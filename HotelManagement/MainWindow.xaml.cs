@@ -24,5 +24,10 @@ namespace HotelManagement
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CustomMessageBox.ShowOk("Mất kế nốidfsdfdsfdsfsdf sgsgdsfds dsfdsfdsfds hfhf fdgfdgfdgb fdgdfgfdgfd g!", "Thông báo", "Đồng ý", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+        }
     }
 }
