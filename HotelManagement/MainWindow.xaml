@@ -114,26 +114,26 @@
                     </StackPanel>
                 </Grid>
             </Border>
-            
-            
+
+
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="179*"/>
+                    <RowDefinition Height="49*"/>
                 </Grid.RowDefinitions>
 
-                <ToggleButton x:Name="Tg_Btn" VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Margin="-4,550,0,0" Grid.Row="1">
+                <ToggleButton x:Name="Tg_Btn" VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Margin="-4,13,0,0" Grid.Row="2">
                     <Canvas>
                         <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}"/>
 
                         <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="03 12 0 0"/>
                     </Canvas>
-                    
                     <ToggleButton.Triggers>
                         <EventTrigger RoutedEvent="ToggleButton.Unchecked">
                             <BeginStoryboard>
                                 <Storyboard x:Name="HideStackPanel">
-                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="62" Duration="0:0:0.3">
+                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="62" Duration="0:0:0.2">
                                     </DoubleAnimation>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -141,7 +141,7 @@
                         <EventTrigger RoutedEvent="ToggleButton.Checked">
                             <BeginStoryboard>
                                 <Storyboard x:Name="ShowStackPanel">
-                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="62" To="230" Duration="0:0:0.3">
+                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="62" To="230" Duration="0:0:0.2">
                                     </DoubleAnimation>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -152,9 +152,8 @@
 
                 <Frame Grid.Row="1"
                        Name="fContainer"
-                       Margin="20"
-                       NavigationUIVisibility="Hidden">
-
+                       Margin="20,20,20,20"
+                       NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                 </Frame>
 
             </Grid>
