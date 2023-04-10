@@ -118,6 +118,16 @@ namespace HotelManagement.Components
         public static readonly DependencyProperty GroupNameProperty =
             DependencyProperty.Register("GroupName", typeof(string), typeof(MenuItem));
 
-      
+
+
+        public CommandConverter Command
+        {
+            get { return (CommandConverter)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GroupName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register("Command", typeof(CommandConverter), typeof(MenuItem));
     }
 }

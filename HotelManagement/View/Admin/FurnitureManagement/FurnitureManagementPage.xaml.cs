@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin
+namespace HotelManagement.View.Admin.FurnitureManagement
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for FurnitureManagementPage.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class FurnitureManagementPage : Page
     {
-        public AdminWindow()
+        public FurnitureManagementPage()
         {
             InitializeComponent();
         }

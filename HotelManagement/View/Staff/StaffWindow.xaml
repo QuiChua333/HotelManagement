@@ -1,17 +1,17 @@
-﻿<Window x:Class="HotelManagement.View.Admin.AdminWindow"
+﻿<Window x:Class="HotelManagement.View.Staff.StaffWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HotelManagement.View.Admin" 
+        xmlns:local="clr-namespace:HotelManagement.View.Staff" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:components="clr-namespace:HotelManagement.Components"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="760" Width="1400"
+        Title="StaffWindow" Height="760" Width="1400"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
-        Name="AdminWD"
+        Name="StaffWD"
         Background="Transparent"
         DataContext="{StaticResource AdminVM}"
 >
@@ -37,7 +37,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!--Overlay-->
         <Rectangle x:Name="Overlay" Fill="#F7FAFD" Grid.ColumnSpan="2" Grid.RowSpan="2" RadiusX="10" RadiusY="10">
             <Rectangle.Effect>
@@ -80,13 +80,13 @@
                                     </Ellipse.Fill>
                                 </Ellipse>
                             </Border>
-                            
+
                             <Border x:Name="ActiveUserDot" Height="12" Width="12"  CornerRadius="100" Background="LightGreen"
                                     BorderBrush="#283342" BorderThickness="1"
                                     VerticalAlignment="Bottom"
                                     HorizontalAlignment="Right"/>
                         </Grid>
-                        
+
 
                         <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" FontWeight="Light" VerticalAlignment="Center" Margin="15,0,20,0" />
                         <materialDesign:PackIcon Kind="MenuDown" Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}" Margin="40 18 0 0"></materialDesign:PackIcon>
@@ -95,14 +95,8 @@
                     <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
                     <StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40" >
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>
-                        </StackPanel>
+                      
 
-                        <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"/>
@@ -111,31 +105,7 @@
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý đặt phòng" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource billing}" IconWidth="16" Text="Quản lý phòng" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource products}" IconWidth="16" Text="Quản lý loại phòng" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource staff}" IconWidth="16" Text="Quản lý nhân viên" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource customer}" IconWidth="16" Text="Quản lý khách hàng" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource food}" IconWidth="16" Text="Quản lý dịch vụ" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý tiện nghi" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Text="Quản lý nội thất" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource history}" IconWidth="16" Text="Lịch sử" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
@@ -150,7 +120,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        
+
         <!--Show/Hide Icon-->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

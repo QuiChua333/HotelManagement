@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:VM1="clr-namespace:HotelManagement.ViewModel.AdminVM"
+                xmlns:VM2="clr-namespace:HotelManagement.ViewModel.StaffVM"
+                xmlns:VM3="clr-namespace:HotelManagement.ViewModel.AdminVM.FurnitureManagementVM"                
+>
+    <VM1:AdminVM x:Key="AdminVM"/>
+    <VM2:StaffVM x:Key="StaffVM"/>
+    <VM3:FurnitureManagementVM x:Key="FurnitureManagementVM"/>
+</ResourceDictionary>
