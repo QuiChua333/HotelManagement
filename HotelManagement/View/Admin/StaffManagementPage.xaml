@@ -1,0 +1,278 @@
+﻿<Page x:Class="HotelManagement.View.Admin.StaffManagementPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HotelManagement.View.Admin"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      mc:Ignorable="d" 
+      d:DesignHeight="644" d:DesignWidth="1298"
+      Title="StaffManagementPage">
+
+    <Grid Background="AliceBlue" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Height="38" Grid.Column="0" CornerRadius="4" Width="340" Background="#E3EBF3" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Border.Effect>
+                    <DropShadowEffect
+                                            BlurRadius="6"
+                                            Color="Black"
+                                            ShadowDepth="4"
+                                            Opacity=".2"
+                                            Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <TextBlock Text="Search" Width="100" Foreground="#1D242E" Opacity="0.5" FontSize="12" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <materialDesign:PackIcon Kind="Search" Margin="0 0 10 0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+            <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Border Grid.Column="1" Height="38" Width="217" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" BorderThickness="0.5">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
+                    </Border.Effect>
+                    <Grid>
+                        <TextBlock Text="- Selected Group -" Width="100" Foreground="#1D242E" Opacity="0.5" FontSize="12" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <materialDesign:PackIcon Kind="ExpandMore" Margin="0 0 10 0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <Border Height="40" Grid.Column="2" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <materialDesign:PackIcon Kind="Plus" Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" />
+                    <TextBlock Text="Thêm nhân viên" Width="120"  Foreground="White" FontSize="15" Margin="24 0 0 0"  VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </Grid>
+        <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5">
+            <Border.Effect>
+                <DropShadowEffect
+                                            BlurRadius="6"
+                                            Color="Black"
+                                            ShadowDepth="4"
+                                            Opacity=".2"
+                                            Direction="270"/>
+            </Border.Effect>
+            <materialDesign:Card UniformCornerRadius="5" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto"  >
+                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                        <ListView.ItemContainerStyle>
+                            <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView >
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="ID" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CustomerCode}"
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn  Width="200">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Tên nhân viên" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0" />
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CustomerName}"                                                           
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="150">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Số điện thoai"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PhoneNumber}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="200">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Email" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Email}"                                                            
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="127" >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Ngày sinh"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding FirstDate, StringFormat=dd/MM/yyyy}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="120">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Giới tính"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="120">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="CCCD"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="120">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Chức vụ"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="120">
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Xoá/Sửa"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center"
+                                                            Orientation="Horizontal" 
+                                                            Margin="0 6 0 0">
+                                                <Border BorderBrush="Black"
+                                                            BorderThickness="1"
+                                                            CornerRadius="6"
+                                                            Cursor="Hand">
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Style.Triggers>
+                                                                <Trigger    Property="IsMouseOver"
+                                                                                Value="True">
+                                                                    <Setter Property="Background"
+                                                                                Value="#00e5ff" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <materialDesign:PackIcon Kind="Pencil"
+                                                                                 Width="22"
+                                                                                 Height="22"
+                                                                                 Cursor="Hand" />
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.OpenEditCustomerCM}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Border>
+                                                <Border Margin="10 0 0 0"
+                                                            BorderBrush="Black"
+                                                            BorderThickness="1"
+                                                            CornerRadius="6"
+                                                            Cursor="Hand">
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver"
+                                                                            Value="True">
+                                                                    <Setter Property="Background"
+                                                                                Value="#ff6255" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <materialDesign:PackIcon Kind="GarbageCanEmpty"
+                                                                                 Width="22"
+                                                                                 Height="22"
+                                                                                 Cursor="Hand" />
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.DeleteCustomerCommand}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Border>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Border>
+
+    </Grid>
+</Page>

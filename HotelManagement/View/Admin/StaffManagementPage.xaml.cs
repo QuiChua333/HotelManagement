@@ -13,26 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement
+namespace HotelManagement.View.Admin
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for StaffManagementPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StaffManagementPage : Page
     {
-        public MainWindow()
+        public StaffManagementPage()
         {
             InitializeComponent();
-        }
-
-        private void Tg_Btn_Click(object sender, RoutedEventArgs e)
-        {
-            fullsidebar.Visibility= Visibility.Visible;
-        }
-
-        private void Tg_Btn2_Click(object sender, RoutedEventArgs e)
-        {
-            fullsidebar.Visibility = Visibility.Hidden;
         }
     }
 }
