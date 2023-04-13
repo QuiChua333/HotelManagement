@@ -10,345 +10,64 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         Title="MainWindow" Height="760" Width="1232">
-    <Grid>
-        <Border Background="AliceBlue" Name="mainFrame" CornerRadius="0 5 5 0" Margin="62 0 0 0" MouseDown="mainFrame_MouseDown">
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Button x:Name="Tg_Btn" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Margin="0,559,0,0" Grid.Row="1" Width="20" Height="40" Click="Tg_Btn_Click" >
-                    <Canvas>
-                        <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}" Margin="-10 -19 0 0"/>
-                        <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="-9 -8 0 0"/>
-                    </Canvas>
-                </Button>
-                <Grid Grid.Row="1"  Margin="20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="340"/>
-                            <ColumnDefinition Width="260"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Height="38" Grid.Column="0" CornerRadius="4" Width="340" Background="#E3EBF3" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <Border.Effect>
-                                <DropShadowEffect
-                                            BlurRadius="6"
-                                            Color="Black"
-                                            ShadowDepth="4"
-                                            Opacity=".2"
-                                            Direction="270"/>
-                            </Border.Effect>
-                            <Grid>
-                                <TextBlock Text="Search" Width="100" Foreground="#1D242E" Opacity="0.5" FontSize="12" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                <materialDesign:PackIcon Kind="Search" Margin="0 0 10 0" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                            </Grid>
-                        </Border>
-                        <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="26"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Border Grid.Column="1" Height="38" Width="217" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" BorderThickness="0.5">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
-                                </Border.Effect>
-                                <Grid>
-                                    <TextBlock Text="- Selected Group -" Width="100" Foreground="#1D242E" Opacity="0.5" FontSize="12" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                    <materialDesign:PackIcon Kind="ExpandMore" Margin="0 0 10 0" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                                </Grid>
+    <Border Background="AliceBlue" CornerRadius="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="{DynamicResource SidebarColor}"
+                    Grid.Column="0"
+                    CornerRadius="5 0 0 5" 
+                    Height="760" 
+                    HorizontalAlignment="Left">
+                <Grid x:Name="GridNav" Width="62">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="60" Background="#1D242E">
+                            <Border Height="30" Width="30"  Background="Transparent"
+                                   HorizontalAlignment="Left" Margin="18,0,0,0">
+                                <Ellipse>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                             </Border>
-                        </Grid>
-                        <Border Height="40" Grid.Column="2" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
-                            </Border.Effect>
-                            <Grid>
-                                <materialDesign:PackIcon Kind="Plus" Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" />
-                                <TextBlock Text="Thêm nhân viên" Width="120"  Foreground="White" FontSize="15" Margin="24 0 0 0"  VerticalAlignment="Center" />
-                            </Grid>
-                        </Border>
-                    </Grid>
-                    <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5" >
-                        <Border.Effect>
-                            <DropShadowEffect
-                                            BlurRadius="6"
-                                            Color="Black"
-                                            ShadowDepth="4"
-                                            Opacity=".2"
-                                            Direction="270"/>
-                        </Border.Effect>
-                        <materialDesign:Card UniformCornerRadius="5"  >
-                            <ScrollViewer VerticalScrollBarVisibility="Auto"  >
-                                <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
-                                    <ListView.ItemContainerStyle>
-                                        <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.View>
-                                        <GridView >
-                                            <GridViewColumn Width="77">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="ID" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate >
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding CustomerCode}"
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn  Width="150">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Tên nhân viên" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0" />
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding CustomerName}"                                                           
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="150">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Số điện thoai"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding PhoneNumber}" 
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="150">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Email" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding Email}"                                                            
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="125" >
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Ngày sinh"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding FirstDate, StringFormat=dd/MM/yyyy}" 
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="116">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Giới tính"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding ExpenseStr}" 
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="110">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="CCCD"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding ExpenseStr}" 
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="114">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Chức vụ"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding ExpenseStr}" 
-                                                           FontSize="14" 
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                            <GridViewColumn Width="120">
-                                                <GridViewColumn.Header>
-                                                    <TextBlock Text="Xoá/Sửa"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                                </GridViewColumn.Header>
-                                                <GridViewColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel VerticalAlignment="Center"
-                                                            Orientation="Horizontal" 
-                                                            Margin="0 6 0 0">
-                                                            <Border BorderBrush="Black"
-                                                            BorderThickness="1"
-                                                            CornerRadius="6"
-                                                            Cursor="Hand">
-                                                                <Border.Style>
-                                                                    <Style TargetType="{x:Type Border}">
-                                                                        <Style.Triggers>
-                                                                            <Trigger    Property="IsMouseOver"
-                                                                                Value="True">
-                                                                                <Setter Property="Background"
-                                                                                Value="#00e5ff" />
-                                                                            </Trigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Border.Style>
-                                                                <materialDesign:PackIcon Kind="Pencil"
-                                                                                 Width="22"
-                                                                                 Height="22"
-                                                                                 Cursor="Hand" />
-                                                                <i:Interaction.Triggers>
-                                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                        <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.OpenEditCustomerCM}" />
-                                                                    </i:EventTrigger>
-                                                                </i:Interaction.Triggers>
-                                                            </Border>
-                                                            <Border Margin="10 0 0 0"
-                                                            BorderBrush="Black"
-                                                            BorderThickness="1"
-                                                            CornerRadius="6"
-                                                            Cursor="Hand">
-                                                                <Border.Style>
-                                                                    <Style TargetType="{x:Type Border}">
-                                                                        <Style.Triggers>
-                                                                            <Trigger Property="IsMouseOver"
-                                                                            Value="True">
-                                                                                <Setter Property="Background"
-                                                                                Value="#ff6255" />
-                                                                            </Trigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Border.Style>
-                                                                <materialDesign:PackIcon Kind="GarbageCanEmpty"
-                                                                                 Width="22"
-                                                                                 Height="22"
-                                                                                 Cursor="Hand" />
-                                                                <i:Interaction.Triggers>
-                                                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                                        <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.DeleteCustomerCommand}" />
-                                                                    </i:EventTrigger>
-                                                                </i:Interaction.Triggers>
-                                                            </Border>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </GridViewColumn.CellTemplate>
-                                            </GridViewColumn>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </ScrollViewer>
-                        </materialDesign:Card>
-                    </Border>
+                            <TextBlock Text="SaiGon Hotel" Foreground="{DynamicResource PrimaryTextColor}" 
+                                    FontSize="17" FontWeight="Medium" VerticalAlignment="Center" Margin="15,0,20,0"  />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="50">
+                            <Border Height="30" Width="30"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}"
+                                   HorizontalAlignment="Left" Margin="18,0,0,0">
+                                <Ellipse>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
 
-                </Grid>
-
-            </Grid>
-        </Border>
-        <Border Background="{DynamicResource SidebarColor}"
-                Grid.Column="0"
-                Name="fullsidebar"
-                Panel.ZIndex="1"
-                Visibility="Hidden"
-                CornerRadius="5 0 0 5" 
-                Height="760" Width="230"
-                HorizontalAlignment="Left">
-
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Height="60" Background="#1D242E">
-                    <Border Height="30" Width="30"  Background="Transparent"
-                                       HorizontalAlignment="Left" Margin="18,0,0,0">
-                        <Ellipse>
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </Border>
-                    <TextBlock Text="SaiGon Hotel" Foreground="{DynamicResource PrimaryTextColor}" 
-                                        FontSize="17" FontWeight="Medium" VerticalAlignment="Center" Margin="15,0,20,0"  />
-                    <Button x:Name="Tg_Btn2" VerticalAlignment="Center" Padding="0" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Click="Tg_Btn2_Click"  >
-                        <materialDesign:PackIcon Kind="Close" Foreground="{DynamicResource PrimaryTextColor}" Margin="15 0 0 0" Height="20" Width="20"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="50">
-                    <Border Height="30" Width="30"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}"
-                                       HorizontalAlignment="Left" Margin="18,0,0,0">
-                        <Ellipse>
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                    </Border>
-                    <Border Height="8" Width="8"  CornerRadius="100" Background="LightGreen"
-                                       Margin="-10 23 0 0" BorderBrush="#283342" BorderThickness="1">
+                            </Border>
+                            <Border Height="8" Width="8"  CornerRadius="100" Background="LightGreen"
+                                   Margin="-10 23 0 0" BorderBrush="#283342" BorderThickness="1">
 
 
-                    </Border>
-                    <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" 
-                                        FontSize="16" FontWeight="Light" VerticalAlignment="Center"
-                                        Margin="15,0,20,0" />
-                    <materialDesign:PackIcon Kind="MenuDown" 
-                                                     Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}"
-                                                     Margin="40 18 0 0"/>
+                            </Border>
+                            <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" 
+                                    FontSize="16" FontWeight="Light" VerticalAlignment="Center"
+                                    Margin="15,0,20,0" />
+                            <materialDesign:PackIcon Kind="MenuDown" 
+                                                 Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}"
+                                                 Margin="40 18 0 0"/>
 
-                </StackPanel>
-                <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
+                        </StackPanel>
+                        <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
-                <StackPanel>
-                    <StackPanel Height="40">
-                        <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Height="40" >
-                        <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5 "/>
+                        <StackPanel>
+                            <StackPanel Height="40">
+                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Height="40" >
+                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5 "/>
 
                             <StackPanel Height="40">
                                 <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"/>
@@ -429,8 +148,6 @@
                     </ToggleButton.Triggers>
                 </ToggleButton>
 
-                </StackPanel>
-                <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
                 <Frame Grid.Row="1"
                        Name="fContainer"
@@ -438,6 +155,9 @@
                        NavigationUIVisibility="Hidden" Grid.RowSpan="2">
                 </Frame>
 
-    </Grid>
+            </Grid>
+        </Grid>
+
+    </Border>
 
 </Window>
