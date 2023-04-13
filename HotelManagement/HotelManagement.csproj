@@ -96,6 +96,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.ImageSharp.2.1.3\lib\net472\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
@@ -144,26 +145,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml.cs">
-      <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+	  <Compile Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml.cs">
+		  <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\CustomerManagement\CustomerManagementPage.xaml.cs">
+		  <DependentUpon>CustomerManagementPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml.cs">
+		  <DependentUpon>EditCustomerWindow.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\StaffManagement\AddStaffWindow.xaml.cs">
+		  <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\StaffManagement\ChangePasswordWindow.xaml.cs">
+		  <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\StaffManagement\EditStaffWindow.xaml.cs">
+		  <DependentUpon>EditStaffWindow.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\Admin\StaffManagement\StaffManagementPage.xaml.cs">
+		  <DependentUpon>StaffManagementPage.xaml</DependentUpon>
+	  </Compile>
+    <Compile Include="Utilities\RelyCommand.cs" />
+    <Compile Include="ViewModel\AdminVM\AdminVM.cs" />
+    <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\FurnitureManagementVM.cs" />
+    <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\StaffVM\StaffVM.cs" />
+    <Compile Include="View\Admin\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\CustomerManagement\CustomerManagementPage.xaml.cs">
-      <DependentUpon>CustomerManagementPage.xaml</DependentUpon>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
+      <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml.cs">
-      <DependentUpon>EditCustomerWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\StaffManagement\AddStaffWindow.xaml.cs">
-      <DependentUpon>AddStaffWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\StaffManagement\ChangePasswordWindow.xaml.cs">
-      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\StaffManagement\EditStaffWindow.xaml.cs">
-      <DependentUpon>EditStaffWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\StaffManagement\StaffManagementPage.xaml.cs">
-      <DependentUpon>StaffManagementPage.xaml</DependentUpon>
+    <Compile Include="View\Staff\StaffWindow.xaml.cs">
+      <DependentUpon>StaffWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\MenuItem\MenuItem.xaml">
       <SubType>Designer</SubType>
@@ -174,6 +189,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\Sidebar\SidebarStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Search\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,6 +213,9 @@
     <Compile Include="Components\Sidebar\SidebarStaff.xaml.cs">
       <DependentUpon>SidebarStaff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\Search\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -210,31 +232,55 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml">
+	  <Page Include="View\Admin\CustomerManagement\AddCustomerWindow.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\CustomerManagement\CustomerManagementPage.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\StaffManagement\AddStaffWindow.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\StaffManagement\ChangePasswordWindow.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\StaffManagement\EditStaffWindow.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Include="View\Admin\StaffManagement\StaffManagementPage.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+	  </Page>
+    <Page Include="ResourceXAML\MainResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\CustomerManagement\CustomerManagementPage.xaml">
+    <Page Include="Utilities\AdminDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\CustomerManagement\EditCustomerWindow.xaml">
+    <Page Include="Utilities\StaffDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\StaffManagement\AddStaffWindow.xaml">
+    <Page Include="View\Admin\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\StaffManagement\ChangePasswordWindow.xaml">
+    <Page Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\StaffManagement\EditStaffWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\StaffManagement\StaffManagementPage.xaml">
+    <Page Include="View\Staff\StaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -314,13 +360,22 @@
   <ItemGroup>
     <Resource Include="Resources\Images\logo.png" />
   </ItemGroup>
+	<ItemGroup>
+		
+		<Folder Include="View\Admin\HistoryManagement\" />
+		<Folder Include="View\Admin\TroubleManagement\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\LogoWd.png" />
+	</ItemGroup>
   <ItemGroup>
-    <Folder Include="Utilities\" />
-    <Folder Include="View\Admin\HistoryManagement\" />
-    <Folder Include="View\Admin\TroubleManagement\" />
+    <Resource Include="Resources\Images\Icon_Search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\LogoWd.png" />
+    <Resource Include="Resources\Icons\Plus_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\giuong-ngu-cao-cap-gn01-5.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

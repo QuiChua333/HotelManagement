@@ -114,6 +114,6 @@
     </UserControl.Resources>
 
     <Grid>
-        <RadioButton Style="{StaticResource MenuButtonStyle}" GroupName="{Binding GroupName, ElementName=this}" Margin="1 0 0 0" />
+        <RadioButton Style="{StaticResource MenuButtonStyle}" GroupName="{Binding GroupName, ElementName=this}" Command="{Binding Command, ElementName=this}"  Margin="1 0 0 0" />
     </Grid>
 </UserControl>
