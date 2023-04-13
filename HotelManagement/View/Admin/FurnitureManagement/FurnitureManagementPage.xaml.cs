@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CinemaManagementProject.Utilities;
+using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,21 @@ namespace HotelManagement.View.Admin.FurnitureManagement
     /// </summary>
     public partial class FurnitureManagementPage : Page
     {
+        public List<Furniture> furnitures;
+
+               
         public FurnitureManagementPage()
         {
             InitializeComponent();
+            furnitures = new List<Furniture>();
+            Furniture f;
+            for (int i = 0; i < 9; i++)
+            {
+                f = new Furniture("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
+                furnitures.Add(f);
+            }
+
+            ListViewProducts.ItemsSource = furnitures;
         }
     }
 }

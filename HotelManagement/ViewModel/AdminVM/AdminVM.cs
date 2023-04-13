@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace HotelManagement.ViewModel.AdminVM
@@ -14,7 +15,7 @@ namespace HotelManagement.ViewModel.AdminVM
         public object CurrentView
         {
             get { return _currentView; }
-            set { _currentView = value; }
+            set { _currentView = value; OnPropertyChanged(); }
         }
         public ICommand FirstLoadCM { get; set; }
         private void Furniture(object obj) => CurrentView = new FurnitureManagementVM.FurnitureManagementVM();
@@ -26,6 +27,5 @@ namespace HotelManagement.ViewModel.AdminVM
 
             FurnitureCommand = new RelayCommand(Furniture);
         }
-
     }
 }

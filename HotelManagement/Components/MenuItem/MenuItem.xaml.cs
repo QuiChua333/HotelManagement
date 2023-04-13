@@ -120,14 +120,15 @@ namespace HotelManagement.Components
 
 
 
-        public CommandConverter Command
+        public ICommand Command
         {
-            get { return (CommandConverter)GetValue(CommandProperty); }
+            get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for GroupName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(CommandConverter), typeof(MenuItem));
+            DependencyProperty.Register("Command", typeof(ICommand), typeof(MenuItem));
+
     }
 }

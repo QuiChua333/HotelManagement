@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:components="clr-namespace:HotelManagement.Components"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="760" Width="1400"
+        Title="AdminWindow" Height="760" Width="1232"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -30,7 +30,7 @@
     </Window.Triggers>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="62"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -53,12 +53,20 @@
         <!--Content-->
         <Frame NavigationUIVisibility="Hidden" x:Name="Content" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentView}"></Frame>
 
+        <!--TopBar-->
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
+            </Border>
+            <Rectangle Height="0.4" Fill="#444B55" VerticalAlignment="Bottom" Opacity="0.3"></Rectangle>
+        </Grid>
+        <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" MouseLeftButtonDown="Mask_MouseLeftButtonDown" x:Name="Mask" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
         <!--SideBar-->
         <Border Background="{DynamicResource SidebarColor}"
+                Name="Sidebar"
             CornerRadius="10 0 0 10" 
             Height="760"  
             HorizontalAlignment="Left"
-            Grid.Column="0" Grid.RowSpan="2">
+            Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Grid Width="62" Name="GridNav">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Height="60" Background="Transparent">
@@ -94,7 +102,7 @@
 
                     <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
-                    <StackPanel>
+                    <StackPanel Name="MenuItems" PreviewMouseLeftButtonUp="MenuItems_PreviewMouseLeftButtonUp">
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
                         </StackPanel>
@@ -148,59 +156,35 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
+                <!--Show/Hide Icon-->
+                <CheckBox x:Name="Tg_Btn" Unchecked="Tg_Btn_Unchecked" Checked="Tg_Btn_Checked" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Margin="0 0 -18 122">
+                    <Canvas>
+                        <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}" Margin="-20 -15 0 0"/>
+
+                        <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="-18 -4 0 0"/>
+                    </Canvas>
+
+                    <CheckBox.Triggers>
+                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="HideStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="62" Duration="0:0:0.2">
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="ShowStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="62" To="230" Duration="0:0:0.2">
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </CheckBox.Triggers>
+                </CheckBox>
             </Grid>
         </Border>
         
-        <!--Show/Hide Icon-->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <CheckBox x:Name="Tg_Btn" VerticalAlignment="Top" Padding="05" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Margin="-4,565,0,0" Grid.Row="1"  >
-                <Canvas>
-                    <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}" Margin="-20 -15 0 0"/>
-
-                    <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="-18 -4 0 0"/>
-                </Canvas>
-
-                <CheckBox.Triggers>
-                    <EventTrigger RoutedEvent="CheckBox.Unchecked">
-                        <BeginStoryboard>
-                            <Storyboard x:Name="HideStackPanel">
-                                <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="62" Duration="0:0:0.2">
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="CheckBox.Checked">
-                        <BeginStoryboard>
-                            <Storyboard x:Name="ShowStackPanel">
-                                <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="62" To="230" Duration="0:0:0.2">
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </CheckBox.Triggers>
-            </CheckBox>
-
-
-            <Frame Grid.Row="1"
-                       Name="fContainer"
-                       Margin="20"
-                       NavigationUIVisibility="Hidden">
-
-            </Frame>
-
-        </Grid>
-
-        <!--TopBar-->
-        <Grid Grid.Column="1" Grid.Row="0">
-            <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
-            </Border>
-            <Rectangle Height="0.4" Fill="#444B55" VerticalAlignment="Bottom" Opacity="0.3"></Rectangle>
-        </Grid>
-
     </Grid>
 </Window>

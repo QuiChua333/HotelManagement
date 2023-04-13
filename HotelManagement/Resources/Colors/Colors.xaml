@@ -13,5 +13,9 @@
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="TextFourthColor" Color="#4B5D78"/>
 
+    <!--Furniture-->
+    <SolidColorBrush x:Key="AddBtn_Furniture" Color="#009099"/>
+    <SolidColorBrush x:Key="Name_Furniture" Color="#A8AE5C"/>
+    <SolidColorBrush x:Key="Type_Cost_Furniture" Color="#7E6E6E"/>
 
 </ResourceDictionary>
