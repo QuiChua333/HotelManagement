@@ -35,10 +35,20 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Wheat" Opacity="0.75" RadiusX="10" RadiusY="10"/>
+        <Rectangle Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="White" Opacity="0.75" RadiusX="10" RadiusY="10">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Color="Black"
+                    ShadowDepth="4"
+                    Opacity=".25"
+                    Direction="270"    
+                />
+            </Rectangle.Effect>
+        </Rectangle>
         
         <!--Top control-->
-        <Grid Name="TopControl" Grid.Row="0" Margin="10">
+        <Grid Name="TopControl" Grid.Row="0" Margin="35 10 35 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
@@ -74,12 +84,15 @@
         </Grid>
         
         <!--Content-->
-        <Grid x:Name="ContentItems" Grid.Row="1" Margin="0 10 10 10">
-            <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Center" Width="{Binding WidthItem, Mode=OneWayToSource}">
+        <Grid x:Name="ContentItems" Grid.Row="1" Margin="14 10 14 10">
+            <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" Width="{Binding WidthItem, Mode=OneWayToSource}" 
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     materialDesign:ListBoxItemAssist.ShowSelection="False">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Margin" Value="12 0 12 0"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -97,14 +110,23 @@
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <UniformGrid Columns="4" Margin="0"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <ListBoxItem HorizontalAlignment="Center" Background="Transparent">
                             <Grid>
-                                <Border x:Name="FurnitureItem" CornerRadius="10" Background="White" Width="219" Height="284">
+                                <Border x:Name="FurnitureItem" CornerRadius="10" Background="White" Width="233" Height="284">
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="10"
+                                            Color="Black"
+                                            ShadowDepth="4"
+                                            Opacity=".25"
+                                            Direction="270"
+                                        />
+                                    </Border.Effect>
                                     <StackPanel>
                                         <Border CornerRadius="10,10,0,0" Height="216">
                                             <Border.Background>

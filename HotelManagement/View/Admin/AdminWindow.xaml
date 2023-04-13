@@ -61,8 +61,9 @@
         </Grid>
         <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" MouseLeftButtonDown="Mask_MouseLeftButtonDown" x:Name="Mask" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
         <!--SideBar-->
-        <Border Background="{DynamicResource SidebarColor}"
-                Name="Sidebar"
+        <Border 
+            Background="{DynamicResource SidebarColor}"
+            Name="Sidebar"
             CornerRadius="10 0 0 10" 
             Height="760"  
             HorizontalAlignment="Left"
