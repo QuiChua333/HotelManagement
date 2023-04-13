@@ -34,5 +34,12 @@ namespace HotelManagement
         {
             fullsidebar.Visibility = Visibility.Hidden;
         }
+
+        private void mainFrame_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            fullsidebar.Visibility = Visibility.Hidden;
+        }
+
+
     }
 }

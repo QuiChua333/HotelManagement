@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin
+namespace HotelManagement.View.Admin.StaffManagement
 {
     /// <summary>
-    /// Interaction logic for StaffManagementPage.xaml
+    /// Interaction logic for ChangePasswordWindow.xaml
     /// </summary>
-    public partial class StaffManagementPage : Page
+    public partial class ChangePasswordWindow : Window
     {
-        public StaffManagementPage()
+        public ChangePasswordWindow()
         {
             InitializeComponent();
         }

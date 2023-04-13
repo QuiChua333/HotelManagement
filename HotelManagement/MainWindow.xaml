@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        Title="MainWindow" Height="760" Width="1400">
+        Title="MainWindow" Height="760" Width="1232">
     <Grid>
-        <Border Background="AliceBlue" CornerRadius="0 5 5 0" Margin="62 0 0 0">
+        <Border Background="AliceBlue" Name="mainFrame" CornerRadius="0 5 5 0" Margin="62 0 0 0" MouseDown="mainFrame_MouseDown">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
@@ -76,7 +76,7 @@
                             </Grid>
                         </Border>
                     </Grid>
-                    <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5">
+                    <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5" >
                         <Border.Effect>
                             <DropShadowEffect
                                             BlurRadius="6"
@@ -85,7 +85,7 @@
                                             Opacity=".2"
                                             Direction="270"/>
                         </Border.Effect>
-                        <materialDesign:Card UniformCornerRadius="5" >
+                        <materialDesign:Card UniformCornerRadius="5"  >
                             <ScrollViewer VerticalScrollBarVisibility="Auto"  >
                                 <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                                     <ListView.ItemContainerStyle>
@@ -93,7 +93,7 @@
                                     </ListView.ItemContainerStyle>
                                     <ListView.View>
                                         <GridView >
-                                            <GridViewColumn Width="100">
+                                            <GridViewColumn Width="77">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="ID" 
                                                        FontSize="14" 
@@ -108,7 +108,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn  Width="200">
+                                            <GridViewColumn  Width="150">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="Tên nhân viên" 
                                                        FontSize="14" 
@@ -138,7 +138,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="200">
+                                            <GridViewColumn Width="150">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="Email" 
                                                        FontSize="14" 
@@ -153,7 +153,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="127" >
+                                            <GridViewColumn Width="125" >
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="Ngày sinh"
                                                        FontSize="14" 
@@ -168,7 +168,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="120">
+                                            <GridViewColumn Width="116">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="Giới tính"
                                                        FontSize="14" 
@@ -183,7 +183,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="120">
+                                            <GridViewColumn Width="110">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="CCCD"
                                                        FontSize="14" 
@@ -198,7 +198,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="120">
+                                            <GridViewColumn Width="114">
                                                 <GridViewColumn.Header>
                                                     <TextBlock Text="Chức vụ"
                                                        FontSize="14" 

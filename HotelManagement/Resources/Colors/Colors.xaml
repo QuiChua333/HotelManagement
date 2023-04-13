@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Background Colors -->
     <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#009099"/>
+    <SolidColorBrush x:Key="SecondBackgroundColor" Color="#C95D3B"/>
     <SolidColorBrush x:Key="SidebarColor" Color="#283342"/>
     <SolidColorBrush x:Key="TagColor" Color="#0AD5E2"/>
 
@@ -10,6 +11,7 @@
 
     <!-- Typograhy Colors -->
     <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SecondTextColor" Color="#1D242E"/>
     <SolidColorBrush x:Key="TextFourthColor" Color="#4B5D78"/>
 
 
