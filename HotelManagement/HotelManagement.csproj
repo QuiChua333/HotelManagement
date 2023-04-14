@@ -96,6 +96,7 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="SixLabors.ImageSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.ImageSharp.2.1.3\lib\net472\SixLabors.ImageSharp.dll</HintPath>
     </Reference>
@@ -188,6 +189,36 @@
     <Compile Include="View\Staff\RoomCatalogManagement\RoomPayment\RoomGroupPayment.xaml.cs">
       <DependentUpon>RoomGroupPayment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\RelyCommand.cs" />
+    <Compile Include="ViewModel\AdminVM\AdminVM.cs" />
+    <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\FurnitureManagementVM.cs" />
+    <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\StaffVM\StaffVM.cs" />
+    <Compile Include="View\Admin\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
+      <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\StaffWindow.xaml.cs">
+      <DependentUpon>StaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Components\MenuItem\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Sidebar\Sidebar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Sidebar\SidebarStaff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Search\Search.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -195,6 +226,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\MenuItem\MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Sidebar\Sidebar.xaml.cs">
+      <DependentUpon>Sidebar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Sidebar\SidebarStaff.xaml.cs">
+      <DependentUpon>SidebarStaff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Search\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -261,6 +304,42 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomPayment\RoomGroupPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Images\Images.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceXAML\MainResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utilities\AdminDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utilities\StaffDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\StaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -370,6 +449,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\image_room.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icon_Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Plus_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\giuong-ngu-cao-cap-gn01-5.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

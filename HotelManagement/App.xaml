@@ -18,6 +18,8 @@
                 <ResourceDictionary Source="./Resources/Styles/Button.xaml"/>
                 <ResourceDictionary Source="./Resources/Styles/Checkbox.xaml"/>
                 <ResourceDictionary Source="./Resources/Styles/ListBox.xaml"/>
+                 <ResourceDictionary Source="./ResourceXAML/MainResources.xaml"/>
+                <ResourceDictionary Source="./Utilities/AdminDataTemplate.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

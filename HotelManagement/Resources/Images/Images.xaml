@@ -9,6 +9,8 @@
     <ImageSource x:Key="TienNghi">./image_tiennghi.png</ImageSource>
     <ImageSource x:Key="Plus_circle">./plus_circle.png</ImageSource>
     <ImageSource x:Key="Room">./image_room.png</ImageSource>
+    <ImageSource x:Key="Logo">./logo.png</ImageSource>
+    <ImageSource x:Key="Giuong">./giuong-ngu-cao-cap-gn01-5.jpg</ImageSource>
 
-
+   
 </ResourceDictionary>

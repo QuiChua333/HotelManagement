@@ -9,12 +9,26 @@
     <SolidColorBrush x:Key="Gray5" Color="#FFE0E0E0" />
     <SolidColorBrush x:Key="Gray6" Color="#FFF1F1F1" />
 
+    <SolidColorBrush x:Key="LightBlue_Search" Color="#E3EBF3"/>
+    <!-- Background Colors -->
+    <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#009099"/>
+    <SolidColorBrush x:Key="SidebarColor" Color="#283342"/>
+    <SolidColorBrush x:Key="TagColor" Color="#0AD5E2"/>
 
     <SolidColorBrush x:Key="White" Color="#FFFFFFFF" />
+    <!-- Primary Colors -->
+    <SolidColorBrush x:Key="PrimaryBlueColor" Color="#3772FF"/>
 
+    <!-- Typograhy Colors -->
+    <SolidColorBrush x:Key="PrimaryTextColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TextFourthColor" Color="#4B5D78"/>
 
     <!--Color Button-->
     <SolidColorBrush x:Key="ButtonOk" Color="#009099" />
     <SolidColorBrush x:Key="ButtonCancel" Color="#E14E4E" />
+    <!--Furniture-->
+    <SolidColorBrush x:Key="AddBtn_Furniture" Color="#009099"/>
+    <SolidColorBrush x:Key="Name_Furniture" Color="#A8AE5C"/>
+    <SolidColorBrush x:Key="Type_Cost_Furniture" Color="#7E6E6E"/>
 
 </ResourceDictionary>
