@@ -67,7 +67,7 @@
                             <DropShadowEffect BlurRadius="0.3" Direction="-45" Color="#000000" ShadowDepth="1" Opacity="0.5"/>
                         </Label.Effect>
                     </Label>
-                    <Image Source="{StaticResource Logo}" 
+                    <Image Source="{StaticResource Logo2}" 
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
                            Width="70"
