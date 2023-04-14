@@ -283,7 +283,7 @@
                             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                         ItemsSource="{Binding ListSeat1}"
                                          x:Name="SeatListBox1"
-                                         VerticalAlignment="Center"
+                                         VerticalAlignment="Top"
                                          SelectedItem="{Binding SelectedSeat}">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems}" />
@@ -444,7 +444,7 @@
                             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                         ItemsSource="{Binding ListSeat1}"
                                          
-                                         VerticalAlignment="Center"
+                                         VerticalAlignment="Top"
                                          SelectedItem="{Binding SelectedSeat}">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems}" />

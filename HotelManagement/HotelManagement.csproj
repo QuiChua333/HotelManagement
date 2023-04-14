@@ -158,8 +158,14 @@
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomMessageBoxWindow\Util.cs" />
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\AddCustomerWindow.xaml.cs">
+      <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml.cs">
       <DependentUpon>RoomCustomerInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml.cs">
+      <DependentUpon>RoomFunitureInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomRentalContractInfo.xaml.cs">
       <DependentUpon>RoomRentalContractInfo.xaml</DependentUpon>
@@ -218,7 +224,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

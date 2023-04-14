@@ -26,7 +26,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border CornerRadius="15" Background="#F5F5F5" BorderBrush="Gray" BorderThickness="0.3" Height="500" Width="850">
+    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="500" Width="850">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
@@ -94,29 +94,31 @@
             </Grid>
             <Grid Grid.Row="2" Margin="20,20,20,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Image Source="{StaticResource Room}" Width="50" Height="50"/>
-                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                            <Label Content="Phòng"
-                                                               Foreground="{StaticResource Gray1}"
+                <Grid Grid.Row="0" Margin="30,0">
+                    <StackPanel   Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
+                        <Image Source="{StaticResource Room}" Width="30" Height="30"/>
+                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center" Orientation="Horizontal">
+                            <Label Content="Phòng:"             
+                                                                 Foreground="#000000"
                                                                FontFamily="{DynamicResource MaterialDesignFont}"
-                                                               FontWeight="Bold"
-                                                               FontSize="18">
+                                                               FontWeight="Medium"
+                                                               FontSize="16">
 
                             </Label>
-                            <Label Content="P102"
-                                                               Foreground="{StaticResource Gray1}"
-                                                               FontFamily="{DynamicResource MaterialDesignFont}"
-                                                               FontWeight="Bold"
-                                                               FontSize="18">
-
-                            </Label>
+                            <TextBlock Text="P102"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                                       Margin="5,0,0,0"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
                         </StackPanel>
                     </StackPanel>
+
                     <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Style="{StaticResource CustomButton}"
@@ -124,7 +126,7 @@
                         Background="{StaticResource ButtonOk}"
                    
                         Width="180"
-                            Height="44"
+                            Height="35"
                         Command="{Binding AcceptEmailCM}"
                         CommandParameter="{Binding ElementName=window}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -139,17 +141,18 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="0,20,0,0" Background="#F5F3F2">
                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 ItemsSource="{Binding DSDV}"
-                                Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}"
+                              >
 
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridHeader}">
 
 
                                 <GridViewColumn
-                                                Width="85">
+                                                Width="100">
                                     <GridViewColumn.Header>
                                         <Label Content="STT"
                                                                Foreground="#111FA0"
@@ -215,7 +218,7 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn
-                                                Width="140">
+                                                Width="150">
                                     <GridViewColumn.Header>
                                         <Label Content="CMND/CCCD"
                                                                 Foreground="#111FA0"
@@ -267,17 +270,12 @@
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center"
                                                             Orientation="Horizontal" 
-                                                            Margin="-40 5 0 0">
+                                                            Margin="-20 5 0 0">
                                                 <Border BorderBrush="Black"
                                                             BorderThickness="1"
                                                             CornerRadius="6"
                                                             Cursor="Hand">
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=VoucherListView, Path=DataContext.LoadInfoBigVRCM}" >
-                                                            </i:InvokeCommandAction>
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
+                                                    
 
                                                     <Border.Style>
                                                         <Style TargetType="{x:Type Border}">
@@ -303,11 +301,7 @@
                                                             BorderThickness="1"
                                                             CornerRadius="6"
                                                             Cursor="Hand">
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=VoucherListView, Path=DataContext.LoadDeleteVoucherCM}" />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
+                                                   
                                                     <Border.Style>
                                                         <Style TargetType="{x:Type Border}">
                                                             <Style.Triggers>
@@ -356,7 +350,7 @@
                         Content="Thoát"
                         FontSize="14"
                         Background="{StaticResource ButtonCancel}"
-                        Margin="0,0,32,0"
+                        Margin="0,0,20,0"
                         Width="70" 
                         Command="{Binding AcceptEmailCM}"
                         CommandParameter="{Binding ElementName=window}">
