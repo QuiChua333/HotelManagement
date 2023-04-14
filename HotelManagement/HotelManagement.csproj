@@ -161,6 +161,9 @@
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml.cs">
       <DependentUpon>RoomCustomerInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomRentalContractInfo.xaml.cs">
+      <DependentUpon>RoomRentalContractInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomWindow.xaml.cs">
       <DependentUpon>RoomWindow.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomRentalContractInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
