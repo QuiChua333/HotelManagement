@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ImageSource x:Key="Logo">./logo_hotel.png</ImageSource>
+    <ImageSource x:Key="Checkbox_Checked">./checked.png</ImageSource>
+    <ImageSource x:Key="Checkbox_Unchecked">./unchecked.png</ImageSource>
+    <ImageSource x:Key="PhieuThue">./image_phieuthue.png</ImageSource>
+    <ImageSource x:Key="LuuTru">./image_luutru.png</ImageSource>
+    <ImageSource x:Key="TienNghi">./image_tiennghi.png</ImageSource>
+    <ImageSource x:Key="Plus_circle">./plus_circle.png</ImageSource>
+    <ImageSource x:Key="Room">./image_room.png</ImageSource>
+
+
+</ResourceDictionary>
