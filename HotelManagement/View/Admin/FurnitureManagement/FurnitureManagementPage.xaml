@@ -10,6 +10,7 @@
       x:Class="HotelManagement.View.Admin.FurnitureManagement.FurnitureManagementPage"
       mc:Ignorable="d" 
       x:Name="FurniturePage"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       DataContext="{StaticResource FurnitureManagementVM}"
 >
     <Page.Triggers>
@@ -35,7 +36,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Rectangle Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="White" Opacity="0.75" RadiusX="10" RadiusY="10">
+        <Rectangle Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="White" RadiusX="10" RadiusY="10">
             <Rectangle.Effect>
                 <DropShadowEffect
                     BlurRadius="10"
@@ -46,7 +47,7 @@
                 />
             </Rectangle.Effect>
         </Rectangle>
-        
+
         <!--Top control-->
         <Grid Name="TopControl" Grid.Row="0" Margin="35 10 35 10">
             <Grid.ColumnDefinitions>
@@ -56,16 +57,27 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Search:Search 
                         Width="350" Height="38"
-                        FontSize="12"
+                        FontSize="14"
                         IconSize="18"
                         Corner="10"
                         Margin="0 0 38 0"
+                        IndicatorBrush="{StaticResource LightBlue_Search}"
                     />
-                <Rectangle Width="205" Height="38" RadiusX="10" RadiusY="10" Fill="White"/>
+                <Rectangle Width="205" Height="38" RadiusX="10" RadiusY="10" Fill="White">
+                    <Rectangle.Effect>
+                        <DropShadowEffect
+                            BlurRadius="10"
+                            Color="Black"
+                            ShadowDepth="4"
+                            Opacity=".25"
+                            Direction="270"
+                        />
+                    </Rectangle.Effect>
+                </Rectangle>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Grid>
+                <Grid Cursor="Hand">
                     <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
@@ -73,7 +85,7 @@
                     </StackPanel>
                 </Grid>
                 <Rectangle Width="27" Height="46" Fill="Transparent"/>
-                <Grid>
+                <Grid Cursor="Hand">
                     <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
@@ -82,12 +94,14 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        
+
         <!--Content-->
         <Grid x:Name="ContentItems" Grid.Row="1" Margin="14 10 14 10">
             <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" Width="{Binding WidthItem, Mode=OneWayToSource}" 
-                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
                      materialDesign:ListBoxItemAssist.ShowSelection="False">
+                <ListBox.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
+                </ListBox.Resources>
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="Background" Value="Transparent"/>
@@ -116,8 +130,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <ListBoxItem HorizontalAlignment="Center" Background="Transparent">
-                            <Grid>
-                                <Border x:Name="FurnitureItem" CornerRadius="10" Background="White" Width="233" Height="284">
+                            <Grid Width="260">
+                                <Border x:Name="FurnitureItem" CornerRadius="10" Background="White" Width="233" Height="284" Cursor="Hand">
                                     <Border.Effect>
                                         <DropShadowEffect
                                             BlurRadius="10"
@@ -127,25 +141,77 @@
                                             Direction="270"
                                         />
                                     </Border.Effect>
-                                    <StackPanel>
-                                        <Border CornerRadius="10,10,0,0" Height="216">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="{StaticResource Giuong}" Stretch="UniformToFill">
+                                    <Grid>
+                                        <StackPanel>
+                                            <Border CornerRadius="10,10,0,0" Height="216">
+                                                <Border.Background>
+                                                    <ImageBrush ImageSource="{StaticResource Giuong}" Stretch="UniformToFill">
 
-                                                </ImageBrush>
-                                            </Border.Background>
-                                        </Border>
-                                        <StackPanel Margin="10">
-                                            <TextBlock Text="Giường Rolex Diamond" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource Name_Furniture}" HorizontalAlignment="Left"/>
-                                            <Grid Margin="0 6 0 0">
-                                                <TextBlock FontSize="14" FontWeight="Regular" HorizontalAlignment="Left" FontFamily="{StaticResource MaterialDesignFont}" Text="Giường ngủ" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                    <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="Kho: " Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                    <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="38" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                </StackPanel>
-                                            </Grid>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <StackPanel Margin="10">
+                                                <TextBlock Text="Giường Rolex Diamond" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource Name_Furniture}" HorizontalAlignment="Left"/>
+                                                <Grid Margin="0 6 0 0">
+                                                    <TextBlock FontSize="14" FontWeight="Regular" HorizontalAlignment="Left" FontFamily="{StaticResource MaterialDesignFont}" Text="Giường ngủ" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                        <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="Kho: " Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
+                                                        <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="38" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
+                                        <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="35" Height="75" Margin="0 35 -17 0">
+                                            <StackPanel x:Name="EditAndRemove" VerticalAlignment="Center">
+                                                <Border x:Name="EditButton" CornerRadius="35" Width="35" Height="35" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect 
+                                                            BlurRadius="4"
+                                                            Color="Black"
+                                                            ShadowDepth="2"
+                                                            Opacity=".22"
+                                                            Direction="270"
+                                                        />
+                                                    </Border.Effect>
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Setter Property="Background" Value="White"></Setter>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="Wheat">
+
+                                                                    </Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"/>
+                                                </Border>
+                                                <Border x:Name="RemoveButton" Cursor="Hand" CornerRadius="35" Width="35" Height="35" Margin="0,5,0,0" BorderThickness="0.5" BorderBrush="Black">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect 
+                                                                BlurRadius="4"
+                                                                Color="Black"
+                                                                ShadowDepth="2"
+                                                                Opacity=".22"
+                                                                Direction="270"
+                                                            />
+                                                    </Border.Effect>
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Setter Property="Background" Value="White"></Setter>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#FFF09E9E"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
                                 </Border>
                             </Grid>
                         </ListBoxItem>

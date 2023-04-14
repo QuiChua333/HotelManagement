@@ -31,6 +31,15 @@ namespace HotelManagement.Components.Search
         public new double FontSize { get; set; }
         public double Corner { get; set; }
         public double IconSize { get; set; }
+        public SolidColorBrush IndicatorBrush
+        {
+            get { return (SolidColorBrush)GetValue(IndicatorBrushProperty); }
+            set { SetValue(IndicatorBrushProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IndicatorBrush.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IndicatorBrushProperty =
+            DependencyProperty.Register("IndicatorBrush", typeof(SolidColorBrush), typeof(Search));
         public string Text
         {
             get
