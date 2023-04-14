@@ -1,16 +1,15 @@
-﻿<UserControl x:Class="HotelManagement.Components.Search.Search"
+﻿<UserControl x:Class="HotelManagement.Components.Filter.Filter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HotelManagement.Components.Search"
-             d:DataContext="{d:DesignInstance Type=local:Search}"
+             xmlns:local="clr-namespace:HotelManagement.Components.Filter"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
 >
-    <Grid Height="{Binding Height}" Width="{Binding Width}">
-        <Rectangle 
-            Fill="{Binding IndicatorBrush}"
+    <!--<Grid Height="{Binding Height}" Width="{Binding Width}">
+        <Rectangle
+            Fill="{StaticResource LightBlue_Search}"
             Grid.ColumnSpan="2"
             RadiusX="{Binding Corner}"
             RadiusY="{Binding Corner}"
@@ -34,7 +33,7 @@
                   Margin="10, 0, 0, 0"
                   VerticalAlignment="Center" 
             >
-            <TextBox x:Name="SearchType" 
+                <TextBox x:Name="SearchType" 
                      Text="{Binding PlaceHolder, Mode=OneWay}" 
                      materialDesign:HintAssist.Hint="Tìm kiếm"
                      materialDesign:HintAssist.HintOpacity="0.5"
@@ -46,7 +45,7 @@
                      FontWeight="Regular"
                      TextChanged="SearchType_TextChanged" Padding="0,5,0,4"
             />
-                <Rectangle Fill="{Binding IndicatorBrush}"
+                <Rectangle Fill="{StaticResource LightBlue_Search}"
                        Height="3"
                        Margin="-1, 0, -1, -1"
                        VerticalAlignment="Bottom"/>
@@ -61,7 +60,6 @@
                 Margin="10, 0, 10, 0"
                 Cursor="Hand"
                 Background="Transparent"
-                MouseLeftButtonUp="IconSeach_MouseLeftButtonUp"
             >
                 <materialDesign:PackIcon 
                     Width="{Binding IconSize}" 
@@ -70,5 +68,5 @@
                 />
             </Grid>
         </Grid>
-    </Grid>
+    </Grid>-->
 </UserControl>

@@ -145,6 +145,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\Filter\Filter.xaml.cs">
+      <DependentUpon>Filter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\RelyCommand.cs" />
     <Compile Include="ViewModel\AdminVM\AdminVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\FurnitureManagementVM.cs" />
@@ -153,12 +156,28 @@
     <Compile Include="View\Admin\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureAddWindow.xaml.cs">
+      <DependentUpon>FurnitureAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureEditWindow.xaml.cs">
+      <DependentUpon>FurnitureEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureImportWindow.xaml.cs">
+      <DependentUpon>FurnitureImportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\FurnitureManagement\FurnitureInfoWindow.xaml.cs">
+      <DependentUpon>FurnitureInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
       <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\Filter\Filter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\MenuItem\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +243,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\FurnitureAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\FurnitureEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\FurnitureImportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\FurnitureInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -319,6 +354,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\giuong-ngu-cao-cap-gn01-5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\draw.png" />
+    <Resource Include="Resources\Icons\dustbin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Logo_Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\dollar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
