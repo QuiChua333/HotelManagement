@@ -28,4 +28,8 @@
     <ImageSource x:Key="iconX_DP">./iconX_DP.png</ImageSource>
     <ImageSource x:Key="iconFilter">./iconFilter.png</ImageSource>
     <ImageSource x:Key="Image_Start">./Image_Start.png</ImageSource>
+    <ImageSource x:Key="ImportFood">./NhapHang.jpg</ImageSource>
+    <ImageSource x:Key="BonusGood">./ThemHang.jpg</ImageSource>
+
+
 </ResourceDictionary>
