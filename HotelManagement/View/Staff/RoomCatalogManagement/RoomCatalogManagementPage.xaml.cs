@@ -10,28 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder
+namespace HotelManagement.View.Staff.RoomCatalogManagement
 {
     /// <summary>
-    /// Interaction logic for RoomOrderService.xaml
+    /// Interaction logic for RoomCatalogManagementPage.xaml
     /// </summary>
-    public partial class RoomOrderService : Window
+    public partial class RoomCatalogManagementPage : Page
     {
-        public RoomOrderService()
+        public RoomCatalogManagementPage()
         {
             InitializeComponent();
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+       
     }
 }

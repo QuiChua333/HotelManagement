@@ -159,6 +159,9 @@
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomMessageBoxWindow\Util.cs" />
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomCatalogManagementPage.xaml.cs">
+      <DependentUpon>RoomCatalogManagementPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
@@ -324,6 +327,10 @@
     <Page Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomCatalogManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\AddCustomerWindow.xaml">
       <SubType>Designer</SubType>

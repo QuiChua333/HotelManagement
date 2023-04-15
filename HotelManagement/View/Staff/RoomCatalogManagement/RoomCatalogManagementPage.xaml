@@ -1,0 +1,1435 @@
+﻿<Page x:Class="HotelManagement.View.Staff.RoomCatalogManagement.RoomCatalogManagementPage"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+         xmlns:Search="clr-namespace:HotelManagement.Components.Search"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement"
+      mc:Ignorable="d" 
+      d:DesignHeight="644" d:DesignWidth="1170"
+      Title="RoomCatalogManagementPage">
+
+
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20">
+        <Border CornerRadius="20" Background="White">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            </Border.Effect>
+        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="18*" />
+                <ColumnDefinition Width="80*" />
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="20,0,0,20" Background="#E7F0F0">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                </Border.Effect>
+                <Grid Grid.Column="0" Margin="20,50,20,30">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Label Content="Loại phòng" Margin="0,5,0,0"
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#EC4242">
+                        </Label>
+                        <StackPanel Margin="20,40,0,0">
+                            <RadioButton GroupName="RoomType">
+                                <TextBlock Text="Phòng A"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0">
+                                <TextBlock Text="Phòng B"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0">
+                                <TextBlock Text="Phòng C"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0">
+                                <TextBlock Text="Tất cả các phòng"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Label Content="Trạng thái" Margin="0,5,0,0"
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#EC4242">
+                        </Label>
+                        <StackPanel Margin="20,40,0,0">
+                            <RadioButton GroupName="RoomStatus">
+                                <TextBlock Text="Phòng trống"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Phòng đã đặt"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Phòng đang thuê"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Tất cả các phòng"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+
+
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Label Content="Dọn dẹp"
+                               Margin="0,5,0,0"
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="#EC4242">
+                        </Label>
+                        <StackPanel Margin="20,40,0,0">
+                            <RadioButton GroupName="RoomCleaningStatus">
+                                <TextBlock Text="Đã dọn dẹp"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Chưa dọn dẹp"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Sửa chữa"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0">
+                                <TextBlock Text="Tất cả các phòng"
+                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                               FontSize="16"
+                                               FontWeight="Regular"
+                                               Margin="5,0,0,0">
+
+                                </TextBlock>
+                            </RadioButton>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Column="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                        
+                        <Search:Search 
+                            HorizontalAlignment="Left"
+                        Width="260" Height="38"
+                        FontSize="12"
+                        IconSize="18"
+                        IndicatorBrush="White"
+                        Corner="10"
+                       
+                        
+                    />
+                  
+
+                    <Border CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,200,0"
+                            Background="White"
+                            Height="46"
+                            Width="145"
+                            BorderBrush="Black">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"/>
+                        </Border.Effect>
+                        <DatePicker
+                                    x:Name="Calendar"
+                                    Height="50"
+                                    Width="155"
+                                    Margin="0,0,0,0"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    BorderBrush="#474545"                            
+                                    FontSize="15"
+                                    Foreground="Black"
+                                    Padding="20,10,15,10"
+                                    HorizontalAlignment="Center"
+                                    materialDesign:ValidationAssist.Background="#f0f2f5"
+                                    materialDesign:ValidationAssist.FontSize="0.01"
+                                    SelectedDate="{Binding SelectedDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedDateCM}"
+                                                           CommandParameter="{Binding ElementName=Calendar}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
+                    </Border>
+
+                    <Border CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            Background="White"
+                            Height="46"
+                            Width="145"
+                            BorderBrush="Black">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"/>
+                        </Border.Effect>
+                        <materialDesign:TimePicker 
+                                                       Is24Hours="True"
+                                                       WithSeconds="False"
+                                                       FontSize="15"
+                                                       FontWeight="Medium"
+                                                       FontFamily="{DynamicResource MaterialDesignFont}"
+                                                       VerticalContentAlignment="Bottom"
+                                                       HorizontalContentAlignment="Center"
+                                                       Height="50"
+                                                        Foreground="Black"
+                                                       Padding="20,10,15,10"
+                                                       materialDesign:ValidationAssist.FontSize="0.001"
+                                                       materialDesign:ValidationAssist.Background="#f0f2f5"
+                                                       SelectedTime="{Binding Showtime}"
+                                                       x:Name="_movieTime"
+                                                       Focusable="False"
+                                                       BorderBrush="#474545"
+>
+                        </materialDesign:TimePicker>
+                    </Border>
+                </Grid>
+
+                <StackPanel Grid.Row="1" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Label Content="Phòng A" 
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Medium"
+                           Foreground="#EC4242">
+                        </Label>
+
+                        <ListBox            
+                                        ItemsSource="{Binding ListSeat1}"
+                                        
+                                         VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                         Margin="20,0,20,0"
+                                         SelectedItem="{Binding SelectedSeat}" >
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4"
+                                             VerticalAlignment="Center"
+                                             FlowDirection="LeftToRight"  />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                            </Border.Effect>
+                                            <Grid>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="25"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0">
+                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid Grid.Row="0">
+                                                                    <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                    <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                    </TextBlock>
+                                                                </Grid>
+
+                                                                <Grid Grid.Row="1">
+                                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <Grid Grid.Row="1">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10,0">
+                                                                <Grid HorizontalAlignment="Left">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                        <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </Grid>
+
+                                                                <Grid HorizontalAlignment="Right">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+
+                                                                    </StackPanel>
+
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+
+
+
+
+                        </ListBox>
+
+                        <Label Content="Phòng B" 
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Medium"
+                           Foreground="#EC4242"
+                               Margin="0,5,0,0">
+                        </Label>
+                        <ListBox            
+                                        ItemsSource="{Binding ListSeat1}"
+                                        
+                                         VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                         Margin="20,0,20,0"
+                                         SelectedItem="{Binding SelectedSeat}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4"
+                                             VerticalAlignment="Center"
+                                             FlowDirection="LeftToRight"  />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                            </Border.Effect>
+                                            <Grid>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="25"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0">
+                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid Grid.Row="0">
+                                                                    <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                    <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                    </TextBlock>
+                                                                </Grid>
+
+                                                                <Grid Grid.Row="1">
+                                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <Grid Grid.Row="1">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10,0">
+                                                                <Grid HorizontalAlignment="Left">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                        <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </Grid>
+
+                                                                <Grid HorizontalAlignment="Right">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+
+                                                                    </StackPanel>
+
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+
+
+
+
+                        </ListBox>
+
+                        <Label Content="Phòng C" 
+                           FontFamily="{DynamicResource MaterialDesignFont }"
+                           FontSize="18"
+                           FontWeight="Medium"
+                           Foreground="#EC4242"
+                               Margin="0,5,0,0">
+                        </Label>
+                        <ListBox            
+                                        ItemsSource="{Binding ListSeat1}"
+                                        
+                                         VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                         Margin="20,0,20,0"
+                                         SelectedItem="{Binding SelectedSeat}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="4"
+                                             VerticalAlignment="Center"
+                                             FlowDirection="LeftToRight"  />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                            </Border.Effect>
+                                            <Grid>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="25"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0">
+                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid Grid.Row="0">
+                                                                    <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                    <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                    </TextBlock>
+                                                                </Grid>
+
+                                                                <Grid Grid.Row="1">
+                                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <Grid Grid.Row="1">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                            <Grid Margin="10,0">
+                                                                <Grid HorizontalAlignment="Left">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                        <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </Grid>
+
+                                                                <Grid HorizontalAlignment="Right">
+                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                        </TextBlock>
+
+                                                                    </StackPanel>
+
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+
+
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
+
+
+                        </ListBox>
+
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Page>
