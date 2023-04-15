@@ -11,6 +11,20 @@
     <ImageSource x:Key="Room">./image_room.png</ImageSource>
     <ImageSource x:Key="Logo">./logo.png</ImageSource>
     <ImageSource x:Key="Giuong">./giuong-ngu-cao-cap-gn01-5.jpg</ImageSource>
-
-   
+    <ImageSource x:Key="Button_X">./Button_X.png</ImageSource>
+    <ImageSource x:Key="Icon_Search">./Icon_Search.png</ImageSource>
+    <ImageSource x:Key="iconAdd">./iconAdd.png</ImageSource>
+    <ImageSource x:Key="iconGhiChu">./iconGhiChu.png</ImageSource>
+    <ImageSource x:Key="iconSua">./iconSua.png</ImageSource>
+    <ImageSource x:Key="iconXoa">./iconXoa.png</ImageSource>
+    <ImageSource x:Key="LogoDark">./LogoDark.png</ImageSource>
+    <ImageSource x:Key="iconAddDP">./iconAddDP.png</ImageSource>
+    <ImageSource x:Key="iconProfile">./iconProfile.png</ImageSource>
+    <ImageSource x:Key="iconDate">./iconDate.png</ImageSource>
+    <ImageSource x:Key="iconChiTiet">./iconChiTiet.png</ImageSource>
+    <ImageSource x:Key="iconDownload">./iconDownload.png</ImageSource>
+    <ImageSource x:Key="iconDatPhong">./iconDatPhong.png</ImageSource>
+    <ImageSource x:Key="iconX_DP">./iconX_DP.png</ImageSource>
+    <ImageSource x:Key="iconFilter">./iconFilter.png</ImageSource>
+    <ImageSource x:Key="Image_Start">./Image_Start.png</ImageSource>
 </ResourceDictionary>

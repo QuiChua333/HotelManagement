@@ -215,8 +215,44 @@
     <Compile Include="View\Admin\FurnitureManagement\FurnitureInfoWindow.xaml.cs">
       <DependentUpon>FurnitureInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\BookingRoomManagement\Booking.xaml.cs">
+      <DependentUpon>Booking.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\BookingRoomManagement\BookingRoomManagementPage.xaml.cs">
+      <DependentUpon>BookingRoomManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\BookingRoomManagement\DetailRent.xaml.cs">
+      <DependentUpon>DetailRent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
       <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\AddNewRoom.xaml.cs">
+      <DependentUpon>AddNewRoom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\EditRoom.xaml.cs">
+      <DependentUpon>EditRoom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\RoomManagementPage.xaml.cs">
+      <DependentUpon>RoomManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomTypeManagement\AddRoomType.xaml.cs">
+      <DependentUpon>AddRoomType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomTypeManagement\EditRoomType.xaml.cs">
+      <DependentUpon>EditRoomType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomTypeManagement\RoomTypeManagementPage.xaml.cs">
+      <DependentUpon>RoomTypeManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StatisticalManagement\IncomeStatiscalManagement.xaml.cs">
+      <DependentUpon>IncomeStatiscalManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StatisticalManagement\RankingStatistical.xaml.cs">
+      <DependentUpon>RankingStatistical.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\StatisticalManagement\StatisticalManagementPage.xaml.cs">
+      <DependentUpon>StatisticalManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>
@@ -337,6 +373,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Styles\HeaderListViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResourceXAML\MainResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -369,7 +409,55 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\BookingRoomManagement\Booking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\BookingRoomManagement\BookingRoomManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\BookingRoomManagement\DetailRent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\AddNewRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\EditRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\RoomManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomTypeManagement\AddRoomType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomTypeManagement\EditRoomType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomTypeManagement\RoomTypeManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StatisticalManagement\IncomeStatiscalManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StatisticalManagement\RankingStatistical.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StatisticalManagement\StatisticalManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -505,6 +593,31 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\dollar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Button_X.png" />
+    <Resource Include="Resources\Images\iconAdd.png" />
+    <Resource Include="Resources\Images\iconGhiChu.png" />
+    <Resource Include="Resources\Images\iconSua.png" />
+    <Resource Include="Resources\Images\iconXoa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\LogoDark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\iconAddDP.png" />
+    <Resource Include="Resources\Images\iconChiTiet.png" />
+    <Resource Include="Resources\Images\iconDate.png" />
+    <Resource Include="Resources\Images\iconDatPhong.png" />
+    <Resource Include="Resources\Images\iconDownload.png" />
+    <Resource Include="Resources\Images\iconProfile.png" />
+    <Resource Include="Resources\Images\iconX_DP.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\iconFilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Image_Start.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
