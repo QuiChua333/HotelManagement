@@ -289,7 +289,7 @@
                 </Grid>
             </StackPanel>
 
-            <materialDesign:Card Margin="10 0 10 0"
+            <materialDesign:Card Margin="10 0 10 10"
                                  UniformCornerRadius="4"
                                  Grid.Row="1">
                 <Grid>
