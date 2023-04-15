@@ -8,12 +8,12 @@
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      d:DesignHeight="700" d:DesignWidth="1170"
+      
       Title="CustomerManagementPage"
       ShowsNavigationUI="False"
       Background="Transparent">
 
-    <Grid Background="#F5f5F5" Margin=" 20 10 20 20" >
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#F5f5F5" Margin=" 20 10 20 20" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>

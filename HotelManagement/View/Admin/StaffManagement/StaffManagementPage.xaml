@@ -8,10 +8,10 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1170" ShowsNavigationUI="False"
+      ShowsNavigationUI="False"
       Title="StaffManagementPage">
 
-    <Grid Background="AliceBlue" Margin=" 20 10 20 20">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#F5f5F5" Margin=" 20 10 20 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
