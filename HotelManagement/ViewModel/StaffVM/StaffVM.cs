@@ -1,5 +1,6 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+using HotelManagement.ViewModel.AdminVM.ServiceManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,17 @@ namespace HotelManagement.ViewModel.StaffVM
         public object CurrentView
         {
             get { return _currentView; }
-            set { _currentView = value; }
+            set { _currentView = value; OnPropertyChanged(); }
         }
+
+        private void RoomCatalog(object obj) => CurrentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
+
         public ICommand FirstLoadCM { get; set; }
+        public ICommand RoomCatalogCommand { get; set; }
         public StaffVM()
         {
-
+            _currentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
+            RoomCatalogCommand = new RelayCommand(RoomCatalog);
         }
     }
 }

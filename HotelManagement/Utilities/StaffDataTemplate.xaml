@@ -1,4 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:RoomCatalogView="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement"
+                    xmlns:RoomCatalogVM="clr-namespace:HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM">
+
+    <DataTemplate DataType="{x:Type RoomCatalogVM:RoomCatalogManagementVM}">
+        <RoomCatalogView:RoomCatalogManagementPage></RoomCatalogView:RoomCatalogManagementPage>
+    </DataTemplate>
+
 </ResourceDictionary>

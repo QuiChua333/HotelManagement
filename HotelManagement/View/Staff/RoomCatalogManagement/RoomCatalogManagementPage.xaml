@@ -9,7 +9,9 @@
       xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement"
       mc:Ignorable="d" 
       d:DesignHeight="644" d:DesignWidth="1170"
-      Title="RoomCatalogManagementPage">
+      Title="RoomCatalogManagementPage"
+      ShowsNavigationUI="False"
+      DataContext="{StaticResource RoomCatalogManagementVM}">
 
 
 

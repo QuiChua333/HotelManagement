@@ -10,8 +10,6 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         Title="MainWindow" Height="760" Width="1232">
-    <Grid>
-        
-    </Grid>
+   
 
 </Window>
