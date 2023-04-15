@@ -307,6 +307,21 @@
     <Compile Include="View\Admin\ServiceManagement\ServiceManagementPage.xaml.cs">
       <DependentUpon>ServiceManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HelpScreen\Frequently_asked_questions.xaml.cs">
+      <DependentUpon>Frequently_asked_questions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\GeneralTerm.xaml.cs">
+      <DependentUpon>GeneralTerm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\HelpScreen.xaml.cs">
+      <DependentUpon>HelpScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\Privacy_Policy.xaml.cs">
+      <DependentUpon>Privacy_Policy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\Trading_Terms.xaml.cs">
+      <DependentUpon>Trading_Terms.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>
     </Compile>
@@ -592,6 +607,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\HelpScreen\Frequently_asked_questions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\GeneralTerm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\HelpScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\Privacy_Policy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\Trading_Terms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Staff\StaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -771,6 +806,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\ThemHang.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\iconFace.png" />
+    <Resource Include="Resources\Images\iconInstargram.png" />
+    <Resource Include="Resources\Images\iconTwiter.png" />
+    <Resource Include="Resources\Images\iconZalo.png" />
+    <Resource Include="Resources\Images\logoGD.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

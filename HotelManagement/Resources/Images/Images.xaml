@@ -32,4 +32,9 @@
     <ImageSource x:Key="BonusGood">./ThemHang.jpg</ImageSource>
 
 
+    <ImageSource x:Key="logoGD">./logoGD.png</ImageSource>
+    <ImageSource x:Key="iconTwiter">./iconTwiter.png</ImageSource>
+    <ImageSource x:Key="iconFace">./iconFace.png</ImageSource>
+    <ImageSource x:Key="iconZalo">./iconZalo.png</ImageSource>
+    <ImageSource x:Key="iconInstargram">./iconInstargram.png</ImageSource>
 </ResourceDictionary>
