@@ -12,28 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
+namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder
 {
     /// <summary>
-    /// Interaction logic for RoomFunitureInfo.xaml
+    /// Interaction logic for RoomOrderService.xaml
     /// </summary>
-    public partial class RoomFunitureInfo : Window
+    public partial class RoomOrderService : Window
     {
-        public RoomFunitureInfo()
+        public RoomOrderService()
         {
             InitializeComponent();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();    
+            this.DragMove();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-     
     }
 }

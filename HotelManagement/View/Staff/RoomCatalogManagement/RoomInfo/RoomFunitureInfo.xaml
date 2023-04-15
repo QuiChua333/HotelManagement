@@ -140,9 +140,9 @@
                         Width="250" Height="38"
                         FontSize="12"
                         IconSize="18"
-                        
+                        IndicatorBrush="{StaticResource LightBlue_Search}"
                         Corner="10"
-                        Margin="0 0 38 0"
+                        Margin="0 0 38 0" Loaded="Search_Loaded"
                         
                     />
 

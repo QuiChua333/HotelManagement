@@ -180,6 +180,9 @@
     <Compile Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderLaundry.xaml.cs">
       <DependentUpon>RoomOrderLaundry.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderService.xaml.cs">
+      <DependentUpon>RoomOrderService.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomPayment\OptionPayment.xaml.cs">
       <DependentUpon>OptionPayment.xaml</DependentUpon>
     </Compile>
@@ -311,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderLaundry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
