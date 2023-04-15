@@ -3,10 +3,15 @@
                     
                     xmlns:FurnitureVM="clr-namespace:HotelManagement.ViewModel.AdminVM.FurnitureManagementVM"
                     xmlns:FurnitureView="clr-namespace:HotelManagement.View.Admin.FurnitureManagement"
+                    xmlns:ServiceVM="clr-namespace:HotelManagement.ViewModel.AdminVM.ServiceManagementVM"
+                    xmlns:ServiceView="clr-namespace:HotelManagement.View.Admin.ServiceManagement"
 >
     
     <DataTemplate DataType="{x:Type FurnitureVM:FurnitureManagementVM}">
         <FurnitureView:FurnitureManagementPage></FurnitureView:FurnitureManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ServiceVM:ServiceManagementVM}">
+        <ServiceView:ServiceManagementPage></ServiceView:ServiceManagementPage>
     </DataTemplate>
 
 </ResourceDictionary>

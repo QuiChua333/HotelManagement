@@ -151,6 +151,7 @@
     <Compile Include="Utilities\RelyCommand.cs" />
     <Compile Include="ViewModel\AdminVM\AdminVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\FurnitureManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\ServiceManagementVM\ServiceManagementVM.cs" />
     <Compile Include="ViewModel\BaseVM.cs" />
     <Compile Include="ViewModel\StaffVM\StaffVM.cs" />
     <Compile Include="View\Admin\AdminWindow.xaml.cs">
@@ -170,6 +171,9 @@
     </Compile>
     <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
       <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\ServiceManagementPage.xaml.cs">
+      <DependentUpon>ServiceManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>
@@ -263,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\ServiceManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -364,6 +372,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\dollar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NhapHang.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ThemHang.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

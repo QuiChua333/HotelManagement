@@ -19,13 +19,17 @@ namespace HotelManagement.ViewModel.AdminVM
         }
         public ICommand FirstLoadCM { get; set; }
         private void Furniture(object obj) => CurrentView = new FurnitureManagementVM.FurnitureManagementVM();
-        
+        private void Service(object obj) => CurrentView = new ServiceManagementVM.ServiceManagementVM();
+
         public ICommand FurnitureCommand { get; set; }
+        public ICommand ServiceCommand { get; set; }
         public AdminVM()
         {
-            _currentView = new FurnitureManagementVM.FurnitureManagementVM();
+            _currentView = new ServiceManagementVM.ServiceManagementVM();
 
             FurnitureCommand = new RelayCommand(Furniture);
+            ServiceCommand = new RelayCommand(Service);
+
         }
     }
 }
