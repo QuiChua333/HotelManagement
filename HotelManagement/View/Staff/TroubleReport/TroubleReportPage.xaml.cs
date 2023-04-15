@@ -9,23 +9,20 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement
+namespace HotelManagement.View.Staff.TroubleReport
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TroubleReportPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TroubleReportPage : Page
     {
-        public MainWindow()
+        public TroubleReportPage()
         {
             InitializeComponent();
         }
-
-        
     }
 }

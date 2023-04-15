@@ -9,23 +9,20 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement
+namespace HotelManagement.View.Admin.HistoryManagement
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for HistoryManagementPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class HistoryManagementPage : Page
     {
-        public MainWindow()
+        public HistoryManagementPage()
         {
             InitializeComponent();
         }
-
-        
     }
 }

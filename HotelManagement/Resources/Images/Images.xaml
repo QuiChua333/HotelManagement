@@ -10,6 +10,7 @@
     <ImageSource x:Key="Plus_circle">./plus_circle.png</ImageSource>
     <ImageSource x:Key="Room">./image_room.png</ImageSource>
     <ImageSource x:Key="Logo">./logo.png</ImageSource>
+    <ImageSource x:Key="Logowd">./LogoWd.png</ImageSource>
     <ImageSource x:Key="Giuong">./giuong-ngu-cao-cap-gn01-5.jpg</ImageSource>
     <ImageSource x:Key="Button_X">./Button_X.png</ImageSource>
     <ImageSource x:Key="Icon_Search">./Icon_Search.png</ImageSource>

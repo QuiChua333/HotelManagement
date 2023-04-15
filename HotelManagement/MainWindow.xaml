@@ -4,133 +4,426 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        xmlns:local="clr-namespace:HotelManagement.Components"
-        xmlns:Component="clr-namespace:HotelManagement.Components"
-        xmlns:local1="clr-namespace:HotelManagement"
+        xmlns:components="clr-namespace:HotelManagement.Components"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        Title="MainWindow" Height="760" Width="1400">
-    <Border Background="AliceBlue" CornerRadius="5">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border Background="{DynamicResource SidebarColor}"
-                    Grid.Column="0"
-                    CornerRadius="5 0 0 5" 
-                    Height="760" 
-                    HorizontalAlignment="Left">
-                <Grid x:Name="GridNav" Width="62">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="60" Background="#1D242E">
-                            <Border Height="30" Width="30"  Background="Transparent"
-                                   HorizontalAlignment="Left" Margin="18,0,0,0">
-                                <Ellipse>
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Border>
-                            <TextBlock Text="SaiGon Hotel" Foreground="{DynamicResource PrimaryTextColor}" 
-                                    FontSize="17" FontWeight="Medium" VerticalAlignment="Center" Margin="15,0,20,0"  />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Height="50">
-                            <Border Height="30" Width="30"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}"
-                                   HorizontalAlignment="Left" Margin="18,0,0,0">
-                                <Ellipse>
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{StaticResource Logo}"></ImageBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+        Title="MainWindow" Height="760" Width="1232">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="62"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-                            </Border>
-                            <Border Height="8" Width="8"  CornerRadius="100" Background="LightGreen"
-                                   Margin="-10 23 0 0" BorderBrush="#283342" BorderThickness="1">
+        <!--Overlay-->
+        <Rectangle x:Name="Overlay" Fill="#F7FAFD" Grid.ColumnSpan="2" Grid.RowSpan="2" RadiusX="10" RadiusY="10">
+            <Rectangle.Effect>
+                <DropShadowEffect
+                    Color="Black"
+                    Opacity="0.25"
+                    Direction="270"
+                    BlurRadius="6"
+                />
+            </Rectangle.Effect>
+        </Rectangle>
 
+        <!--Content-->
+        <!--<Frame NavigationUIVisibility="Hidden" x:Name="Content" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentView}">
+            
+        </Frame>-->
+        <Grid Background="AliceBlue" Grid.Column="1" Grid.Row="1" Margin=" 20 10 20 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                            </Border>
-                            <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" 
-                                    FontSize="16" FontWeight="Light" VerticalAlignment="Center"
-                                    Margin="15,0,20,0" />
-                            <materialDesign:PackIcon Kind="MenuDown" 
-                                                 Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}"
-                                                 Margin="40 18 0 0"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" CornerRadius="4" BorderBrush="#1D242E" BorderThickness="0.5" Width="350" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Border.Effect>
+                        <DropShadowEffect
+                                            BlurRadius="6"
+                                            Color="Black"
+                                            ShadowDepth="4"
+                                            Opacity=".2"
+                                            Direction="270"/>
+                    </Border.Effect>
+                    <Search:Search  Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Border>
+                <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                        </StackPanel>
-                        <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
+                    <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                        <StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40" >
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5 "/>
-
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý đặt phòng" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource billing}" IconWidth="16" Text="Quản lý phòng" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource products}" IconWidth="16" Text="Quản lý loại phòng" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource staff}" IconWidth="16" Text="Quản lý nhân viên" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource customer}" IconWidth="16" Text="Quản lý khách hàng" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource food}" IconWidth="16" Text="Quản lý dịch vụ" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" IconWidth="16" Text="Quản lý tiện nghi" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Text="Quản lý nội thất" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource history}" IconWidth="16" Text="Lịch sử" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource help}" IconWidth="16" Text="Giúp đỡ" VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <StackPanel Height="40">
-                                <local:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource settings}" IconWidth="16" Text="Cài đặt" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
+                    <Border Grid.Column="1" Height="38" Width="180" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
+                        </Border.Effect>
+                        <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                                  SelectedIndex="0"
+                                  FontWeight="Regular"
+                                  UseLayoutRounding="False"
+                                  FontSize="15" 
+                                  SelectedValuePath="Tag"
+                                  BorderThickness="0" 
+                                  x:Name="cbbFilter" 
+                                  FontFamily="{DynamicResource MaterialDesignFont}"
+                                  HorizontalContentAlignment="Left">
+                            <ComboBoxItem  Content="Mã khách hàng" Tag="Mã khách hàng" FontSize="14" />
+                            <ComboBoxItem  Content="Tên khách hàng" Tag="Tên khách hàng" FontSize="14"/>
+                            <ComboBoxItem  Content="Số điện thoại" Tag="Số điện thoại" FontSize="14" />
+                        </ComboBox>
+                    </Border>
+                    
                 </Grid>
+                <Border Height="40" Grid.Column="2" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
+                    </Border.Effect>
+                    <Grid>
+                        <materialDesign:PackIcon Kind="Plus" Height="20" Width="20" Margin="20 0 0 0" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" />
+                        <TextBlock Text="Thêm khách hàng" Width="120"  Foreground="White" FontSize="15" Margin="24 0 0 0"  VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5">
+                <Border.Effect>
+                    <DropShadowEffect
+                                            BlurRadius="6"
+                                            Color="Black"
+                                            ShadowDepth="4"
+                                            Opacity=".2"
+                                            Direction="270"/>
+                </Border.Effect>
+                <materialDesign:Card UniformCornerRadius="5" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"  >
+                        <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                            <ListView.ItemContainerStyle>
+                                <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView >
+                                    <GridViewColumn Width="77">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="ID" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding CustomerCode}"
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Width="166">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Tên khách hàng" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0" />
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding CustomerName}"                                                           
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="146">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Số điện thoai"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PhoneNumber}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="150">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Email" 
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Email}"                                                            
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="130" >
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Địa chỉ"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding FirstDate, StringFormat=dd/MM/yyyy}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="116">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Giới tính"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="110">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="CCCD"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="115">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Loại KH"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ExpenseStr}" 
+                                                           FontSize="14" 
+                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="120">
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Xoá/Sửa"
+                                                       FontSize="14" 
+                                                       FontWeight="Medium" 
+                                                       Foreground="#111FA0"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel VerticalAlignment="Center"
+                                                            Orientation="Horizontal" 
+                                                            Margin="0 6 0 0">
+                                                    <Border BorderBrush="Black"
+                                                            BorderThickness="1"
+                                                            CornerRadius="3"
+                                                            Cursor="Hand">
+                                                        <Border.Style>
+                                                            <Style TargetType="{x:Type Border}">
+                                                                <Style.Triggers>
+                                                                    <Trigger    Property="IsMouseOver"
+                                                                                Value="True">
+                                                                        <Setter Property="Background"
+                                                                                Value="{DynamicResource PrimaryBackgroundColor}" />
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <materialDesign:PackIcon Kind="Pencil"
+                                                                                 Width="22"
+                                                                                 Height="22"
+                                                                                 Cursor="Hand" />
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.OpenEditCustomerCM}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
+                                                    <Border Margin="10 0 0 0"
+                                                            BorderBrush="Black"
+                                                            BorderThickness="1"
+                                                            CornerRadius="3"
+                                                            Cursor="Hand">
+                                                        <Border.Style>
+                                                            <Style TargetType="{x:Type Border}">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver"
+                                                                            Value="True">
+                                                                        <Setter Property="Background"
+                                                                                Value="{DynamicResource SecondBackgroundColor}" />
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <materialDesign:PackIcon Kind="GarbageCanEmpty"
+                                                                                 Width="22"
+                                                                                 Height="22"
+                                                                                 Cursor="Hand" />
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.DeleteCustomerCommand}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
             </Border>
 
+        </Grid>
+        <!--TopBar-->
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
+            </Border>
+            <Rectangle Height="0.4" Fill="#444B55" VerticalAlignment="Bottom" Opacity="0.3"></Rectangle>
+        </Grid>
+        <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" MouseLeftButtonDown="Mask_MouseLeftButtonDown" x:Name="Mask" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
+        <!--SideBar-->
+        <Border 
+            Background="{DynamicResource SidebarColor}"
+            Name="Sidebar"
+            CornerRadius="10 0 0 10" 
+            Height="760"  
+            HorizontalAlignment="Left"
+            Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <Grid Width="62" Name="GridNav">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="60" Background="Transparent">
+                        <Border Height="38" Width="38" Background="{DynamicResource SidebarColor}" HorizontalAlignment="Left" Margin="12,0,0,0">
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{StaticResource Logo}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Border>
+                        <TextBlock Text="SaiGon Hotel" Foreground="{DynamicResource PrimaryTextColor}" FontSize="17" FontWeight="Medium" VerticalAlignment="Center" Margin="15,0,20,0"  />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="50">
+                        <Grid VerticalAlignment="Center" Margin="11 0 0 0">
+                            <Border Height="40" Width="40"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center">
+                                <Ellipse>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{StaticResource Logo}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Border>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="179*"/>
-                    <RowDefinition Height="49*"/>
-                </Grid.RowDefinitions>
+                            <Border x:Name="ActiveUserDot" Height="12" Width="12"  CornerRadius="100" Background="LightGreen"
+                                    BorderBrush="#283342" BorderThickness="1"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"/>
+                        </Grid>
 
-                <ToggleButton x:Name="Tg_Btn" VerticalAlignment="Top"  HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Margin="-4,13,0,0" Grid.Row="2">
+
+                        <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" FontWeight="Light" VerticalAlignment="Center" Margin="15,0,20,0" />
+                        <materialDesign:PackIcon Kind="MenuDown" Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}" Margin="40 18 0 0"></materialDesign:PackIcon>
+                    </StackPanel>
+
+                    <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
+
+                    <StackPanel Name="MenuItems" PreviewMouseLeftButtonUp="MenuItems_PreviewMouseLeftButtonUp">
+                        <StackPanel Height="40">
+                            <components:MenuItem  GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40" >
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
+
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý đặt phòng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource billing}" IconWidth="16" Text="Quản lý phòng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource products}" IconWidth="16" Text="Quản lý loại phòng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource staff}" IconWidth="16" Text="Quản lý nhân viên" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource customer}" IconWidth="16" Text="Quản lý khách hàng" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource food}" IconWidth="16" Text="Quản lý dịch vụ" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý tiện nghi" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Text="Quản lý nội thất" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource history}" IconWidth="16" Text="Lịch sử" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
+
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource help}" IconWidth="16" Text="Giúp đỡ" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource settings}" IconWidth="16" Text="Cài đặt" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <!--Show/Hide Icon-->
+                <CheckBox x:Name="Tg_Btn" Unchecked="Tg_Btn_Unchecked" Checked="Tg_Btn_Checked" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent" Margin="0 0 -18 122">
                     <Canvas>
-                        <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}"/>
+                        <Polygon Points="0,40 0,0 20,10 20,30" Fill="{DynamicResource SidebarColor}" Margin="-20 -15 0 0"/>
 
-                        <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="03 12 0 0"/>
+                        <materialDesign:PackIcon Kind="MoreVert" Foreground="{DynamicResource PrimaryTextColor}" Margin="-18 -4 0 0"/>
                     </Canvas>
-                    <ToggleButton.Triggers>
-                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+
+                    <CheckBox.Triggers>
+                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
                             <BeginStoryboard>
                                 <Storyboard x:Name="HideStackPanel">
                                     <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="62" Duration="0:0:0.2">
@@ -138,7 +431,7 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                        <EventTrigger RoutedEvent="ToggleButton.Checked">
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
                             <BeginStoryboard>
                                 <Storyboard x:Name="ShowStackPanel">
                                     <DoubleAnimation Storyboard.TargetName="GridNav" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="62" To="230" Duration="0:0:0.2">
@@ -146,18 +439,11 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                    </ToggleButton.Triggers>
-                </ToggleButton>
-
-
-                <Frame Grid.Row="1"
-                       Name="fContainer"
-                       Margin="20,20,20,20"
-                       NavigationUIVisibility="Hidden" Grid.RowSpan="2">
-                </Frame>
-
+                    </CheckBox.Triggers>
+                </CheckBox>
             </Grid>
-        </Grid>
+        </Border>
 
-    </Border>
+    </Grid>
+
 </Window>

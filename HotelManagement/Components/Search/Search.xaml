@@ -14,6 +14,7 @@
             Grid.ColumnSpan="2"
             RadiusX="{Binding Corner}"
             RadiusY="{Binding Corner}"
+            
         >
             <Rectangle.Effect>
                 <DropShadowEffect
