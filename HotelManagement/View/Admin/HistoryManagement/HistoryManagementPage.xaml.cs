@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.StaffManagement
+namespace HotelManagement.View.Admin.HistoryManagement
 {
     /// <summary>
-    /// Interaction logic for AddStaffWindow.xaml
+    /// Interaction logic for HistoryManagementPage.xaml
     /// </summary>
-    public partial class AddStaffWindow : Window
+    public partial class HistoryManagementPage : Page
     {
-        public AddStaffWindow()
+        public HistoryManagementPage()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

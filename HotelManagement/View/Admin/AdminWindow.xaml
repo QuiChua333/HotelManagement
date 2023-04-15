@@ -7,9 +7,12 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:components="clr-namespace:HotelManagement.Components"
         mc:Ignorable="d"
+              xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
+
         Title="AdminWindow" Height="760" Width="1232"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         AllowsTransparency="True"
         Name="AdminWD"
         Background="Transparent"
@@ -52,7 +55,6 @@
 
         <!--Content-->
         <Frame NavigationUIVisibility="Hidden" x:Name="Content" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentView}"></Frame>
-
         <!--TopBar-->
         <Grid Grid.Column="1" Grid.Row="0">
             <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
@@ -105,7 +107,7 @@
 
                     <StackPanel Name="MenuItems" PreviewMouseLeftButtonUp="MenuItems_PreviewMouseLeftButtonUp">
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
+                            <components:MenuItem  GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40" >
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center"/>

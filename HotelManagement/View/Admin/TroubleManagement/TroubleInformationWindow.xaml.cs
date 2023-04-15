@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.StaffManagement
+namespace HotelManagement.View.Admin.TroubleManagement
 {
     /// <summary>
-    /// Interaction logic for AddStaffWindow.xaml
+    /// Interaction logic for TroubleInformationWindow.xaml
     /// </summary>
-    public partial class AddStaffWindow : Window
+    public partial class TroubleInformationWindow : Window
     {
-        public AddStaffWindow()
+        public TroubleInformationWindow()
         {
             InitializeComponent();
         }

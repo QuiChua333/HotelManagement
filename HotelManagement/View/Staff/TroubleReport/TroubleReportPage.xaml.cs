@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.StaffManagement
+namespace HotelManagement.View.Staff.TroubleReport
 {
     /// <summary>
-    /// Interaction logic for AddStaffWindow.xaml
+    /// Interaction logic for TroubleReportPage.xaml
     /// </summary>
-    public partial class AddStaffWindow : Window
+    public partial class TroubleReportPage : Page
     {
-        public AddStaffWindow()
+        public TroubleReportPage()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
