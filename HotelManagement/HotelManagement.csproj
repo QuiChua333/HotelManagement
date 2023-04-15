@@ -412,6 +412,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderLaundry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
