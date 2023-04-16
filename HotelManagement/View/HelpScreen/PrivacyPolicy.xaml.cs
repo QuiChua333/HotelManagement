@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.HelpScreen
 {
     /// <summary>
-    /// Interaction logic for GeneralTerm.xaml
+    /// Interaction logic for PrivacyPolicy.xaml
     /// </summary>
-    public partial class GeneralTerm : Window
+    public partial class PrivacyPolicy : Window
     {
-        public GeneralTerm()
+        public PrivacyPolicy()
         {
             InitializeComponent();
         }

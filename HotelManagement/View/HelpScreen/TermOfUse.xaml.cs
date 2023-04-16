@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.HelpScreen
 {
     /// <summary>
-    /// Interaction logic for Trading_Terms.xaml
+    /// Interaction logic for TermOfUse.xaml
     /// </summary>
-    public partial class Trading_Terms : Window
+    public partial class TermOfUse : Window
     {
-        public Trading_Terms()
+        public TermOfUse()
         {
             InitializeComponent();
         }

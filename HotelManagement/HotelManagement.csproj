@@ -154,12 +154,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AdminVM\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
+    <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBox.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml.cs">
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomMessageBoxWindow\Util.cs" />
+    <Compile Include="View\HelpScreen\AboutUs.xaml.cs">
+      <DependentUpon>AboutUs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\PrivacyPolicy.xaml.cs">
+      <DependentUpon>PrivacyPolicy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpScreen\TermOfUse.xaml.cs">
+      <DependentUpon>TermOfUse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomCatalogManagementPage.xaml.cs">
       <DependentUpon>RoomCatalogManagementPage.xaml</DependentUpon>
     </Compile>
@@ -308,17 +322,8 @@
     <Compile Include="View\HelpScreen\Frequently_asked_questions.xaml.cs">
       <DependentUpon>Frequently_asked_questions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HelpScreen\GeneralTerm.xaml.cs">
-      <DependentUpon>GeneralTerm.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\HelpScreen\HelpScreen.xaml.cs">
       <DependentUpon>HelpScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HelpScreen\Privacy_Policy.xaml.cs">
-      <DependentUpon>Privacy_Policy.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HelpScreen\Trading_Terms.xaml.cs">
-      <DependentUpon>Trading_Terms.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\StaffWindow.xaml.cs">
       <DependentUpon>StaffWindow.xaml</DependentUpon>
@@ -399,6 +404,18 @@
     <Page Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\HelpScreen\AboutUs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\PrivacyPolicy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpScreen\TermOfUse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomCatalogManagementPage.xaml">
       <SubType>Designer</SubType>
@@ -605,19 +622,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HelpScreen\GeneralTerm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\HelpScreen\HelpScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HelpScreen\Privacy_Policy.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HelpScreen\Trading_Terms.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

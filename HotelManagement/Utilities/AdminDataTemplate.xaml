@@ -5,6 +5,16 @@
                     xmlns:FurnitureView="clr-namespace:HotelManagement.View.Admin.FurnitureManagement"
                     xmlns:ServiceVM="clr-namespace:HotelManagement.ViewModel.AdminVM.ServiceManagementVM"
                     xmlns:ServiceView="clr-namespace:HotelManagement.View.Admin.ServiceManagement"
+                    xmlns:BookingRoomVM="clr-namespace:HotelManagement.ViewModel.AdminVM.BookingRoomManagementVM"
+                    xmlns:BookingRoomView="clr-namespace:HotelManagement.View.Admin.BookingRoomManagement"
+                    xmlns:RoomView="clr-namespace:HotelManagement.View.Admin.RoomManagement"
+                    xmlns:RoomVM="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomManagementVM"
+                    xmlns:RoomTypeView="clr-namespace:HotelManagement.View.Admin.RoomTypeManagement"
+                    xmlns:RoomTypeVM="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM"
+                    xmlns:StatiscalView="clr-namespace:HotelManagement.View.Admin.StatisticalManagement"
+                    xmlns:StatiscalVM="clr-namespace:HotelManagement.ViewModel.AdminVM.StatisticalManagementVM"
+                    xmlns:HelpScreenView="clr-namespace:HotelManagement.View.HelpScreen"
+                    xmlns:HelpScreenVM="clr-namespace:HotelManagement.ViewModel.HelpScreenVM"
 >
     
     <DataTemplate DataType="{x:Type FurnitureVM:FurnitureManagementVM}">
@@ -13,5 +23,19 @@
     <DataTemplate DataType="{x:Type ServiceVM:ServiceManagementVM}">
         <ServiceView:ServiceManagementPage></ServiceView:ServiceManagementPage>
     </DataTemplate>
-
+    <DataTemplate DataType="{x:Type BookingRoomVM:BookingRoomManagementVM}">
+        <BookingRoomView:BookingRoomManagementPage></BookingRoomView:BookingRoomManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type RoomVM:RoomManagementVM}">
+        <RoomView:RoomManagementPage></RoomView:RoomManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type RoomTypeVM:RoomTypeManagementVM}">
+        <RoomTypeView:RoomTypeManagementPage></RoomTypeView:RoomTypeManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type StatiscalVM:StatisticalManagementVM}">
+        <StatiscalView:StatisticalManagementPage></StatiscalView:StatisticalManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type HelpScreenVM:HelpScreenVM}">
+        <HelpScreenView:HelpScreen></HelpScreenView:HelpScreen>
+    </DataTemplate>
 </ResourceDictionary>

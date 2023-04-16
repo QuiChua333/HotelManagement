@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      Title="HelpScreen">
+      Title="HelpScreen"
+      DataContext="{StaticResource HelpScreenVM}"
+>
 
     <Grid Margin="20" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -124,7 +126,7 @@
 
                         <TextBlock Grid.Row="0"
                                 x:Name="GeneralTermButton"
-                                Text ="Điều khoản chung"
+                                Text ="Về chúng tôi"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 Margin="40,0,0,0">
@@ -146,7 +148,7 @@
                         </TextBlock>
 
                         <TextBlock Grid.Row="1"
-                                Text="Điều khoản giao dịch"
+                                Text="Điều khoản sử dụng"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 Margin="40,0,0,0">
@@ -168,7 +170,7 @@
                         </TextBlock>
 
                         <TextBlock Grid.Row="2"
-                                Text="Chính sách bảo mật"
+                                Text="Chính sách quyền riêng tư"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 Margin="40,0,0,0">
