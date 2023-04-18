@@ -21,6 +21,8 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand FirstLoadCM { get; set; }
         private void Furniture(object obj) => CurrentView = new FurnitureManagementVM.FurnitureManagementVM();
         private void Service(object obj) => CurrentView = new ServiceManagementVM.ServiceManagementVM();
+        private void RoomFurniture(object obj) => CurrentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM();
+        private void Setting(object obj) => CurrentView = new SettingVM.SettingVM();
         private void BookingRoom(object obj) => CurrentView = new BookingRoomManagementVM.BookingRoomManagementVM();
         private void Room(object obj) => CurrentView = new RoomManagementVM.RoomManagementVM();
         private void RoomType(object obj) => CurrentView = new RoomTypeManagementVM.RoomTypeManagementVM();
@@ -28,6 +30,8 @@ namespace HotelManagement.ViewModel.AdminVM
         private void HelpScreen(object obj) => CurrentView = new HelpScreenVM.HelpScreenVM();
         public ICommand FurnitureCommand { get; set; }
         public ICommand ServiceCommand { get; set; }
+        public ICommand RoomFurnitureCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
         public ICommand BookingRoomCommand { get; set; }
         public ICommand RoomCommand { get; set; }
         public ICommand RoomTypeCommand { get; set; }
@@ -41,6 +45,8 @@ namespace HotelManagement.ViewModel.AdminVM
 
             FurnitureCommand = new RelayCommand(Furniture);
             ServiceCommand = new RelayCommand(Service);
+            RoomFurnitureCommand = new RelayCommand(RoomFurniture);
+            SettingCommand = new RelayCommand(Setting);
             BookingRoomCommand = new RelayCommand(BookingRoom);
             RoomCommand = new RelayCommand(Room);
             RoomTypeCommand = new RelayCommand(RoomType);

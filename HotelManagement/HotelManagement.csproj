@@ -160,7 +160,33 @@
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
+    <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
+    <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureImportWindow.xaml.cs">
+      <DependentUpon>RoomFurnitureImportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureInfoWindow.xaml.cs">
+      <DependentUpon>RoomFurnitureInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureManagementPage.xaml.cs">
+      <DependentUpon>RoomFurnitureManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\AddProductWindow.xaml.cs">
+      <DependentUpon>AddProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\EditProductWindow.xaml.cs">
+      <DependentUpon>EditProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\ImportProductWindow.xaml.cs">
+      <DependentUpon>ImportProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\OtherServices\EditCleanServiceWindow.xaml.cs">
+      <DependentUpon>EditCleanServiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\ServiceManagement\OtherServices\OtherServicesWindow.xaml.cs">
+      <DependentUpon>OtherServicesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBox.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml.cs">
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
@@ -174,6 +200,15 @@
     </Compile>
     <Compile Include="View\HelpScreen\TermOfUse.xaml.cs">
       <DependentUpon>TermOfUse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingManagement\ConfirmWindow.xaml.cs">
+      <DependentUpon>ConfirmWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingManagement\ResetPassWindow.xaml.cs">
+      <DependentUpon>ResetPassWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingManagement\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomCatalogManagementPage.xaml.cs">
       <DependentUpon>RoomCatalogManagementPage.xaml</DependentUpon>
@@ -198,6 +233,9 @@
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderLaundry.xaml.cs">
       <DependentUpon>RoomOrderLaundry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderProducts.xaml.cs">
+      <DependentUpon>RoomOrderProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomPayment\OptionPayment.xaml.cs">
       <DependentUpon>OptionPayment.xaml</DependentUpon>
@@ -402,6 +440,38 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\RoomFurnitureManagement\RoomFurnitureImportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomFurnitureManagement\RoomFurnitureInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomFurnitureManagement\RoomFurnitureManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\AddProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\EditProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\ImportProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\OtherServices\EditCleanServiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\ServiceManagement\OtherServices\OtherServicesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -415,6 +485,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HelpScreen\TermOfUse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingManagement\ConfirmWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingManagement\ResetPassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingManagement\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -448,6 +530,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderLaundry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Staff\RoomCatalogManagement\RoomOrder\RoomOrderProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

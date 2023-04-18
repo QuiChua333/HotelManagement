@@ -141,7 +141,7 @@
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý tiện nghi" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Text="Quản lý nội thất" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Command="{Binding RoomFurnitureCommand}" Text="Quản lý nội thất" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center"/>
@@ -156,7 +156,7 @@
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource help}" IconWidth="16" Text="Giúp đỡ" VerticalAlignment="Center" Command="{Binding HelpScreenCommand}"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource settings}" IconWidth="16" Text="Cài đặt" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource settings}" IconWidth="16" Text="Cài đặt" Command="{Binding SettingCommand}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
