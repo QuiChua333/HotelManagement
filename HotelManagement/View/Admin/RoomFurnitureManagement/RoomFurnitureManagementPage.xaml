@@ -7,17 +7,17 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
-      x:Class="HotelManagement.View.Admin.FurnitureManagement.FurnitureManagementPage"
+      x:Class="HotelManagement.View.Admin.RoomFurnitureManagement.RoomFurnitureManagementPage"
       mc:Ignorable="d" 
-      x:Name="FurniturePage"
+      x:Name="RoomFurniturePage"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      DataContext="{StaticResource FurnitureManagementVM}"
+      DataContext="{StaticResource RoomFurnitureManagementVM}"
 >
     <Page.Triggers>
         <EventTrigger RoutedEvent="Page.Loaded">
             <BeginStoryboard>
                 <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="FurniturePage"
+                    <DoubleAnimation Storyboard.TargetName="RoomFurniturePage"
                                      Storyboard.TargetProperty="Opacity"
                                      From="0"
                                      To="1"
@@ -75,29 +75,6 @@
                     </Rectangle.Effect>
                 </Rectangle>
             </StackPanel>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Grid Cursor="Hand">
-                    <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
-                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Thêm tiện nghi" FontSize="15" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
-                    </StackPanel>
-                </Grid>
-                <Rectangle Width="27" Height="46" Fill="Transparent"/>
-                <Grid Cursor="Hand" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                    <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
-                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Nhập tiện nghi" FontSize="15" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
-                    </StackPanel>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding ClickCM}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Grid>
-            </StackPanel>
         </Grid>
 
         <!--Content-->
@@ -108,7 +85,7 @@
             </Grid.ColumnDefinitions>
             <Grid x:Name="ContentItems" Grid.Column="0" Margin="14 10 14 10">
                 <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" 
-                         materialDesign:ListBoxItemAssist.ShowSelection="False"
+                         materialDesign:ListBoxItemAssist.ShowSelection="True"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          BorderThickness="0">
                     <ListBox.Resources>
@@ -116,7 +93,7 @@
                     </ListBox.Resources>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Background" Value="Wheat"/>
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="Padding" Value="0"/>
                             <Setter Property="Template">
@@ -134,184 +111,93 @@
                             </Style.Triggers>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                    <ListBox.Style>
-                        <Style TargetType="ListBox">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsChanged}" Value="True">
-                                    <Setter Property="ItemsPanel">
-                                        <Setter.Value>
-                                            <ItemsPanelTemplate>
-                                                <UniformGrid Columns="2" />
-                                            </ItemsPanelTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsChanged}" Value="False">
-                                    <Setter Property="ItemsPanel">
-                                        <Setter.Value>
-                                            <ItemsPanelTemplate>
-                                                <UniformGrid Columns="4" />
-                                            </ItemsPanelTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.Style>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <ListBoxItem HorizontalAlignment="Center" Background="Transparent">
-                                <Grid Width="260">
-                                    <Border x:Name="FurnitureItem" CornerRadius="10" Background="White" Width="233" Height="280" Cursor="Hand">
-                                        <Border.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="10"
-                                                Color="Black"
-                                                ShadowDepth="4"
-                                                Opacity=".25"
-                                                Direction="270"
-                                            />
-                                        </Border.Effect>
-                                        <Grid>
-                                            <StackPanel>
-                                                <Border CornerRadius="10,10,0,0" Height="216">
-                                                    <Border.Background>
-                                                        <ImageBrush ImageSource="{StaticResource Giuong}" Stretch="UniformToFill">
+                            <Grid Width="263" Height="161">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Border CornerRadius="10,10,0,0" Background="{StaticResource PrimaryBackgroundColor}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Grid Margin="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" VerticalAlignment="Center" Margin="0 0 0 5">
+                                                <Label Content="P1.02" 
+                                                        FontFamily="{DynamicResource MaterialDesignFont }"
+                                                        FontSize="19"
+                                                        FontWeight="Bold"
+                                                        Foreground="#FFFFFF"
+                                                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Thương gia"
+                                                            FontFamily="{DynamicResource MaterialDesignFont}"
+                                                            FontSize="13"
+                                                            Foreground="#FFFFFF"
+                                                        HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                </TextBlock>
+                                            </Grid>
 
-                                                        </ImageBrush>
-                                                    </Border.Background>
-                                                    <Grid x:Name="AvatarMask" MouseLeave="AvatarMask_MouseLeave" MouseMove="AvatarMask_MouseMove">
-                                                        <Border Name="Mask" CornerRadius="10,10,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Black" Opacity="0">
-
-                                                        </Border>
-                                                        <StackPanel x:Name="ChooseType" Visibility="Collapsed" Margin="0 0 0 10" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                                            <Button Name="InfoButton" Cursor="Hand" Margin="0 0 10 0" Width="85" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
-                                                                <Button.Style>
-                                                                    <Style TargetType="{x:Type Button}">
-                                                                        <Setter Property="Background" Value="Transparent"/>
-                                                                        <Setter Property="BorderThickness" Value="0"/>
-                                                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                                                        <Setter Property="Template">
-                                                                            <Setter.Value>
-                                                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                                    </Border>
-                                                                                </ControlTemplate>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                        <Style.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.8"/>
-                                                                            </Trigger>
-                                                                            <Trigger Property="IsMouseCaptured" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.5"/>
-                                                                            </Trigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Button.Style>
-
-                                                                <TextBlock Text="Chi tiết" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
-                                                            </Button>
-                                                            <Button Name="ImportButton" Cursor="Hand" Width="100" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
-                                                                <Button.Style>
-                                                                    <Style TargetType="{x:Type Button}">
-                                                                        <Setter Property="Background" Value="Transparent"/>
-                                                                        <Setter Property="Width" Value="32"/>
-                                                                        <Setter Property="Height" Value="32"/>
-                                                                        <Setter Property="BorderThickness" Value="0"/>
-                                                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                                                        <Setter Property="Template">
-                                                                            <Setter.Value>
-                                                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                                    </Border>
-                                                                                </ControlTemplate>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                        <Style.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.8"/>
-                                                                            </Trigger>
-                                                                            <Trigger Property="IsMouseCaptured" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.5"/>
-                                                                            </Trigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-
-                                                                </Button.Style>
-
-                                                                <TextBlock Text="Nhập hàng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
-                                                            </Button>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </Border>
-                                                <StackPanel Margin="10">
-                                                    <TextBlock Text="Giường Rolex Diamond" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource Name_Furniture}" HorizontalAlignment="Left"/>
-                                                    <Grid Margin="0 6 0 0">
-                                                        <TextBlock FontSize="14" FontWeight="Regular" HorizontalAlignment="Left" FontFamily="{StaticResource MaterialDesignFont}" Text="Giường ngủ" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                            <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="Kho: " Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                            <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="38" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="35" Height="75" Margin="0 35 -17 0">
-                                                <StackPanel x:Name="EditAndRemove" VerticalAlignment="Center">
-                                                    <Border x:Name="EditButton" CornerRadius="35" Width="35" Height="35" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
-                                                        <Border.Effect>
-                                                            <DropShadowEffect 
-                                                                BlurRadius="4"
-                                                                Color="Black"
-                                                                ShadowDepth="2"
-                                                                Opacity=".22"
-                                                                Direction="270"
-                                                            />
-                                                        </Border.Effect>
-                                                        <Border.Style>
-                                                            <Style TargetType="{x:Type Border}">
-                                                                <Setter Property="Background" Value="White"></Setter>
-                                                                <Style.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter Property="Background" Value="Wheat">
-
-                                                                        </Setter>
-                                                                    </Trigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Border.Style>
-                                                        <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"/>
-                                                    </Border>
-                                                    <Border x:Name="RemoveButton" Cursor="Hand" CornerRadius="35" Width="35" Height="35" Margin="0,5,0,0" BorderThickness="0.5" BorderBrush="Black">
-                                                        <Border.Effect>
-                                                            <DropShadowEffect 
-                                                                    BlurRadius="4"
-                                                                    Color="Black"
-                                                                    ShadowDepth="2"
-                                                                    Opacity=".22"
-                                                                    Direction="270"
-                                                                />
-                                                        </Border.Effect>
-                                                        <Border.Style>
-                                                            <Style TargetType="{x:Type Border}">
-                                                                <Setter Property="Background" Value="White"></Setter>
-                                                                <Style.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter Property="Background" Value="#FFF09E9E"/>
-                                                                    </Trigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Border.Style>
-                                                        <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"/>
-                                                    </Border>
+                                            <Grid Grid.Row="1">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 -8 0 0">
+                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                    Foreground="#FFFFFF"
+                                                                    Width="33"
+                                                                    Height="33"
+                                                                    VerticalAlignment="Center"/>
+                                                    <Label Content="Nguyễn Văn Phát" 
+                                                            FontFamily="{DynamicResource MaterialDesignFont }"
+                                                            FontSize="19"
+                                                            FontWeight="Bold"
+                                                            Foreground="#FFFFFF"
+                                                            Margin="20 0 0 0"
+                                                            VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
                                     </Border>
                                 </Grid>
-                            </ListBoxItem>
+
+                                <Grid Grid.Row="1">
+                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Grid Margin="10,0">
+                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <TextBlock Text="Đang cho thuê" FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" FontWeight="SemiBold" Foreground="#5A5A5A" />
+                                            </Grid>
+
+                                            <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                Foreground="Black"
+                                                                Width="15"
+                                                                Height="15"
+                                                                Margin="5 0 0 0"
+                                                                VerticalAlignment="Center"/>
+                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                Foreground="Black"
+                                                                Width="15"
+                                                                Height="15"
+                                                                Margin="5 0 0 0"
+                                                                VerticalAlignment="Center"/>
+                                                    <materialDesign:PackIcon Kind="Account" 
+                                                                Foreground="Black"
+                                                                Width="15"
+                                                                Height="15"
+                                                                Margin="5 0 0 0"
+                                                                VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -326,13 +212,13 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <ListBox Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-                                            ItemsSource="{Binding OrderList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            x:Name="BillStack"
-                                            SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            materialDesign:ListBoxItemAssist.ShowSelection="False"
-                                            materialDesign:ListBoxAssist.IsToggle="False"
-                                            Margin="0, 5, 0, 0"
-                                        >
+                                    ItemsSource="{Binding OrderList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    x:Name="BillStack"
+                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    materialDesign:ListBoxItemAssist.ShowSelection="False"
+                                    materialDesign:ListBoxAssist.IsToggle="False"
+                                    Margin="0, 5, 0, 0"
+                                >
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">
                                         <Setter Property="Background" Value="Transparent"/>
@@ -369,28 +255,28 @@
                                                 <Rectangle Grid.Column="0" Fill="White" Grid.ColumnSpan="2" RadiusX="10" RadiusY="10">
                                                     <Rectangle.Effect>
                                                         <DropShadowEffect
-                                                                        BlurRadius="4"
-                                                                        Color="Black"
-                                                                        ShadowDepth="4"
-                                                                        Opacity=".25"
-                                                                        Direction="270"
-                                                                    />
+                                                            BlurRadius="4"
+                                                            Color="Black"
+                                                            ShadowDepth="4"
+                                                            Opacity=".25"
+                                                            Direction="270"
+                                                        />
                                                     </Rectangle.Effect>
                                                 </Rectangle>
                                                 <Grid Grid.Column="0">
                                                     <Ellipse
-                                                                    Width="80"
-                                                                    Height="80"
-                                                                    Fill="#D9D9D9" 
-                                                                >
+                                                        Width="80"
+                                                        Height="80"
+                                                        Fill="#D9D9D9" 
+                                                    >
                                                         <Ellipse.Effect>
                                                             <DropShadowEffect 
-                                                                            BlurRadius="10"
-                                                                            Color="Black"
-                                                                            ShadowDepth="4"
-                                                                            Opacity=".25"
-                                                                            Direction="270"
-                                                                        />
+                                                                BlurRadius="10"
+                                                                Color="Black"
+                                                                ShadowDepth="4"
+                                                                Opacity=".25"
+                                                                Direction="270"
+                                                            />
                                                         </Ellipse.Effect>
                                                     </Ellipse>
                                                     <Border CornerRadius="80" Width="80" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -405,14 +291,14 @@
                                                         <RowDefinition Height="*"/>
                                                     </Grid.RowDefinitions>
                                                     <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="Black"
-                                                                    FontWeight="SemiBold"
-                                                                    FontSize="24" 
-                                                                    VerticalAlignment="Center" 
-                                                                    Margin="14,0,0,0"
-                                                                    Text="{Binding ProductName}"
-                                                                ></TextBlock>
+                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                        Foreground="Black"
+                                                        FontWeight="SemiBold"
+                                                        FontSize="24" 
+                                                        VerticalAlignment="Center" 
+                                                        Margin="14,0,0,0"
+                                                        Text="{Binding ProductName}"
+                                                    ></TextBlock>
                                                     <Grid Grid.Row="2" >
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -428,17 +314,17 @@
                                                                     </Button.InputBindings>
                                                                 </Button>
                                                                 <TextBox
-                                                                                x:Name="Count"
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
+                                                                    x:Name="Count"
+                                                                    Grid.Column="1"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontSize="18"
+                                                                    BorderThickness="1"
+                                                                    Height="25" Padding="6,2,6,0"
+                                                                    Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                    Margin="2,0,2,0"
+                                                                ></TextBox>
                                                                 <Button x:Name="InceaseIndex" Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="#E71A0F" Content="+">
                                                                     <Button.InputBindings>
                                                                         <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -456,12 +342,12 @@
 
                                                             </Image>
                                                             <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="{Binding PriceStr}"
-                                                                        >
+                                                                FontFamily="{StaticResource MaterialDesignFont}"
+                                                                FontWeight="Regular"
+                                                                FontSize="16"
+                                                                Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                Text="{Binding PriceStr}"
+                                                            >
                                                             </TextBlock>
                                                         </Grid>
                                                     </Grid>
@@ -482,12 +368,12 @@
                                         <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                                                BlurRadius="6"
-                                                                Direction="270"
-                                                                Opacity="0.2"
-                                                                Color="Black"
-                                                                ShadowDepth="4"
-                                                            />
+                                                    BlurRadius="6"
+                                                    Direction="270"
+                                                    Opacity="0.2"
+                                                    Color="Black"
+                                                    ShadowDepth="4"
+                                                />
                                             </Border.Effect>
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.ColumnDefinitions>
@@ -502,26 +388,26 @@
                                                 <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <TextBlock
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        Foreground="#A8AE5C"
-                                                                        FontWeight="Bold"
-                                                                        FontSize="19" 
-                                                                        Height="29"
-                                                                        Padding="0 3 0 0"
-                                                                        Margin="0 0 20 0"
-                                                                        VerticalAlignment="Center" 
-                                                                        Text="Giường Rolex Diamond"
-                                                                    />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            Foreground="#A8AE5C"
+                                                            FontWeight="Bold"
+                                                            FontSize="19" 
+                                                            Height="29"
+                                                            Padding="0 3 0 0"
+                                                            Margin="0 0 20 0"
+                                                            VerticalAlignment="Center" 
+                                                            Text="Giường Rolex Diamond"
+                                                        />
                                                         <TextBlock 
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        FontWeight="Regular"
-                                                                        FontSize="14"
-                                                                        Height="18"
-                                                                        Padding="0 1 0 0"
-                                                                        VerticalAlignment="Center"
-                                                                        Foreground="#7E6E6E"
-                                                                        Text="Giường ngủ"
-                                                                    />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            FontWeight="Regular"
+                                                            FontSize="14"
+                                                            Height="18"
+                                                            Padding="0 1 0 0"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="#7E6E6E"
+                                                            Text="Giường ngủ"
+                                                        />
                                                         <Grid Margin="0 7 0 0">
                                                             <Grid x:Name="SetupCount" HorizontalAlignment="Left" Margin="0,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
@@ -533,17 +419,17 @@
                                                                         </Button.InputBindings>
                                                                     </Button>
                                                                     <TextBox
-                                                                                    x:Name="Count"
-                                                                                    Grid.Column="1"
-                                                                                    HorizontalAlignment="Center"
-                                                                                    VerticalAlignment="Center"
-                                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                    FontSize="18"
-                                                                                    BorderThickness="1"
-                                                                                    Height="25" Padding="6,2,6,0"
-                                                                                    Text="1"
-                                                                                    Margin="2,0,2,0"
-                                                                                ></TextBox>
+                                                                        x:Name="Count"
+                                                                        Grid.Column="1"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontSize="18"
+                                                                        BorderThickness="1"
+                                                                        Height="25" Padding="6,2,6,0"
+                                                                        Text="1"
+                                                                        Margin="2,0,2,0"
+                                                                    ></TextBox>
                                                                     <Button x:Name="InceaseIndex" Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
                                                                         <Button.InputBindings>
                                                                             <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -555,12 +441,12 @@
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
                                                                 <TextBlock 
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontWeight="Regular"
-                                                                                FontSize="16"
-                                                                                Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                                Text="1,000,000 đ"
-                                                                            />
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontWeight="Regular"
+                                                                    FontSize="16"
+                                                                    Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                    Text="1,000,000 đ"
+                                                                />
                                                             </StackPanel>
                                                         </Grid>
                                                     </StackPanel>
@@ -581,12 +467,12 @@
                                         <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                                                BlurRadius="6"
-                                                                Direction="270"
-                                                                Opacity="0.2"
-                                                                Color="Black"
-                                                                ShadowDepth="4"
-                                                            />
+                                                    BlurRadius="6"
+                                                    Direction="270"
+                                                    Opacity="0.2"
+                                                    Color="Black"
+                                                    ShadowDepth="4"
+                                                />
                                             </Border.Effect>
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.ColumnDefinitions>
@@ -601,26 +487,26 @@
                                                 <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <TextBlock
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        Foreground="#A8AE5C"
-                                                                        FontWeight="Bold"
-                                                                        FontSize="19" 
-                                                                        Height="29"
-                                                                        Padding="0 3 0 0"
-                                                                        Margin="0 0 20 0"
-                                                                        VerticalAlignment="Center" 
-                                                                        Text="Giường Rolex Diamond"
-                                                                    />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            Foreground="#A8AE5C"
+                                                            FontWeight="Bold"
+                                                            FontSize="19" 
+                                                            Height="29"
+                                                            Padding="0 3 0 0"
+                                                            Margin="0 0 20 0"
+                                                            VerticalAlignment="Center" 
+                                                            Text="Giường Rolex Diamond"
+                                                        />
                                                         <TextBlock 
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        FontWeight="Regular"
-                                                                        FontSize="14"
-                                                                        Height="18"
-                                                                        Padding="0 1 0 0"
-                                                                        VerticalAlignment="Center"
-                                                                        Foreground="#7E6E6E"
-                                                                        Text="Giường ngủ"
-                                                                    />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            FontWeight="Regular"
+                                                            FontSize="14"
+                                                            Height="18"
+                                                            Padding="0 1 0 0"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="#7E6E6E"
+                                                            Text="Giường ngủ"
+                                                        />
                                                         <Grid Margin="0 7 0 0">
                                                             <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
@@ -632,16 +518,16 @@
                                                                         </Button.InputBindings>
                                                                     </Button>
                                                                     <TextBox
-                                                                                    Grid.Column="1"
-                                                                                    HorizontalAlignment="Center"
-                                                                                    VerticalAlignment="Center"
-                                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                    FontSize="18"
-                                                                                    BorderThickness="1"
-                                                                                    Height="25" Padding="6,2,6,0"
-                                                                                    Text="1"
-                                                                                    Margin="2,0,2,0"
-                                                                                ></TextBox>
+                                                                        Grid.Column="1"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontSize="18"
+                                                                        BorderThickness="1"
+                                                                        Height="25" Padding="6,2,6,0"
+                                                                        Text="1"
+                                                                        Margin="2,0,2,0"
+                                                                    ></TextBox>
                                                                     <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
                                                                         <Button.InputBindings>
                                                                             <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -653,12 +539,12 @@
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
                                                                 <TextBlock 
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontWeight="Regular"
-                                                                                FontSize="16"
-                                                                                Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                                Text="1,000,000 đ"
-                                                                            />
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontWeight="Regular"
+                                                                    FontSize="16"
+                                                                    Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                    Text="1,000,000 đ"
+                                                                />
                                                             </StackPanel>
                                                         </Grid>
                                                     </StackPanel>
@@ -679,12 +565,12 @@
                                         <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                                            BlurRadius="6"
-                                                            Direction="270"
-                                                            Opacity="0.2"
-                                                            Color="Black"
-                                                            ShadowDepth="4"
-                                                        />
+                                                    BlurRadius="6"
+                                                    Direction="270"
+                                                    Opacity="0.2"
+                                                    Color="Black"
+                                                    ShadowDepth="4"
+                                                />
                                             </Border.Effect>
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.ColumnDefinitions>
@@ -699,26 +585,26 @@
                                                 <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            Foreground="#A8AE5C"
+                                                            FontWeight="Bold"
+                                                            FontSize="19" 
+                                                            Height="29"
+                                                            Padding="0 3 0 0"
+                                                            Margin="0 0 20 0"
+                                                            VerticalAlignment="Center" 
+                                                            Text="Giường Rolex Diamond"
+                                                        />
                                                         <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            FontWeight="Regular"
+                                                            FontSize="14"
+                                                            Height="18"
+                                                            Padding="0 1 0 0"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="#7E6E6E"
+                                                            Text="Giường ngủ"
+                                                        />
                                                         <Grid Margin="0 7 0 0">
                                                             <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
@@ -730,16 +616,16 @@
                                                                         </Button.InputBindings>
                                                                     </Button>
                                                                     <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
+                                                                        Grid.Column="1"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontSize="18"
+                                                                        BorderThickness="1"
+                                                                        Height="25" Padding="6,2,6,0"
+                                                                        Text="1"
+                                                                        Margin="2,0,2,0"
+                                                                    ></TextBox>
                                                                     <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
                                                                         <Button.InputBindings>
                                                                             <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -751,12 +637,12 @@
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
                                                                 <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontWeight="Regular"
+                                                                    FontSize="16"
+                                                                    Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                    Text="1,000,000 đ"
+                                                                />
                                                             </StackPanel>
                                                         </Grid>
                                                     </StackPanel>
@@ -777,12 +663,12 @@
                                         <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                                                BlurRadius="6"
-                                                                Direction="270"
-                                                                Opacity="0.2"
-                                                                Color="Black"
-                                                                ShadowDepth="4"
-                                                            />
+                                                    BlurRadius="6"
+                                                    Direction="270"
+                                                    Opacity="0.2"
+                                                    Color="Black"
+                                                    ShadowDepth="4"
+                                                />
                                             </Border.Effect>
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.RowDefinitions>
@@ -801,26 +687,26 @@
                                                 <Grid Grid.Column="1" Margin="20,0,20,0" Grid.RowSpan="2">
                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            Foreground="#A8AE5C"
+                                                            FontWeight="Bold"
+                                                            FontSize="19" 
+                                                            Height="29"
+                                                            Padding="0 3 0 0"
+                                                            Margin="0 0 20 0"
+                                                            VerticalAlignment="Center" 
+                                                            Text="Giường Rolex Diamond"
+                                                        />
                                                         <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            FontWeight="Regular"
+                                                            FontSize="14"
+                                                            Height="18"
+                                                            Padding="0 1 0 0"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="#7E6E6E"
+                                                            Text="Giường ngủ"
+                                                        />
                                                         <Grid Margin="0 7 0 0">
                                                             <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
@@ -832,16 +718,16 @@
                                                                         </Button.InputBindings>
                                                                     </Button>
                                                                     <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
+                                                                        Grid.Column="1"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontSize="18"
+                                                                        BorderThickness="1"
+                                                                        Height="25" Padding="6,2,6,0"
+                                                                        Text="1"
+                                                                        Margin="2,0,2,0"
+                                                                    ></TextBox>
                                                                     <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
                                                                         <Button.InputBindings>
                                                                             <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -853,12 +739,12 @@
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
                                                                 <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontWeight="Regular"
+                                                                    FontSize="16"
+                                                                    Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                    Text="1,000,000 đ"
+                                                                />
                                                             </StackPanel>
                                                         </Grid>
                                                     </StackPanel>
@@ -879,12 +765,12 @@
                                         <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                                            BlurRadius="6"
-                                                            Direction="270"
-                                                            Opacity="0.2"
-                                                            Color="Black"
-                                                            ShadowDepth="4"
-                                                        />
+                                                    BlurRadius="6"
+                                                    Direction="270"
+                                                    Opacity="0.2"
+                                                    Color="Black"
+                                                    ShadowDepth="4"
+                                                />
                                             </Border.Effect>
                                             <Grid HorizontalAlignment="Stretch">
                                                 <Grid.ColumnDefinitions>
@@ -899,26 +785,26 @@
                                                 <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                         <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            Foreground="#A8AE5C"
+                                                            FontWeight="Bold"
+                                                            FontSize="19" 
+                                                            Height="29"
+                                                            Padding="0 3 0 0"
+                                                            Margin="0 0 20 0"
+                                                            VerticalAlignment="Center" 
+                                                            Text="Giường Rolex Diamond"
+                                                        />
                                                         <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
+                                                            FontFamily="{StaticResource MaterialDesignFont}"
+                                                            FontWeight="Regular"
+                                                            FontSize="14"
+                                                            Height="18"
+                                                            Padding="0 1 0 0"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="#7E6E6E"
+                                                            Text="Giường ngủ"
+                                                        />
                                                         <Grid Margin="0 7 0 0">
                                                             <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
@@ -930,16 +816,16 @@
                                                                         </Button.InputBindings>
                                                                     </Button>
                                                                     <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
+                                                                        Grid.Column="1"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontSize="18"
+                                                                        BorderThickness="1"
+                                                                        Height="25" Padding="6,2,6,0"
+                                                                        Text="1"
+                                                                        Margin="2,0,2,0"
+                                                                    ></TextBox>
                                                                     <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
                                                                         <Button.InputBindings>
                                                                             <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
@@ -951,12 +837,12 @@
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                                 <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
                                                                 <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
+                                                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                                                    FontWeight="Regular"
+                                                                    FontSize="16"
+                                                                    Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                    Text="1,000,000 đ"
+                                                                />
                                                             </StackPanel>
                                                         </Grid>
                                                     </StackPanel>
@@ -980,7 +866,7 @@
                         </Grid>
                     </Border>
                     <StackPanel Orientation="Horizontal" Margin="0 0 20 20" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Button Name="CloseButton" Command="{Binding CloseCM}" Click="CloseButton_Click" Cursor="Hand" Margin="0 0 10 0" Width="60" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
+                        <Button Name="CloseButton" Command="{Binding CloseCM}" Cursor="Hand" Margin="0 0 10 0" Width="60" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="Background" Value="Transparent"/>

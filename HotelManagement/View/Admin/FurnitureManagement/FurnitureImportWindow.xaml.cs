@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,8 @@ namespace HotelManagement.View.Admin.FurnitureManagement
                 DoubleAnimation animation = new DoubleAnimation(900, TimeSpan.FromSeconds(0.2));
                 MainWindow.BeginAnimation(Border.WidthProperty, animation);
                 FurnitureImportWD.BeginAnimation(Border.WidthProperty, animation);
-
+                FurnitureImportWD.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                FurnitureImportWD.Margin = new Thickness(225, 0, 0, 0);
             }
             else
             {
@@ -58,6 +60,8 @@ namespace HotelManagement.View.Admin.FurnitureManagement
                 DoubleAnimation animation = new DoubleAnimation(450, TimeSpan.FromSeconds(0.2));
                 MainWindow.BeginAnimation(Border.WidthProperty, animation);
                 FurnitureImportWD.BeginAnimation(Border.WidthProperty, animation);
+                FurnitureImportWD.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                FurnitureImportWD.Margin = new Thickness(0, 0, 0, 0);
             }
         }
     }

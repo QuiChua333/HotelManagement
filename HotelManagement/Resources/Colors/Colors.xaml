@@ -17,6 +17,11 @@
     <SolidColorBrush x:Key="TagColor" Color="#0AD5E2"/>
 
     <SolidColorBrush x:Key="White" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="HeavyBlueZodiac" Color="#0F2851"/>
+    <SolidColorBrush x:Key="LightGrayBombay" Color="#B2B8BD"/>
+    <SolidColorBrush x:Key="Black1" Color="#FF000000" />
+
+
     <!-- Primary Colors -->
     <SolidColorBrush x:Key="PrimaryBlueColor" Color="#3772FF"/>
 
@@ -28,6 +33,8 @@
     <!--Color Button-->
     <SolidColorBrush x:Key="ButtonOk" Color="#009099" />
     <SolidColorBrush x:Key="ButtonCancel" Color="#E14E4E" />
+    <SolidColorBrush x:Key="ColorButtonRed" Color="#DD1515"/>
+
     <!--Furniture-->
     <SolidColorBrush x:Key="AddBtn_Furniture" Color="#009099"/>
     <SolidColorBrush x:Key="Name_Furniture" Color="#A8AE5C"/>
