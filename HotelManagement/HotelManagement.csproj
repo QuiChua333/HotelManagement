@@ -158,6 +158,7 @@
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
@@ -841,7 +842,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\AdminVM\HistoryManagementVM\" />
-    <Folder Include="ViewModel\AdminVM\StaffManagementVM\" />
     <Folder Include="ViewModel\StaffVM\TroubleReportVM\" />
   </ItemGroup>
   <ItemGroup>

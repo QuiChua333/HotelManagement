@@ -21,6 +21,13 @@
                     xmlns:SettingView="clr-namespace:HotelManagement.View.SettingManagement"
                     xmlns:CustomerView="clr-namespace:HotelManagement.View.Admin.CustomerManagement"
                     xmlns:CustomerVM="clr-namespace:HotelManagement.ViewModel.AdminVM.CustomerManagementVM"
+                    xmlns:StaffView="clr-namespace:HotelManagement.View.Admin.StaffManagement"
+                    xmlns:StaffVM="clr-namespace:HotelManagement.ViewModel.AdminVM.StaffManagementVM"
+                    xmlns:HistoryView="clr-namespace:HotelManagement.View.Admin.HistoryManagement"
+                    xmlns:HistoryVM="clr-namespace:HotelManagement.ViewModel.AdminVM.HistoryManagementVM"
+                    xmlns:TroubleView="clr-namespace:HotelManagement.View.Admin.TroubleManagement"
+                    xmlns:TroubleVM="clr-namespace:HotelManagement.ViewModel.AdminVM.TroubleManagementVM"
+                    
 >
     
     <DataTemplate DataType="{x:Type FurnitureVM:FurnitureManagementVM}">
@@ -50,8 +57,17 @@
     <DataTemplate DataType="{x:Type SettingVM:SettingVM}">
         <SettingView:SettingPage></SettingView:SettingPage>
     </DataTemplate>
-
     <DataTemplate DataType="{x:Type CustomerVM:CustomerManagementVM}">
         <CustomerView:CustomerManagementPage></CustomerView:CustomerManagementPage>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type StaffVM:StaffManagementVM}">
+        <StaffView:StaffManagementPage></StaffView:StaffManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type HistoryVM:HistoryManagementVM}">
+        <HistoryView:HistoryManagementPage></HistoryView:HistoryManagementPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type TroubleVM:TroubleManagementVM}">
+        <TroubleView:TroubleManagementPage></TroubleView:TroubleManagementPage>
+    </DataTemplate>
+
 </ResourceDictionary>

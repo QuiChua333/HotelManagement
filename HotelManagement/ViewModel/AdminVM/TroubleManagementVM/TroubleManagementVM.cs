@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace HotelManagement.ViewModel.AdminVM.TroubleManagement
+namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
 {
-    public class TroubleManagementVM
+    public class TroubleManagementVM:BaseVM
     {
         public class Trouble
         {
@@ -26,6 +27,15 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagement
             public string StaffName { get; set; }
 
             
+        }
+        public ICommand FirstLoadCM { get; set; }
+        public TroubleManagementVM()
+        {
+            FirstLoadCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, (p) =>
+            {
+
+            });
+
         }
     }
 }

@@ -28,6 +28,10 @@ namespace HotelManagement.ViewModel.AdminVM
         private void RoomType(object obj) => CurrentView = new RoomTypeManagementVM.RoomTypeManagementVM();
         private void Statiscal(object obj) => CurrentView = new StatisticalManagementVM.StatisticalManagementVM();
         private void HelpScreen(object obj) => CurrentView = new HelpScreenVM.HelpScreenVM();
+        private void Customer(object obj) => CurrentView = new CustomerManagementVM.CustomerManagementVM();
+        private void Staff(object obj) => CurrentView = new StaffManagementVM.StaffManagementVM();
+        private void History(object obj) => CurrentView = new HistoryManagementVM.HistoryManagementVM();
+        private void Trouble(object obj) => CurrentView = new TroubleManagementVM.TroubleManagementVM();
         public ICommand FurnitureCommand { get; set; }
         public ICommand ServiceCommand { get; set; }
         public ICommand RoomFurnitureCommand { get; set; }
@@ -37,8 +41,10 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand RoomTypeCommand { get; set; }
         public ICommand StatiscalCommand { get; set; }
         public ICommand HelpScreenCommand { get; set; }
-
-        
+        public ICommand CustomerCommand { get; set; }
+        public ICommand StaffCommand { get; set; }
+        public ICommand HistoryCommand { get; set; }
+        public ICommand TroubleCommand { get; set; }
         public AdminVM()
         {
             _currentView = new ServiceManagementVM.ServiceManagementVM(); 
@@ -52,6 +58,10 @@ namespace HotelManagement.ViewModel.AdminVM
             RoomTypeCommand = new RelayCommand(RoomType);
             StatiscalCommand=new RelayCommand(Statiscal);
             HelpScreenCommand = new RelayCommand(HelpScreen);
+            CustomerCommand=new RelayCommand(Customer);
+            StaffCommand=new RelayCommand(Staff);
+            HistoryCommand=new RelayCommand(History);
+            TroubleCommand=new RelayCommand(Trouble);
         }
     }
 }
