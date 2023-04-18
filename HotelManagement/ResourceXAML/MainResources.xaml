@@ -8,6 +8,11 @@
                 xmlns:VM6="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM"
                 xmlns:VM7="clr-namespace:HotelManagement.ViewModel.SettingVM"
                     
+                xmlns:VM8="clr-namespace:HotelManagement.ViewModel.AdminVM.BookingRoomManagementVM"
+                xmlns:VM9="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomManagementVM"
+                xmlns:VM10="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM"
+                xmlns:VM11="clr-namespace:HotelManagement.ViewModel.AdminVM.StatisticalManagementVM"
+                xmlns:VM12="clr-namespace:HotelManagement.ViewModel.HelpScreenVM"
 >
     <VM1:AdminVM x:Key="AdminVM"/>
     <VM2:StaffVM x:Key="StaffVM"/>
@@ -16,5 +21,11 @@
     <VM5:RoomCatalogManagementVM x:Key="RoomCatalogManagementVM" />
     <VM6:RoomFurnitureManagementVM x:Key="RoomFurnitureManagementVM"/>
     <VM7:SettingVM x:Key="SettingVM"/>
+    <VM8:BookingRoomManagementVM x:Key="BookingRoomManagementVM"/>
+    <VM9:RoomManagementVM x:Key="RoomManagementVM"/>
+    <VM10:RoomTypeManagementVM x:Key="RoomTypeManagementVM"/>
+    <VM11:StatisticalManagementVM x:Key="StatisticalManagementVM"/>
+    <VM12:HelpScreenVM x:Key="HelpScreenVM"/>
+    
 
 </ResourceDictionary>

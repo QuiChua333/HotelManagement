@@ -8,7 +8,9 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      Title="RoomManagementPage">
+      Title="RoomManagementPage"
+      DataContext="{StaticResource RoomManagementVM}"
+>
 
 
     <Grid Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
