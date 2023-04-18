@@ -8,11 +8,29 @@
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      
-      Title="CustomerManagementPage"
+      x:Name="CustomerManagementPage"
       ShowsNavigationUI="False"
-      Background="Transparent">
+      Background="Transparent"
+      DataContext="{StaticResource CustomerManagementVM}">
 
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="CustomerManagementPage"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1"
+                                     Duration="0:0:0.3" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#F5f5F5" Margin=" 20 10 20 20" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
