@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 {
-    public partial class RoomCatalogManagementVM:BaseVM
+    public partial class RoomCatalogManagementVM : BaseVM
     {
-        public RoomCatalogManagementVM()
-        {
 
-        }
     }
 }

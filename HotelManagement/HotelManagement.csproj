@@ -155,6 +155,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
+    <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomInfoVM\RoomInfoVM.cs" />
+    <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomOrderVM\RoomOrderVM.cs" />
+    <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomPaymentVM\RoomPaymentVM.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBox.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml.cs">
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
