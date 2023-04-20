@@ -21,33 +21,9 @@ namespace HotelManagement.View.Admin.ServiceManagement
     /// </summary>
     public partial class ServiceManagementPage : Page
     {
-        public class Service
-        {
-            public string name;
-            public string type;
-            public string quantity;
-            public Service() { }
-            public Service(string name, string type, string quantity)
-            {
-                this.name = name;
-                this.type = type;
-                this.quantity = quantity;
-            }
-        }
-        public List<Service> furnitures;
-
         public ServiceManagementPage()
         {
             InitializeComponent();
-            furnitures = new List<Service>();
-            Service f;
-            for (int i = 0; i < 9; i++)
-            {
-                f = new Service("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
-                furnitures.Add(f);
-            }
-
-            ListViewProducts.ItemsSource = furnitures;
         }
     }
 }

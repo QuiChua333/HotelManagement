@@ -56,24 +56,38 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Search:Search 
+                    x:Name="SearchBox"
                         Width="350" Height="38"
                         FontSize="14"
                         IconSize="18"
                         Corner="10"
                         Margin="0 0 38 0"
                         IndicatorBrush="{StaticResource LightBlue_Search}"
-                    />
-                <Rectangle Width="205" Height="38" RadiusX="10" RadiusY="10" Fill="White">
-                    <Rectangle.Effect>
-                        <DropShadowEffect
-                            BlurRadius="10"
-                            Color="Black"
-                            ShadowDepth="4"
-                            Opacity=".25"
-                            Direction="270"
-                        />
-                    </Rectangle.Effect>
-                </Rectangle>
+                        SearchTextChange="SearchBox_SearchTextChange"
+                    >
+                </Search:Search>
+                <StackPanel Width="205" Height="38" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
+                    <Border CornerRadius="10" Width="173" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"
+                            />
+                        </Border.Effect>
+                        <ComboBox Background="Transparent" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" ItemsSource="{Binding CurrentListFurnitureType}" SelectedItem="{Binding SelectedItemFilter}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionFilterChangeCM}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        
+                    </Border>
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -107,9 +121,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid x:Name="ContentItems" Grid.Column="0" Margin="14 10 14 10">
-                <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" 
+                <ListBox Name="ListViewFurniture" ItemsSource="{Binding FurnitureList}" SelectedItem="{Binding SelectedFurniture}" HorizontalAlignment="Stretch" 
                          materialDesign:ListBoxItemAssist.ShowSelection="False"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                         VerticalAlignment="Top"
                          BorderThickness="0">
                     <ListBox.Resources>
                         <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
@@ -176,7 +191,7 @@
                                             <StackPanel>
                                                 <Border CornerRadius="10,10,0,0" Height="216">
                                                     <Border.Background>
-                                                        <ImageBrush ImageSource="{StaticResource Giuong}" Stretch="UniformToFill">
+                                                        <ImageBrush ImageSource="{Binding FurnitureAvatar}" Stretch="UniformToFill">
 
                                                         </ImageBrush>
                                                     </Border.Background>
@@ -248,12 +263,12 @@
                                                     </Grid>
                                                 </Border>
                                                 <StackPanel Margin="10">
-                                                    <TextBlock Text="Giường Rolex Diamond" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource Name_Furniture}" HorizontalAlignment="Left"/>
+                                                    <TextBlock Text="{Binding FurnitureName}" FontSize="18" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource Name_Furniture}" HorizontalAlignment="Left"/>
                                                     <Grid Margin="0 6 0 0">
-                                                        <TextBlock FontSize="14" FontWeight="Regular" HorizontalAlignment="Left" FontFamily="{StaticResource MaterialDesignFont}" Text="Giường ngủ" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
+                                                        <TextBlock FontSize="14" FontWeight="Regular" HorizontalAlignment="Left" FontFamily="{StaticResource MaterialDesignFont}" Text="{Binding FurnitureType}" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                                             <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="Kho: " Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
-                                                            <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="38" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
+                                                            <TextBlock FontSize="14" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Text="{Binding Quantity}" Foreground="{StaticResource Type_Cost_Furniture}"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
                                                 </StackPanel>
@@ -261,6 +276,11 @@
                                             <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="35" Height="75" Margin="0 35 -17 0">
                                                 <StackPanel x:Name="EditAndRemove" VerticalAlignment="Center">
                                                     <Border x:Name="EditButton" CornerRadius="35" Width="35" Height="35" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurniture, Path=DataContext.OpenEditFurnitureCM}"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
                                                         <Border.Effect>
                                                             <DropShadowEffect 
                                                                 BlurRadius="4"
@@ -1044,5 +1064,37 @@
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <!--LoadBar-->
+        <Grid
+            Grid.RowSpan="2"
+            Background="Transparent"
+            VerticalAlignment="Stretch"
+        >
+            <ProgressBar
+                IsIndeterminate="{Binding IsLoading}"
+                BorderThickness="0"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0"
+                x:Name="load"
+                Height="3" 
+                Background="{StaticResource PrimaryBackgroundColor}"
+            />
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility"
+                        Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=load,Path=IsIndeterminate}"
+                                    Value="True">
+                            <Setter Property="Visibility"
+                                Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </Grid.Style>
+        </Grid>
+
     </Grid>
 </Page>

@@ -36,5 +36,17 @@ namespace HotelManagement.View.Admin.FurnitureManagement
                 DragMove();
             }    
         }
+        private void BtnAdd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectTypeFurniture.Visibility = Visibility.Collapsed;
+            AddNewTypeFurniture.Visibility = Visibility.Visible;
+            TypeBoxAddNewTypeFurniture.Text = String.Empty;
+        }
+
+        private void BtnFilter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectTypeFurniture.Visibility = Visibility.Visible;
+            AddNewTypeFurniture.Visibility = Visibility.Collapsed;
+        }
     }
 }

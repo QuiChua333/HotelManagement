@@ -1,8 +1,10 @@
 ﻿using CinemaManagementProject.Utilities;
+using HotelManagement.DTOs;
 using HotelManagement.ViewModel;
 using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -28,7 +30,6 @@ namespace HotelManagement.View.Admin.FurnitureManagement
     /// </summary>
     public partial class FurnitureManagementPage : Page
     {
-        public List<Furniture> furnitures;
 
         private bool isChanged;
         public bool IsChanged { get { return isChanged; } set { isChanged = value;} }
@@ -36,15 +37,6 @@ namespace HotelManagement.View.Admin.FurnitureManagement
         public FurnitureManagementPage()
         {
             InitializeComponent();
-            furnitures = new List<Furniture>();
-            Furniture f;
-            for (int i = 0; i < 9; i++)
-            {
-                f = new Furniture("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
-                furnitures.Add(f);
-            }
-
-            ListViewProducts.ItemsSource = furnitures;
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -93,6 +85,23 @@ namespace HotelManagement.View.Admin.FurnitureManagement
             mask.Opacity = 0;
             StackPanel st = (StackPanel)grid.FindName("ChooseType");
             st.Visibility = Visibility.Collapsed;
+        }
+
+        private void SearchBox_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewFurniture.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = Filter;
+                CollectionViewSource.GetDefaultView(ListViewFurniture.ItemsSource).Refresh();
+            }
+        }
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as FurnitureDTO).FurnitureName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

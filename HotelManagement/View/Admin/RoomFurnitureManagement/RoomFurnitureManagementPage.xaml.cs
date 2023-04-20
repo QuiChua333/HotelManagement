@@ -21,19 +21,9 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
     /// </summary>
     public partial class RoomFurnitureManagementPage : Page
     {
-        public List<Furniture> furnitures;
         public RoomFurnitureManagementPage()
         {
             InitializeComponent();
-            furnitures = new List<Furniture>();
-            Furniture f;
-            for (int i = 0; i < 9; i++)
-            {
-                f = new Furniture("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
-                furnitures.Add(f);
-            }
-
-            ListViewProducts.ItemsSource = furnitures;
         }
     }
 }

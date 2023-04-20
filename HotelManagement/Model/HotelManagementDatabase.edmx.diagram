@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="28f0c0a773744c238ea68046599b7ebc" Name="Diagram1">
+        <EntityTypeShape EntityType="HotelManagementModel.Bill" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Customer" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Furniture" Width="1.5" PointX="10.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.FurnitureStorage" Width="1.5" PointX="13" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.GoodsStorage" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.RentalContract" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.RentalContractDetail" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Review" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Room" Width="1.5" PointX="10" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.RoomFurnituresDetail" Width="1.5" PointX="12.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.RoomType" Width="1.5" PointX="7.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Service" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.ServiceUsing" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Staff" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.Trouble" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelManagementModel.TroubleByCustomer" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="HotelManagementModel.FK_Bill_RentalContract" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_Review_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_FurnitureStorage_Furniture" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_RentalContract" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_ServiceUsing_RentalContract" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_TroubleByCustomer_RentalContract" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_Room_RoomType" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_RoomFurnituresDetail_Room" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_ServiceUsing_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_Trouble_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_TroubleByCustomer_Trouble" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.RoomCustomer" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
