@@ -154,6 +154,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\Constants.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomInfoVM\RoomInfoVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomOrderVM\RoomOrderVM.cs" />

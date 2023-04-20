@@ -32,6 +32,6 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement
             e.Handled = true;
         }
 
-        
+      
     }
 }

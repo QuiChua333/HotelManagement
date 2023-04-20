@@ -12,9 +12,15 @@
       d:DesignHeight="644" d:DesignWidth="1170"
       Title="RoomCatalogManagementPage"
       ShowsNavigationUI="False"
+      x:Name="mainPage"
       DataContext="{StaticResource RoomCatalogManagementVM}">
 
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}"
+                                   CommandParameter="{Binding ElementName=mainPage}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20">
         <Border CornerRadius="20" Background="White">
@@ -46,7 +52,9 @@
                            Foreground="#EC4242">
                         </Label>
                         <StackPanel Margin="20,40,0,0">
-                            <RadioButton GroupName="RoomType" Background="#EC4242">
+                            <RadioButton GroupName="RoomType" Background="#EC4242"
+                                        x:Name="rdbRoomTypeA"
+                                         Tag="RoomTypeA">
                                 <TextBlock Text="Phòng A"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -55,7 +63,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
+                                          x:Name="rdbRoomTypeB"
+                                         Tag="RoomTypeB">
                                 <TextBlock Text="Phòng B"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -64,7 +74,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
+                                          x:Name="rdbRoomTypeC"
+                                         Tag="RoomTypeC">
                                 <TextBlock Text="Phòng C"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -73,7 +85,10 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
+                                         IsChecked="True"
+                                         x:Name="rdbAllRoomType"
+                                         Tag="AllRoomType">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -92,7 +107,9 @@
                            Foreground="#EC4242">
                         </Label>
                         <StackPanel Margin="20,40,0,0">
-                            <RadioButton GroupName="RoomStatus" Background="#EC4242">
+                            <RadioButton GroupName="RoomStatus" Background="#EC4242"
+                                          x:Name="rdbRoomStatusReady"
+                                         Tag="RoomStatusReady">
                                 <TextBlock Text="Phòng trống"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -101,7 +118,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
+                                         x:Name="rdbRoomStatusBooked"
+                                         Tag="RoomStatusBooked">
                                 <TextBlock Text="Phòng đã đặt"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -110,7 +129,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
+                                         x:Name="rdbRoomStatusRenting"
+                                         Tag="RoomStatusRenting">
                                 <TextBlock Text="Phòng đang thuê"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -119,7 +140,10 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
+                                         IsChecked="True"
+                                         x:Name="rdbAllRoomStatus"
+                                         Tag="AllRoomStatus">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -141,7 +165,9 @@
                            Foreground="#EC4242">
                         </Label>
                         <StackPanel Margin="20,40,0,0">
-                            <RadioButton GroupName="RoomCleaningStatus" Background="#EC4242">
+                            <RadioButton GroupName="RoomCleaningStatus" Background="#EC4242"
+                                          x:Name="rdbRoomCleaningStatusCleaned"
+                                         Tag="RoomCleaningStatusCleaned">
                                 <TextBlock Text="Đã dọn dẹp"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -150,7 +176,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
+                                          x:Name="rdbRoomCleaningStatusNotCleanYet"
+                                         Tag="RoomCleaningStatusNotCleaningYet">
                                 <TextBlock Text="Chưa dọn dẹp"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -159,7 +187,9 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
+                                          x:Name="rdbRoomCleaningStatusRepairing"
+                                         Tag="RoomCleaningStatusCleanedRepairing">
                                 <TextBlock Text="Sửa chữa"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -168,7 +198,10 @@
 
                                 </TextBlock>
                             </RadioButton>
-                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242">
+                            <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
+                                         IsChecked="True"
+                                          x:Name="rdbAllRoomCleaningStatus"
+                                         Tag="AllRoomCleaningStatus">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -229,7 +262,7 @@
                                     HorizontalAlignment="Center"
                                     materialDesign:ValidationAssist.Background="#f0f2f5"
                                     materialDesign:ValidationAssist.FontSize="0.01"
-                                    SelectedDate="{Binding SelectedDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                    SelectedDate="{Binding SelectedDate,Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">
                                     <i:InvokeCommandAction Command="{Binding SelectedDateCM}"
@@ -266,7 +299,7 @@
                                                        Padding="20,10,15,10"
                                                        materialDesign:ValidationAssist.FontSize="0.001"
                                                        materialDesign:ValidationAssist.Background="#f0f2f5"
-                                                       SelectedTime="{Binding Showtime}"
+                                                       SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
                                                        x:Name="_movieTime"
                                                        Focusable="False"
                                                        BorderBrush="#474545"
@@ -289,12 +322,12 @@
                         </Label>
 
                         <ListBox            
-                                        ItemsSource="{Binding ListSeat1}"
+                                        ItemsSource="{Binding ListRoomType1}"
                                         
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedSeat}" >
+                                         SelectedItem="{Binding SelectedRoom}" >
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
@@ -638,12 +671,12 @@
                                Margin="0,20,0,0">
                         </Label>
                         <ListBox            
-                                        ItemsSource="{Binding ListSeat1}"
+                                        ItemsSource="{Binding ListRoomType2}"
                                         
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedSeat}">
+                                         SelectedItem="{Binding SelectedRoom}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
@@ -882,12 +915,12 @@
                                Margin="0,20,0,0">
                         </Label>
                         <ListBox            
-                                        ItemsSource="{Binding ListSeat1}"
+                                        ItemsSource="{Binding ListRoomType3}"
                                         
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedSeat}">
+                                         SelectedItem="{Binding SelectedRoom}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
