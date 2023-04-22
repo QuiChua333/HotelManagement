@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.BookingRoomManagement
+namespace HotelManagement.View.BookingRoomManagement
 {
     /// <summary>
     /// Interaction logic for BookingRoomManagementPage.xaml
