@@ -13,5 +13,4 @@
     <DataTemplate DataType="{x:Type ServiceVM:ServiceManagementVM}">
         <ServiceView:ServiceManagementPage></ServiceView:ServiceManagementPage>
     </DataTemplate>
-
 </ResourceDictionary>
