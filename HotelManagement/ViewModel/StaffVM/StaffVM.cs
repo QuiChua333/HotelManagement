@@ -1,6 +1,4 @@
 ﻿using CinemaManagementProject.Utilities;
-using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
-using HotelManagement.ViewModel.AdminVM.ServiceManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
