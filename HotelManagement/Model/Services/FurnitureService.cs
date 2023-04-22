@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using System.Runtime.Remoting.Contexts;
 using System.Collections.ObjectModel;
+using System.Windows.Automation.Peers;
 
 namespace HotelManagement.Model.Services
 {
@@ -42,6 +43,7 @@ namespace HotelManagement.Model.Services
                         from p in db.Furnitures
                         select new FurnitureDTO
                         {
+                            FurnitureID = p.FurnitureId,
                             FurnitureAvatarData = p.FurnitureAvatar,
                             FurnitureName = p.FurnitureName,
                             FurnitureType = p.FurnitureType,
@@ -69,12 +71,42 @@ namespace HotelManagement.Model.Services
             {
                 return allFurniture.Where(item => item.FurnitureType == typeSelection).ToList();
             }
+
             catch (Exception ex)
             {
                 return null;
             }
         }
+        
+        public async Task<(bool, string)> SaveEditFurniture(FurnitureDTO furnitureSelected)
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    Furniture furniture = await db.Furnitures.FirstOrDefaultAsync(item => item.FurnitureId == furnitureSelected.FurnitureID);
+                    if(furniture == null) 
+                    {
+                        return (false, "Không tìm thấy tiện nghi");
+                    }
 
+                    furniture.FurnitureName = furnitureSelected.FurnitureName;
+                    furniture.FurnitureType = furnitureSelected.FurnitureType;
+                    furniture.FurnitureStorage.QuantityFurniture = furnitureSelected.Quantity;
+                    furniture.FurnitureAvatar = furnitureSelected.FurnitureAvatarData;
+                    await db.SaveChangesAsync();
+                    return (true, "Cập nhật thành công");
+                }
+            }
+            catch(EntityException ex) 
+            {
+                return (false, "Mất kết nối cơ sở dữ liệu");
+            }
+            catch(Exception e)
+            {
+                return (false, "Lỗi hệ thống");
+            }
+        }
         public ImageSource LoadImage(string ImagePath)
         {
             BitmapImage _image = new BitmapImage();
@@ -107,5 +139,6 @@ namespace HotelManagement.Model.Services
 
             return bitmapImage;
         }
+
     }
 }

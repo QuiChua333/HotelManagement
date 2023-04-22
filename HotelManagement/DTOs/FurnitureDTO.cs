@@ -25,6 +25,7 @@ namespace HotelManagement.DTOs
             OnPropertyChanged(propertyName);
             return true;
         }
+
         public byte[] FurnitureAvatarData { get; set; }
         private ImageSource furnitureAvatar;
         public ImageSource FurnitureAvatar
@@ -32,6 +33,7 @@ namespace HotelManagement.DTOs
             get { return furnitureAvatar; }
             set { SetField(ref furnitureAvatar, value, "FurnitureAvatar"); }
         } 
+        public string FurnitureID { get; set; }
         public string FurnitureName { get; set; }
         public string FurnitureType { get; set; }
         public int Quantity { get; set; }

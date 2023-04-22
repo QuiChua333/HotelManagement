@@ -21,7 +21,6 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                     continue;
                 AllFurnitureType.Add(AllFurniture[i].FurnitureType);
             }
-
         }
 
     }

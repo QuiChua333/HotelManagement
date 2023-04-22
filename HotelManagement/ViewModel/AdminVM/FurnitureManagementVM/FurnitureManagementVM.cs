@@ -4,7 +4,6 @@ using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.FurnitureManagement;
-using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,7 +53,13 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             get { return selectedFurniture; }
             set { selectedFurniture = value; OnPropertyChanged(); }
         }
-        public FurnitureDTO SelectedFurnitureCacheData { get; set; }
+        private FurnitureDTO selectedFurnitureCacheData;
+        public  FurnitureDTO SelectedFurnitureCacheData
+        {
+            set { selectedFurnitureCacheData = value; OnPropertyChanged(); }
+            get { return selectedFurnitureCacheData; }
+        }
+
 
         private ObservableCollection<string> currentListFurnitureType { get; set; }
         public ObservableCollection<string> CurrentListFurnitureType
@@ -81,7 +86,9 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
         public ICommand CloseCM { get; set; }
         public ICommand OpenEditFurnitureCM { get; set; }
         public ICommand CloseEditFurnitureCM { get; set; }
+        public ICommand SaveEditFurnitureCM { get; set; }
         public ICommand SelectionFilterChangeCM { get; set; }
+
 
 
 
@@ -110,7 +117,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
 
             OpenEditFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if(SelectedFurniture !=null)
+                if(SelectedFurniture != null)
                 {
                     SelectedFurnitureCacheData = SelectedFurniture;
                     FurnitureEditWindow furnitureEditWD = new FurnitureEditWindow();
@@ -123,6 +130,25 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             {
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
                 SelectedFurnitureCacheData = null;
+            });
+
+            SaveEditFurnitureCM = new RelayCommand<System.Windows.Window>((p) => { return true; },async (p) =>
+            {
+                if(SelectedFurnitureCacheData != null)
+                {
+                    (bool isSuccess, string messageReturn) = await Task.Run(() => FurnitureService.Ins.SaveEditFurniture(SelectedFurnitureCacheData));
+                    if(isSuccess)
+                    {
+                        CustomMessageBox.ShowOkCancel(messageReturn, "Thành công", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+
+                    }
+                    else
+                    {
+                        CustomMessageBox.ShowOkCancel(messageReturn, "Lỗi", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+                    }
+                    p.Close();
+                    tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                }
             });
 
             SelectionFilterChangeCM = new RelayCommand<object>((p) => { return true; }, (p) =>

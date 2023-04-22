@@ -158,6 +158,11 @@
                         <TextBlock Text="Đóng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                     <Button Name="SaveButton" Cursor="Hand" Width="60" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding SaveEditFurnitureCM}" CommandParameter="{Binding ElementName=FurnitureEditWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="Transparent"/>
