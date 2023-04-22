@@ -1,5 +1,6 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.View.Admin.StatisticalManagement;
+using HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 
 namespace HotelManagement.ViewModel.AdminVM
 {
@@ -32,6 +34,8 @@ namespace HotelManagement.ViewModel.AdminVM
         private void Staff(object obj) => CurrentView = new StaffManagementVM.StaffManagementVM();
         private void History(object obj) => CurrentView = new HistoryManagementVM.HistoryManagementVM();
         private void Trouble(object obj) => CurrentView = new TroubleManagementVM.TroubleManagementVM();
+        private void RoomCatalog(object obj) => CurrentView = new RoomCatalogManagementVM();
+
         public ICommand FurnitureCommand { get; set; }
         public ICommand ServiceCommand { get; set; }
         public ICommand RoomFurnitureCommand { get; set; }
@@ -45,6 +49,7 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand StaffCommand { get; set; }
         public ICommand HistoryCommand { get; set; }
         public ICommand TroubleCommand { get; set; }
+        public ICommand RoomCatalogCommand { get; set; }
         public AdminVM()
         {
             _currentView = new ServiceManagementVM.ServiceManagementVM(); 
@@ -62,6 +67,7 @@ namespace HotelManagement.ViewModel.AdminVM
             StaffCommand=new RelayCommand(Staff);
             HistoryCommand=new RelayCommand(History);
             TroubleCommand=new RelayCommand(Trouble);
+            RoomCatalogCommand = new RelayCommand(RoomCatalog);
         }
     }
 }

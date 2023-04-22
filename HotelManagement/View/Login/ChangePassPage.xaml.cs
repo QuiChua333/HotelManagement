@@ -13,25 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Staff.RoomCatalogManagement
+namespace HotelManagement.View.Login
 {
     /// <summary>
-    /// Interaction logic for RoomCatalogManagementPage.xaml
+    /// Interaction logic for ChangePassPage.xaml
     /// </summary>
-    public partial class RoomCatalogManagementPage : Page
+    public partial class ChangePassPage : Page
     {
-        public RoomCatalogManagementPage()
+        public ChangePassPage()
         {
             InitializeComponent();
         }
-
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            ScrollViewer scv = (ScrollViewer)sender;
-            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-            e.Handled = true;
-        }
-
-      
     }
 }

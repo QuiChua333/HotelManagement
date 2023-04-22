@@ -29,7 +29,7 @@
             <i:InvokeCommandAction Command="{Binding FirstLoadCM}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#F5f5F5" Margin=" 20 10 20 20">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Margin=" 20 10 20 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
@@ -50,7 +50,7 @@
                                             Opacity=".2"
                                             Direction="270"/>
                 </Border.Effect>
-                <Search:Search  Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Search:Search IndicatorBrush="White"  Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Border>
 
             <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
