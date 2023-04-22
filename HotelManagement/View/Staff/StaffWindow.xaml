@@ -106,7 +106,7 @@
                                                  Command="{Binding RoomCatalogCommand}"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center" Command="{Binding TroubleRpCommand}"/>
                         </StackPanel>
 
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
