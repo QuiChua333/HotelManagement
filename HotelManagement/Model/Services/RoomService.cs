@@ -79,6 +79,7 @@ namespace HotelManagement.Model.Services
                                               StartDate=  c.StartDate,
                                               StartTime=c.StartTime,
                                               CheckOutDate=c.CheckOutDate,
+                                              Validated = c.Validated,
                                               //CustomerId = cu.CustomerId,
                                               //CustomerName = cu.CustomerName,
 

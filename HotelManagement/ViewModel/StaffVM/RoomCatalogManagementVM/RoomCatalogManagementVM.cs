@@ -1,4 +1,5 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.Utils;
 using IronXL.Formatting;
@@ -86,38 +87,38 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _ListRooms; }
             set { _ListRooms = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType1;
-        public ObservableCollection<RoomSettingDTO> ListRoomType1
+        private List<RoomSettingDTO> _ListRoomType1;
+        public List<RoomSettingDTO> ListRoomType1
         {
             get { return _ListRoomType1; }
             set { _ListRoomType1 = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType1Mini;
-        public ObservableCollection<RoomSettingDTO> ListRoomType1Mini
+        private  List<RoomSettingDTO> _ListRoomType1Mini;
+        public List<RoomSettingDTO> ListRoomType1Mini
         {
             get { return _ListRoomType1Mini; }
             set { _ListRoomType1Mini = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType2Mini;
-        public ObservableCollection<RoomSettingDTO> ListRoomType2Mini
+        private List<RoomSettingDTO> _ListRoomType2Mini;
+        public List<RoomSettingDTO> ListRoomType2Mini
         {
             get { return _ListRoomType2Mini; }
             set { _ListRoomType2Mini = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType3Mini;
-        public ObservableCollection<RoomSettingDTO> ListRoomType3Mini
+        private List<RoomSettingDTO> _ListRoomType3Mini;
+        public List<RoomSettingDTO> ListRoomType3Mini
         {
             get { return _ListRoomType3Mini; }
             set { _ListRoomType3Mini = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType2;
-        public ObservableCollection<RoomSettingDTO> ListRoomType2
+        private List<RoomSettingDTO> _ListRoomType2;
+        public List<RoomSettingDTO> ListRoomType2
         {
             get { return _ListRoomType2; }
             set { _ListRoomType2 = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RoomSettingDTO> _ListRoomType3;
-        public ObservableCollection<RoomSettingDTO> ListRoomType3
+        private List<RoomSettingDTO> _ListRoomType3;
+        public List<RoomSettingDTO> ListRoomType3
         {
             get { return _ListRoomType3; }
             set { _ListRoomType3 = value; OnPropertyChanged(); }
@@ -190,18 +191,24 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
 
             });
-            ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },  async (p) =>
+            ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
                 if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
                 else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus= p;
                 else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus= p;
-                await ChangView();
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+                ChangView();
 
                 
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
-    
+
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
                 radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
                 radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
                 radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
@@ -209,7 +216,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 radioButtonRoomStatus.IsChecked = true;
                 radioButtonRoomCleaningStatus.IsChecked = true;
 
-                await ChangView();
+                ChangView();
 
 
                 List<string> listRentalContractId = (await RentalContractService.Ins.GetRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
@@ -260,12 +267,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         {
             RoomTypes = new List<RoomTypeDTO>(await RoomService.Ins.GetRoomTypes());
 
-            ListRoomType1 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[0].RoomTypeId));
-            ListRoomType1Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType1);
-            ListRoomType2 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[1].RoomTypeId));
-            ListRoomType2Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType2);
-            ListRoomType3 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
-            ListRoomType3Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType3);
+            ListRoomType1 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[0].RoomTypeId));
+            ListRoomType1Mini = new List<RoomSettingDTO>(ListRoomType1);
+            ListRoomType2 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[1].RoomTypeId));
+            ListRoomType2Mini = new List<RoomSettingDTO>(ListRoomType2);
+            ListRoomType3 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
+            ListRoomType3Mini = new List<RoomSettingDTO>(ListRoomType3);
             //ListRooms = new List<RoomDTO>(await RoomService.Ins.GetRooms());
 
         }
@@ -289,7 +296,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         }
       
      
-        private async Task<(string,string,string)> GetContentRadioButton(RadioButton radioButton1, RadioButton radioButton2, RadioButton radioButton3)
+        private Tuple<string,string,string> GetContentRadioButton(RadioButton radioButton1, RadioButton radioButton2, RadioButton radioButton3)
         {
             string res1, res2, res3;
             switch(radioButton1.Name.ToString())
@@ -337,15 +344,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     res3 = "All";
                     break;
             }
-            return (res1, res2, res3);
+           var res = Tuple.Create(res1,res2,res3);
+            return res;
         }
-        private async Task ChangView()
+        private void ChangView()
         {
-            ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1Mini);
-            ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2Mini);
-            ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3Mini);
 
-            (string roomType, string roomStatus, string roomCleaningStatus) = await GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
+            (string roomType, string roomStatus, string roomCleaningStatus) =  GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
             lbRoomTypeA.Visibility = lbRoomTypeB.Visibility = lbRoomTypeC.Visibility = Visibility.Visible;
             if (roomType != "All")
             {
@@ -365,23 +370,23 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     lbRoomTypeA.Visibility = Visibility.Collapsed;
                     lbRoomTypeB.Visibility = Visibility.Collapsed;
                 }
-                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
             }
 
             if (roomStatus != "All")
             {
-                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomStatus == roomStatus).ToList());
-                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomStatus == roomStatus).ToList());
-                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomStatus == roomStatus).ToList());
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomStatus == roomStatus).ToList());
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomStatus == roomStatus).ToList());
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomStatus == roomStatus).ToList());
             }
 
             if (roomCleaningStatus != "All")
             {
-                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
-                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
-                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
             }
         }
     }

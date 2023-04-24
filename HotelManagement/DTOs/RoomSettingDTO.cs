@@ -32,18 +32,14 @@ namespace HotelManagement.DTOs
                 return res;
             }
         }
-        public TimeSpan CheckOutTime
-        {
-            get
-            {
-                return (TimeSpan)StartTime;
-            }
-        }
+     
         public Nullable<bool> Validated { get; set; }
         public string RoomName
         {
             get { return "P "+RoomNumber.ToString(); }
+            set { }
         }
+        
 
     }
 }
