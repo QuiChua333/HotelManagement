@@ -1,22 +1,30 @@
-﻿using System;
+﻿using HotelManagement.DTOs;
+using HotelManagement.Model.Services;
+using HotelManagement.Utils;
+using IronXL.Formatting;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 {
-    public partial class RoomCatalogManagementVM:BaseVM
+    public partial class RoomCatalogManagementVM : BaseVM
     {
         private DateTime _SelectedDate;
         public DateTime SelectedDate
         {
             get { return _SelectedDate; }
-            set { _SelectedDate = value;  OnPropertyChanged(); }
+            set { _SelectedDate = value; OnPropertyChanged(); }
         }
         private DateTime _SelectedTime;
         public DateTime SelectedTime
@@ -24,46 +32,357 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _SelectedTime; }
             set { _SelectedTime = value; OnPropertyChanged(); }
         }
-        public RadioButton radioButtonRoomType { get; set; }  
-        public RadioButton radioButtonRoomStatus { get; set; }  
-        public RadioButton radioButtonRoomCleaningStatus { get; set; }
 
-        private ObservableCollection<Object> _ListRoomType1;
-        public ObservableCollection<Object> ListRoomType1
+        private RadioButton _radioButtonRoomType;
+        public RadioButton radioButtonRoomType
+        {
+            get { return _radioButtonRoomType; }
+            set { _radioButtonRoomType = value; OnPropertyChanged(); }
+        }
+        private RadioButton _radioButtonRoomStatus;
+        public RadioButton radioButtonRoomStatus
+        {
+            get { return _radioButtonRoomStatus; }
+            set { _radioButtonRoomStatus = value; OnPropertyChanged(); }
+        }
+        private RadioButton _radioButtonRoomCleaningStatus;
+        public RadioButton radioButtonRoomCleaningStatus
+        {
+            get { return _radioButtonRoomCleaningStatus; }
+            set { _radioButtonRoomCleaningStatus = value; OnPropertyChanged(); }
+        }
+        Page MainPage;
+        public string RoomTypeA
+        {
+            get
+            {
+                return ROOM_TYPE.ROOM_TYPE_A;
+            }
+        }
+        public string RoomTypeB
+        {
+            get
+            {
+                return ROOM_TYPE.ROOM_TYPE_B;
+            }
+        }
+        public string RoomTypeC
+        {
+            get
+            {
+                return ROOM_TYPE.ROOM_TYPE_C;
+            }
+        }
+
+        private List<RoomTypeDTO> _RoomTypes;
+        public List<RoomTypeDTO> RoomTypes 
+        { 
+            get { return _RoomTypes; }
+            set { _RoomTypes = value; OnPropertyChanged();}
+        }
+        private List<RoomDTO> _ListRooms;
+        public List<RoomDTO> ListRooms
+        {
+            get { return _ListRooms; }
+            set { _ListRooms = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<RoomSettingDTO> _ListRoomType1;
+        public ObservableCollection<RoomSettingDTO> ListRoomType1
         {
             get { return _ListRoomType1; }
             set { _ListRoomType1 = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<Object> _ListRoomType2;
-        public ObservableCollection<Object> ListRoomType2
+        private ObservableCollection<RoomSettingDTO> _ListRoomType1Mini;
+        public ObservableCollection<RoomSettingDTO> ListRoomType1Mini
+        {
+            get { return _ListRoomType1Mini; }
+            set { _ListRoomType1Mini = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<RoomSettingDTO> _ListRoomType2Mini;
+        public ObservableCollection<RoomSettingDTO> ListRoomType2Mini
+        {
+            get { return _ListRoomType2Mini; }
+            set { _ListRoomType2Mini = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<RoomSettingDTO> _ListRoomType3Mini;
+        public ObservableCollection<RoomSettingDTO> ListRoomType3Mini
+        {
+            get { return _ListRoomType3Mini; }
+            set { _ListRoomType3Mini = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<RoomSettingDTO> _ListRoomType2;
+        public ObservableCollection<RoomSettingDTO> ListRoomType2
         {
             get { return _ListRoomType2; }
             set { _ListRoomType2 = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<Object> _ListRoomType3;
-        public ObservableCollection<Object> ListRoomType3
+        private ObservableCollection<RoomSettingDTO> _ListRoomType3;
+        public ObservableCollection<RoomSettingDTO> ListRoomType3
         {
             get { return _ListRoomType3; }
             set { _ListRoomType3 = value; OnPropertyChanged(); }
         }
 
-        private Object _SelectedRoom;
-        public Object SelectedRoom
+        private RoomSettingDTO _SelectedRoom;
+        public RoomSettingDTO SelectedRoom
         {
             get { return _SelectedRoom; }
             set { _SelectedRoom = value; OnPropertyChanged(); }
         }
+        Label lbRoomTypeA;
+        Label lbRoomTypeB;
+        Label lbRoomTypeC;
         public ICommand FirstLoadCM { get; set; }
+        public ICommand LoadRoomInfoCM { get; set; }
+        public ICommand ChangeViewCM { get; set; }
+        public ICommand SelectedDateTimeCM { get; set; }
         public RoomCatalogManagementVM()
         {
+            Color color = new Color();
+            FormatStringDate();
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
-                SelectedDate = DateTime.Today;
-                SelectedTime = DateTime.Now;
+                PageSetting(p);
+                await GenerateRoom();
+            });
+            LoadRoomInfoCM = new RelayCommand<Grid>((p) => { return true; },  (p) => 
+            {
+
+                Border border = p.Children.OfType<Border>().FirstOrDefault();
+                TextBlock textBlockRoomStatus = (TextBlock)p.FindName("RoomStatus");
+                TextBlock textBlockRoomCleaningStatus = (TextBlock)p.FindName("RoomCleaningStatus");
+                MaterialDesignThemes.Wpf.PackIcon packIcon = (MaterialDesignThemes.Wpf.PackIcon)p.FindName("icon");
+
+                if (textBlockRoomStatus != null)
+                {
+                    if (textBlockRoomStatus.Text == ROOM_STATUS.READY)
+                    {
+                        color = (Color)ColorConverter.ConvertFromString("#59D66D");
+                        border.Background = new SolidColorBrush(color);
+                    }
+                    else if (textBlockRoomStatus.Text == ROOM_STATUS.BOOKED)
+                    {
+                        color = (Color)ColorConverter.ConvertFromString("#BDBDBA");
+                        border.Background = new SolidColorBrush(color);
+                    }
+                    else
+                    {
+                        color = (Color)ColorConverter.ConvertFromString("#72B6DC");
+                        border.Background = new SolidColorBrush(color);
+                    }
+                }
+
+                if (textBlockRoomCleaningStatus != null)
+                {
+                    if (textBlockRoomCleaningStatus.Text == ROOM_CLEANING_STATUS.CLEANED)
+                    {
+                        packIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Check;
+                    }
+                    else if (textBlockRoomCleaningStatus.Text == ROOM_CLEANING_STATUS.NOT_CLEANING_YET)
+                    {
+                        packIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.Close;
+                    }
+                    else
+                    {
+                        packIcon.Kind = MaterialDesignThemes.Wpf.PackIconKind.HammerWrench;
+                    }
+                }
+
+
+            });
+            ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },  async (p) =>
+            {
+                if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
+                else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus= p;
+                else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus= p;
+                await ChangView();
+
+                
+            });
+            SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
+            {
+    
                 radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
                 radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
                 radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
+                radioButtonRoomType.IsChecked = true;
+                radioButtonRoomStatus.IsChecked = true;
+                radioButtonRoomCleaningStatus.IsChecked = true;
+
+                await ChangView();
+
+
+                List<string> listRentalContractId = (await RentalContractService.Ins.GetRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
+              
+                foreach (var item in ListRoomType1)
+                {
+                   
+                    if (listRentalContractId.Contains(item.RoomId))
+                    {
+                        if (item.RoomStatus == ROOM_STATUS.READY)
+                        {
+                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                        }
+                    }
+                    else item.RoomStatus = ROOM_STATUS.READY;
+
+                }
+                foreach (var item in ListRoomType2)
+                {
+                    if (listRentalContractId.Contains(item.RoomId))
+                    {
+                        if (item.RoomStatus == ROOM_STATUS.READY)
+                        {
+                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                        }
+                    }
+                    else item.RoomStatus = ROOM_STATUS.READY;
+
+                }
+                foreach (var item in ListRoomType3)
+                {
+                    if (listRentalContractId.Contains(item.RoomId))
+                    {
+                        if (item.RoomStatus == ROOM_STATUS.READY)
+                        {
+                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                        }
+                    }
+                    else item.RoomStatus = ROOM_STATUS.READY;
+                }
+
+                
             });
+        }
+
+       
+        public async Task GenerateRoom()
+        {
+            RoomTypes = new List<RoomTypeDTO>(await RoomService.Ins.GetRoomTypes());
+
+            ListRoomType1 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[0].RoomTypeId));
+            ListRoomType1Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType1);
+            ListRoomType2 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[1].RoomTypeId));
+            ListRoomType2Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType2);
+            ListRoomType3 = new ObservableCollection<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
+            ListRoomType3Mini = new ObservableCollection<RoomSettingDTO>(ListRoomType3);
+            //ListRooms = new List<RoomDTO>(await RoomService.Ins.GetRooms());
+
+        }
+        public void FormatStringDate()
+        {
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            ci.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
+        }
+        private void PageSetting(Page p)
+        {
+            SelectedDate = DateTime.Today;
+            SelectedTime = DateTime.Now;
+            radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
+            radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
+            radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
+            lbRoomTypeA = (Label)p.FindName("lbRoomTypeA");
+            lbRoomTypeB = (Label)p.FindName("lbRoomTypeB");
+            lbRoomTypeC = (Label)p.FindName("lbRoomTypeC");
+            MainPage = (Page)p;
+        }
+      
+     
+        private async Task<(string,string,string)> GetContentRadioButton(RadioButton radioButton1, RadioButton radioButton2, RadioButton radioButton3)
+        {
+            string res1, res2, res3;
+            switch(radioButton1.Name.ToString())
+            {
+                case "rdbRoomTypeA":
+                    res1 = ROOM_TYPE.ROOM_TYPE_A;
+                    break;
+                case "rdbRoomTypeB":
+                    res1 = ROOM_TYPE.ROOM_TYPE_B;
+                    break;
+                case "rdbRoomTypeC":
+                    res1 = ROOM_TYPE.ROOM_TYPE_C;
+                    break;
+                default:
+                    res1 = "All";
+                    break;
+            }
+            switch (radioButton2.Name.ToString())
+            {
+                case "rdbRoomStatusReady":
+                    res2 = ROOM_STATUS.READY;
+                    break;
+                case "rdbRoomStatusBooked":
+                    res2 = ROOM_STATUS.BOOKED;
+                    break;
+                case "rdbRoomStatusRenting":
+                    res2 = ROOM_STATUS.RENTING;
+                    break;
+                default:
+                    res2 = "All";
+                    break;
+            }
+            switch (radioButton3.Name.ToString())
+            {
+                case "rdbRoomCleaningStatusCleaned":
+                    res3 = ROOM_CLEANING_STATUS.CLEANED;
+                    break;
+                case "rdbRoomCleaningStatusNotCleanYet":
+                    res3 = ROOM_CLEANING_STATUS.NOT_CLEANING_YET;
+                    break;
+                case "rdbRoomCleaningStatusRepairing":
+                    res3 = ROOM_CLEANING_STATUS.REPAIRING;
+                    break;
+                default:
+                    res3 = "All";
+                    break;
+            }
+            return (res1, res2, res3);
+        }
+        private async Task ChangView()
+        {
+            ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1Mini);
+            ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2Mini);
+            ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3Mini);
+
+            (string roomType, string roomStatus, string roomCleaningStatus) = await GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
+            lbRoomTypeA.Visibility = lbRoomTypeB.Visibility = lbRoomTypeC.Visibility = Visibility.Visible;
+            if (roomType != "All")
+            {
+
+                if (roomType == ROOM_TYPE.ROOM_TYPE_A)
+                {
+                    lbRoomTypeB.Visibility = Visibility.Collapsed;
+                    lbRoomTypeC.Visibility = Visibility.Collapsed;
+                }
+                else if (roomType == ROOM_TYPE.ROOM_TYPE_B)
+                {
+                    lbRoomTypeA.Visibility = Visibility.Collapsed;
+                    lbRoomTypeC.Visibility = Visibility.Collapsed;
+                }
+                else if (roomType == ROOM_TYPE.ROOM_TYPE_C)
+                {
+                    lbRoomTypeA.Visibility = Visibility.Collapsed;
+                    lbRoomTypeB.Visibility = Visibility.Collapsed;
+                }
+                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+            }
+
+            if (roomStatus != "All")
+            {
+                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomStatus == roomStatus).ToList());
+                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomStatus == roomStatus).ToList());
+                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomStatus == roomStatus).ToList());
+            }
+
+            if (roomCleaningStatus != "All")
+            {
+                ListRoomType1 = new ObservableCollection<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+                ListRoomType2 = new ObservableCollection<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+                ListRoomType3 = new ObservableCollection<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
+            }
         }
     }
 }

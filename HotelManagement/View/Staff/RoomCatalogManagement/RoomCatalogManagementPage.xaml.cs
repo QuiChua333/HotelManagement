@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitMiracle.LibTiff.Classic;
+using HotelManagement.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +33,40 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as RoomSettingDTO).RoomName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                    || (item as RoomSettingDTO).RoomStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                    || (item as RoomSettingDTO).RoomCleaningStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                   /* || (item as RoomSettingDTO).CustomerName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)*/;
 
-      
+        }
+        private void Search_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(listRoom1.ItemsSource);
+            if (view1 != null)
+            {
+                view1.Filter = Filter;
+                //result.Text = Listviewmini.Items.Count.ToString();
+                CollectionViewSource.GetDefaultView(listRoom1.ItemsSource).Refresh();
+            }
+            CollectionView view2 = (CollectionView)CollectionViewSource.GetDefaultView(listRoom2.ItemsSource);
+            if (view2 != null)
+            {
+                view2.Filter = Filter;
+                //result.Text = Listviewmini.Items.Count.ToString();
+                CollectionViewSource.GetDefaultView(listRoom2.ItemsSource).Refresh();
+            }
+            CollectionView view3 = (CollectionView)CollectionViewSource.GetDefaultView(listRoom3.ItemsSource);
+            if (view3 != null)
+            {
+                view3.Filter = Filter;
+                //result.Text = Listviewmini.Items.Count.ToString();
+                CollectionViewSource.GetDefaultView(listRoom3.ItemsSource).Refresh();
+            }
+        }
     }
 }

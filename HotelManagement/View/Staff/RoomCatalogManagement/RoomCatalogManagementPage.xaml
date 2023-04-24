@@ -1,5 +1,4 @@
 ﻿<Page x:Class="HotelManagement.View.Staff.RoomCatalogManagement.RoomCatalogManagementPage"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -7,6 +6,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement"
       mc:Ignorable="d" 
       d:DesignHeight="644" d:DesignWidth="1170"
@@ -14,6 +14,7 @@
       ShowsNavigationUI="False"
       x:Name="mainPage"
       DataContext="{StaticResource RoomCatalogManagementVM}">
+
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -54,8 +55,10 @@
                         <StackPanel Margin="20,40,0,0">
                             <RadioButton GroupName="RoomType" Background="#EC4242"
                                         x:Name="rdbRoomTypeA"
-                                         Tag="RoomTypeA">
-                                <TextBlock Text="Phòng A"
+                                         Tag="RoomTypeA"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomTypeA}">
+                                <TextBlock Text="{Binding RoomTypeA}"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
                                                FontWeight="Regular"
@@ -65,8 +68,10 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
                                           x:Name="rdbRoomTypeB"
-                                         Tag="RoomTypeB">
-                                <TextBlock Text="Phòng B"
+                                         Tag="RoomTypeB"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomTypeB}">
+                                <TextBlock Text="{Binding RoomTypeB}"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
                                                FontWeight="Regular"
@@ -76,8 +81,10 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
                                           x:Name="rdbRoomTypeC"
-                                         Tag="RoomTypeC">
-                                <TextBlock Text="Phòng C"
+                                         Tag="RoomTypeC"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomTypeC}">
+                                <TextBlock Text="{Binding RoomTypeC}"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
                                                FontWeight="Regular"
@@ -88,7 +95,9 @@
                             <RadioButton GroupName="RoomType" Margin="0,10,0,0" Background="#EC4242"
                                          IsChecked="True"
                                          x:Name="rdbAllRoomType"
-                                         Tag="AllRoomType">
+                                         Tag="AllRoomType"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbAllRoomType}">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -109,7 +118,9 @@
                         <StackPanel Margin="20,40,0,0">
                             <RadioButton GroupName="RoomStatus" Background="#EC4242"
                                           x:Name="rdbRoomStatusReady"
-                                         Tag="RoomStatusReady">
+                                         Tag="RoomStatusReady"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomStatusReady}">
                                 <TextBlock Text="Phòng trống"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -120,7 +131,9 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
                                          x:Name="rdbRoomStatusBooked"
-                                         Tag="RoomStatusBooked">
+                                         Tag="RoomStatusBooked"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomStatusBooked}">
                                 <TextBlock Text="Phòng đã đặt"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -131,7 +144,9 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
                                          x:Name="rdbRoomStatusRenting"
-                                         Tag="RoomStatusRenting">
+                                         Tag="RoomStatusRenting"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomStatusRenting}">
                                 <TextBlock Text="Phòng đang thuê"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -143,7 +158,9 @@
                             <RadioButton GroupName="RoomStatus" Margin="0,10,0,0" Background="#EC4242"
                                          IsChecked="True"
                                          x:Name="rdbAllRoomStatus"
-                                         Tag="AllRoomStatus">
+                                         Tag="AllRoomStatus"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbAllRoomStatus}">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -167,7 +184,9 @@
                         <StackPanel Margin="20,40,0,0">
                             <RadioButton GroupName="RoomCleaningStatus" Background="#EC4242"
                                           x:Name="rdbRoomCleaningStatusCleaned"
-                                         Tag="RoomCleaningStatusCleaned">
+                                         Tag="RoomCleaningStatusCleaned"
+                                         Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomCleaningStatusCleaned}">
                                 <TextBlock Text="Đã dọn dẹp"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -178,7 +197,9 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
                                           x:Name="rdbRoomCleaningStatusNotCleanYet"
-                                         Tag="RoomCleaningStatusNotCleaningYet">
+                                         Tag="RoomCleaningStatusNotCleaningYet"
+                                          Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomCleaningStatusNotCleanYet}">
                                 <TextBlock Text="Chưa dọn dẹp"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -189,7 +210,9 @@
                             </RadioButton>
                             <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
                                           x:Name="rdbRoomCleaningStatusRepairing"
-                                         Tag="RoomCleaningStatusCleanedRepairing">
+                                         Tag="RoomCleaningStatusRepairing"
+                                          Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbRoomCleaningStatusRepairing}">
                                 <TextBlock Text="Sửa chữa"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -201,7 +224,9 @@
                             <RadioButton GroupName="RoomCleaningStatus" Margin="0,10,0,0" Background="#EC4242"
                                          IsChecked="True"
                                           x:Name="rdbAllRoomCleaningStatus"
-                                         Tag="AllRoomCleaningStatus">
+                                         Tag="AllRoomCleaningStatus"
+                                          Command="{Binding ChangeViewCM}"
+                                         CommandParameter="{Binding ElementName=rdbAllRoomCleaningStatus}">
                                 <TextBlock Text="Tất cả các phòng"
                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                FontSize="16"
@@ -221,22 +246,23 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Bottom">
-                        
-                        <Search:Search 
+
+                    <Search:Search 
+                        x:Name="SearchBox"
                             HorizontalAlignment="Left"
                         Width="260" Height="38"
                         FontSize="12"
                         IconSize="18"
                         IndicatorBrush="White"
                         Corner="10"
-                       
+                        SearchTextChange="Search_SearchTextChange" 
                         
                     />
-                  
+
 
                     <Border CornerRadius="12"
                             HorizontalAlignment="Right"
-                            Margin="0,0,220,0"
+                            Margin="0,0,300,0"
                             Background="White"
                             Height="46"
                             Width="145"
@@ -250,30 +276,34 @@
                                 Direction="270"/>
                         </Border.Effect>
                         <DatePicker
-                                    x:Name="Calendar"
+                                   
                                     Height="50"
                                     Width="155"
-                                    Margin="0,0,0,0"
-                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
-                                    BorderBrush="#474545"                            
+                                    FontWeight="Medium"                           
                                     FontSize="15"
-                                    Foreground="Black"
-                                    Padding="20,10,15,10"
+                                    Foreground="{StaticResource Gray1}"
+                                    Padding="25,10,15,10"
                                     HorizontalAlignment="Center"
-                                    materialDesign:ValidationAssist.Background="#f0f2f5"
-                                    materialDesign:ValidationAssist.FontSize="0.01"
-                                    SelectedDate="{Binding SelectedDate,Mode=TwoWay}">
+                                    Focusable="False"
+                                    BorderBrush="#67C6E6"
+                                    SelectedDate="{Binding SelectedDate, Mode=TwoWay}">
+
+
+
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">
-                                    <i:InvokeCommandAction Command="{Binding SelectedDateCM}"
-                                                           CommandParameter="{Binding ElementName=Calendar}" />
+                                    <i:InvokeCommandAction Command="{Binding SelectedDateTimeCM}"
+                                                           CommandParameter="{Binding ElementName=mainPage}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
+
+
                     </Border>
 
                     <Border CornerRadius="12"
                             HorizontalAlignment="Right"
+                            Margin="0,0,100,0"
                             Background="White"
                             Height="46"
                             Width="145"
@@ -286,7 +316,7 @@
                                 Opacity=".25"
                                 Direction="270"/>
                         </Border.Effect>
-                        <materialDesign:TimePicker 
+                        <materialDesign:TimePicker x:Name="select" 
                                                        Is24Hours="True"
                                                        WithSeconds="False"
                                                        FontSize="15"
@@ -295,15 +325,22 @@
                                                        VerticalContentAlignment="Bottom"
                                                        HorizontalContentAlignment="Center"
                                                        Height="50"
-                                                        Foreground="Black"
+                                                       Foreground="{StaticResource Gray1}"
                                                        Padding="20,10,15,10"
                                                        materialDesign:ValidationAssist.FontSize="0.001"
-                                                       materialDesign:ValidationAssist.Background="#f0f2f5"
+                                                       
                                                        SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
-                                                       x:Name="_movieTime"
+                                                       
                                                        Focusable="False"
-                                                       BorderBrush="#474545"
->
+                                                       BorderBrush="#67C6E6">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedTimeChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedDateTimeCM}"
+                                                           CommandParameter="{Binding ElementName=mainPage}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+
                         </materialDesign:TimePicker>
                     </Border>
                 </Grid>
@@ -314,7 +351,9 @@
                     </ScrollViewer.Resources>
 
                     <StackPanel>
-                        <Label Content="Phòng A" 
+                        <Label
+                            x:Name="lbRoomTypeA"
+                            Content="{Binding RoomTypeA}" 
                            FontFamily="{DynamicResource MaterialDesignFont }"
                            FontSize="18"
                            FontWeight="Medium"
@@ -323,9 +362,9 @@
 
                         <ListBox            
                                         ItemsSource="{Binding ListRoomType1}"
-                                        
+                                        x:Name="listRoom1"
                                          VerticalAlignment="Center"
-                                            HorizontalAlignment="Left"
+                                         HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
                                          SelectedItem="{Binding SelectedRoom}" >
                             <ListBox.ItemContainerStyle>
@@ -340,8 +379,9 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
+                                    <Grid x:Name="grid">
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                               >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
                                             </Border.Effect>
@@ -352,20 +392,22 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="P1.02" 
+                                                                    <Label Content="{Binding RoomName}" 
+                                                                       x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
                                                                        Foreground="#FFFFFF"
                                                                        HorizontalAlignment="Left"/>
-                                                                    <TextBlock Text="Phòng trống"
+                                                                    <TextBlock Text="{Binding RoomStatus}"
+                                                                               x:Name="RoomStatus"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="13"
                                                                                Foreground="#FFFFFF"
@@ -380,8 +422,9 @@
                                                                                Foreground="#FFFFFF"
                                                                                          Width="33"
                                                                                          Height="33"
-                                                                                         HorizontalAlignment="Left"/>
-                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                                         HorizontalAlignment="Left"
+                                                                                            />
+                                                                    <Label Content="{Binding CustomerName}" 
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
@@ -399,7 +442,7 @@
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                                         <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="3"
+                                                                        <TextBlock Text="{Binding DayNumber}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
@@ -422,9 +465,11 @@
 
                                                                 <Grid HorizontalAlignment="Right">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"
+                                                                                                 x:Name="icon"/>
+                                                                        <TextBlock Text="{Binding RoomCleaningStatus}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                                x:Name="RoomCleaningStatus"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
                                                                                FontWeight="Regular"
@@ -442,11 +487,126 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>                                    
                                     </Grid>
 
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
+                            <!--<ListBoxItem>
+                                <Grid>
+                                    <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="25"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="220" HorizontalAlignment="Left">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="107*"/>
+                                                                    <ColumnDefinition Width="93*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="P1.02" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left" Height="38" VerticalAlignment="Center"/>
+                                                                <TextBlock Text="Phòng trống"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="13"
+                                                                               Foreground="#FFFFFF"
+                                                                               Margin="0,6,0,0"
+                                                                           HorizontalAlignment="Right" Grid.Column="1">
+
+                                                                </TextBlock>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="1">
+                                                                <materialDesign:PackIcon Kind="Account" 
+                                                                               Foreground="#FFFFFF"
+                                                                                         Width="33"
+                                                                                         Height="33"
+                                                                                         HorizontalAlignment="Left"/>
+                                                                <Label Content="Nguyễn Văn Phát" 
+                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
+                                                                       FontSize="16"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="#FFFFFF"
+                                                                       HorizontalAlignment="Left"
+                                                                       VerticalAlignment="Top" Margin="68,5,0,0"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="220" HorizontalAlignment="Left">
+                                                        <Grid Margin="10,0">
+                                                            <Grid HorizontalAlignment="Left">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="3"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="ngày"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="3,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                            <Grid HorizontalAlignment="Right">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="Đã dọn dẹp"
+                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                               FontSize="11"
+                                                                               Foreground="#444444"
+                                                                               FontWeight="Regular"
+                                                                               Margin="5,0,0,0"
+                                                                               VerticalAlignment="Center">
+
+                                                                    </TextBlock>
+
+                                                                </StackPanel>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </ListBoxItem>
                             <ListBoxItem>
                                 <Grid>
                                     <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
@@ -551,119 +711,15 @@
                                         </Grid>
                                     </Border>
                                 </Grid>
-                            </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
-                                            </Border.Effect>
-                                            <Grid>
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="25"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="220" HorizontalAlignment="Left">
-                                                            <Grid Margin="10">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="*"/>
-                                                                    <RowDefinition Height="*"/>
-                                                                </Grid.RowDefinitions>
-                                                                <Grid Grid.Row="0">
-                                                                    <Label Content="P1.02" 
-                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
-                                                                       FontSize="16"
-                                                                       FontWeight="Bold"
-                                                                       Foreground="#FFFFFF"
-                                                                       HorizontalAlignment="Left"/>
-                                                                    <TextBlock Text="Phòng trống"
-                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
-                                                                               FontSize="13"
-                                                                               Foreground="#FFFFFF"
-                                                                               Margin="0,6,0,0"
-                                                                           HorizontalAlignment="Right">
-
-                                                                    </TextBlock>
-                                                                </Grid>
-
-                                                                <Grid Grid.Row="1">
-                                                                    <materialDesign:PackIcon Kind="Account" 
-                                                                               Foreground="#FFFFFF"
-                                                                                         Width="33"
-                                                                                         Height="33"
-                                                                                         HorizontalAlignment="Left"/>
-                                                                    <Label Content="Nguyễn Văn Phát" 
-                                                                       FontFamily="{DynamicResource MaterialDesignFont }"
-                                                                       FontSize="16"
-                                                                       FontWeight="Bold"
-                                                                       Foreground="#FFFFFF"
-                                                                       HorizontalAlignment="Right"
-                                                                       VerticalAlignment="Center"/>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Border>
-                                                    </Grid>
-
-                                                    <Grid Grid.Row="1">
-                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="220" HorizontalAlignment="Left">
-                                                            <Grid Margin="10,0">
-                                                                <Grid HorizontalAlignment="Left">
-                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                        <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="3"
-                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
-                                                                               FontSize="11"
-                                                                               Foreground="#444444"
-                                                                               FontWeight="Regular"
-                                                                               Margin="5,0,0,0"
-                                                                               VerticalAlignment="Center">
-
-                                                                        </TextBlock>
-                                                                        <TextBlock Text="ngày"
-                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
-                                                                               FontSize="11"
-                                                                               Foreground="#444444"
-                                                                               FontWeight="Regular"
-                                                                               Margin="3,0,0,0"
-                                                                               VerticalAlignment="Center">
-
-                                                                        </TextBlock>
-                                                                    </StackPanel>
-                                                                </Grid>
-
-                                                                <Grid HorizontalAlignment="Right">
-                                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="Đã dọn dẹp"
-                                                                               FontFamily="{DynamicResource MaterialDesignFont}"
-                                                                               FontSize="11"
-                                                                               Foreground="#444444"
-                                                                               FontWeight="Regular"
-                                                                               Margin="5,0,0,0"
-                                                                               VerticalAlignment="Center">
-
-                                                                        </TextBlock>
-
-                                                                    </StackPanel>
-
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Border>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
+                            </ListBoxItem>-->
 
 
 
 
-                            </ListBox>
+                        </ListBox>
 
-                        <Label Content="Phòng B" 
+                        <Label x:Name="lbRoomTypeB" 
+                            Content="{Binding RoomTypeB}" 
                            FontFamily="{DynamicResource MaterialDesignFont }"
                            FontSize="18"
                            FontWeight="Medium"
@@ -672,7 +728,7 @@
                         </Label>
                         <ListBox            
                                         ItemsSource="{Binding ListRoomType2}"
-                                        
+                                        x:Name="listRoom2"
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
@@ -689,8 +745,9 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
+                                    <Grid x:Name="grid">
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                               >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
                                             </Border.Effect>
@@ -701,20 +758,22 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="P1.02" 
+                                                                    <Label Content="{Binding RoomName}" 
+                                                                       x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
                                                                        Foreground="#FFFFFF"
                                                                        HorizontalAlignment="Left"/>
-                                                                    <TextBlock Text="Phòng trống"
+                                                                    <TextBlock Text="{Binding RoomStatus}"
+                                                                               x:Name="RoomStatus"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="13"
                                                                                Foreground="#FFFFFF"
@@ -729,8 +788,9 @@
                                                                                Foreground="#FFFFFF"
                                                                                          Width="33"
                                                                                          Height="33"
-                                                                                         HorizontalAlignment="Left"/>
-                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                                         HorizontalAlignment="Left"
+                                                                                            />
+                                                                    <Label Content="{Binding CustomerName}" 
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
@@ -748,7 +808,7 @@
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                                         <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="3"
+                                                                        <TextBlock Text="{Binding DayNumber}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
@@ -771,9 +831,11 @@
 
                                                                 <Grid HorizontalAlignment="Right">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"
+                                                                                                 x:Name="icon"/>
+                                                                        <TextBlock Text="{Binding RoomCleaningStatus}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                                x:Name="RoomCleaningStatus"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
                                                                                FontWeight="Regular"
@@ -791,12 +853,18 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Grid>
 
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
-                            <ListBoxItem>
+                            <!--<ListBoxItem>
                                 <Grid>
                                     <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
                                         <Border.Effect>
@@ -900,14 +968,16 @@
                                         </Grid>
                                     </Border>
                                 </Grid>
-                            </ListBoxItem>
+                            </ListBoxItem>-->
 
 
 
 
                         </ListBox>
 
-                        <Label Content="Phòng C" 
+                        <Label
+                            x:Name="lbRoomTypeC"
+                            Content="{Binding RoomTypeC}" 
                            FontFamily="{DynamicResource MaterialDesignFont }"
                            FontSize="18"
                            FontWeight="Medium"
@@ -916,7 +986,7 @@
                         </Label>
                         <ListBox            
                                         ItemsSource="{Binding ListRoomType3}"
-                                        
+                                        x:Name="listRoom3"
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
@@ -932,9 +1002,10 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
+                                     <DataTemplate>
+                                    <Grid x:Name="grid">
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                               >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
                                             </Border.Effect>
@@ -945,20 +1016,22 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0" Background="#59D66D" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="P1.02" 
+                                                                    <Label Content="{Binding RoomName}" 
+                                                                       x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
                                                                        Foreground="#FFFFFF"
                                                                        HorizontalAlignment="Left"/>
-                                                                    <TextBlock Text="Phòng trống"
+                                                                    <TextBlock Text="{Binding RoomStatus}"
+                                                                               x:Name="RoomStatus"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="13"
                                                                                Foreground="#FFFFFF"
@@ -973,8 +1046,9 @@
                                                                                Foreground="#FFFFFF"
                                                                                          Width="33"
                                                                                          Height="33"
-                                                                                         HorizontalAlignment="Left"/>
-                                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                                         HorizontalAlignment="Left"
+                                                                                            />
+                                                                    <Label Content="{Binding CustomerName}" 
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
                                                                        FontWeight="Bold"
@@ -992,7 +1066,7 @@
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                                         <materialDesign:PackIcon Kind="CalendarMonthOutline" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="3"
+                                                                        <TextBlock Text="{Binding DayNumber}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
@@ -1015,9 +1089,11 @@
 
                                                                 <Grid HorizontalAlignment="Right">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"/>
-                                                                        <TextBlock Text="Đã dọn dẹp"
+                                                                        <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center"
+                                                                                                 x:Name="icon"/>
+                                                                        <TextBlock Text="{Binding RoomCleaningStatus}"
                                                                                FontFamily="{DynamicResource MaterialDesignFont}"
+                                                                                x:Name="RoomCleaningStatus"
                                                                                FontSize="11"
                                                                                Foreground="#444444"
                                                                                FontWeight="Regular"
@@ -1035,12 +1111,18 @@
                                                 </Grid>
                                             </Grid>
                                         </Border>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>                                    
                                     </Grid>
 
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
-                            <ListBoxItem>
+                            <!--<ListBoxItem>
                                 <Grid>
                                     <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left">
                                         <Border.Effect>
@@ -1566,13 +1648,13 @@
                                         </Grid>
                                     </Border>
                                 </Grid>
-                            </ListBoxItem>
+                            </ListBoxItem>-->
 
 
                         </ListBox>
 
                     </StackPanel>
-                
+
                 </ScrollViewer>
             </Grid>
         </Grid>
