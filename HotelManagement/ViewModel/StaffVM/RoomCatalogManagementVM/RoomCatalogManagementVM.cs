@@ -2,6 +2,8 @@
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.Utils;
+using HotelManagement.View.CustomMessageBoxWindow;
+using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
 using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
@@ -75,6 +77,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 return ROOM_TYPE.ROOM_TYPE_C;
             }
         }
+       
 
         private List<RoomTypeDTO> _RoomTypes;
         public List<RoomTypeDTO> RoomTypes 
@@ -134,10 +137,14 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         Label lbRoomTypeA;
         Label lbRoomTypeB;
         Label lbRoomTypeC;
+        private bool TimeChange = false;
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRoomInfoCM { get; set; }
         public ICommand ChangeViewCM { get; set; }
         public ICommand SelectedDateTimeCM { get; set; }
+        public ICommand OpenRoomWindowCM { get; set; }
+        public ICommand FirstLoadRoomWindowCM { get; set; }
+        public ICommand RefreshCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -145,6 +152,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 PageSetting(p);
+                await AutoUpdateDb();
                 await GenerateRoom();
             });
             LoadRoomInfoCM = new RelayCommand<Grid>((p) => { return true; },  (p) => 
@@ -197,16 +205,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
                 else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus= p;
                 else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus= p;
-                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
-                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
-                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+              
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+                
+               
                 ChangView();
 
                 
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
-
+                TimeChange = true;
                 ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -297,21 +308,63 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
                 
             });
+            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; },  (p) =>
+            {
+                if (SelectedRoom != null)
+                {
+                    try
+                    {
+                        RoomWindow wd = new RoomWindow();
+                        wd.ShowDialog();
+
+
+                    }
+                    catch(Exception ex)
+                    {
+                        CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
+                    }
+                }
+            });
+            FirstLoadRoomWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                PersonNumber = RoomService.Ins.GetPersonNumber(SelectedRoom.RentalContractId);
+            });
+            RefreshCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
+            {
+                SelectedDate = DateTime.Today;
+                SelectedTime = DateTime.Now;
+                radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
+                radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
+                radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
+                radioButtonRoomType.IsChecked = true;
+                radioButtonRoomStatus.IsChecked = true;
+                radioButtonRoomCleaningStatus.IsChecked = true;
+                await AutoUpdateDb();
+                await GenerateRoom();
+              
+           
+            
+               
+            });
         }
 
        
         public async Task GenerateRoom()
         {
             RoomTypes = new List<RoomTypeDTO>(await RoomService.Ins.GetRoomTypes());
-
             ListRoomType1 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[0].RoomTypeId));
             ListRoomType1Mini = new List<RoomSettingDTO>(ListRoomType1);
             ListRoomType2 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[1].RoomTypeId));
             ListRoomType2Mini = new List<RoomSettingDTO>(ListRoomType2);
             ListRoomType3 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
             ListRoomType3Mini = new List<RoomSettingDTO>(ListRoomType3);
+            
             //ListRooms = new List<RoomDTO>(await RoomService.Ins.GetRooms());
 
+        }
+        public async Task AutoUpdateDb()
+        {
+            await RoomService.Ins.AutoUpdateDb();
         }
         public void FormatStringDate()
         {
@@ -407,9 +460,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     lbRoomTypeA.Visibility = Visibility.Collapsed;
                     lbRoomTypeB.Visibility = Visibility.Collapsed;
                 }
-                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+        
+                
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+              
+              
             }
 
             if (roomStatus != "All")
@@ -435,4 +492,5 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     .ToList();
         }
     }
+  
 }

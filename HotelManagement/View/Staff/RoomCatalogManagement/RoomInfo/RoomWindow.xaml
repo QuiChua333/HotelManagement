@@ -14,9 +14,15 @@
         Background="Transparent"
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        x:Name="mainWindow">
-    
-    
+        x:Name="mainRoomWindow"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadRoomWindowCM}"
+                                   CommandParameter="{Binding ElementName=mainRoomWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Window.Resources>
         <Style x:Key="GridHeader" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
@@ -29,6 +35,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+  
 
     <Border CornerRadius="15" Background="#F5F5F5" BorderBrush="Gray" BorderThickness="0.3" Height="650" Width="1000">
         <Border.Effect>
@@ -94,7 +101,7 @@
                       
                     </Border>
                     <Label Padding="0" 
-                           Content="PHÒNG P102"
+                           Content="{Binding SelectedRoom.RoomName}"
                            FontSize="22" 
                            FontWeight="Bold" 
                            VerticalAlignment="Center" 
@@ -152,8 +159,9 @@
                                                                                  Height="30"
                                                                                  Foreground="#444444"/>
                                                         <Label 
+                                                          Content="{Binding SelectedRoom.CustomerName}"
                                                           Margin="5,0,0,0"
-                                                           Content="Nguyễn Văn Phát"
+                                                          
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -180,8 +188,9 @@
                                                            VerticalContentAlignment="Center">
                                                         </Label>
                                                         <Label 
+                                                       
                                                           Margin="2,0,0,0"
-                                                           Content="01/04/2023"
+                                                           Content="{Binding SelectedRoom.StartDate, StringFormat=dd/MM/yyyy, Mode=TwoWay}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -208,8 +217,9 @@
                                                            VerticalContentAlignment="Center">
                                                         </Label>
                                                         <Label 
+                                                          
                                                           Margin="2,0,0,0"
-                                                           Content="3"
+                                                           Content="{Binding SelectedRoom.DayNumber}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -237,7 +247,7 @@
                                                     </Label>
                                                     <Label 
                                                           Margin="2,0,0,0"
-                                                           Content="3"
+                                                           Content="{Binding PersonNumber}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -358,7 +368,7 @@
                                     <Label 
                                      Padding="12,8"
                                       
-                                    Content="Phòng đang thuê" 
+                                    Content="{Binding RoomStatus}" 
                                     HorizontalAlignment="Left"
                                     FontWeight="Medium" 
                                    Foreground="#FFFFFF"
@@ -394,9 +404,9 @@
                                       FontFamily="{DynamicResource MaterialDesignFont}"
                                       HorizontalContentAlignment="Center"
                                       SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                                        <ComboBoxItem  Content="Đã dọn dẹp" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                        <ComboBoxItem  Content="Chưa dọn dẹp" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                        <ComboBoxItem  Content="Sửa chữa" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusCleaned}" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusNotCleaningYet}" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusRepairing}" FontSize="14" Foreground="{StaticResource Gray1}"/>
 
                                     </ComboBox>
                                 </Border>

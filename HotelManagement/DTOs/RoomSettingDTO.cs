@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.DTOs
 {
-    public class RoomSettingDTO
+    public class RoomSettingDTO : IComparable<RoomSettingDTO>   
     {
         public string RoomId { get; set; }
         public Nullable<int> RoomNumber { get; set; }
@@ -26,7 +26,14 @@ namespace HotelManagement.DTOs
         {
             get
             {
-                if (CheckOutDate == null || StartDate == null) return 0;
+                if (CheckOutDate == null || StartDate == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (!(bool)Validated) return 0;
+                }
                 TimeSpan t = (TimeSpan)(CheckOutDate - StartDate);
                 int res = (int)t.TotalDays;
                 return res;
@@ -36,10 +43,18 @@ namespace HotelManagement.DTOs
         public Nullable<bool> Validated { get; set; }
         public string RoomName
         {
-            get { return "P "+RoomNumber.ToString(); }
+            get { return "P"+RoomNumber.ToString(); }
             set { }
         }
         
+        public int CompareTo(RoomSettingDTO other)
+        {
+            DateTime t1 = (DateTime)this.StartDate + (TimeSpan)this.StartTime;
+            DateTime t2 = (DateTime)other.StartDate + (TimeSpan)other.StartTime;
+
+            DateTime o = DateTime.Today + DateTime.Now.TimeOfDay;
+            return (t1 - o).CompareTo(t2 - o);
+        }
 
     }
 }

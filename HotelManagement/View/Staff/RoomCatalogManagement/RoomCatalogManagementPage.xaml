@@ -343,6 +343,24 @@
 
                         </materialDesign:TimePicker>
                     </Border>
+                    <Border VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Background="#F6EEEE"
+                            Padding="5"
+                            CornerRadius="100"
+                            Margin="0,0,10,0"
+                            Cursor="Hand">
+                        <materialDesign:PackIcon Kind="Refresh"
+                                                 Width="35"
+                                                 Height="35"
+                                                 Foreground="#5AC872"/>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding RefreshCM}"
+                                                           CommandParameter="{Binding ElementName=mainPage}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Border>
                 </Grid>
 
                 <ScrollViewer Grid.Row="1" Margin="0,20,0,0"  HorizontalScrollBarVisibility="Hidden" CanContentScroll="False" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
@@ -353,7 +371,7 @@
                     <StackPanel>
                         <Label
                             x:Name="lbRoomTypeA"
-                            Content="{Binding RoomTypeA}" 
+                            Content="{Binding RoomTypeA, Mode=OneWay}" 
                            FontFamily="{DynamicResource MaterialDesignFont }"
                            FontSize="18"
                            FontWeight="Medium"
@@ -366,7 +384,7 @@
                                          VerticalAlignment="Center"
                                          HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom}" >
+                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}" >
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
@@ -379,7 +397,19 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid x:Name="grid">
+                                    <Grid x:Name="grid" Cursor="Hand">
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Opacity" Value="1"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Opacity" Value="0.8"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                         <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
@@ -491,6 +521,11 @@
                                             <i:EventTrigger EventName="Loaded">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>                                    
                                     </Grid>
@@ -745,7 +780,19 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid x:Name="grid">
+                                    <Grid x:Name="grid" Cursor="Hand">
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Opacity" Value="1"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Opacity" Value="0.8"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                         <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
@@ -857,6 +904,11 @@
                                             <i:EventTrigger EventName="Loaded">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Grid>
@@ -1002,8 +1054,20 @@
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
-                                     <DataTemplate>
-                                    <Grid x:Name="grid">
+                                <DataTemplate>
+                                    <Grid x:Name="grid" Cursor="Hand">
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Opacity" Value="1"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Opacity" Value="0.8"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
                                         <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
@@ -1116,7 +1180,12 @@
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
                                             </i:EventTrigger>
-                                        </i:Interaction.Triggers>                                    
+                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
+                                                                       CommandParameter="{Binding ElementName=grid}" />
+
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
                                     </Grid>
 
                                 </DataTemplate>

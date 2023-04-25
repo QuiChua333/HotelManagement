@@ -33,6 +33,7 @@ namespace HotelManagement.Model
         public virtual DbSet<RentalContract> RentalContracts { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<RoomCustomer> RoomCustomers { get; set; }
         public virtual DbSet<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<Service> Services { get; set; }
