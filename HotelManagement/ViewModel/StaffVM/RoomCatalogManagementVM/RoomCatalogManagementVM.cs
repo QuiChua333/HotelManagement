@@ -115,6 +115,24 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _ListRoomType3Mini; }
             set { _ListRoomType3Mini = value; OnPropertyChanged(); }
         }
+        private List<RoomSettingDTO> _ListRoomType1ChangeMini;
+        public List<RoomSettingDTO> ListRoomType1ChangeMini
+        {
+            get { return _ListRoomType1ChangeMini; }
+            set { _ListRoomType1ChangeMini = value; OnPropertyChanged(); }
+        }
+        private List<RoomSettingDTO> _ListRoomType2ChangeMini;
+        public List<RoomSettingDTO> ListRoomType2ChangeMini
+        {
+            get { return _ListRoomType2ChangeMini; }
+            set { _ListRoomType2ChangeMini = value; OnPropertyChanged(); }
+        }
+        private List<RoomSettingDTO> _ListRoomType3ChangeMini;
+        public List<RoomSettingDTO> ListRoomType3ChangeMini
+        {
+            get { return _ListRoomType3ChangeMini; }
+            set { _ListRoomType3ChangeMini = value; OnPropertyChanged(); }
+        }
         private List<RoomSettingDTO> _ListRoomType2;
         public List<RoomSettingDTO> ListRoomType2
         {
@@ -205,12 +223,22 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
                 else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus= p;
                 else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus= p;
-              
+
+                if (TimeChange == false)
+                {
                     ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
                     ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
                     ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
-                
+                }
+                else
+                {
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini);
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini);
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini);
+                }
                
+
+
                 ChangView();
 
                 
@@ -231,6 +259,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     CheckOutDate = r.CheckOutDate,
                     Validated = r.Validated,
                 }).ToList();
+               
                 ListRoomType2 = ListRoomType2Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -244,6 +273,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     CheckOutDate = r.CheckOutDate,
                     Validated = r.Validated,
                 }).ToList();
+                
                 ListRoomType3 = ListRoomType3Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -257,6 +287,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     CheckOutDate = r.CheckOutDate,
                     Validated = r.Validated,
                 }).ToList();
+               
                 radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
                 radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
                 radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
@@ -267,7 +298,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 ChangView();
 
 
-                List<string> listRentalContractId = (await RentalContractService.Ins.GetRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
+                List<string> listRentalContractId = (await RentalContractService.Ins.GetRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate  + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
               
                 foreach (var item in ListRoomType1)
                 {
@@ -305,8 +336,46 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     }
                     else item.RoomStatus = ROOM_STATUS.READY;
                 }
+                ListRoomType1ChangeMini = ListRoomType1.Select(r => new RoomSettingDTO
+                {
+                    RoomId = r.RoomId,
+                    RoomNumber = r.RoomNumber,
+                    RoomTypeId = r.RoomTypeId,
+                    RoomTypeName = r.RoomTypeName.Trim(),
+                    RoomStatus = r.RoomStatus.Trim(),
+                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                    StartDate = r.StartDate,
+                    StartTime = r.StartTime,
+                    CheckOutDate = r.CheckOutDate,
+                    Validated = r.Validated,
+                }).ToList();
+                ListRoomType2ChangeMini = ListRoomType2.Select(r => new RoomSettingDTO
+                {
+                    RoomId = r.RoomId,
+                    RoomNumber = r.RoomNumber,
+                    RoomTypeId = r.RoomTypeId,
+                    RoomTypeName = r.RoomTypeName.Trim(),
+                    RoomStatus = r.RoomStatus.Trim(),
+                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                    StartDate = r.StartDate,
+                    StartTime = r.StartTime,
+                    CheckOutDate = r.CheckOutDate,
+                    Validated = r.Validated,
+                }).ToList();
+                ListRoomType3ChangeMini = ListRoomType3.Select(r => new RoomSettingDTO
+                {
+                    RoomId = r.RoomId,
+                    RoomNumber = r.RoomNumber,
+                    RoomTypeId = r.RoomTypeId,
+                    RoomTypeName = r.RoomTypeName.Trim(),
+                    RoomStatus = r.RoomStatus.Trim(),
+                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                    StartDate = r.StartDate,
+                    StartTime = r.StartTime,
+                    CheckOutDate = r.CheckOutDate,
+                    Validated = r.Validated,
+                }).ToList();
 
-                
             });
             OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; },  (p) =>
             {
@@ -461,10 +530,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     lbRoomTypeB.Visibility = Visibility.Collapsed;
                 }
         
-                
+                    if (TimeChange == false)
+                {
                     ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
                     ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
                     ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                }
+                    else
+                {
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                }
+                   
               
               
             }
@@ -484,13 +562,6 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             }
         }
     }
-    public static class Extensions
-    {
-        public static List<string> GetClone(this List<string> source)
-        {
-            return source.Select(item => (string)item.Clone())
-                    .ToList();
-        }
-    }
+   
   
 }
