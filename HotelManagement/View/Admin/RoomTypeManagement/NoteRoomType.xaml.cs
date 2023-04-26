@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.Admin.RoomTypeManagement
 {
     /// <summary>
-    /// Interaction logic for AddRoomType.xaml
+    /// Interaction logic for NoteRoomType.xaml
     /// </summary>
-    public partial class AddRoomType : Window
+    public partial class NoteRoomType : Window
     {
-        public AddRoomType()
+        public NoteRoomType()
         {
             InitializeComponent();
         }

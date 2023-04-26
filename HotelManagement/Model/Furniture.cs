@@ -24,6 +24,7 @@ namespace HotelManagement.Model
         public string FurnitureName { get; set; }
         public string FurnitureType { get; set; }
         public byte[] FurnitureAvatar { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual FurnitureStorage FurnitureStorage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

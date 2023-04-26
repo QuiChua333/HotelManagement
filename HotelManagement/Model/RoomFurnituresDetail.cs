@@ -17,6 +17,7 @@ namespace HotelManagement.Model
         public string FurnitureId { get; set; }
         public string RoomId { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual Furniture Furniture { get; set; }
         public virtual Room Room { get; set; }

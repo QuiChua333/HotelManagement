@@ -17,9 +17,9 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.RentalContractDetails = new HashSet<RentalContractDetail>();
-            this.Reviews = new HashSet<Review>();
             this.RentalContracts = new HashSet<RentalContract>();
+            this.Reviews = new HashSet<Review>();
+            this.RentalContracts1 = new HashSet<RentalContract>();
         }
     
         public string CustomerId { get; set; }
@@ -31,12 +31,13 @@ namespace HotelManagement.Model
         public string Gender { get; set; }
         public string CustomerType { get; set; }
         public string CustomerAddress { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContractDetail> RentalContractDetails { get; set; }
+        public virtual ICollection<RentalContract> RentalContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContract> RentalContracts { get; set; }
+        public virtual ICollection<RentalContract> RentalContracts1 { get; set; }
     }
 }

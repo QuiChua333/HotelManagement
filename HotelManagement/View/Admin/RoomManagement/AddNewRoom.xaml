@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:HotelManagement.View.Admin.RoomManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="AddNewRoom" Height="522" Width="600">
+        MouseLeftButtonDown="addroomwindow_MouseLeftButtonDown"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        x:Name="addroomwindow"
+        PreviewKeyUp="addroomwindow_PreviewKeyUp"
+        Title="AddNewRoom" Height="522" Width="600"
+        DataContext="{StaticResource RoomManagementVM}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"/>
@@ -25,7 +31,17 @@
 
             <Image Grid.Column="0" Source="{StaticResource LogoDark}" Height="60" Width="70"/>
             <Label Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60 0 0 0" Content="THÊM PHÒNG MỚI" FontSize="24" Foreground="#009099" FontWeight="Bold"/>
-            <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 10 0" Height="50" Width="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0" Background="Transparent">
+            <Button Grid.Column="2" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top" 
+                    Margin="0 10 10 0" 
+                    Height="50" Width="50" 
+                    HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center" 
+                    BorderThickness="0" 
+                    Background="Transparent"
+                    Command="{Binding CloseCM}"
+                    CommandParameter="{Binding ElementName=addroomwindow}">
                 <Image Source="{StaticResource Button_X}" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="26" Width="30" />
             </Button>
         </Grid>
@@ -53,7 +69,21 @@
                         <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Số phòng:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="1" Padding="10 0 10 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontSize="16" Foreground="Black" Margin="28 0 0 0" Height="36" Width="240" materialDesign:HintAssist.Hint="Nhập số phòng (VD: P101)" BorderThickness="0.5" BorderBrush="#545454"/>
+                    <TextBox Grid.Row="1" 
+                             Padding="10 0 10 0" 
+                             HorizontalAlignment="Left" 
+                             VerticalContentAlignment="Center" 
+                             FontSize="16" 
+                             Foreground="Black" 
+                             Margin="28 0 0 0" 
+                             Height="36" 
+                             Width="240" 
+                             materialDesign:HintAssist.Hint="Nhập số phòng (VD: 101)" 
+                             BorderThickness="0.5" 
+                             BorderBrush="#545454"
+                             PreviewTextInput="TextBox_PreviewTextInput" 
+                             TextChanged="TextBox_TextChanged"
+                             Text="{Binding RoomNumber,Mode=TwoWay}"/>
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -63,18 +93,17 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Loại phòng:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Bottom"/>
                     <Border Grid.Row="1" Background="White" CornerRadius="5" Width="240" Height="36">
-                        <ComboBox     Width="240" Height="36"
-                                      Padding="10 5"
-                                      BorderBrush="#606060"
-                                      BorderThickness="0.5"
-                                      Foreground="Black"
-                                      SelectedIndex="0"
-                                      FontSize="16"
-                                      HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                            <ComboBoxItem  Content="Phòng thương gia" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Phòng thường" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Phòng vip" FontSize="16" Foreground="Black"/>
+                        <ComboBox Width="240" Height="36"
+                                 Padding="10 5"
+                                 BorderBrush="#606060"
+                                 BorderThickness="0.5"
+                                 Foreground="Black"
+                                 FontSize="16"
+                                 HorizontalContentAlignment="Center"
+                                 SelectedItem="{Binding CbRoomType, Mode=OneWayToSource}">
+                            <ComboBoxItem Tag="Phòng thương gia"  Content="Phòng thương gia" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Phòng thường"  Content="Phòng thường" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Phòng vip"  Content="Phòng vip" FontSize="16" Foreground="Black"/>
 
                         </ComboBox>
                     </Border>
@@ -91,8 +120,22 @@
                         <RowDefinition Height="40*"/>
                         <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Giá phòng / Ngày:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Bottom"/>
-                    <TextBox Grid.Row="1" Padding="10 0 10 0" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontSize="16" Foreground="Black" Margin="28 0 0 0" Height="36" Width="240" materialDesign:HintAssist.Hint="Nhập giá phòng (VD: 100 000)" BorderThickness="0.5" BorderBrush="#545454"/>
+                    <Label Grid.Row="0" Content="Trạng thái phòng:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="1" Background="White" CornerRadius="5" Width="240" Height="36">
+                        <ComboBox     Width="240" Height="36"
+                                      Padding="10 5"
+                                      BorderBrush="#606060"
+                                      BorderThickness="0.5"
+                                      Foreground="Black"
+                                      FontSize="16"
+                                      HorizontalContentAlignment="Center"
+                                      SelectedItem="{Binding CbRoomStatus,Mode=OneWayToSource}">
+                            <ComboBoxItem Tag="Phòng trống" Content="Phòng trống" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Phòng đang thuê" Content="Phòng đang thuê" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Phòng đã đặt" Content="Phòng đã đặt" FontSize="16" Foreground="Black"/>
+
+                        </ComboBox>
+                    </Border>
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -107,13 +150,12 @@
                                       BorderBrush="#606060"
                                       BorderThickness="0.5"
                                       Foreground="Black"
-                                      SelectedIndex="0"
                                       FontSize="16"
                                       HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                            <ComboBoxItem  Content="Đã dọn dẹp" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Chưa dọn dẹp" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Đang sửa chữa" FontSize="16" Foreground="Black"/>
+                                      SelectedItem="{Binding CbRoomTinhTrang,Mode=OneWayToSource}">
+                            <ComboBoxItem Tag="Đã dọn dẹp"  Content="Đã dọn dẹp" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Chưa dọn dẹp" Content="Chưa dọn dẹp" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Đang sửa chữa" Content="Đang sửa chữa" FontSize="16" Foreground="Black"/>
 
                         </ComboBox>
                     </Border>
@@ -125,10 +167,29 @@
                     <RowDefinition Height="80*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Ghi chú:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="1" Padding="10" FontSize="16" Foreground="Black" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" HorizontalAlignment="Center"  Width="540" materialDesign:HintAssist.Hint="Nhập ghi chú ..." BorderThickness="0.5" BorderBrush="#545454"/>
+                <TextBox Grid.Row="1" 
+                         Padding="10" 
+                         FontSize="16" 
+                         Foreground="Black" 
+                         HorizontalContentAlignment="Left"
+                         VerticalContentAlignment="Top" 
+                         HorizontalAlignment="Center"  
+                         Width="540" 
+                         materialDesign:HintAssist.Hint="Nhập ghi chú ..." 
+                         BorderThickness="0.5" 
+                         BorderBrush="#545454"
+                         Text="{Binding RoomNote,Mode=TwoWay}"/>
             </Grid>
         </Grid>
-        <Button Grid.Row="4" Content="Thêm" Background="#009099" Width="80" Height="34" Foreground="White" HorizontalAlignment="Right" Margin="0 0 40 0"/>
+        <Button Grid.Row="4" 
+                Content="Thêm" 
+                Background="#009099" 
+                Width="80" Height="34" 
+                Foreground="White" 
+                HorizontalAlignment="Right" 
+                Margin="0 0 40 0"
+                Command="{Binding SaveRoomCM}"
+                CommandParameter="{Binding ElementName=addroomwindow}"/>
 
     </Grid>
 </Window>
