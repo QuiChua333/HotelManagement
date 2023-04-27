@@ -13,7 +13,8 @@
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
     <Window.Resources>
         <Style x:Key="GridHeader" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
@@ -118,7 +119,7 @@
                                                                FontSize="16">
 
                                 </Label>
-                                <TextBlock Text="P102"
+                                <TextBlock Text="{Binding SelectedRoom.RoomNumber}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"

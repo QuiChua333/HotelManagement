@@ -35,7 +35,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-  
+
 
     <Border CornerRadius="15" Background="#F5F5F5" BorderBrush="Gray" BorderThickness="0.3" Height="650" Width="1000">
         <Border.Effect>
@@ -98,9 +98,10 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
                     <Border  BorderBrush="#009099" BorderThickness="0,0,0,5">
-                      
+
                     </Border>
                     <Label Padding="0" 
+                           x:Name="lbRoomName"
                            Content="{Binding SelectedRoom.RoomName}"
                            FontSize="22" 
                            FontWeight="Bold" 
@@ -117,7 +118,7 @@
                            HorizontalAlignment="Left"
                            Width="70"
                            Margin="5,0,0,0">
-                        
+
                     </Image>
                 </Grid>
             </Grid>
@@ -159,9 +160,9 @@
                                                                                  Height="30"
                                                                                  Foreground="#444444"/>
                                                         <Label 
-                                                          Content="{Binding SelectedRoom.CustomerName}"
+                                                          x:Name="lbCustomerName"
                                                           Margin="5,0,0,0"
-                                                          
+                                                          Content="{Binding SelectedRoom.CustomerName}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -190,7 +191,8 @@
                                                         <Label 
                                                        
                                                           Margin="2,0,0,0"
-                                                           Content="{Binding SelectedRoom.StartDate, StringFormat=dd/MM/yyyy, Mode=TwoWay}"
+                                                            x:Name="lbStartDate"
+                                                           Content="{Binding SelectedRoom.StartDateSting}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -219,7 +221,8 @@
                                                         <Label 
                                                           
                                                           Margin="2,0,0,0"
-                                                           Content="{Binding SelectedRoom.DayNumber}"
+                                                           x:Name="lbDayNumber"
+                                                            Content="{Binding SelectedRoom.DayNumber}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -247,7 +250,8 @@
                                                     </Label>
                                                     <Label 
                                                           Margin="2,0,0,0"
-                                                           Content="{Binding PersonNumber}"
+                                                           x:Name="lbPersonNumber"
+                                                      
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -267,11 +271,51 @@
                                             <ColumnDefinition Width="1.3*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
+                                        <Grid HorizontalAlignment="Left" 
+                                              Margin="20,0,0,0" 
+                                              Cursor="Hand" 
+                                              VerticalAlignment="Center"
+                                               Grid.Column="0"
+                                              x:Name="grXemPhieuThue">
+                                            <Grid.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Grid.IsMouseOver" Value="true">
+                                                            <Setter Property="Grid.Opacity" Value="0.8" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+
+
+                                            <Image Source="{StaticResource PhieuThue}" 
+                                                   Width="40"
+                                                   Height="40"
+                                                        VerticalAlignment="Center"
+                                                       HorizontalAlignment="Left"/>
+                                            <Label 
+                                                          Margin="50,0,0,6"
+                                                           Content="Xem phiếu thuê"
+                                                           FontSize="16"
+                                                           Foreground="#000000"
+                                                           FontFamily="{DynamicResource MaterialDesignFont}"
+                                                           VerticalContentAlignment="Center"
+                                                            VerticalAlignment="Bottom" 
+                                                    HorizontalAlignment="Left">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding LoadRoomRentalContractInfoCM}"
+                                                            CommandParameter="{Binding ElementName=grXemPhieuThue}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Label>
+
+                                            
+                                        </Grid>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                                    Margin="20,0,0,0"
-                                                    Grid.Column="0"
-                                                    Cursor="Hand"
-                                                    >
+                                                    Grid.Column="1"
+                                                    Cursor="Hand" >
+
                                             <StackPanel.Style>
                                                 <Style>
                                                     <Style.Triggers>
@@ -280,31 +324,6 @@
                                                         </Trigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </StackPanel.Style>
-                                            <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="40"
-                                                   Height="40"/>
-                                            <Label 
-                                                          Margin="5,0,0,0"
-                                                           Content="Xem phiếu thuê"
-                                                           FontSize="16"
-                                                           Foreground="#000000"
-                                                           FontFamily="{DynamicResource MaterialDesignFont}"
-                                                           VerticalContentAlignment="Center">
-                                            </Label>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                                                    Grid.Column="1"
-                                                    Cursor="Hand" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp">
-                                            
-                                            <StackPanel.Style>
-                                            <Style>
-                                                <Style.Triggers>
-                                                    <Trigger Property="StackPanel.IsMouseOver" Value="true">
-                                                        <Setter Property="StackPanel.Opacity" Value="0.8" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
                                             </StackPanel.Style>
                                             <Image Source="{StaticResource LuuTru}" 
                                                    Width="40"
@@ -367,8 +386,8 @@
                                         Background="#5AC872">
                                     <Label 
                                      Padding="12,8"
-                                      
-                                    Content="{Binding RoomStatus}" 
+                                      Content="{Binding SelectedRoom.RoomStatus}"
+                                    x:Name="lbRoomStatus"
                                     HorizontalAlignment="Left"
                                     FontWeight="Medium" 
                                    Foreground="#FFFFFF"
@@ -391,22 +410,23 @@
                                     FontFamily="{DynamicResource MaterialDesignFont}" 
                                     VerticalAlignment="Center" 
                                     FontSize="16" />
-                              
+
                                 <Border Background="#5AC872" CornerRadius="5"
                                         Margin="20,0,0,0">
-                                    <ComboBox     
+                                    <ComboBox   
+                                      x:Name="cbbRoomCleaningStatus"
                                       Padding="12,8"
+                                      SelectedIndex="0"
                                       BorderBrush="{StaticResource White}"
                                       Foreground="{StaticResource White}"
-                                      SelectedIndex="0"
                                       FontWeight="Medium"
                                       FontSize="16"
                                       FontFamily="{DynamicResource MaterialDesignFont}"
                                       HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusCleaned}" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusNotCleaningYet}" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                        <ComboBoxItem  Content="{Binding RoomCleaningStatusRepairing}" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                      SelectedItem="{Binding SelectedRoomCleaningStatus}">
+                                        <ComboBoxItem  Content="Đã dọn dẹp" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                        <ComboBoxItem  Content="Chưa dọn dẹp" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                        <ComboBoxItem  Content="Sửa chữa" FontSize="14" Foreground="{StaticResource Gray1}"/>
 
                                     </ComboBox>
                                 </Border>
@@ -415,11 +435,12 @@
                         </Grid>
                         <Grid Grid.Row="2" Margin="14" >
                             <Border CornerRadius="0,10,10,10" Background="#EAF0EA">
-                                
+
                             </Border>
                             <Border CornerRadius="0,0,8,0" Background="#DFDFD3"
                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left">
+                                     HorizontalAlignment="Left"
+                                    x:Name="test">
                                 <Label 
                                                             Padding="20,8"
                                     FontWeight="Medium"
@@ -429,6 +450,7 @@
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
                                                            >
                                 </Label>
+                               
                             </Border>
                             <Grid Margin="0,50,0,0">
                                 <Grid.ColumnDefinitions>
@@ -439,11 +461,11 @@
                                     <ListView Margin="30,0,35,25" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 ItemsSource="{Binding DSDV}"
                                 Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}">
-                                        
+
                                         <ListView.View>
                                             <GridView ColumnHeaderContainerStyle="{StaticResource GridHeader}">
-                                               
-                      
+
+
                                                 <GridViewColumn
                                                 Width="160">
                                                     <GridViewColumn.Header>
@@ -452,7 +474,7 @@
                                                                FontFamily="{DynamicResource MaterialDesignFont}"
                                                                FontWeight="Bold"
                                                                FontSize="16">
-                                                               
+
                                                         </Label>
                                                     </GridViewColumn.Header>
                                                     <GridViewColumn.CellTemplate>
@@ -505,7 +527,7 @@
                                                        Margin="5,0,0,0"
                                                       
                                                        FontSize="14" />
-                                                           
+
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
@@ -522,24 +544,24 @@
                                                     </GridViewColumn.Header>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                           
-                                                                <TextBlock Text="{Binding Thanhtien}"
+
+                                                            <TextBlock Text="{Binding Thanhtien}"
                                                        Margin="5,0,0,0"
                                                                      Foreground="#000000"
                                                                      FontWeight="Regular"       
                                                                HorizontalAlignment="Right"
                                                                FontSize="14" />
-                                                           
+
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                              
+
                                             </GridView>
                                         </ListView.View>
 
                                     </ListView>
-                                
-                                    
+
+
 
 
                                 </Grid>
@@ -583,7 +605,7 @@
                                                 </Label>
                                             </StackPanel>
                                         </Grid>
-                                        
+
                                     </Border>
                                 </Grid>
 
@@ -617,8 +639,7 @@
                         Background="{StaticResource ButtonOk}"
                         Margin="540,0,0,0"
                         Width="110" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        >
                 </Button>
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"

@@ -24,7 +24,7 @@ namespace HotelManagement.Model.Services
             private set => _ins = value;
         }
         private RentalContractService() { }
-        public async Task<List<RentalContractDTO>> GetRentalContracts()
+        public async Task<List<RentalContractDTO>> GetAllRentalContracts()
         {
             try
             {
@@ -43,6 +43,7 @@ namespace HotelManagement.Model.Services
                                              Validated=r.Validated,
                                           }
                                           ).ToListAsync();
+                    
                     return rentalContractList;
                 }
             }
@@ -50,7 +51,51 @@ namespace HotelManagement.Model.Services
             {
                 throw ex;
             }
+        }
+        public async Task<List<RentalContractDTO>> GetRentalContractsNow()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var rentalContractList = await (from r in context.RentalContracts
 
+                                                    select new RentalContractDTO
+                                                    {
+                                                        RentalContractId = r.RentalContractId,
+                                                        StartDate = r.StartDate,
+                                                        StartTime = r.StartTime,
+                                                        CheckOutDate = r.CheckOutDate,
+                                                        CustomerId = r.CustomerId,
+                                                        RoomId = r.RoomId,
+                                                        Validated = r.Validated,
+                                                    }
+                                          ).ToListAsync();
+                    rentalContractList = rentalContractList.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay).ToList();
+
+                    return rentalContractList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> GetPersonNumber(string rentalContractId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var customerList = await context.RoomCustomers.Where(x => x.RentalContractId == rentalContractId).Select(x => x.CustomerId).CountAsync();
+                    return customerList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

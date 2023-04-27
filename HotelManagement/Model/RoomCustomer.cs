@@ -14,7 +14,11 @@ namespace HotelManagement.Model
     
     public partial class RoomCustomer
     {
+        public int RoomCustomerId { get; set; }
         public string RentalContractId { get; set; }
         public string CustomerId { get; set; }
+    
+        public virtual Customer Customer { get; set; }
+        public virtual RentalContract RentalContract { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace HotelManagement.Model
     
     public partial class RoomFurnituresDetail
     {
+        public int RoomFurnituresDetailId { get; set; }
         public string FurnitureId { get; set; }
         public string RoomId { get; set; }
         public Nullable<int> Quantity { get; set; }

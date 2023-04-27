@@ -68,5 +68,7 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement
                 CollectionViewSource.GetDefaultView(listRoom3.ItemsSource).Refresh();
             }
         }
+
+        
     }
 }

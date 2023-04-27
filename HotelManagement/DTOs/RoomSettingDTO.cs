@@ -1,8 +1,11 @@
-﻿using System;
+﻿using HotelManagement.Model.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace HotelManagement.DTOs
 {
@@ -35,18 +38,31 @@ namespace HotelManagement.DTOs
                     if (!(bool)Validated) return 0;
                 }
                 TimeSpan t = (TimeSpan)(CheckOutDate - StartDate);
-                int res = (int)t.TotalDays;
+                int res = (int)t.TotalDays +1;
                 return res;
             }
         }
+        
+        
      
         public Nullable<bool> Validated { get; set; }
+        public string RoomNameP
+        {
+            get { return "P"+RoomNumber.ToString();  }
+        }
         public string RoomName
         {
-            get { return "P"+RoomNumber.ToString(); }
-            set { }
+            get { return "Phòng " + RoomNumber.ToString(); }
         }
-        
+        public string StartDateSting
+        {
+            get 
+            { 
+                if (StartDate != null) return ((DateTime)StartDate).ToString("dd/MM/yyyy"); 
+                else return null;
+            }
+        }
+
         public int CompareTo(RoomSettingDTO other)
         {
             DateTime t1 = (DateTime)this.StartDate + (TimeSpan)this.StartTime;

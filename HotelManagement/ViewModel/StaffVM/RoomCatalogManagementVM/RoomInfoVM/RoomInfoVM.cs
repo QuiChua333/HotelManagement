@@ -1,44 +1,26 @@
 ﻿using HotelManagement.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 {
     public partial class RoomCatalogManagementVM : BaseVM
     {
-        public string RoomCleaningStatusCleaned
+       
+
+        private ComboBoxItem _SelectedRoomCleaningStatus;
+        public ComboBoxItem SelectedRoomCleaningStatus
         {
-            get
-            {
-                return ROOM_CLEANING_STATUS.CLEANED;
-            }
-        }
-        public string RoomCleaningStatusNotCleaningYet
-        {
-            get
-            {
-                return ROOM_CLEANING_STATUS.NOT_CLEANING_YET;
-            }
-        }
-        public string RoomCleaningStatusRepairing
-        {
-            get
-            {
-                return ROOM_CLEANING_STATUS.REPAIRING;
-            }
+            get { return _SelectedRoomCleaningStatus; }
+            set { _SelectedRoomCleaningStatus = value; OnPropertyChanged(); }
         }
 
-        private int _PersonNumber;
-        public int PersonNumber
-        {
-            get { return _PersonNumber; }
-            set { _PersonNumber = value; OnPropertyChanged(); }
-        }
 
-        
     }
 }

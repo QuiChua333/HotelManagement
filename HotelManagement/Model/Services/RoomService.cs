@@ -4,8 +4,10 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -68,7 +70,7 @@ namespace HotelManagement.Model.Services
 
                     var list1 = await context.RentalContracts.ToListAsync();
                     var rentalContractListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay
-                    && !roomRentingList.Contains(x.RoomId)).Select(x=> x.RentalContractId).ToList();
+                    && roomRentingList.Contains(x.RoomId) == false).Select(x=> x.RentalContractId).ToList();
                     string t = "";
                     for (int i = 0; i < rentalContractListId.Count; i++)
                     {
@@ -84,7 +86,7 @@ namespace HotelManagement.Model.Services
 
 
                     list1 = await context.RentalContracts.ToListAsync();
-                    var roomListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && !roomRentingList.Contains(x.RoomId)).Select(x => x.RoomId).ToList();
+                    var roomListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId)==false).Select(x => x.RoomId).ToList();
                     t = "";
                     for (int i = 0; i < roomListId.Count; i++)
                     {
@@ -99,7 +101,7 @@ namespace HotelManagement.Model.Services
                     await context.Database.ExecuteSqlCommandAsync(sql2);
 
                     list1 = await context.RentalContracts.ToListAsync();
-                    roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && !roomRentingList.Contains(x.RoomId)).Select(x => x.RoomId).ToList();
+                    roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId)==false).Select(x => x.RoomId).ToList();
                     t = "";
                     for (int i = 0; i < roomListId.Count; i++)
                     {
@@ -133,9 +135,10 @@ namespace HotelManagement.Model.Services
 
                     var roomList = await (from r in context.Rooms join c in context.RentalContracts
                                           on r.RoomId equals c.RoomId into ps from c in ps.DefaultIfEmpty()
-                                          //join cu in context.Customers
-                                          //on c.CustomerId equals cu.CustomerId 
+                                          join cu in context.Customers 
+                                          on c.CustomerId equals cu.CustomerId into pi from cu in pi.DefaultIfEmpty()
                                           where r.RoomTypeId == RoomTypeId
+                                         
                                           orderby r.RoomId 
                                           select new RoomSettingDTO
                                           {
@@ -149,8 +152,8 @@ namespace HotelManagement.Model.Services
                                               StartTime=c.StartTime,
                                               CheckOutDate=c.CheckOutDate,
                                               Validated = c.Validated,
-                                              //CustomerId = cu.CustomerId,
-                                              //CustomerName = cu.CustomerName,
+                                              CustomerId = cu.CustomerId,
+                                              CustomerName = cu.CustomerName,
 
                                           }
                                           
@@ -203,7 +206,18 @@ namespace HotelManagement.Model.Services
                         }
                         else roomList2.Add(item[0]);
                     }
-                    
+                    foreach (var item in roomList2)
+                    {
+                        if (item.RoomStatus == ROOM_STATUS.READY)
+                        {
+
+                            item.StartDate = null;
+                            item.StartTime = null;
+                            item.CheckOutDate = null;
+                            item.CustomerId = null;
+                            item.CustomerName = null;
+                        }
+                    }
                     return roomList2;
                 }
             }
@@ -236,21 +250,6 @@ namespace HotelManagement.Model.Services
             }
 
         }
-        public int GetPersonNumber(string rentalContractId)
-        {
-            try
-            {
-                using (var context = new HotelManagementEntities())
-                {
-                    int number =  context.RoomCustomers.Where(x => x.RentalContractId == rentalContractId).Select(x => x.CustomerId).Count();
-                    return number;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-           
-        }
+        
     }
 }

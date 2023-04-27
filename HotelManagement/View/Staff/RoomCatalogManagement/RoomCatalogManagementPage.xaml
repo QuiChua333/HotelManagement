@@ -6,7 +6,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement"
       mc:Ignorable="d" 
       d:DesignHeight="644" d:DesignWidth="1170"
@@ -286,6 +286,7 @@
                                     HorizontalAlignment="Center"
                                     Focusable="False"
                                     BorderBrush="#67C6E6"
+                                    DisplayDateStart="{x:Static sys:DateTime.Today}"
                                     SelectedDate="{Binding SelectedDate, Mode=TwoWay}">
 
 
@@ -328,9 +329,7 @@
                                                        Foreground="{StaticResource Gray1}"
                                                        Padding="20,10,15,10"
                                                        materialDesign:ValidationAssist.FontSize="0.001"
-                                                       
                                                        SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
-                                                       
                                                        Focusable="False"
                                                        BorderBrush="#67C6E6">
                             <i:Interaction.Triggers>
@@ -429,7 +428,7 @@
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="{Binding RoomName}" 
+                                                                    <Label Content="{Binding RoomNameP}" 
                                                                        x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
@@ -812,7 +811,7 @@
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="{Binding RoomName}" 
+                                                                    <Label Content="{Binding RoomNameP}" 
                                                                        x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"
@@ -1087,7 +1086,7 @@
                                                                     <RowDefinition Height="*"/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid Grid.Row="0">
-                                                                    <Label Content="{Binding RoomName}" 
+                                                                    <Label Content="{Binding RoomNameP}" 
                                                                        x:Name="labelRoomName"
                                                                        FontFamily="{DynamicResource MaterialDesignFont }"
                                                                        FontSize="16"

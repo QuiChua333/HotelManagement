@@ -18,6 +18,7 @@ namespace HotelManagement.Model
         public RentalContract()
         {
             this.Bills = new HashSet<Bill>();
+            this.RoomCustomers = new HashSet<RoomCustomer>();
             this.ServiceUsings = new HashSet<ServiceUsing>();
             this.TroubleByCustomers = new HashSet<TroubleByCustomer>();
         }
@@ -36,6 +37,8 @@ namespace HotelManagement.Model
         public virtual Customer Customer { get; set; }
         public virtual Room Room { get; set; }
         public virtual Staff Staff { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomCustomer> RoomCustomers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceUsing> ServiceUsings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

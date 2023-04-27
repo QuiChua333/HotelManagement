@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 {
@@ -77,8 +78,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 return ROOM_TYPE.ROOM_TYPE_C;
             }
         }
-       
 
+        List<string> NotiList = new List<string>(); 
         private List<RoomTypeDTO> _RoomTypes;
         public List<RoomTypeDTO> RoomTypes 
         { 
@@ -156,6 +157,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         Label lbRoomTypeB;
         Label lbRoomTypeC;
         private bool TimeChange = false;
+        private bool Refresh = false;
+        DispatcherTimer timer = new DispatcherTimer();
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRoomInfoCM { get; set; }
         public ICommand ChangeViewCM { get; set; }
@@ -163,10 +166,14 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand OpenRoomWindowCM { get; set; }
         public ICommand FirstLoadRoomWindowCM { get; set; }
         public ICommand RefreshCM { get; set; }
+        public ICommand LoadRoomRentalContractInfoCM { get; set; }
+        public ICommand ClickCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
             FormatStringDate();
+
+            
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 PageSetting(p);
@@ -245,7 +252,31 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
+                if (Refresh == true)
+                {
+                    Refresh= false;
+                    return;
+                }
                 TimeChange = true;
+
+                if (SelectedDate.Year == DateTime.Now.Year && SelectedDate.Month == DateTime.Now.Month && SelectedDate.Day == DateTime.Now.Day)
+                {
+                   if (SelectedTime.Hour < DateTime.Now.Hour)
+                   {
+                        CustomMessageBox.ShowOk("Không được chọn thời điểm quá khứ!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                        RefreshCM.Execute(p);
+                        return;
+                   }
+                   else if (SelectedTime.Hour == DateTime.Now.Hour)
+                    {
+                        if (SelectedTime.Minute < DateTime.Now.Minute)
+                        {
+                            CustomMessageBox.ShowOk("Không được chọn thời điểm quá khứ!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                            RefreshCM.Execute(p);
+                            return;
+                        }
+                    }
+                }
                 ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -298,7 +329,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 ChangView();
 
 
-                List<string> listRentalContractId = (await RentalContractService.Ins.GetRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate  + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
+                List<string> listRentalContractId = (await RentalContractService.Ins.GetAllRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate  + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
               
                 foreach (var item in ListRoomType1)
                 {
@@ -377,44 +408,52 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 }).ToList();
 
             });
-            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; },  (p) =>
-            {
-                if (SelectedRoom != null)
-                {
-                    try
-                    {
-                        RoomWindow wd = new RoomWindow();
-                        wd.ShowDialog();
-
-
-                    }
-                    catch(Exception ex)
-                    {
-                        CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
-                    }
-                }
-            });
-            FirstLoadRoomWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                PersonNumber = RoomService.Ins.GetPersonNumber(SelectedRoom.RentalContractId);
-            });
+            
             RefreshCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
+                Refresh = true;
+                TimeChange = false;
+                await AutoUpdateDb();
                 SelectedDate = DateTime.Today;
+                Refresh = true;
                 SelectedTime = DateTime.Now;
+                await GenerateRoom();
                 radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
                 radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
                 radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
                 radioButtonRoomType.IsChecked = true;
                 radioButtonRoomStatus.IsChecked = true;
                 radioButtonRoomCleaningStatus.IsChecked = true;
-                await AutoUpdateDb();
-                await GenerateRoom();
-              
-           
-            
+
                
             });
+            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if (SelectedRoom != null)
+                {
+                    try
+                    {
+                        RoomWindow wd = new RoomWindow();
+                        var rentalContractId = (await RentalContractService.Ins.GetRentalContractsNow()).Where(x => x.RoomId == SelectedRoom.RoomId).Select(x=> x.RentalContractId).FirstOrDefault();
+                        int personNumber = (await RentalContractService.Ins.GetPersonNumber(rentalContractId));
+                        wd.lbPersonNumber.Content = personNumber.ToString();
+                        SelectedRoomCleaningStatus.Content = SelectedRoom.RoomCleaningStatus;
+                        wd.ShowDialog();
+                    }
+                    catch (Exception ex)
+                    {
+                        CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
+                    }
+                }
+            });
+            LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                
+            });
+
+           
+
         }
 
        
@@ -427,8 +466,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ListRoomType2Mini = new List<RoomSettingDTO>(ListRoomType2);
             ListRoomType3 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
             ListRoomType3Mini = new List<RoomSettingDTO>(ListRoomType3);
-            
-            //ListRooms = new List<RoomDTO>(await RoomService.Ins.GetRooms());
+            NotiList = new List<string>();
+            timer.Interval = TimeSpan.FromSeconds(5);
+            timer.Tick += timer_Tick;
+            timer.Start();
 
         }
         public async Task AutoUpdateDb()
@@ -561,7 +602,59 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
             }
         }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (TimeChange == true) return;
+            foreach(var item in ListRoomType1Mini)
+            {
+                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
+                {
+                    if (!NotiList.Contains(item.RoomId))
+                    {
+                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
+                        if (t > 0 && t <=5)
+                        {
+                            NotiList.Add(item.RoomId);
+                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                        }
+                    }
+                }
+            }
+            foreach (var item in ListRoomType2Mini)
+            {
+                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
+                {
+                    if (!NotiList.Contains(item.RoomId))
+                    {
+                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
+                        if  (t>0 && t <= 5)
+                        {
+                            NotiList.Add(item.RoomId);
+                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                        }
+                    }
+                }
+                
+            }
+            foreach (var item in ListRoomType3Mini)
+            {
+                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
+                {
+                    if (!NotiList.Contains(item.RoomId))
+                    {
+                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
+                        if (t > 0 && t <= 5)
+                        {
+                            NotiList.Add(item.RoomId);
+                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                        }
+                    }
+                }
+
+            }
+        }
     }
+
    
   
 }
