@@ -62,6 +62,7 @@ namespace HotelManagement.DTOs
                 else return null;
             }
         }
+        
 
         public int CompareTo(RoomSettingDTO other)
         {

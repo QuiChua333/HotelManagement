@@ -25,6 +25,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
     
     public partial class RoomCatalogManagementVM : BaseVM
     {
+        
         private DateTime _SelectedDate;
         public DateTime SelectedDate
         {
@@ -78,6 +79,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 return ROOM_TYPE.ROOM_TYPE_C;
             }
         }
+        private ListBox ListBox1;
+        private ListBox ListBox2;
+        private ListBox ListBox3;
 
         List<string> NotiList = new List<string>(); 
         private List<RoomTypeDTO> _RoomTypes;
@@ -167,7 +171,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand FirstLoadRoomWindowCM { get; set; }
         public ICommand RefreshCM { get; set; }
         public ICommand LoadRoomRentalContractInfoCM { get; set; }
-        public ICommand ClickCM { get; set; }
+  
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -179,6 +183,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 PageSetting(p);
                 await AutoUpdateDb();
                 await GenerateRoom();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += timer_Tick;
             });
             LoadRoomInfoCM = new RelayCommand<Grid>((p) => { return true; },  (p) => 
             {
@@ -205,7 +211,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                         color = (Color)ColorConverter.ConvertFromString("#72B6DC");
                         border.Background = new SolidColorBrush(color);
                     }
+
                 }
+               
 
                 if (textBlockRoomCleaningStatus != null)
                 {
@@ -448,7 +456,6 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-
                 
             });
 
@@ -467,8 +474,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ListRoomType3 = new List<RoomSettingDTO>(await RoomService.Ins.GetRoomsByRoomType(RoomTypes[2].RoomTypeId));
             ListRoomType3Mini = new List<RoomSettingDTO>(ListRoomType3);
             NotiList = new List<string>();
-            timer.Interval = TimeSpan.FromSeconds(5);
-            timer.Tick += timer_Tick;
+            timer.Stop();
             timer.Start();
 
         }
@@ -493,6 +499,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             lbRoomTypeB = (Label)p.FindName("lbRoomTypeB");
             lbRoomTypeC = (Label)p.FindName("lbRoomTypeC");
             MainPage = (Page)p;
+            ListBox1 = (ListBox) MainPage.FindName("listRoom1");
+            ListBox2 = (ListBox)MainPage.FindName("listRoom2");
+            ListBox3 = (ListBox)MainPage.FindName("listRoom3");
         }
       
      
@@ -601,60 +610,149 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
                 ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomCleaningStatus == roomCleaningStatus).ToList());
             }
+
         }
         void timer_Tick(object sender, EventArgs e)
         {
             if (TimeChange == true) return;
-            foreach(var item in ListRoomType1Mini)
+            for (int i= 0; i<ListRoomType1.Count; i++)
             {
+                var item = ListRoomType1[i];
                 if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
                 {
                     if (!NotiList.Contains(item.RoomId))
                     {
                         double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
-                        if (t > 0 && t <=5)
+                        if (t > 0 && t <= ROOM_NOTI.TIME_EXPIRED)
                         {
                             NotiList.Add(item.RoomId);
-                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
-                        }
-                    }
-                }
-            }
-            foreach (var item in ListRoomType2Mini)
-            {
-                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
-                {
-                    if (!NotiList.Contains(item.RoomId))
-                    {
-                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
-                        if  (t>0 && t <= 5)
-                        {
-                            NotiList.Add(item.RoomId);
-                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
-                        }
-                    }
-                }
-                
-            }
-            foreach (var item in ListRoomType3Mini)
-            {
-                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
-                {
-                    if (!NotiList.Contains(item.RoomId))
-                    {
-                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
-                        if (t > 0 && t <= 5)
-                        {
-                            NotiList.Add(item.RoomId);
-                            CustomMessageBox.ShowOk($"{item.RoomName} sắp hết hạn phiếu thuê!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
-                        }
-                    }
-                }
+                            if (item.RoomStatus == ROOM_STATUS.BOOKED)
+                            {
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hệ thống sẽ tự động hủy trạng thái đặt phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            }
+                            else CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hãy nhanh chóng thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            ListBoxItem listBoxItem = (ListBoxItem)ListBox1.ItemContainerGenerator.ContainerFromIndex(i);
+                            var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                            var dtmpl = cp.ContentTemplate as DataTemplate;
+                            var border = (Border)dtmpl.FindName("border", cp);
+                            border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
 
+                        }
+                        if (item.RoomStatus == ROOM_STATUS.RENTING)
+                        {
+                            if (t < 0)
+                            {
+                                NotiList.Add(item.RoomId);
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} đã hết hạn! Hãy thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                                ListBoxItem listBoxItem = (ListBoxItem)ListBox1.ItemContainerGenerator.ContainerFromIndex(i);
+                                var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                                var dtmpl = cp.ContentTemplate as DataTemplate;
+                                var border = (Border)dtmpl.FindName("border", cp);
+                                border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < ListRoomType2.Count; i++)
+            {
+                var item = ListRoomType2[i];
+                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
+                {
+                    if (!NotiList.Contains(item.RoomId))
+                    {
+                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
+                        if (t > 0 && t <= ROOM_NOTI.TIME_EXPIRED)
+                        {
+                            NotiList.Add(item.RoomId);
+                            if (item.RoomStatus == ROOM_STATUS.BOOKED)
+                            {
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hệ thống sẽ tự động hủy trạng thái đặt phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            }
+                            else CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hãy nhanh chóng thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            ListBoxItem listBoxItem = (ListBoxItem)ListBox2.ItemContainerGenerator.ContainerFromIndex(i);
+
+                            var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                            var dtmpl = cp.ContentTemplate as DataTemplate;
+                            var border = (Border)dtmpl.FindName("border", cp);
+                            border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
+                        }
+                        if (item.RoomStatus == ROOM_STATUS.RENTING)
+                        {
+                            if (t < 0)
+                            {
+                                NotiList.Add(item.RoomId);
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} đã hết hạn! Hãy thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                                ListBoxItem listBoxItem = (ListBoxItem)ListBox2.ItemContainerGenerator.ContainerFromIndex(i);
+                                var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                                var dtmpl = cp.ContentTemplate as DataTemplate;
+                                var border = (Border)dtmpl.FindName("border", cp);
+                                border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < ListRoomType3.Count; i++)
+            {
+                var item = ListRoomType3[i];
+                if (item.RoomStatus == ROOM_STATUS.RENTING || item.RoomStatus == ROOM_STATUS.BOOKED)
+                {
+                    if (!NotiList.Contains(item.RoomId))
+                    {
+                        double t = ((TimeSpan)((item.CheckOutDate + item.StartTime) - (DateTime.Today + DateTime.Now.TimeOfDay))).TotalMinutes;
+                        if (t > 0 && t <= ROOM_NOTI.TIME_EXPIRED)
+                        {
+                            NotiList.Add(item.RoomId);
+                            if (item.RoomStatus== ROOM_STATUS.BOOKED)
+                            {
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hệ thống sẽ tự động hủy trạng thái đặt phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            }
+                            else CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} sau {ROOM_NOTI.TIME_EXPIRED} phút nữa sẽ hết hạn! Hãy nhanh chóng thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                            ListBoxItem listBoxItem = (ListBoxItem)ListBox3.ItemContainerGenerator.ContainerFromIndex(i);
+                            var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                            var dtmpl = cp.ContentTemplate as DataTemplate;
+                            var border = (Border)dtmpl.FindName("border", cp);
+                            border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
+                        }
+                        if (item.RoomStatus == ROOM_STATUS.RENTING)
+                        {
+                            if (t < 0)
+                            {
+                                NotiList.Add(item.RoomId);
+                                CustomMessageBox.ShowOk($"Phiếu thuê phòng {item.RoomNumber} đã hết hạn! Hãy thanh toán tiền phòng!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                                ListBoxItem listBoxItem = (ListBoxItem)ListBox3.ItemContainerGenerator.ContainerFromIndex(i);
+                                var cp = FindVisualChild<ContentPresenter>(listBoxItem);
+                                var dtmpl = cp.ContentTemplate as DataTemplate;
+                                var border = (Border)dtmpl.FindName("border", cp);
+                                border.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F68A73"));
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
-
-   
   
+        public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                    {
+                        return (T)child;
+                    }
+
+                    T childItem = FindVisualChild<T>(child);
+                    if (childItem != null) return childItem;
+                }
+            }
+            return null;
+        }
+    }
+    
+
+
 }

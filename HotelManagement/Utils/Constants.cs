@@ -26,4 +26,9 @@ namespace HotelManagement.Utils
         public static readonly string NOT_CLEANING_YET = "Chưa dọn dẹp";
         public static readonly string REPAIRING = "Sửa chữa";
     }
+
+    public class  ROOM_NOTI
+    {
+        public static readonly int TIME_EXPIRED = 10;
+    }
 }

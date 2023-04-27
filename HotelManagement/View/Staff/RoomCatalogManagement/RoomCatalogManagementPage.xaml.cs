@@ -38,10 +38,10 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement
             if (String.IsNullOrEmpty(SearchBox.Text))
                 return true;
             else
-                return ((item as RoomSettingDTO).RoomName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                return ((item as RoomSettingDTO).RoomNameP.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
                     || (item as RoomSettingDTO).RoomStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                    || (item as RoomSettingDTO).RoomCleaningStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                   /* || (item as RoomSettingDTO).CustomerName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)*/;
+                    || (item as RoomSettingDTO).RoomCleaningStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                    || (((item as RoomSettingDTO).CustomerName != null) ? (item as RoomSettingDTO).CustomerName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0 : false));
 
         }
         private void Search_SearchTextChange(object sender, EventArgs e)
