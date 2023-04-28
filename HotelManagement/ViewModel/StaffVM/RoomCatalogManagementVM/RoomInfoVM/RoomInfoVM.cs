@@ -1,4 +1,5 @@
-﻿using HotelManagement.Utils;
+﻿using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         {
             get { return _SelectedRoomCleaningStatus; }
             set { _SelectedRoomCleaningStatus = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<RoomCustomerDTO> _ListCustomer;
+        public ObservableCollection<RoomCustomerDTO> ListCustomer
+        {
+            get { return _ListCustomer; }
+            set { _ListCustomer = value; OnPropertyChanged(); }
         }
 
 

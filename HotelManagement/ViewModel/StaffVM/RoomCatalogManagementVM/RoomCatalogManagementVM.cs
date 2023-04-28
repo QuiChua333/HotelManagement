@@ -171,7 +171,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand FirstLoadRoomWindowCM { get; set; }
         public ICommand RefreshCM { get; set; }
         public ICommand LoadRoomRentalContractInfoCM { get; set; }
-  
+        public ICommand LoadRoomCustomerInfoCM { get; set; }
+
+        public ICommand LoadAddCustomerWindowCM { get; set; }
+        public ICommand LoadRoomFurnitureInfoCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -454,12 +457,30 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     }
                 }
             });
-            LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                
+                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+                RoomRentalContractInfo wd = new RoomRentalContractInfo();
+                wd.ShowDialog();
+            });
+            LoadRoomCustomerInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+                RoomCustomerInfo wd = new RoomCustomerInfo();
+                wd.ShowDialog();
             });
 
-           
+            LoadAddCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                AddCustomerWindow wd  = new AddCustomerWindow();
+                wd.ShowDialog();
+            });
+            LoadRoomFurnitureInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                RoomFurnitureInfo wd = new RoomFurnitureInfo();
+                wd.ShowDialog();
+            });
+        
 
         }
 

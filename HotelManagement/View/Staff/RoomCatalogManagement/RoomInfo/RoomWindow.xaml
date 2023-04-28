@@ -271,13 +271,12 @@
                                             <ColumnDefinition Width="1.3*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
-                                        <Grid HorizontalAlignment="Left" 
-                                              Margin="20,0,0,0" 
-                                              Cursor="Hand" 
-                                              VerticalAlignment="Center"
-                                               Grid.Column="0"
-                                              x:Name="grXemPhieuThue">
-                                            <Grid.Style>
+                                        <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                                    Grid.Column="0"
+                                                    Cursor="Hand"
+                                                     Margin="15,0,0,0"
+                                                     x:Name="spXemPhieuThue">
+                                            <StackPanel.Style>
                                                 <Style>
                                                     <Style.Triggers>
                                                         <Trigger Property="Grid.IsMouseOver" Value="true">
@@ -285,7 +284,7 @@
                                                         </Trigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </Grid.Style>
+                                            </StackPanel.Style>
 
 
                                             <Image Source="{StaticResource PhieuThue}" 
@@ -294,7 +293,7 @@
                                                         VerticalAlignment="Center"
                                                        HorizontalAlignment="Left"/>
                                             <Label 
-                                                          Margin="50,0,0,6"
+                                                          Margin="5,0,0,6"
                                                            Content="Xem phiếu thuê"
                                                            FontSize="16"
                                                            Foreground="#000000"
@@ -305,16 +304,17 @@
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                                         <i:InvokeCommandAction Command="{Binding LoadRoomRentalContractInfoCM}"
-                                                            CommandParameter="{Binding ElementName=grXemPhieuThue}"/>
+                                                            CommandParameter="{Binding ElementName=spXemPhieuThue}"/>
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Label>
 
                                             
-                                        </Grid>
+                                        </StackPanel>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" 
                                                     Grid.Column="1"
-                                                    Cursor="Hand" >
+                                                    Cursor="Hand" 
+                                                    x:Name="spXemKhachO">
 
                                             <StackPanel.Style>
                                                 <Style>
@@ -336,10 +336,16 @@
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
                                                            VerticalContentAlignment="Center">
                                             </Label>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding LoadRoomCustomerInfoCM}"
+                                                            CommandParameter="{Binding ElementName=spXemKhachO}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" 
                                                     Cursor="Hand"
-                                                   
+                                                   x:Name="spXemTienNghi"
                                                     Grid.Column="2">
                                             <StackPanel.Style>
                                                 <Style>
@@ -361,6 +367,12 @@
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
                                                            VerticalContentAlignment="Center">
                                             </Label>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding LoadRoomFurnitureInfoCM}"
+                                                            CommandParameter="{Binding ElementName=spXemTienNghi}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </StackPanel>
 
 

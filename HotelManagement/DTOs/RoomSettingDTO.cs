@@ -62,7 +62,15 @@ namespace HotelManagement.DTOs
                 else return null;
             }
         }
-        
+        public string CheckOutDateSting
+        {
+            get
+            {
+                if (CheckOutDate != null) return ((DateTime)CheckOutDate).ToString("dd/MM/yyyy");
+                else return null;
+            }
+        }
+
 
         public int CompareTo(RoomSettingDTO other)
         {

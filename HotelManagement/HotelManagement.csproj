@@ -158,6 +158,7 @@
     </ApplicationDefinition>
     <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RentalContractDTO.cs" />
+    <Compile Include="DTOs\RoomCustomerDTO.cs" />
     <Compile Include="DTOs\RoomDTO.cs" />
     <Compile Include="DTOs\RoomSettingDTO.cs" />
     <Compile Include="DTOs\RoomTypeDTO.cs" />
@@ -248,8 +249,8 @@
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml.cs">
       <DependentUpon>RoomCustomerInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml.cs">
-      <DependentUpon>RoomFunitureInfo.xaml</DependentUpon>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFurnitureInfo.xaml.cs">
+      <DependentUpon>RoomFurnitureInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomRentalContractInfo.xaml.cs">
       <DependentUpon>RoomRentalContractInfo.xaml</DependentUpon>
@@ -494,7 +495,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml">
+    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFurnitureInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -154,6 +154,7 @@ namespace HotelManagement.Model.Services
                                               Validated = c.Validated,
                                               CustomerId = cu.CustomerId,
                                               CustomerName = cu.CustomerName,
+                                              RentalContractId = c.RentalContractId,
 
                                           }
                                           

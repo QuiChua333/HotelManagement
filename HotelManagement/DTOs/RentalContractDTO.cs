@@ -16,5 +16,6 @@ namespace HotelManagement.DTOs
         public string CustomerId { get; set; }
         public string RoomId { get; set; }
         public Nullable<bool> Validated { get; set; }
+        public IList<CustomerDTO> CustomersOfRoom { get; set; }
     }
 }
