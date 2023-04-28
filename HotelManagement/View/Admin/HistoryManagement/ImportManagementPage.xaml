@@ -32,7 +32,7 @@
                                             Opacity=".2"
                                             Direction="270"/>
                 </Border.Effect>
-                <Search:Search IndicatorBrush="White" Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Search:Search x:Name="FilterBox" SearchTextChange="filterbox_textchange" IndicatorBrush="White" Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Border>
             <Grid Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
                 <Grid.ColumnDefinitions>

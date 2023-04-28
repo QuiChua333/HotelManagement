@@ -26,5 +26,49 @@ namespace HotelManagement.Properties
                 return defaultInstance;
             }
         }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string userNameSetting
+        {
+            get
+            {
+                return ((string)(this["userNameSetting"]));
+            }
+            set
+            {
+                this["userNameSetting"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string userPassSetting
+        {
+            get
+            {
+                return ((string)(this["userPassSetting"]));
+            }
+            set
+            {
+                this["userPassSetting"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isRemidUserAndPass
+        {
+            get
+            {
+                return ((bool)(this["isRemidUserAndPass"]));
+            }
+            set
+            {
+                this["isRemidUserAndPass"] = value;
+            }
+        }
     }
 }

@@ -45,5 +45,10 @@ namespace HotelManagement.View.Login
             Border border = sender as Border;
             border.Background = new SolidColorBrush(Colors.Transparent);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.CustomerManagement"
         mc:Ignorable="d"
+        x:Name="ThemKH"
         Title="AddCustomerWindow" 
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -13,6 +14,8 @@
         ResizeMode="NoResize"
         AllowsTransparency="True" 
         BorderBrush="Transparent"
+        
+        DataContext="{StaticResource CustomerManagementVM }"
         Height="710" Width="610">
     <Border Background="White" CornerRadius="5" Height="700" Width="600" BorderBrush="#1D242E" BorderThickness="1">
         <Border.Effect>
@@ -58,12 +61,13 @@
                 <Grid Grid.Column="0">
                     <TextBlock Text="Tên khách hàng" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"/>
+                        <TextBox Text="{Binding FullName, Mode=TwoWay}" x:Name="FullName" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
                     <TextBlock Text="CCCD/CMND" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" Margin="19 0 0 0"/>
                     <Border Margin="0 0 0 10" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Right"  >
+                        <TextBox Text="{Binding Cccd, Mode=TwoWay}" x:Name="Cccd" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"/>
                     </Border>
                 </Grid>
             </Grid>
@@ -75,13 +79,13 @@
                 <Grid Grid.Column="0">
                     <TextBlock Text="Email" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
+                        <TextBox Text="{Binding Email, Mode=TwoWay}" x:Name="Email" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <TextBlock Text="Số điẹn thoại" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" Margin="19 0 0 0"/>
+                    <TextBlock Text="Số điện thoại" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" Margin="19 0 0 0"/>
                     <Border Margin="0 0 0 10" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Right"  >
-                        <TextBox Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
+                        <TextBox Text="{Binding Phonenumber, Mode=TwoWay}" x:Name="Phonenumber" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
                     </Border>
                 </Grid>
             </Grid>
@@ -94,7 +98,7 @@
                     <TextBlock Text="Ngày sinh" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                         <Grid>
-                            <DatePicker BorderThickness="0" FontSize="15" FontWeight="Regular"  Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
+                            <DatePicker SelectedDate="{Binding Birthday, Mode=TwoWay}"  x:Name="Birthday" BorderThickness="0" FontSize="15" FontWeight="Regular"  Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
                             <materialDesign:PackIcon Kind="CalendarBadgeOutline" Foreground="{DynamicResource SecondTextColor}" Width="18" Margin="0 0 10 0" Height="18" HorizontalAlignment="Right" VerticalAlignment="Center" />
                         </Grid>
                     </Border>
@@ -109,7 +113,9 @@
                     <TextBlock Text="Giới tính" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Height="30.5" Width="147" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                         <ComboBox Padding="12,8" 
-                                          BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                                  SelectedItem="{Binding Gender, Mode=TwoWay}"
+                                  x:Name="Gender"
+                                  BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="0"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
@@ -128,8 +134,10 @@
                     <TextBlock Text="Loại khách hàng" Margin="19 0 0 0" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Height="30.5" Width="147" Margin="19 0 0 0" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                         <ComboBox Padding="12,7" 
-                                          BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                                  BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="0"
+                                  SelectedItem="{Binding CustomerType, Mode=TwoWay}"
+                                  x:Name="CustomerType"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
                                   FontSize="14" 
@@ -148,7 +156,7 @@
                 <Grid Grid.Column="0">
                     <TextBlock Text="Địa chỉ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="85" Width="556" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding Address}" x:Name="Address"  Height="80"  Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Top"/>
                     </Border>
                 </Grid>
 
@@ -160,12 +168,9 @@
                         <TextBlock Text="Thoát" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Button>
                 </Border>
-                <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                    <Button Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
-                        <TextBlock Text="Lưu" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Button>
-                </Border>
-
+                <Button Command="{Binding AddCustomerCM}" CommandParameter="{Binding ElementName=ThemKH}" Height="34" BorderBrush="Red"  Width="80" materialDesign:ButtonAssist.CornerRadius="4" Background="{DynamicResource PrimaryBackgroundColor}" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                    <TextBlock Text="Lưu" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
             </Grid>
         </Grid>
 

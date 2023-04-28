@@ -9,7 +9,8 @@
       Title="LoginPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      ShowsNavigationUI="False">
+      ShowsNavigationUI="False"
+      DataContext="{StaticResource LoginVM}">
 
     <Grid  Margin="30 0 20 20">
         <Grid.RowDefinitions>
@@ -18,6 +19,7 @@
             <RowDefinition Height="45"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="70"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="90"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -38,7 +40,7 @@
         <StackPanel Grid.Row="3" VerticalAlignment="Bottom">
             <TextBlock FontSize="12" FontFamily="{DynamicResource MaterialDesignFont}" Text="Tên đăng nhập hoặc email"/>
             <Border Margin="0 5 0 0 " Height="32" Width="255" Background="White" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="0.7" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                <TextBox  Margin="5 0 0 0" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}">
+                <TextBox Text="{Binding Username, Mode=TwoWay}" Margin="5 0 0 0" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}">
 
                 </TextBox>
             </Border>
@@ -46,19 +48,32 @@
         <StackPanel Grid.Row="4" VerticalAlignment="Bottom">
             <TextBlock FontSize="12" FontFamily="{DynamicResource MaterialDesignFont}" Text="Mật khẩu"/>
             <Border Margin="0 5 0 0 " Height="32" Width="255" Background="White" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="0.7" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                <PasswordBox  Margin="5 0 0 0" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}">
-
+                <PasswordBox Name="PasswordBox" Margin="5 0 0 0" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}">
+                    <i:Interaction.Triggers >
+                        <i:EventTrigger EventName="PasswordChanged">
+                            <i:InvokeCommandAction Command="{Binding PasswordChangedCM}" CommandParameter="{Binding ElementName=PasswordBox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </PasswordBox>
             </Border>
         </StackPanel>
-        <StackPanel Grid.Row="5" Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock FontSize="12" TextDecorations="Underline" Foreground="{DynamicResource PrimaryBackgroundColor}" FontFamily="{DynamicResource MaterialDesignFont}" Text="Quên mật khẩu?" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Grid Grid.Row="5" VerticalAlignment="Bottom" >
+            <Label FontSize="11" Foreground="Red" Name="labelError" FontFamily="{DynamicResource MaterialDesignFont}"/>
+        </Grid>
+        <StackPanel Grid.Row="6" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Name="forgotpass" Cursor="Hand" FontSize="12" TextDecorations="Underline" Foreground="{DynamicResource PrimaryBackgroundColor}" FontFamily="{DynamicResource MaterialDesignFont}" Text="Quên mật khẩu?" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding LoadForgotPageCM}" CommandParameter="{Binding ElementName=forgotpass}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
             <Border Margin="68 0 0 0" Height="34" Width="100" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                <Button Height="34" BorderBrush="Transparent"  Width="100" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                <Button Command="{Binding LoginCM}" CommandParameter="{Binding ElementName=labelError}" Height="34" BorderBrush="Transparent"  Width="100" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
                     <TextBlock Text="Đăng nhập" FontSize="14" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Button>
             </Border>
         </StackPanel>
-        <TextBlock Grid.Row="6" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="12"  Text="Thời hạn và điều kiện chính sách riêng tư." HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="7" FontFamily="{DynamicResource MaterialDesignFont}" FontSize="12"  Text="Thời hạn và điều kiện chính sách riêng tư." HorizontalAlignment="Center"/>
     </Grid>
 </Page>

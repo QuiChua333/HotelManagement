@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,28 @@ namespace HotelManagement.View.Admin.CustomerManagement
         public CustomerManagementPage()
         {
             InitializeComponent();
+        }
+
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(FilterBox.Text)) return true;
+            switch (cbbFilter.SelectedValue)
+            {
+                case "Mã khách hàng":
+                    return ((item as CustomerDTO).CustomerId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >=0);
+                case "Tên khách hàng":
+                    return ((item as CustomerDTO).CustomerName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                case "Số điện thoại":
+                    return ((item as CustomerDTO).PhoneNumber.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                default:
+                    return ((item as CustomerDTO).CustomerId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+        }
+        private void filterbox_textchange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_ListView.ItemsSource);
+            view.Filter = Filter;
+            CollectionViewSource.GetDefaultView(_ListView.ItemsSource).Refresh();
         }
     }
 }

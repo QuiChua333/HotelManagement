@@ -18,6 +18,7 @@
                 xmlns:VM15="clr-namespace:HotelManagement.ViewModel.AdminVM.HistoryManagementVM"
                 xmlns:VM16="clr-namespace:HotelManagement.ViewModel.AdminVM.TroubleManagementVM"
                 xmlns:VM17="clr-namespace:HotelManagement.ViewModel.StaffVM.TroubleReportVM"
+                xmlns:VM18="clr-namespace:HotelManagement.ViewModel.LoginVM"
 >
     <VM1:AdminVM x:Key="AdminVM"/>
     <VM2:StaffVM x:Key="StaffVM"/>
@@ -36,6 +37,8 @@
     <VM15:HistoryManagementVM x:Key="HistoryManagementVM"/>
     <VM16:TroubleManagementVM x:Key="TroubleManagementVM"/>
     <VM17:TroubleReportVM x:Key="TroubleReportVM"/>
+    <VM18:ForgotPassVM x:Key="ForgotPassVM"/>
+    <VM18:LoginVM x:Key="LoginVM"/>
 
 
 </ResourceDictionary>

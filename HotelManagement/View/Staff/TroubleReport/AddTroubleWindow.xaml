@@ -12,6 +12,8 @@
         ResizeMode="NoResize"
         AllowsTransparency="True" 
         BorderBrush="Transparent"
+        DataContext="{StaticResource TroubleReportVM}"
+        Name="ReportTrouble"
         Height="710" Width="610">
     <Border Background="White" CornerRadius="5" Height="700" Width="600" BorderBrush="#1D242E" BorderThickness="1">
         <Border.Effect>
@@ -60,7 +62,7 @@
                                         Direction="270"/>
                     </Border.Effect>
                     <Border.Background>
-                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding Image}"/>
+                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding ImageTrouble, Mode=TwoWay}"/>
                     </Border.Background>
                 </Border>
                 <Grid Grid.Column="1" Margin="0 20 0 0">
@@ -73,27 +75,26 @@
                     <Grid Grid.Row="0">
                         <TextBlock Text="Nhân viên báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="Nguyen Van Phat" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                            <TextBlock Name="staffname" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1">
                         <TextBlock Text="Ngày báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="12/04/2023" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            <TextBlock Name="startdate" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2">
                         <TextBlock Text="Tình trạng" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="150" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="Chờ xử lý" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            <TextBlock Name="status" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <Border Height="34" Width="120" CornerRadius="5" Background="{DynamicResource SecondBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                            <Button Height="34" BorderBrush="Transparent"  Width="120" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"  >
+                            <Button Command="{Binding UploadImgCM}" Height="34" BorderBrush="Transparent"  Width="120" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right"  >
                                 <Grid>
                                     <materialDesign:PackIcon Kind="ImageAddOutline" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
-
                                     <TextBlock Text="Thêm ảnh" FontSize="15" Margin="20 0 0 0" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Right" VerticalAlignment="Center" />
                                     
                                 </Grid>
@@ -105,13 +106,13 @@
             <Grid Grid.Row="2" Margin="15 15 15 0">
                 <TextBlock Text="Tiêu đề:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 6" Height="30.5" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBox Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"/>
+                    <TextBox Text="{Binding Title,Mode=TwoWay}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="5" Margin="15 0 15 0">
                 <TextBlock Text="Mô tả sự cố:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 15" Height="60" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBox Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0"/>
+                    <TextBox Text="{Binding Desription,Mode=TwoWay}" Margin="5 0 0 0" TextWrapping="Wrap" Height="55" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Top"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="3" Margin="15 0 15 5 " >
@@ -125,7 +126,8 @@
                         <ComboBox Padding="12,7" 
                                   BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="0"
-                                  
+                                  SelectedItem="{Binding Reason,Mode=TwoWay}"
+                                  Name="cbbReason"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
                                   FontSize="14" 
@@ -142,7 +144,7 @@
                 <Grid Grid.Column="1" Visibility="Visible" x:Name="txtboxMPT">
                     <TextBlock Text="Mã số phiếu thuê" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox  Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center" BorderThickness="0"/>
+                        <TextBox Text="{Binding RentalContractId}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center" BorderThickness="0"/>
                     </Border>
                 </Grid>
             </Grid>
@@ -150,7 +152,9 @@
                 <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 10" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
                     <ComboBox Padding="12,7" 
-                                          BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                              SelectedItem="{Binding Level,Mode=TwoWay}"
+                              Name="cbblevel"
+                              BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="0"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
@@ -173,7 +177,7 @@
                     </Button>
                 </Border>
                 <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                    <Button Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                    <Button Command="{Binding AddTroubleCM}" CommandParameter="{Binding ElementName=ReportTrouble}" Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
                         <TextBlock Text="Lưu" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Button>
                 </Border>
