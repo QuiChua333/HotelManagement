@@ -19,7 +19,7 @@ namespace HotelManagement.Model
         {
             this.RentalContract = new HashSet<RentalContract>();
             this.Review = new HashSet<Review>();
-            this.RentalContract1 = new HashSet<RentalContract>();
+            this.RoomCustomer = new HashSet<RoomCustomer>();
         }
     
         public string CustomerId { get; set; }
@@ -38,6 +38,6 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Review { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContract> RentalContract1 { get; set; }
+        public virtual ICollection<RoomCustomer> RoomCustomer { get; set; }
     }
 }

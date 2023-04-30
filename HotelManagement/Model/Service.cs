@@ -22,6 +22,7 @@ namespace HotelManagement.Model
     
         public string ServiceId { get; set; }
         public string ServiceName { get; set; }
+        public string ServiceType { get; set; }
         public Nullable<double> ServicePrice { get; set; }
     
         public virtual GoodsStorage GoodsStorage { get; set; }

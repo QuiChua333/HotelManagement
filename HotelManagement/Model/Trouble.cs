@@ -14,6 +14,12 @@ namespace HotelManagement.Model
     
     public partial class Trouble
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Trouble()
+        {
+            this.TroubleByCustomer = new HashSet<TroubleByCustomer>();
+        }
+    
         public string TroubleId { get; set; }
         public string Title { get; set; }
         public byte[] Avatar { get; set; }
@@ -28,6 +34,7 @@ namespace HotelManagement.Model
         public string Level { get; set; }
     
         public virtual Staff Staff { get; set; }
-        public virtual TroubleByCustomer TroubleByCustomer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TroubleByCustomer> TroubleByCustomer { get; set; }
     }
 }
