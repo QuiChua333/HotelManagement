@@ -5,12 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.ServiceManagement"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         x:Name="ProductImportWD" Height="342" Width="542"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         MouseDown="ProductImportWD_MouseDown"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource ServiceManagementVM}"
 >
 
     <Grid Height="330" Width="530">
@@ -42,7 +45,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20">
                         <Border Height="230" Width="230" CornerRadius="230" BorderThickness="1" BorderBrush="#4C1D242E" VerticalAlignment="Top">
                             <Border.Background>
-                                <ImageBrush ImageSource="{StaticResource Giuong}"/>
+                                <ImageBrush ImageSource="{Binding ServiceCache.ServiceAvatar}"/>
                             </Border.Background>
                             <Border.Effect>
                                 <DropShadowEffect
@@ -65,9 +68,10 @@
                                                 <ColumnDefinition Width="197*"/>
                                             </Grid.ColumnDefinitions>
                                             <ComboBox Margin="2,0,2,0" BorderBrush="#FF4B4B4B"
+                                                      ItemsSource="{Binding ProductList}"
+                                                      DisplayMemberPath="ServiceName"
+                                                      SelectedItem="{Binding ServiceCache}"
                                                     Height="25" Padding="3 2 0 0" Width="233" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B" Grid.ColumnSpan="2">
-                                                <ComboBoxItem IsSelected="True" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" VerticalAlignment="Center">Giường Rolex Diamond</ComboBoxItem>
-                                                <ComboBoxItem FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" VerticalAlignment="Center">Ti vi</ComboBoxItem>
                                             </ComboBox>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3" Grid.ColumnSpan="2"/>
                                         </Grid>
@@ -81,7 +85,7 @@
                                                 <ColumnDefinition Width="19*"/>
                                                 <ColumnDefinition Width="60*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBox Text="12" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B" Grid.ColumnSpan="2"/>
+                                            <TextBox Text="{Binding ServiceCache.ImportQuantity}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B" Grid.ColumnSpan="2"/>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3" Grid.ColumnSpan="2"/>
                                         </Grid>
                                     </Border>
@@ -90,7 +94,7 @@
                                     <TextBlock Text="Giá nhập" Margin="5 0 0 2" FontSize="12" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#CC191919"></TextBlock>
                                     <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E">
                                         <Grid VerticalAlignment="Center" Height="25">
-                                            <TextBox Text="16,000,000" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
+                                            <TextBox Text="{Binding ServiceCache.ImportPrice}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                         </Grid>
                                     </Border>
@@ -126,7 +130,11 @@
                             </Style>
 
                         </Button.Style>
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding CloseImportWindowCM}" CommandParameter="{Binding ElementName=ProductImportWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBlock Text="Đóng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                     <Button Name="AddButton" Cursor="Hand" Width="60" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
@@ -157,7 +165,11 @@
                             </Style>
 
                         </Button.Style>
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ImportProductCM}" CommandParameter="{Binding ElementName=ProductImportWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBlock Text="Nhập" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                 </StackPanel>

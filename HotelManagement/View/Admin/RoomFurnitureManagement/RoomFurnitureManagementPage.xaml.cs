@@ -1,4 +1,7 @@
-﻿using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+﻿using BitMiracle.LibTiff.Classic;
+using HotelManagement.DTOs;
+using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+using IronXL.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +24,44 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
     /// </summary>
     public partial class RoomFurnitureManagementPage : Page
     {
-        public List<Furniture> furnitures;
         public RoomFurnitureManagementPage()
         {
             InitializeComponent();
-            furnitures = new List<Furniture>();
-            Furniture f;
-            for (int i = 0; i < 9; i++)
-            {
-                f = new Furniture("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
-                furnitures.Add(f);
-            }
+        }
 
-            ListViewProducts.ItemsSource = furnitures;
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
+            mask.Opacity = 0.1;
+        }
+
+        private void Grid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
+            mask.Opacity = 0;
+        }
+
+        private void SearchBox_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewFurnitureRoom.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = Filter;
+                CollectionViewSource.GetDefaultView(ListViewFurnitureRoom.ItemsSource).Refresh();
+            }
+        }
+
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as FurnituresRoomDTO).RoomNumber.ToString().IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                       || ((item as FurnituresRoomDTO).RoomType.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                       || ((item as FurnituresRoomDTO).RoomStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                       || ((item as FurnituresRoomDTO).CustomerName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

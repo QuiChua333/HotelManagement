@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    
                     xmlns:FurnitureVM="clr-namespace:HotelManagement.ViewModel.AdminVM.FurnitureManagementVM"
                     xmlns:FurnitureView="clr-namespace:HotelManagement.View.Admin.FurnitureManagement"
                     xmlns:ServiceVM="clr-namespace:HotelManagement.ViewModel.AdminVM.ServiceManagementVM"
@@ -29,7 +28,6 @@
                     xmlns:TroubleVM="clr-namespace:HotelManagement.ViewModel.AdminVM.TroubleManagementVM"
                     
 >
-    
     <DataTemplate DataType="{x:Type FurnitureVM:FurnitureManagementVM}">
         <FurnitureView:FurnitureManagementPage></FurnitureView:FurnitureManagementPage>
     </DataTemplate>

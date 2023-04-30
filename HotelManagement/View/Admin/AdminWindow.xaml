@@ -190,6 +190,8 @@
                 </CheckBox>
             </Grid>
         </Border>
-        
+
+        <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" x:Name="MaskOverSideBar" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
+
     </Grid>
 </Window>

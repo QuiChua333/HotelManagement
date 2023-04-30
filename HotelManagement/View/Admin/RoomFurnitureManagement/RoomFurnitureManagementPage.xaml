@@ -50,30 +50,71 @@
 
         <!--Top control-->
         <Grid Name="TopControl" Grid.Row="0" Margin="35 10 35 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Search:Search 
-                        Width="350" Height="38"
-                        FontSize="14"
-                        IconSize="18"
-                        Corner="10"
-                        Margin="0 0 38 0"
-                        IndicatorBrush="{StaticResource LightBlue_Search}"
-                    />
-                <Rectangle Width="205" Height="38" RadiusX="10" RadiusY="10" Fill="White">
-                    <Rectangle.Effect>
-                        <DropShadowEffect
-                            BlurRadius="10"
-                            Color="Black"
-                            ShadowDepth="4"
-                            Opacity=".25"
-                            Direction="270"
-                        />
-                    </Rectangle.Effect>
-                </Rectangle>
+                    x:Name="SearchBox"
+                    Width="350" Height="38"
+                    FontSize="14"
+                    IconSize="18"
+                    Corner="10"
+                    Margin="0 0 38 0"
+                    IndicatorBrush="{StaticResource LightBlue_Search}"
+                    SearchTextChange="SearchBox_SearchTextChange"
+                />
+                <StackPanel Width="205" Height="38" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
+                    <Border CornerRadius="10" Width="173" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"
+                            />
+                        </Border.Effect>
+                        <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Loại phòng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterTypeRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
+                            <ComboBoxItem Content="Tất cả loại phòng" Tag="Tất cả"/>
+                            <ComboBoxItem Content="Thường" Tag="Thường"/>
+                            <ComboBoxItem Content="VIP" Tag="VIP"/>
+                            <ComboBoxItem Content="Thương gia" Tag="Thương gia"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding MainPageSelectionFilterChangeCM}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        
+
+                    </Border>
+                </StackPanel>
+                <StackPanel Width="205" Height="38" Orientation="Horizontal" Margin="20 0 0 0">
+                    <!--<materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>-->
+                    <Border CornerRadius="10" Width="173" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"
+                            />
+                        </Border.Effect>
+                        <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Tình trạng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterStatusRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
+                            <ComboBoxItem Content="Tất cả tình trạng" Tag="Tất cả"/>
+                            <ComboBoxItem Content="Phòng trống" Tag="Phòng trống"/>
+                            <ComboBoxItem Content="Đang thuê" Tag="Đang thuê"/>
+                            <ComboBoxItem Content="Đã đặt" Tag="Đã đặt"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding MainPageSelectionFilterChangeCM}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </Grid>
 
@@ -84,7 +125,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid x:Name="ContentItems" Grid.Column="0" Margin="14 10 14 10">
-                <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" 
+                <ListBox Name="ListViewFurnitureRoom" ItemsSource="{Binding FurnituresRoomList}" HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Top"
+                         SelectedItem="{Binding SelectedFurnituresRoom}"
                          materialDesign:ListBoxItemAssist.ShowSelection="True"
                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                          BorderThickness="0">
@@ -95,6 +138,7 @@
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Background" Value="Wheat"/>
                             <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Margin" Value="0 5 0 29"/>
                             <Setter Property="Padding" Value="0"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -113,31 +157,36 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="3"/>
+                            <UniformGrid Columns="3" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="263" Height="161">
+                            <Grid Width="263" Height="161" Cursor="Hand" MouseMove="Grid_MouseMove" MouseLeave="Grid_MouseLeave">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurnitureRoom, Path=DataContext.OpenFurnituresInRoomWindow}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <Border CornerRadius="10,10,0,0" Background="{StaticResource PrimaryBackgroundColor}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Border CornerRadius="10,10,0,0" Background="{Binding BackgroundRoomBrush}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                         <Grid Margin="10">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0" VerticalAlignment="Center" Margin="0 0 0 5">
-                                                <Label Content="P1.02" 
+                                                <Label Content="{Binding RoomNumber}" 
                                                         FontFamily="{DynamicResource MaterialDesignFont }"
                                                         FontSize="19"
                                                         FontWeight="Bold"
                                                         Foreground="#FFFFFF"
                                                         HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                <TextBlock Text="Thương gia"
+                                                <TextBlock Text="{Binding RoomType}"
                                                             FontFamily="{DynamicResource MaterialDesignFont}"
                                                             FontSize="13"
                                                             Foreground="#FFFFFF"
@@ -147,12 +196,25 @@
 
                                             <Grid Grid.Row="1">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 -8 0 0">
-                                                    <materialDesign:PackIcon Kind="Account" 
+                                                    <materialDesign:PackIcon 
                                                                     Foreground="#FFFFFF"
                                                                     Width="33"
                                                                     Height="33"
-                                                                    VerticalAlignment="Center"/>
-                                                    <Label Content="Nguyễn Văn Phát" 
+                                                                    VerticalAlignment="Center">
+                                                        <materialDesign:PackIcon.Style>
+                                                            <Style TargetType="materialDesign:PackIcon">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsEmptyRoom}" Value="False">
+                                                                        <Setter Property="Kind" Value="Account"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsEmptyRoom}" Value="True">
+                                                                        <Setter Property="Kind" Value="Tick"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </materialDesign:PackIcon.Style>
+                                                    </materialDesign:PackIcon>
+                                                    <Label Content="{Binding CustomerName}" 
                                                             FontFamily="{DynamicResource MaterialDesignFont }"
                                                             FontSize="19"
                                                             FontWeight="Bold"
@@ -169,34 +231,55 @@
                                     <Border CornerRadius="0,0,10,10" Background="#EBE8E8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                         <Grid Margin="10,0">
                                             <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <TextBlock Text="Đang cho thuê" FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" FontWeight="SemiBold" Foreground="#5A5A5A" />
+                                                <TextBlock Text="{Binding RoomStatus}" FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" FontWeight="SemiBold" Foreground="#5A5A5A" />
                                             </Grid>
 
                                             <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <materialDesign:PackIcon Kind="Account" 
-                                                                Foreground="Black"
-                                                                Width="15"
-                                                                Height="15"
-                                                                Margin="5 0 0 0"
-                                                                VerticalAlignment="Center"/>
-                                                    <materialDesign:PackIcon Kind="Account" 
-                                                                Foreground="Black"
-                                                                Width="15"
-                                                                Height="15"
-                                                                Margin="5 0 0 0"
-                                                                VerticalAlignment="Center"/>
-                                                    <materialDesign:PackIcon Kind="Account" 
-                                                                Foreground="Black"
-                                                                Width="15"
-                                                                Height="15"
-                                                                Margin="5 0 0 0"
-                                                                VerticalAlignment="Center"/>
+                                                    <ListBox Name="ListCus" ItemsSource="{Binding RoomCusList}"
+                                                         VerticalAlignment="Center"
+                                                         materialDesign:ListBoxItemAssist.ShowSelection="False"
+                                                         ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                                        <ListBox.ItemContainerStyle>
+                                                            <Style TargetType="ListBoxItem">
+                                                                <Setter Property="Margin" Value="0"/>
+                                                                <Setter Property="Padding" Value="0"/>
+                                                                <Setter Property="Background" Value="Wheat"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                            <ContentPresenter/>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ListBox.ItemContainerStyle>
+                                                        <ListBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ListBox.ItemsPanel>
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <ListBoxItem Margin="1 0 1 0" Padding="0">
+                                                                    <materialDesign:PackIcon 
+                                                                        Kind="Account"
+                                                                        Foreground="Black"
+                                                                        Width="18"
+                                                                        Height="18"
+                                                                        VerticalAlignment="Center"
+                                                                    />
+                                                                </ListBoxItem>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
                                     </Border>
                                 </Grid>
+                                
+                                <Rectangle Name="MaskOver" Grid.RowSpan="2" Fill="Black" Opacity="0" RadiusX="10" RadiusY="10"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -929,6 +1012,36 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
+        </Grid>
+        <!--LoadBar-->
+        <Grid
+            Grid.RowSpan="2"
+            Background="Transparent"
+            VerticalAlignment="Stretch"
+        >
+            <ProgressBar
+                IsIndeterminate="{Binding IsLoading}"
+                BorderThickness="0"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0"
+                x:Name="load"
+                Height="3" 
+                Background="{StaticResource PrimaryBackgroundColor}"
+            />
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility"
+                        Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=load,Path=IsIndeterminate}"
+                                    Value="True">
+                            <Setter Property="Visibility"
+                                Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </Grid.Style>
         </Grid>
     </Grid>
 </Page>

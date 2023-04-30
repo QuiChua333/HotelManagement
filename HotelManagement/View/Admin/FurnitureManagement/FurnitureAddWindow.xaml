@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:HotelManagement.View.Admin.FurnitureManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
         x:Name="FurnitureAddWD" Height="342" Width="542"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
+        DataContext="{StaticResource FurnitureManagementVM}"
+        WindowStartupLocation="CenterScreen"
         MouseDown="FurnitureAddWD_MouseDown"
 >
 
@@ -42,7 +45,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20">
                         <Border Height="230" Width="230" CornerRadius="5" BorderThickness="1" BorderBrush="#4C1D242E" VerticalAlignment="Top">
                             <Border.Background>
-                                <ImageBrush ImageSource="{StaticResource Giuong}"/>
+                                <ImageBrush ImageSource="{Binding furnitureCache.FurnitureAvatar}"/>
                             </Border.Background>
                         </Border>
                         <Grid Margin="0 0 0 0">
@@ -51,7 +54,7 @@
                                     <TextBlock Text="Tên tiện nghi" Margin="5 0 0 2" FontSize="12" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#CC191919"></TextBlock>
                                     <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E">
                                         <Grid VerticalAlignment="Center" Height="25">
-                                            <TextBox Text="Giường Rolex Diamond" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
+                                            <TextBox Text="{Binding furnitureCache.FurnitureName}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                         </Grid>
                                     </Border>
@@ -64,9 +67,8 @@
                                                 <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E">
                                                     <Grid VerticalAlignment="Center" Height="25">
                                                         <ComboBox Margin="2,0,2,0" BorderBrush="#FF4B4B4B"
-                                                                Height="25" Padding="5 2 3 0" Width="210" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B">
-                                                            <ComboBoxItem IsSelected="True" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" VerticalAlignment="Center">Giường ngủ</ComboBoxItem>
-                                                            <ComboBoxItem FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" VerticalAlignment="Center">Ti vi</ComboBoxItem>
+                                                                  ItemsSource="{Binding AllFurnitureType}"
+                                                                Height="25" SelectedItem="{Binding furnitureCache.FurnitureType}" Padding="5 2 3 0" Width="210" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B">
                                                         </ComboBox>
                                                         <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                                     </Grid>
@@ -79,7 +81,7 @@
                                             <StackPanel x:Name="AddNewTypeFurniture" Visibility="Collapsed" Orientation="Horizontal">
                                                 <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E" HorizontalAlignment="Left">
                                                     <Grid VerticalAlignment="Center" Height="25">
-                                                        <TextBox x:Name="TypeBoxAddNewTypeFurniture" Margin="5,0,5,0" Height="25" Padding="0" Width="204" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
+                                                        <TextBox x:Name="TypeBoxAddNewTypeFurniture" Text="{Binding furnitureCache.FurnitureType}" Margin="5,0,5,0" Height="25" Padding="0" Width="204" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
                                                         <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                                     </Grid>
                                                 </Border>
@@ -104,6 +106,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenImagesWindowCM}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <Path Data="{StaticResource UpLoadImageIcon}" Fill="White"/>
                             </Border>
                         </Grid>
@@ -134,9 +141,14 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
+                            
 
                         </Button.Style>
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding CloseAddFurnitureCM}" CommandParameter="{Binding ElementName=FurnitureAddWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBlock Text="Đóng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                     <Button Name="SaveButton" Cursor="Hand" Width="60" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
@@ -165,9 +177,14 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
+                            
 
                         </Button.Style>
-
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding AddFurnitureCM}" CommandParameter="{Binding ElementName=FurnitureAddWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <TextBlock Text="Thêm" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                 </StackPanel>

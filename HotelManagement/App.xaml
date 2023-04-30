@@ -21,7 +21,7 @@
                 <ResourceDictionary Source="./Resources/Styles/ListBox.xaml"/>
                 <ResourceDictionary Source="./Resources/Styles/HeaderListViewStyle.xaml"/>
                 <ResourceDictionary Source="./Resources/Icons/Icons.xaml"/>
-                 <ResourceDictionary Source="./ResourceXAML/MainResources.xaml"/>
+                <ResourceDictionary Source="./ResourceXAML/MainResources.xaml"/>
                 <ResourceDictionary Source="./Utilities/AdminDataTemplate.xaml"/>
                 <ResourceDictionary Source="./Utilities/StaffDataTemplate.xaml"/>
 
