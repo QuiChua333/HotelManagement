@@ -12,15 +12,12 @@ namespace HotelManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RentalContractDetail
+    public partial class sysdiagram
     {
-        public string RentalContractId { get; set; }
-        public string StaffId { get; set; }
-        public string CustomerId { get; set; }
-        public Nullable<bool> Validated { get; set; }
-    
-        public virtual Customer Customer { get; set; }
-        public virtual RentalContract RentalContract { get; set; }
-        public virtual Staff Staff { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

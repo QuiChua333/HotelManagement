@@ -14,6 +14,7 @@ namespace HotelManagement.Model
     
     public partial class ServiceUsing
     {
+        public int ServiceUsingId { get; set; }
         public string ServiceId { get; set; }
         public string RentalContractId { get; set; }
         public Nullable<double> UnitPrice { get; set; }

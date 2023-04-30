@@ -33,5 +33,10 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
         {
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

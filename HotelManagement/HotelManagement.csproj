@@ -166,6 +166,12 @@
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
+    <Compile Include="DTOs\CustomerDTO.cs" />
+    <Compile Include="DTOs\RentalContractDTO.cs" />
+    <Compile Include="DTOs\RoomCustomerDTO.cs" />
+    <Compile Include="DTOs\RoomDTO.cs" />
+    <Compile Include="DTOs\RoomSettingDTO.cs" />
+    <Compile Include="DTOs\RoomTypeDTO.cs" />
     <Compile Include="Model\Bill.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
@@ -199,13 +205,13 @@
     <Compile Include="Model\RentalContract.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\RentalContractDetail.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Review.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Room.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RoomCustomer.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RoomFurnituresDetail.cs">
@@ -217,10 +223,15 @@
     <Compile Include="Model\Service.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Services\RentalContractService.cs" />
+    <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\ServiceUsing.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Staff.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Trouble.cs">
@@ -306,8 +317,8 @@
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomCustomerInfo.xaml.cs">
       <DependentUpon>RoomCustomerInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml.cs">
-      <DependentUpon>RoomFunitureInfo.xaml</DependentUpon>
+    <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFurnitureInfo.xaml.cs">
+      <DependentUpon>RoomFurnitureInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomRentalContractInfo.xaml.cs">
       <DependentUpon>RoomRentalContractInfo.xaml</DependentUpon>
@@ -619,7 +630,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFunitureInfo.xaml">
+    <Page Include="View\Staff\RoomCatalogManagement\RoomInfo\RoomFurnitureInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -954,19 +965,6 @@
     <Resource Include="Resources\Images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\bgLogin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model\HotelManagementDatabase.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
-      <LastGenOutput>HotelManagementDatabase.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\HotelManagementDatabase.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
-      <LastGenOutput>HotelManagementDatabase.cs</LastGenOutput>
-    </Content>
     <Resource Include="Model\Services\item.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -1031,6 +1029,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\HotelManagementDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
+      <LastGenOutput>HotelManagementDatabase.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\HotelManagementDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
+      <LastGenOutput>HotelManagementDatabase.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
