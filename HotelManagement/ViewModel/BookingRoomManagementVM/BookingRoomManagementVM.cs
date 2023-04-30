@@ -8,5 +8,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 {
     public class BookingRoomManagementVM:BaseVM
     {
+        public BookingRoomManagementVM() 
+        { 
+            
+        }
     }
 }

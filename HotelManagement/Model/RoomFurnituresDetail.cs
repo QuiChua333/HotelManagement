@@ -14,10 +14,10 @@ namespace HotelManagement.Model
     
     public partial class RoomFurnituresDetail
     {
+        public int RoomFurnituresDetailId { get; set; }
         public string FurnitureId { get; set; }
         public string RoomId { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual Furniture Furniture { get; set; }
         public virtual Room Room { get; set; }

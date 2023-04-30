@@ -22,8 +22,8 @@ namespace HotelManagement.Model
     
         public string RoomTypeId { get; set; }
         public string RoomTypeName { get; set; }
-        public string Note { get; set; }
         public Nullable<double> Price { get; set; }
+        public string Note { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

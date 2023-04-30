@@ -37,9 +37,12 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             w1.trangthaiphong.Text = SelectedItem.RoomStatus;
             w1.tinhtrangphong.Text = SelectedItem.RoomCleaningStatus;
         }
+        
         public async Task UpdateRoomFunc(System.Windows.Window p)
         {
-          
+            string rtn = CbRoomType.Tag.ToString();
+            string rti = await RoomTypeService.Ins.GetRoomTypeID(rtn);
+
             if (RoomID != null && IsValidData())
             {
                 RoomDTO room = new RoomDTO
@@ -47,7 +50,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                     RoomID = RoomID,
                     Note = RoomNote,
                     RoomNumber = RoomNumber,
-                    RoomTypeId = RoomTypeID,
+                    RoomTypeId = rti,
                     RoomCleaningStatus = CbRoomTinhTrang.Tag.ToString(),
                     RoomTypeName = CbRoomType.Tag.ToString(),
                     RoomStatus = CbRoomStatus.Tag.ToString(),

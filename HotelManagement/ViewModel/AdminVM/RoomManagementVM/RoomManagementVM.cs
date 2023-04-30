@@ -254,13 +254,10 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         }
         public bool IsValidData()
         {
-            
             return !string.IsNullOrEmpty(RoomNote) &&
                 !string.IsNullOrEmpty(CbRoomStatus.Tag.ToString()) &&
                 !string.IsNullOrEmpty(CbRoomTinhTrang.Tag.ToString()) &&
                 !string.IsNullOrEmpty(CbRoomType.Tag.ToString());
-                
-
         }
     }
 }

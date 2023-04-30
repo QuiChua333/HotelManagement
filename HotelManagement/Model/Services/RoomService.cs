@@ -37,14 +37,14 @@ namespace HotelManagement.Model.Services
                     List<RoomDTO> RoomDTOs = await (
                         from r in db.Rooms join temp in db.RoomTypes
                         on r.RoomTypeId equals temp.RoomTypeId into gj
-                        from temp in gj.DefaultIfEmpty()
+                        from d in gj.DefaultIfEmpty()
                         select new RoomDTO
                         {
                             // DTO = db
                             RoomID = r.RoomId,
                             RoomNumber = (int)r.RoomNumber,
-                            RoomTypeName = temp.RoomTypeName,
-                            RoomTypeId = temp.RoomTypeId,
+                            RoomTypeName = d.RoomTypeName,
+                            RoomTypeId = d.RoomTypeId,
                             Note = r.Note,
                             RoomCleaningStatus = r.RoomCleaningStatus,
                             RoomStatus = r.RoomStatus,
