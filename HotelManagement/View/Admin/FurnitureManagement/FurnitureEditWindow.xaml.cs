@@ -41,13 +41,18 @@ namespace HotelManagement.View.Admin.FurnitureManagement
         {
             SelectTypeFurniture.Visibility = Visibility.Collapsed;
             AddNewTypeFurniture.Visibility = Visibility.Visible;
-            TypeBoxAddNewTypeFurniture.Text = String.Empty;
+            AddNewTypeFurniture.IsEnabled = true;
+            TypeBoxAddNewTypeFurniture.Text = "";
+            TypeBoxAddNewTypeFurniture.Focus();
+            SelectTypeFurniture.IsEnabled = false;
         }
 
         private void BtnFilter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectTypeFurniture.Visibility = Visibility.Visible;
             AddNewTypeFurniture.Visibility = Visibility.Collapsed;
+            AddNewTypeFurniture.IsEnabled = false;
+            SelectTypeFurniture.IsEnabled = true;
         }
     }
 }

@@ -12,15 +12,16 @@ namespace HotelManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RentalContractDetail
+    public partial class FurnitureReceipt
     {
-        public string RentalContractId { get; set; }
+        public string FurnitureReceiptId { get; set; }
+        public string FurnitureId { get; set; }
         public string StaffId { get; set; }
-        public string CustomerId { get; set; }
-        public Nullable<bool> Validated { get; set; }
+        public Nullable<double> ImportPrice { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<System.DateTime> CreateAt { get; set; }
     
-        public virtual Customer Customer { get; set; }
-        public virtual RentalContract RentalContract { get; set; }
+        public virtual Furniture Furniture { get; set; }
         public virtual Staff Staff { get; set; }
     }
 }

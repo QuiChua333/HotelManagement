@@ -1,4 +1,5 @@
 ﻿using BitMiracle.LibTiff.Classic;
+using HotelManagement.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
 {
     public partial class FurnitureManagementVM: BaseVM
     {
+        
+        public FurnitureDTO furnitureCache { get; set; }
         public List<string> AllFurnitureType { get; set; }
         public void GetAllFurnitureType()
         {

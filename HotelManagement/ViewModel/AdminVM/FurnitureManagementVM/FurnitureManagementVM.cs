@@ -1,12 +1,16 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.Components.Search;
 using HotelManagement.DTOs;
+using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.FurnitureManagement;
+using HotelManagement.View.CustomMessageBoxWindow;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -53,14 +57,6 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             get { return selectedFurniture; }
             set { selectedFurniture = value; OnPropertyChanged(); }
         }
-        private FurnitureDTO selectedFurnitureCacheData;
-        public  FurnitureDTO SelectedFurnitureCacheData
-        {
-            set { selectedFurnitureCacheData = value; OnPropertyChanged(); }
-            get { return selectedFurnitureCacheData; }
-        }
-
-
         private ObservableCollection<string> currentListFurnitureType { get; set; }
         public ObservableCollection<string> CurrentListFurnitureType
         {
@@ -78,38 +74,67 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                 OnPropertyChanged();
             }
         }
-
+        string filePath;
+        bool IsChangeImage;
+        bool IsImportList;
         public ObservableCollection<string> AllListFurniture { get; set; }
 
         public ICommand FirstLoadCM { get; set; }
-        public ICommand ClickCM { get; set; }
         public ICommand CloseCM { get; set; }
-        public ICommand OpenEditFurnitureCM { get; set; }
-        public ICommand CloseEditFurnitureCM { get; set; }
-        public ICommand SaveEditFurnitureCM { get; set; }
+        public ICommand OpenImagesWindowCM { get; set; }
+
+        //Lọc tiện nghi
         public ICommand SelectionFilterChangeCM { get; set; }
 
+        //Sửa tiện nghi
+        public ICommand OpenEditFurnitureCM { get; set; }
+        public ICommand SaveEditFurnitureCM { get; set; }
+        public ICommand CloseEditFurnitureCM { get; set; }
+
+        //Thêm tiện nghi
+        public ICommand OpenAddFurnitureCM { get; set; }
+        public ICommand AddFurnitureCM { get; set; }
+        public ICommand CloseAddFurnitureCM { get; set; }
+
+        //Xóa tiện nghi
+        public ICommand DeleteFurnitureCM { get; set; }
+
+        //Chi tiết tiện nghi
+        public ICommand OpenInfoFurnitureCM { get; set; }
+        public ICommand CloseInfoFunitureCM { get; set; }
+
+        //Nhập tiện nghi
+        public ICommand OpenImportFurnitureCM { get; set; }
+        public ICommand OpenImportListFurnitureCM { get; set; }
+        public ICommand IncreaseQuantityOrderItem { get; set; }
+        public ICommand DecreaseQuantityOrderItem { get; set; }
+        public ICommand DeleteItemInBillStackCM { get; set; }
+        public ICommand ImportFurnitureCM { get; set; }
+        public ICommand ImportListFurnitureCM { get; set; }
+        public ICommand OpenImportContractCM { get; set; }
+        public ICommand CloseImportFurnitureCM { get; set; }
+        public ICommand CloseImportListFurnitureCM { get; set; }
+        public ICommand CloseImportListInfoCM { get; set; }
 
 
 
         public FurnitureManagementVM()
         {
             AdminWindow tk = System.Windows.Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
-            
 
             FirstLoadCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, async (p) =>
             {
                 IsChanged = false;
-
+                IsImportList = false;
                 IsLoading = true;
                 (bool isSuccess, string messageReturn, List<FurnitureDTO> listFurniture) = await Task.Run(() => FurnitureService.Ins.GetAllFurniture());
-                CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(listFurniture));
                 IsLoading = false;
 
                 if (isSuccess)
                 {
                     AllFurniture = new ObservableCollection<FurnitureDTO>(listFurniture);
                     FurnitureList = new ObservableCollection<FurnitureDTO>(AllFurniture);
+                    CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(listFurniture));
                 }
                 else
                     CustomMessageBox.ShowOk(messageReturn, "Lỗi" , "OK");
@@ -119,7 +144,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             {
                 if(SelectedFurniture != null)
                 {
-                    SelectedFurnitureCacheData = SelectedFurniture;
+                    furnitureCache = new FurnitureDTO(SelectedFurniture);
                     FurnitureEditWindow furnitureEditWD = new FurnitureEditWindow();
                     tk.MaskOverSideBar.Visibility = Visibility.Visible;
                     furnitureEditWD.ShowDialog();
@@ -129,24 +154,30 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             CloseEditFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
-                SelectedFurnitureCacheData = null;
+                furnitureCache = null;
             });
 
             SaveEditFurnitureCM = new RelayCommand<System.Windows.Window>((p) => { return true; },async (p) =>
             {
-                if(SelectedFurnitureCacheData != null)
+                if(furnitureCache != null)
                 {
-                    (bool isSuccess, string messageReturn) = await Task.Run(() => FurnitureService.Ins.SaveEditFurniture(SelectedFurnitureCacheData));
+                    if(furnitureCache.IsEmptyFurniture())
+                    {
+                        if(CustomMessageBox.ShowOk("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning) == CustomMessageBoxResult.OK)
+                            return;
+                    } 
+
+                    (bool isSuccess, string messageReturn) = await Task.Run(() => FurnitureService.Ins.SaveEditFurniture(furnitureCache));
                     if(isSuccess)
                     {
                         CustomMessageBox.ShowOkCancel(messageReturn, "Thành công", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
-
+                        LoadFurnitureListView(Operation.UPDATE, furnitureCache);
                     }
                     else
                     {
                         CustomMessageBox.ShowOkCancel(messageReturn, "Lỗi", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
                     }
-                    p.Close();
+                    p.Close();  
                     tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
                 }
             });
@@ -156,21 +187,211 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                 if(SelectedItemFilter != null)
                 {
                     if (SelectedItemFilter == "Tất cả")
-                        FurnitureList = AllFurniture;
+                        FurnitureList = new ObservableCollection<FurnitureDTO>(AllFurniture);
                     else
-                    FurnitureList = new ObservableCollection<FurnitureDTO>(FurnitureService.Ins.GetAllFurnitureByType(SelectedItemFilter, AllFurniture));
+                        FurnitureList = new ObservableCollection<FurnitureDTO>(FurnitureService.Ins.GetAllFurnitureByType(SelectedItemFilter, AllFurniture));
+                }    
+            });
+            OpenImagesWindowCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                OpenFileDialog openfile = new OpenFileDialog();
+                openfile.Title = "Select an image";
+                openfile.Filter = "Image File (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg; *.png";
+                if (openfile.ShowDialog() == true)
+                {
+                    furnitureCache.SetAvatar(openfile.FileName);
+                    return;
+                }
+            });
+
+            OpenAddFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                furnitureCache = new FurnitureDTO();
+                FurnitureAddWindow furnitureAddWD = new FurnitureAddWindow();
+                tk.MaskOverSideBar.Visibility = Visibility.Visible;
+                furnitureAddWD.ShowDialog();
+            });
+            AddFurnitureCM = new RelayCommand<System.Windows.Window>((p) => { return true; }, async (p) => {
+                if (furnitureCache != null)
+                {
+                    if (furnitureCache.IsEmptyFurniture())
+                    {
+                        if (CustomMessageBox.ShowOk("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning) == CustomMessageBoxResult.OK)
+                            return;
+                    }
+
+                    (bool isSuccess, string messageReturn, string id) = await Task.Run(() => FurnitureService.Ins.AddFurniture(furnitureCache));
+                    furnitureCache.FurnitureID = id;
+                    if (isSuccess)
+                    {
+                        CustomMessageBox.ShowOkCancel(messageReturn, "Thành công", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+                        LoadFurnitureListView(Operation.CREATE, furnitureCache);
+                    }
+                    else
+                    {
+                        CustomMessageBox.ShowOkCancel(messageReturn, "Lỗi", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+                    }
+                    p.Close();
+                    tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                }
+            });
+            CloseAddFurnitureCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                p.Close();
+                tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                furnitureCache = null;
+            });
+
+            DeleteFurnitureCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = SelectedFurniture;
+                if(CustomMessageBox.ShowOkCancel("Bạn có chắc chắn muốn xóa tiện nghi này không?","Cảnh báo", "Có", "Hủy", CustomMessageBoxImage.Warning)
+                    == CustomMessageBoxResult.Cancel) 
+                    return;
+
+                (bool isSuccess, string messageReturn) = await Task.Run(() =>  FurnitureService.Ins.DeleteFurniture(furnitureCache));
+
+                if (isSuccess)
+                {
+                    CustomMessageBox.ShowOk(messageReturn, "Thành công", "OK", CustomMessageBoxImage.Success);
+                    LoadFurnitureListView(Operation.DELETE, furnitureCache);
+                }
+                else
+                    CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", CustomMessageBoxImage.Error);
+            });
+
+            OpenInfoFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = SelectedFurniture;
+                FurnitureInfoWindow furnitureInfoWD = new FurnitureInfoWindow();
+                tk.MaskOverSideBar.Visibility = Visibility.Visible;
+                furnitureInfoWD.ShowDialog();
+            });
+
+            CloseInfoFunitureCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                p.Close();
+                tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                furnitureCache = null;
+            });
+
+            OpenImportFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = new FurnitureDTO(SelectedFurniture);
+                if (IsImportList == false)
+                {
+                    FurnitureImportWindow furnitureImportWD = new FurnitureImportWindow();
+                    tk.MaskOverSideBar.Visibility = Visibility.Visible;
+                    furnitureImportWD.ShowDialog();
+                }
+                else
+                    LoadItemToList(furnitureCache);
+            });
+
+            ImportFurnitureCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                IsLoading = true;
+                await ImportFurniture(furnitureCache, p, tk);
+                IsLoading = false;
+            });
+
+            OpenImportListFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsChanged = true;
+                IsImportList = true;
+                OrderList = new ObservableCollection<FurnitureDTO>();
+            });
+
+            IncreaseQuantityOrderItem = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = SelectedFurniture;
+                furnitureCache.ImportQuantity += 1;
+                SumMoney += furnitureCache.ImportPrice;
+            });
+
+            DecreaseQuantityOrderItem = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = SelectedFurniture;
+                if(furnitureCache.ImportQuantity > 1)
+                    furnitureCache.ImportQuantity -= 1;
+                else
+                    OrderList.Remove(furnitureCache);
+                SumMoney -= furnitureCache.ImportPrice;
+            });
+
+            DeleteItemInBillStackCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                furnitureCache = SelectedFurniture;
+                if(CustomMessageBox.ShowOkCancel("Bạn có muốn xóa tiện nghi này không?", "Cảnh báo", "Có", "Không", CustomMessageBoxImage.Warning)
+                    == CustomMessageBoxResult.OK)
+                {
+                    OrderList.Remove(furnitureCache);
+                    SumMoney -= (furnitureCache.ImportQuantity * furnitureCache.ImportPrice);
                 }    
             });
 
-            ClickCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, (p) =>
+            OpenImportContractCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                IsChanged = true ;
+                SumMoney = 0;
+                for(int i = 0; i < OrderList.Count(); i++)
+                {
+                    OrderList[i].SetTotalImportPrice();
+                    SumMoney += OrderList[i].TotalImportPrice;
+                }
+                SumMoneyStr = Helper.FormatVNMoney(SumMoney);
+                CreateDate = DateTime.Now;
+                CreateDateString = DateTimeToString(CreateDate);
+                tk.MaskOverSideBar.Visibility = Visibility.Visible;
+                ImportListWD importListWD = new ImportListWD();
+                importListWD.ShowDialog();
             });
+
+            ImportListFurnitureCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                IsLoading = true;
+                await ImportListFurniture(p, tk);
+                IsLoading = false;
+            });
+
+            CloseImportListInfoCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                SumMoney = 0;
+                SumMoneyStr = null;
+                p.Close();
+                tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+            });
+
+            CloseImportListFurnitureCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IsImportList = false;
+                OrderList = null;
+            });
+
+            CloseImportFurnitureCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                p.Close();
+                tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                ImportPrice = null;
+                ImportQuantity = null;
+                furnitureCache = null;
+            });
+
             CloseCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, (p) =>
             {
                 IsChanged = false;
             });
-
         }
 
         public List<string> GetAllCurrentFurnitureType(List<FurnitureDTO> listFurniture)
@@ -188,6 +409,42 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             AllFurnitureType = new List<string>(result);
             AllFurnitureType.Remove(AllFurnitureType[0]);
             return result;
+        }
+
+        public void LoadFurnitureListView(Operation operation, FurnitureDTO furniture = null)
+        {
+            switch(operation)
+            {
+                case Operation.UPDATE:
+                    FurnitureDTO furnitureDTO = FurnitureList.FirstOrDefault(item => item.FurnitureID == furniture.FurnitureID);
+                    if (furnitureDTO == null)
+                        return;
+                    FurnitureList[FurnitureList.IndexOf(furnitureDTO)] = furniture;
+                    AllFurniture[AllFurniture.IndexOf(furnitureDTO)] = furniture;
+                    CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(new List<FurnitureDTO>(AllFurniture)));
+                    break;
+                case Operation.CREATE:
+                    FurnitureDTO furnitureCreate = new FurnitureDTO(furniture);
+                    if (furnitureCreate == null)
+                        return;
+                    FurnitureList.Add(furnitureCreate);
+                    AllFurniture.Add(furnitureCreate);
+                    CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(new List<FurnitureDTO>(AllFurniture)));
+                    break;
+                case Operation.DELETE:
+                    FurnitureDTO furnitureDelete = FurnitureList.FirstOrDefault(item => item.FurnitureID == furniture.FurnitureID);
+                    if (furnitureDelete == null)
+                        return;
+                    FurnitureList.Remove(furnitureDelete);
+                    AllFurniture.Remove(furnitureDelete);
+                    CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(new List<FurnitureDTO>(AllFurniture)));
+                    break;
+                case Operation.UPDATE_PROD_QUANTITY:
+                    FurnitureDTO furnitureUpdateQuantity = FurnitureList.FirstOrDefault(item => item.FurnitureID == furniture.FurnitureID);
+                    FurnitureList[FurnitureList.IndexOf(furnitureUpdateQuantity)] = furniture;
+                    AllFurniture[AllFurniture.IndexOf(furnitureUpdateQuantity)] = furniture;
+                    break;
+            }    
         }
     }
 }

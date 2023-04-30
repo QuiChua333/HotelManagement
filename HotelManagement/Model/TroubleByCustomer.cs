@@ -14,6 +14,7 @@ namespace HotelManagement.Model
     
     public partial class TroubleByCustomer
     {
+        public int TroubleByCustomerId { get; set; }
         public string TroubleId { get; set; }
         public string RentalContractId { get; set; }
         public Nullable<double> PredictedPrice { get; set; }

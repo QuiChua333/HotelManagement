@@ -1,4 +1,5 @@
-﻿using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+﻿using HotelManagement.DTOs;
+using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,23 @@ namespace HotelManagement.View.Admin.ServiceManagement
         public ServiceManagementPage()
         {
             InitializeComponent();
+        }
+
+        private void Search_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProducts.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = Filter;
+                CollectionViewSource.GetDefaultView(ListViewProducts.ItemsSource).Refresh();
+            }
+        }
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as ServiceDTO).ServiceName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

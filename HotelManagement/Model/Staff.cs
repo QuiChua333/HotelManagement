@@ -17,7 +17,9 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Staff()
         {
-            this.RentalContractDetails = new HashSet<RentalContractDetail>();
+            this.FurnitureReceipts = new HashSet<FurnitureReceipt>();
+            this.GoodsReceipts = new HashSet<GoodsReceipt>();
+            this.RentalContracts = new HashSet<RentalContract>();
             this.Troubles = new HashSet<Trouble>();
         }
     
@@ -34,7 +36,11 @@ namespace HotelManagement.Model
         public byte[] Avatar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContractDetail> RentalContractDetails { get; set; }
+        public virtual ICollection<FurnitureReceipt> FurnitureReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RentalContract> RentalContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trouble> Troubles { get; set; }
     }

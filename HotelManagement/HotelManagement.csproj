@@ -157,6 +157,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DTOs\FurnitureDTO.cs" />
+    <Compile Include="DTOs\FurnituresRoomDTO.cs" />
+    <Compile Include="DTOs\ServiceDTO.cs" />
     <Compile Include="Model\Bill.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
@@ -166,7 +168,13 @@
     <Compile Include="Model\Furniture.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\FurnitureReceipt.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\FurnitureStorage.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GoodsReceipt.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GoodsStorage.cs">
@@ -190,13 +198,13 @@
     <Compile Include="Model\RentalContract.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\RentalContractDetail.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Review.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Room.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RoomCustomer.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RoomFurnituresDetail.cs">
@@ -209,6 +217,8 @@
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Services\FurnitureService.cs" />
+    <Compile Include="Model\Services\FurnituresRoomService.cs" />
+    <Compile Include="Model\Services\ServiceHelper.cs" />
     <Compile Include="Model\ServiceUsing.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
@@ -221,15 +231,25 @@
     <Compile Include="Model\TroubleByCustomer.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
     <Compile Include="ViewModel\AdminVM\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\AddFurnitureVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\EditFurnitureVM.cs" />
+    <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\ImportFurnitureVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureImportVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureInfoVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\ServiceManagementVM\EditServiceManagement.cs" />
+    <Compile Include="ViewModel\AdminVM\ServiceManagementVM\ImportServiceVM.cs" />
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
+    <Compile Include="View\Admin\FurnitureManagement\ImportListWD.xaml.cs">
+      <DependentUpon>ImportListWD.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureImportWindow.xaml.cs">
       <DependentUpon>RoomFurnitureImportWindow.xaml</DependentUpon>
     </Compile>
@@ -504,6 +524,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\ListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\FurnitureManagement\ImportListWD.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

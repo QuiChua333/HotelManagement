@@ -9,7 +9,7 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
       x:Class="HotelManagement.View.Admin.FurnitureManagement.FurnitureManagementPage"
       mc:Ignorable="d" 
-      x:Name="FurniturePage"
+          x:Name="FurniturePage"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       DataContext="{StaticResource FurnitureManagementVM}"
 >
@@ -57,14 +57,14 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Search:Search 
                     x:Name="SearchBox"
-                        Width="350" Height="38"
-                        FontSize="14"
-                        IconSize="18"
-                        Corner="10"
-                        Margin="0 0 38 0"
-                        IndicatorBrush="{StaticResource LightBlue_Search}"
-                        SearchTextChange="SearchBox_SearchTextChange"
-                    >
+                    Width="350" Height="38"
+                    FontSize="14"
+                    IconSize="18"
+                    Corner="10"
+                    Margin="0 0 38 0"
+                    IndicatorBrush="{StaticResource LightBlue_Search}"
+                    SearchTextChange="SearchBox_SearchTextChange"
+                >
                 </Search:Search>
                 <StackPanel Width="205" Height="38" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
@@ -92,6 +92,11 @@
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Grid Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenAddFurnitureCM}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
@@ -100,16 +105,16 @@
                 </Grid>
                 <Rectangle Width="27" Height="46" Fill="Transparent"/>
                 <Grid Cursor="Hand" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenImportListFurnitureCM}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
                         <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Nhập tiện nghi" FontSize="15" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
                     </StackPanel>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding ClickCM}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
                 </Grid>
             </StackPanel>
         </Grid>
@@ -225,40 +230,49 @@
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </Button.Style>
-
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="Click">
+                                                                        <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurniture, Path=DataContext.OpenInfoFurnitureCM}"/>
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
                                                                 <TextBlock Text="Chi tiết" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                                                             </Button>
-                                                            <Button Name="ImportButton" Cursor="Hand" Width="100" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
-                                                                <Button.Style>
-                                                                    <Style TargetType="{x:Type Button}">
-                                                                        <Setter Property="Background" Value="Transparent"/>
-                                                                        <Setter Property="Width" Value="32"/>
-                                                                        <Setter Property="Height" Value="32"/>
-                                                                        <Setter Property="BorderThickness" Value="0"/>
-                                                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                                                        <Setter Property="Template">
-                                                                            <Setter.Value>
-                                                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                                    </Border>
-                                                                                </ControlTemplate>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                        <Style.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.8"/>
-                                                                            </Trigger>
-                                                                            <Trigger Property="IsMouseCaptured" Value="True">
-                                                                                <Setter Property="Opacity" Value="0.5"/>
-                                                                            </Trigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
+                                                            <Grid>
+                                                                <Button Name="ImportButton" Cursor="Hand" Width="100" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
+                                                                    <Button.Style>
+                                                                        <Style TargetType="{x:Type Button}">
+                                                                            <Setter Property="Background" Value="Transparent"/>
+                                                                            <Setter Property="Width" Value="32"/>
+                                                                            <Setter Property="Height" Value="32"/>
+                                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                                                        <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                                        </Border>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter Property="Opacity" Value="0.8"/>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsMouseCaptured" Value="True">
+                                                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                                                </Trigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
 
-                                                                </Button.Style>
-
-                                                                <TextBlock Text="Nhập hàng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
-                                                            </Button>
+                                                                    </Button.Style>
+                                                                    <Button.InputBindings>
+                                                                        <MouseBinding Command="{Binding ElementName=ListViewFurniture, Path=DataContext.OpenImportFurnitureCM}"
+                                                                                            MouseAction="LeftClick" />
+                                                                    </Button.InputBindings>
+                                                                    <TextBlock Text="Nhập hàng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
+                                                                </Button>
+                                                            </Grid>
                                                         </StackPanel>
                                                     </Grid>
                                                 </Border>
@@ -324,6 +338,11 @@
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Border.Style>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurniture, Path=DataContext.DeleteFurnitureCM}"></i:InvokeCommandAction>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
                                                         <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20"/>
                                                     </Border>
                                                 </StackPanel>
@@ -345,14 +364,15 @@
                                 <RowDefinition Height="430"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListBox Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-                                            ItemsSource="{Binding OrderList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            x:Name="BillStack"
-                                            SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            materialDesign:ListBoxItemAssist.ShowSelection="False"
-                                            materialDesign:ListBoxAssist.IsToggle="False"
-                                            Margin="0, 5, 0, 0"
-                                        >
+                            <ListBox 
+                                Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                                ItemsSource="{Binding OrderList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                x:Name="BillStack"
+                                SelectedItem="{Binding SelectedFurniture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                materialDesign:ListBoxItemAssist.ShowSelection="False"
+                                materialDesign:ListBoxAssist.IsToggle="False"
+                                Margin="0, 5, 0, 0"
+                            >
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">
                                         <Setter Property="Background" Value="Transparent"/>
@@ -381,158 +401,40 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Grid Height="98" Margin="10,5,10,0" HorizontalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2.3*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Grid.Column="0" Fill="White" Grid.ColumnSpan="2" RadiusX="10" RadiusY="10">
-                                                    <Rectangle.Effect>
-                                                        <DropShadowEffect
-                                                                        BlurRadius="4"
-                                                                        Color="Black"
-                                                                        ShadowDepth="4"
-                                                                        Opacity=".25"
-                                                                        Direction="270"
-                                                                    />
-                                                    </Rectangle.Effect>
-                                                </Rectangle>
-                                                <Grid Grid.Column="0">
-                                                    <Ellipse
-                                                                    Width="80"
-                                                                    Height="80"
-                                                                    Fill="#D9D9D9" 
-                                                                >
-                                                        <Ellipse.Effect>
-                                                            <DropShadowEffect 
-                                                                            BlurRadius="10"
-                                                                            Color="Black"
-                                                                            ShadowDepth="4"
-                                                                            Opacity=".25"
-                                                                            Direction="270"
-                                                                        />
-                                                        </Ellipse.Effect>
-                                                    </Ellipse>
-                                                    <Border CornerRadius="80" Width="80" Height="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                        <Border.Background>
-                                                            <ImageBrush x:Name="ProductAvatar" Stretch="UniformToFill" ImageSource="{Binding ProductImage}"/>
-                                                        </Border.Background>
-                                                    </Border>
-                                                </Grid>
-                                                <Grid Grid.Column="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="Black"
-                                                                    FontWeight="SemiBold"
-                                                                    FontSize="24" 
-                                                                    VerticalAlignment="Center" 
-                                                                    Margin="14,0,0,0"
-                                                                    Text="{Binding ProductName}"
-                                                                ></TextBlock>
-                                                    <Grid Grid.Row="2" >
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid x:Name="SetupCount" HorizontalAlignment="Left" Margin="14,0,0,0">
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <Button x:Name="DecreaseIndex" Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="#E71A0F" Content="-"
-                                                                        >
-                                                                    <Button.InputBindings>
-                                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
-                                                                                MouseAction="LeftClick" />
-                                                                    </Button.InputBindings>
-                                                                </Button>
-                                                                <TextBox
-                                                                                x:Name="Count"
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
-                                                                <Button x:Name="InceaseIndex" Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="#E71A0F" Content="+">
-                                                                    <Button.InputBindings>
-                                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
-                                                                                MouseAction="LeftClick" />
-                                                                    </Button.InputBindings>
-                                                                </Button>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                        <Grid Grid.Column="1" Width="100">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="3*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20">
-
-                                                            </Image>
-                                                            <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="{Binding PriceStr}"
-                                                                        >
-                                                            </TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                                <Border x:Name="DeleteElement" Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,10,0">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
-                                                                                MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Border.Effect>
-                                                <DropShadowEffect
+                                            <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
+                                                <Border.Effect>
+                                                    <DropShadowEffect
                                                                 BlurRadius="6"
                                                                 Direction="270"
                                                                 Opacity="0.2"
                                                                 Color="Black"
                                                                 ShadowDepth="4"
                                                             />
-                                            </Border.Effect>
-                                            <Grid HorizontalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" CornerRadius="10" Margin="5 0 0 0" Width="86" Height="86" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                    <Border.Background>
-                                                        <ImageBrush x:Name="ProductAvatar" Stretch="UniformToFill" ImageSource="{StaticResource Giuong}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                        <TextBlock
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        Foreground="#A8AE5C"
-                                                                        FontWeight="Bold"
-                                                                        FontSize="19" 
-                                                                        Height="29"
-                                                                        Padding="0 3 0 0"
-                                                                        Margin="0 0 20 0"
-                                                                        VerticalAlignment="Center" 
-                                                                        Text="Giường Rolex Diamond"
-                                                                    />
-                                                        <TextBlock 
+                                                </Border.Effect>
+                                                <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Grid.Column="0" CornerRadius="10" Margin="5 0 0 0" Width="86" Height="86" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                        <Border.Background>
+                                                            <ImageBrush x:Name="ProductAvatar" Stretch="UniformToFill" ImageSource="{Binding FurnitureAvatar}"/>
+                                                        </Border.Background>
+                                                    </Border>
+                                                    <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
+                                                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                            <TextBlock
+                                                                FontFamily="{StaticResource MaterialDesignFont}"
+                                                                Foreground="#A8AE5C"
+                                                                FontWeight="Bold"
+                                                                FontSize="19" 
+                                                                Height="29"
+                                                                Padding="0 3 0 0"
+                                                                Margin="0 0 20 0"
+                                                                VerticalAlignment="Center" 
+                                                                Text="{Binding FurnitureName}"
+                                                            />
+                                                            <TextBlock 
                                                                         FontFamily="{StaticResource MaterialDesignFont}"
                                                                         FontWeight="Regular"
                                                                         FontSize="14"
@@ -540,19 +442,19 @@
                                                                         Padding="0 1 0 0"
                                                                         VerticalAlignment="Center"
                                                                         Foreground="#7E6E6E"
-                                                                        Text="Giường ngủ"
+                                                                        Text="{Binding FurnitureType}"
                                                                     />
-                                                        <Grid Margin="0 7 0 0">
-                                                            <Grid x:Name="SetupCount" HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button x:Name="DecreaseIndex" Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
+                                                            <Grid Margin="0 7 0 0">
+                                                                <Grid x:Name="SetupCount" HorizontalAlignment="Left" Margin="0,0,0,0">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Button x:Name="DecreaseIndex" Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
                                                                             >
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
+                                                                            <Button.InputBindings>
+                                                                                <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
                                                                                     MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                    <TextBox
+                                                                            </Button.InputBindings>
+                                                                        </Button>
+                                                                        <TextBox
                                                                                     x:Name="Count"
                                                                                     Grid.Column="1"
                                                                                     HorizontalAlignment="Center"
@@ -561,442 +463,57 @@
                                                                                     FontSize="18"
                                                                                     BorderThickness="1"
                                                                                     Height="25" Padding="6,2,6,0"
-                                                                                    Text="1"
+                                                                                    Text="{Binding ImportQuantity}"
                                                                                     Margin="2,0,2,0"
                                                                                 ></TextBox>
-                                                                    <Button x:Name="InceaseIndex" Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
+                                                                        <Button x:Name="InceaseIndex" Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
+                                                                            <Button.InputBindings>
+                                                                                <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
                                                                                             MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
-                                                                <TextBlock 
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontWeight="Regular"
-                                                                                FontSize="16"
-                                                                                Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                                Text="1,000,000 đ"
-                                                                            />
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </Grid>
-                                                <Border x:Name="DeleteElement" Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
-                                                                                MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Border.Effect>
-                                                <DropShadowEffect
-                                                                BlurRadius="6"
-                                                                Direction="270"
-                                                                Opacity="0.2"
-                                                                Color="Black"
-                                                                ShadowDepth="4"
-                                                            />
-                                            </Border.Effect>
-                                            <Grid HorizontalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" CornerRadius="10" Margin="5 0 0 0" Width="86" Height="86" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource Giuong}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                        <TextBlock
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                                        Foreground="#A8AE5C"
-                                                                        FontWeight="Bold"
-                                                                        FontSize="19" 
-                                                                        Height="29"
-                                                                        Padding="0 3 0 0"
-                                                                        Margin="0 0 20 0"
-                                                                        VerticalAlignment="Center" 
-                                                                        Text="Giường Rolex Diamond"
-                                                                    />
-                                                        <TextBlock 
-                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                            </Button.InputBindings>
+                                                                        </Button>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                                    <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
+                                                                    <TextBox 
+                                                                         FontFamily="{StaticResource MaterialDesignFont}"
                                                                         FontWeight="Regular"
-                                                                        FontSize="14"
-                                                                        Height="18"
-                                                                        Padding="0 1 0 0"
-                                                                        VerticalAlignment="Center"
-                                                                        Foreground="#7E6E6E"
-                                                                        Text="Giường ngủ"
-                                                                    />
-                                                        <Grid Margin="0 7 0 0">
-                                                            <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
-                                                                            >
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
-                                                                                    MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                    <TextBox
-                                                                                    Grid.Column="1"
-                                                                                    HorizontalAlignment="Center"
-                                                                                    VerticalAlignment="Center"
-                                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                    FontSize="18"
-                                                                                    BorderThickness="1"
-                                                                                    Height="25" Padding="6,2,6,0"
-                                                                                    Text="1"
-                                                                                    Margin="2,0,2,0"
-                                                                                ></TextBox>
-                                                                    <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
-                                                                                            MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
+                                                                        FontSize="16"
+                                                                        Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                                        Text="{Binding ImportPrice}"
+                                                                        Width="100"
+                                                                    >
+                                                                        <TextBox.Style>
+                                                                            <Style TargetType="TextBox">
+                                                                                <Style.Triggers>
+                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                        <Setter Property="Background" Value="Wheat"></Setter>
+                                                                                    </Trigger>
+                                                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                                                        <Setter Property="Background" Value="Transparent"></Setter>
+                                                                                    </Trigger>  
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBox.Style>
+                                                                    </TextBox>
                                                                 </StackPanel>
                                                             </Grid>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
-                                                                <TextBlock 
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontWeight="Regular"
-                                                                                FontSize="16"
-                                                                                Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                                Text="1,000,000 đ"
-                                                                            />
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </Grid>
-                                                <Border  Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Border x:Name="DeleteElement" Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
+                                                        <Border.InputBindings>
+                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
                                                                                 MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Border.Effect>
-                                                <DropShadowEffect
-                                                            BlurRadius="6"
-                                                            Direction="270"
-                                                            Opacity="0.2"
-                                                            Color="Black"
-                                                            ShadowDepth="4"
-                                                        />
-                                            </Border.Effect>
-                                            <Grid HorizontalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" CornerRadius="10" Margin="5 0 0 0" Width="86" Height="86" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource Giuong}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                        <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
-                                                        <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
-                                                        <Grid Margin="0 7 0 0">
-                                                            <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
-                                                                        >
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
-                                                                                MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                    <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
-                                                                    <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
-                                                                                        MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
-                                                                <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </StackPanel>
+                                                        </Border.InputBindings>
+                                                        <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
+                                                    </Border>
                                                 </Grid>
-                                                <Border  Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
-                                                                            MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Border.Effect>
-                                                <DropShadowEffect
-                                                                BlurRadius="6"
-                                                                Direction="270"
-                                                                Opacity="0.2"
-                                                                Color="Black"
-                                                                ShadowDepth="4"
-                                                            />
-                                            </Border.Effect>
-                                            <Grid HorizontalAlignment="Stretch">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="79*"/>
-                                                    <RowDefinition Height="13*"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" CornerRadius="10" Margin="5,3,0,3" Width="86" Height="86" Grid.RowSpan="2">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource Giuong}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Grid Grid.Column="1" Margin="20,0,20,0" Grid.RowSpan="2">
-                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                        <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
-                                                        <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
-                                                        <Grid Margin="0 7 0 0">
-                                                            <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
-                                                                        >
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
-                                                                                MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                    <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
-                                                                    <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
-                                                                                        MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
-                                                                <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </Grid>
-                                                <Border  Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0" Grid.Column="1">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
-                                                                            MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid>
-                                        <Border Margin="10,5,10,0" BorderThickness="0.3" BorderBrush="Black" Background="White" CornerRadius="10" HorizontalAlignment="Stretch">
-                                            <Border.Effect>
-                                                <DropShadowEffect
-                                                            BlurRadius="6"
-                                                            Direction="270"
-                                                            Opacity="0.2"
-                                                            Color="Black"
-                                                            ShadowDepth="4"
-                                                        />
-                                            </Border.Effect>
-                                            <Grid HorizontalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" CornerRadius="10" Margin="5 0 0 0" Width="86" Height="86" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource Giuong}"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Grid Grid.Column="1" Margin="20 0 20 0" HorizontalAlignment="Stretch">
-                                                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                                        <TextBlock
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    Foreground="#A8AE5C"
-                                                                    FontWeight="Bold"
-                                                                    FontSize="19" 
-                                                                    Height="29"
-                                                                    Padding="0 3 0 0"
-                                                                    Margin="0 0 20 0"
-                                                                    VerticalAlignment="Center" 
-                                                                    Text="Giường Rolex Diamond"
-                                                                />
-                                                        <TextBlock 
-                                                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                                                    FontWeight="Regular"
-                                                                    FontSize="14"
-                                                                    Height="18"
-                                                                    Padding="0 1 0 0"
-                                                                    VerticalAlignment="Center"
-                                                                    Foreground="#7E6E6E"
-                                                                    Text="Giường ngủ"
-                                                                />
-                                                        <Grid Margin="0 7 0 0">
-                                                            <Grid HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Button Grid.Column="0" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="-"
-                                                                        >
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DecreaseQuantityOrderItem}"
-                                                                                MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                    <TextBox
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                FontFamily="{StaticResource MaterialDesignFont}"
-                                                                                FontSize="18"
-                                                                                BorderThickness="1"
-                                                                                Height="25" Padding="6,2,6,0"
-                                                                                Text="1"
-                                                                                Margin="2,0,2,0"
-                                                                            ></TextBox>
-                                                                    <Button Grid.Column="2" Width="15" Height="25" BorderThickness="0" Padding="0,0,0,4" Foreground="White" Background="{StaticResource PrimaryBackgroundColor}" Content="+">
-                                                                        <Button.InputBindings>
-                                                                            <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.IncreaseQuantityOrderItem}"
-                                                                                        MouseAction="LeftClick" />
-                                                                        </Button.InputBindings>
-                                                                    </Button>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                <Image Grid.Column="0" Source="{StaticResource DollarIcon}" Width="20" Height="20"/>
-                                                                <TextBlock 
-                                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                                            FontWeight="Regular"
-                                                                            FontSize="16"
-                                                                            Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
-                                                                            Text="1,000,000 đ"
-                                                                        />
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </Grid>
-                                                <Border  Cursor="Hand" Width="20" Height="20" Background="White" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
-                                                    <Border.InputBindings>
-                                                        <MouseBinding Command="{Binding ElementName=BillStack, Path=DataContext.DeleteItemInBillStackCM}"
-                                                                            MouseAction="LeftClick" />
-                                                    </Border.InputBindings>
-                                                    <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ListBoxItem>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
                             </ListBox>
-                            <Grid x:Name="SumMoney" Grid.Row="1" Margin="20 4 40 3">
-                                <TextBlock Text="Tổng: " Foreground="#FF2E2E2E" FontFamily="{StaticResource MaterialDesignFont}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Left"/>
-                                <TextBlock Text="4,000,000 đ" Foreground="#FF2E2E2E" FontFamily="{StaticResource MaterialDesignFont}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Right" MaxWidth="300"/>
-                            </Grid>
                         </Grid>
                     </Border>
                     <StackPanel Orientation="Horizontal" Margin="0 0 20 20" VerticalAlignment="Bottom" HorizontalAlignment="Right">
@@ -1026,7 +543,11 @@
                                 </Style>
 
                             </Button.Style>
-
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding CloseImportListFurnitureCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <TextBlock Text="Đóng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                         </Button>
                         <Button Name="SaveButton2" Cursor="Hand" Width="60" Grid.Row="1" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="{StaticResource PrimaryBackgroundColor}">
@@ -1055,16 +576,18 @@
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
-
                             </Button.Style>
-
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding OpenImportContractCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <TextBlock Text="Nhập" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                         </Button>
                     </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>
-
         <!--LoadBar-->
         <Grid
             Grid.RowSpan="2"
@@ -1095,6 +618,5 @@
                 </Style>
             </Grid.Style>
         </Grid>
-
     </Grid>
 </Page>

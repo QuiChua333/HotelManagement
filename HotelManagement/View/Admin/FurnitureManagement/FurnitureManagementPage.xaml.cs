@@ -31,14 +31,12 @@ namespace HotelManagement.View.Admin.FurnitureManagement
     public partial class FurnitureManagementPage : Page
     {
 
-        private bool isChanged;
-        public bool IsChanged { get { return isChanged; } set { isChanged = value;} }
 
         public FurnitureManagementPage()
         {
             InitializeComponent();
         }
-
+        
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DoubleAnimation animationWidth = new DoubleAnimation(450, TimeSpan.FromSeconds(0.2));
@@ -85,6 +83,7 @@ namespace HotelManagement.View.Admin.FurnitureManagement
             mask.Opacity = 0;
             StackPanel st = (StackPanel)grid.FindName("ChooseType");
             st.Visibility = Visibility.Collapsed;
+
         }
 
         private void SearchBox_SearchTextChange(object sender, EventArgs e)
@@ -103,5 +102,6 @@ namespace HotelManagement.View.Admin.FurnitureManagement
             else
                 return ((item as FurnitureDTO).FurnitureName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
+
     }
 }

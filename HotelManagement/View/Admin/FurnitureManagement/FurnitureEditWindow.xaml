@@ -11,8 +11,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         MouseDown="FurnitureEditWD_MouseDown"
-        WindowStartupLocation="CenterScreen"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource FurnitureManagementVM}"
 >
 
@@ -45,7 +45,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20">
                         <Border Height="230" Width="230" CornerRadius="5" BorderThickness="1" BorderBrush="#4C1D242E" VerticalAlignment="Top">
                             <Border.Background>
-                                <ImageBrush ImageSource="{Binding SelectedFurnitureCacheData.FurnitureAvatar}"/>
+                                <ImageBrush ImageSource="{Binding furnitureCache.FurnitureAvatar}"/>
                             </Border.Background>
                         </Border>
                         <Grid Margin="0 0 0 0">
@@ -58,7 +58,7 @@
                                                 <ColumnDefinition Width="19*"/>
                                                 <ColumnDefinition Width="60*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBox Text="{Binding SelectedFurnitureCacheData.FurnitureName}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B" Grid.ColumnSpan="2"/>
+                                            <TextBox Text="{Binding furnitureCache.FurnitureName}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B" Grid.ColumnSpan="2"/>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3" Grid.ColumnSpan="2"/>
                                         </Grid>
                                     </Border>
@@ -71,7 +71,7 @@
                                                 <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E">
                                                     <Grid VerticalAlignment="Center" Height="25">
                                                         <ComboBox Margin="2,0,2,0" BorderBrush="#FF4B4B4B"
-                                                                Height="25" ItemsSource="{Binding AllFurnitureType}" SelectedItem="{Binding SelectedFurnitureCacheData.FurnitureType}" Padding="5 2 3 0" Width="210" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B">
+                                                                Height="25" ItemsSource="{Binding AllFurnitureType}" SelectedItem="{Binding furnitureCache.FurnitureType}" Padding="5 2 3 0" Width="210" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B">
                                                         </ComboBox>
                                                         <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                                     </Grid>
@@ -81,10 +81,10 @@
                                                     <materialDesign:PackIcon Kind="Add" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
                                                 </Border>
                                             </StackPanel>
-                                            <StackPanel x:Name="AddNewTypeFurniture" Visibility="Collapsed" Orientation="Horizontal">
+                                            <StackPanel x:Name="AddNewTypeFurniture" IsEnabled="False" Visibility="Collapsed" Orientation="Horizontal">
                                                 <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E" HorizontalAlignment="Left">
                                                     <Grid VerticalAlignment="Center" Height="25">
-                                                        <TextBox x:Name="TypeBoxAddNewTypeFurniture" Margin="5,0,5,0" Height="25" Padding="0" Width="204" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
+                                                        <TextBox x:Name="TypeBoxAddNewTypeFurniture" Text="{Binding furnitureCache.FurnitureType}" Margin="5,0,5,0" Height="25" Padding="0" Width="204" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
                                                         <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                                     </Grid>
                                                 </Border>
@@ -101,7 +101,7 @@
                                     <TextBlock Text="Số lượng" Margin="5 0 0 2" FontSize="12" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#CC191919"></TextBlock>
                                     <Border CornerRadius="4" BorderThickness="0.2" Height="30" BorderBrush="#1D242E">
                                         <Grid VerticalAlignment="Center" Height="25">
-                                            <TextBox Text="{Binding SelectedFurnitureCacheData.Quantity}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
+                                            <TextBox Text="{Binding furnitureCache.Quantity}" Margin="5,0,5,0" Height="25" Padding="0" Width="227" FontSize="16" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#FF4B4B4B"/>
                                             <Rectangle Margin="1 0 1 -1" VerticalAlignment="Bottom" Fill="White" Height="3"/>
                                         </Grid>
                                     </Border>
@@ -117,6 +117,11 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenImagesWindowCM}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <Path Data="{StaticResource UpLoadImageIcon}" Fill="White"/>
                             </Border>
                         </Grid>
