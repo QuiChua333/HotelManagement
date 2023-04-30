@@ -7,16 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class GoodsStorage
+    public partial class TroubleByCustomer
     {
-        public string ServiceId { get; set; }
-        public Nullable<int> QuantityService { get; set; }
+        public int TroubleByCustomerId { get; set; }
+        public string TroubleId { get; set; }
+        public string RentalContractId { get; set; }
+        public Nullable<double> PredictedPrice { get; set; }
     
-        public virtual Service Service { get; set; }
+        public virtual RentalContract RentalContract { get; set; }
+        public virtual Trouble Trouble { get; set; }
     }
 }

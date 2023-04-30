@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utils;
 using HotelManagement.View.Admin.RoomManagement;
 using HotelManagement.View.Admin.RoomTypeManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
@@ -13,17 +14,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static HotelManagement.Utils.Constants;
+
 
 namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 {
     public partial class RoomManagementVM : BaseVM
     {
-        private string _roomID;
-        public string RoomID
+        private string _RoomId;
+        public string RoomId
         {
-            get { return _roomID; }
-            set { _roomID = value; OnPropertyChanged(); }
+            get { return _RoomId; }
+            set { _RoomId = value; OnPropertyChanged(); }
         }
         private string _roomTypeID;
         public string RoomTypeID
@@ -156,7 +157,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                 {
                     IsLoadding = true;
 
-                    (bool successDeleteRoom, string messageFromDelRoom) = await RoomService.Ins.DeleteRoom(SelectedItem.RoomID);
+                    (bool successDeleteRoom, string messageFromDelRoom) = await RoomService.Ins.DeleteRoom(SelectedItem.RoomId);
 
                     IsLoadding = false;
 
@@ -224,7 +225,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                     RoomList.Add(r);
                     break;
                 case Operation.UPDATE:
-                    var movieFound = RoomList.FirstOrDefault(x => x.RoomID == r.RoomID);
+                    var movieFound = RoomList.FirstOrDefault(x => x.RoomId == r.RoomId);
                     RoomList[RoomList.IndexOf(movieFound)] = r;
                     break;
                 case Operation.DELETE:
@@ -244,7 +245,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         public void RenewWindowData()
         {
              
-            RoomID = null;
+            RoomId = null;
             RoomNumber = 0;
             RoomNote = null;
             RoomTypeID = null;

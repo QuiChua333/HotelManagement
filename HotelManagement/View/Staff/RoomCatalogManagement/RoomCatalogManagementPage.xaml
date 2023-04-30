@@ -31,8 +31,8 @@
         </Border>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="18*" />
-                <ColumnDefinition Width="80*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Border CornerRadius="20,0,0,20" Background="#E7F0F0">
                 <Border.Effect>

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;

@@ -7,17 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class RoomFurnituresDetail
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int RoomFurnituresDetailId { get; set; }
+        public string FurnitureId { get; set; }
+        public string RoomId { get; set; }
+        public Nullable<int> Quantity { get; set; }
+    
+        public virtual Furniture Furniture { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

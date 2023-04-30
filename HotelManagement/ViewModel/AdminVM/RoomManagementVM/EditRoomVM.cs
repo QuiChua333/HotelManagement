@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static HotelManagement.Utils.Constants;
 using System.Windows.Input;
 using System.Windows;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 {
@@ -20,8 +20,8 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 
         public void LoadEditRoom(EditRoom w1)
         {
-            RoomID = SelectedItem.RoomID;
-            RoomNumber = SelectedItem.RoomNumber;
+            RoomId = SelectedItem.RoomId;
+            RoomNumber = (int)SelectedItem.RoomNumber;
             RoomNote = SelectedItem.Note;
 
             if (SelectedItem.RoomTypeId == "LP001")
@@ -43,11 +43,11 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             string rtn = CbRoomType.Tag.ToString();
             string rti = await RoomTypeService.Ins.GetRoomTypeID(rtn);
 
-            if (RoomID != null && IsValidData())
+            if (RoomId != null && IsValidData())
             {
                 RoomDTO room = new RoomDTO
                 {
-                    RoomID = RoomID,
+                    RoomId = RoomId,
                     Note = RoomNote,
                     RoomNumber = RoomNumber,
                     RoomTypeId = rti,

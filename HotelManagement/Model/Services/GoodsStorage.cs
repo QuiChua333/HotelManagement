@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class FurnitureStorage
+    public partial class GoodsStorage
     {
-        public string FurnitureId { get; set; }
-        public Nullable<int> QuantityFurniture { get; set; }
+        public string ServiceId { get; set; }
+        public Nullable<int> QuantityService { get; set; }
     
-        public virtual Furniture Furniture { get; set; }
+        public virtual Service Service { get; set; }
     }
 }

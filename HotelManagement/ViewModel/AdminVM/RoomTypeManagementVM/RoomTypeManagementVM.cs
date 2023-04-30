@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static HotelManagement.Utils.Constants;
 using System.Windows.Media;
 using HotelManagement.Model.Services;
 using HotelManagement.View.CustomMessageBoxWindow;
 using Microsoft.Office.Interop.Excel;
 using HotelManagement.View.Admin.RoomTypeManagement;
 using System.Windows;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
 {

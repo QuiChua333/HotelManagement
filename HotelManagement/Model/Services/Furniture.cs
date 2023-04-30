@@ -7,35 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Staff
+    public partial class Furniture
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Staff()
+        public Furniture()
         {
-            this.RentalContractDetails = new HashSet<RentalContractDetail>();
-            this.Troubles = new HashSet<Trouble>();
+            this.FurnitureReceipts = new HashSet<FurnitureReceipt>();
+            this.RoomFurnituresDetails = new HashSet<RoomFurnituresDetail>();
         }
     
-        public string StaffId { get; set; }
-        public string StaffName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string CCCD { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
-        public string Gender { get; set; }
-        public string Position { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public byte[] Avatar { get; set; }
+        public string FurnitureId { get; set; }
+        public string FurnitureName { get; set; }
+        public string FurnitureType { get; set; }
+        public byte[] FurnitureAvatar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContractDetail> RentalContractDetails { get; set; }
+        public virtual ICollection<FurnitureReceipt> FurnitureReceipts { get; set; }
+        public virtual FurnitureStorage FurnitureStorage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Trouble> Troubles { get; set; }
+        public virtual ICollection<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }
     }
 }

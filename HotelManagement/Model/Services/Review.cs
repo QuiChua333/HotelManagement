@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TroubleByCustomer
+    public partial class Review
     {
-        public int TroubleByCustomerId { get; set; }
-        public string TroubleId { get; set; }
-        public string RentalContractId { get; set; }
-        public Nullable<double> PredictedPrice { get; set; }
+        public string ReviewId { get; set; }
+        public string ContentReview { get; set; }
+        public string CustomerId { get; set; }
+        public Nullable<int> StarNumber { get; set; }
     
-        public virtual RentalContract RentalContract { get; set; }
-        public virtual Trouble Trouble { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

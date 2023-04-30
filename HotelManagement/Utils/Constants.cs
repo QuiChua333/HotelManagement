@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Utils
 {
+    public enum Operation
+    {
+        CREATE,
+        READ,
+        UPDATE,
+        DELETE,
+        UPDATE_PASSWORD,
+        UPDATE_PROD_QUANTITY
+    }
     public class ROOM_TYPE
     {
         public static readonly string ROOM_TYPE_A = "Phòng thường";

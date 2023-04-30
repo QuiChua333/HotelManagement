@@ -7,21 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class FurnitureReceipt
+    public partial class FurnitureStorage
     {
-        public string FurnitureReceiptId { get; set; }
         public string FurnitureId { get; set; }
-        public string StaffId { get; set; }
-        public Nullable<double> ImportPrice { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<System.DateTime> CreateAt { get; set; }
+        public Nullable<int> QuantityFurniture { get; set; }
     
         public virtual Furniture Furniture { get; set; }
-        public virtual Staff Staff { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace HotelManagement.DTOs
         public bool IsDeleted { get; set; }
         public string RoomTypePriceStr
         {
-            get {  return Helper.FormatVNMoney(RoomTypePrice); }
+            get { return Helper.FormatVNMoney(RoomTypePrice); }
         }
         public IList<RoomDTO> Rooms { get; set; }
     }

@@ -7,31 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelManagement.Model
+namespace HotelManagement.Model.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Room
+    public partial class Customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Room()
+        public Customer()
         {
             this.RentalContracts = new HashSet<RentalContract>();
-            this.RoomFurnituresDetails = new HashSet<RoomFurnituresDetail>();
+            this.Reviews = new HashSet<Review>();
+            this.RoomCustomers = new HashSet<RoomCustomer>();
         }
     
-        public string RoomId { get; set; }
-        public Nullable<int> RoomNumber { get; set; }
-        public string RoomTypeId { get; set; }
-        public string Note { get; set; }
-        public string RoomStatus { get; set; }
-        public string RoomCleaningStatus { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string CCCD { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public string CustomerType { get; set; }
+        public string CustomerAddress { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalContract> RentalContracts { get; set; }
-        public virtual RoomType RoomType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomCustomer> RoomCustomers { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Google.Apis.Util;
 using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
@@ -39,21 +40,20 @@ namespace HotelManagement.Model.Services
                 using (HotelManagementEntities db = new HotelManagementEntities())
                 {
                     List<RoomDTO> RoomDTOs = await (
-                        from r in db.Rooms join temp in db.RoomTypes
+                        from r in db.Rooms
+                        join temp in db.RoomTypes
                         on r.RoomTypeId equals temp.RoomTypeId into gj
                         from d in gj.DefaultIfEmpty()
                         select new RoomDTO
                         {
                             // DTO = db
-                            RoomID = r.RoomId,
+                            RoomId = r.RoomId,
                             RoomNumber = (int)r.RoomNumber,
                             RoomTypeName = d.RoomTypeName,
                             RoomTypeId = d.RoomTypeId,
                             Note = r.Note,
                             RoomCleaningStatus = r.RoomCleaningStatus,
                             RoomStatus = r.RoomStatus,
-                                              RoomCleaningStatus = r.RoomCleaningStatus,
-                                              Price = t.Price,
                         }
                     ).ToListAsync();
                     RoomDTOs.Reverse();
@@ -87,21 +87,9 @@ namespace HotelManagement.Model.Services
 
                     if (r != null)
                     {
-                        if (r.IsDeleted == false)
-                        {
-                            return (false, "Phòng này đã tồn tại", null);
-                        }
-                        //Khi loại phòng đã bị xóa nhưng được add lại với cùng tên => update lại loại phòng đã xóa đó với thông tin là 
-                        // loại phòng mới thêm thay vì add thêm
-                        r.RoomNumber = newRoom.RoomNumber;
-                        r.RoomStatus = newRoom.RoomStatus;
-                        r.RoomCleaningStatus = newRoom.RoomCleaningStatus;
-                        r.RoomTypeId = newRoom.RoomTypeId;
-                        r.Note = newRoom.Note;
-                        r.IsDeleted = false;
+                                 
+                            return (false, $"Phòng {r.RoomNumber} đã tồn tại!", null);
 
-                        await context.SaveChangesAsync();
-                        newRoom.RoomID = r.RoomId;
                     }
                     else
                     {
@@ -119,11 +107,10 @@ namespace HotelManagement.Model.Services
                             Note = newRoom.Note,
                             RoomStatus = newRoom.RoomStatus,
                             RoomCleaningStatus = newRoom.RoomCleaningStatus,
-                            IsDeleted = false,
                         };
                         context.Rooms.Add(room);
                         await context.SaveChangesAsync();
-                        newRoom.RoomID = room.RoomId;
+                        newRoom.RoomId = room.RoomId;
                     }
                 }
             }
@@ -157,13 +144,12 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
                     Room room = await (from p in context.Rooms
-                                               where p.RoomId == Id && p.IsDeleted == false
-                                               select p).FirstOrDefaultAsync();
+                                       where p.RoomId == Id 
+                                       select p).FirstOrDefaultAsync();
                     if (room == null)
                     {
                         return (false, "Loại phòng này không tồn tại!");
                     }
-                    room.IsDeleted = true;
                     context.Rooms.Remove(room);
                     await context.SaveChangesAsync();
                 }
@@ -181,7 +167,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    Room room = context.Rooms.Find(updatedRoom.RoomID);
+                    Room room = context.Rooms.Find(updatedRoom.RoomId);
 
                     if (room is null)
                     {
@@ -197,13 +183,13 @@ namespace HotelManagement.Model.Services
                     //    return (false, "Phòng đang được sử dụng không thể chỉnh sửa!");
                     //}
 
-                    room.RoomId = updatedRoom.RoomID;
+                    room.RoomId = updatedRoom.RoomId;
                     room.RoomNumber = updatedRoom.RoomNumber;
                     room.RoomStatus = updatedRoom.RoomStatus;
                     room.Note = updatedRoom.Note;
                     room.RoomCleaningStatus = updatedRoom.RoomCleaningStatus;
                     room.RoomTypeId = updatedRoom.RoomTypeId;
-                   
+
                     await context.SaveChangesAsync();
                     return (true, "Cập nhật thành công");
                 }
@@ -222,7 +208,7 @@ namespace HotelManagement.Model.Services
             }
 
         }
-        private RoomService() { }
+
         public async Task<List<RoomDTO>> GetRooms()
         {
             try
@@ -274,6 +260,7 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
+                    if (t == "") return;
                     var sql1 = $@"Update [RentalContract] SET Validated = 0  WHERE RentalContractId IN ({t})";
                     await context.Database.ExecuteSqlCommandAsync(sql1);
 
@@ -290,7 +277,8 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
-                    var sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.READY}'  WHERE RoomID  IN ({t})";
+                    if (t == "") return;
+                    var sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.READY}'  WHERE RoomId  IN ({t})";
                     await context.Database.ExecuteSqlCommandAsync(sql2);
 
                     list1 = await context.RentalContracts.ToListAsync();
@@ -305,7 +293,8 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
-                    sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.BOOKED}'  WHERE RoomID  IN ({t})";
+                    if (t == "") return;
+                    sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.BOOKED}'  WHERE RoomId  IN ({t})";
                     await context.Database.ExecuteSqlCommandAsync(sql2);
 
                 }
@@ -435,7 +424,7 @@ namespace HotelManagement.Model.Services
                                               {
                                                   RoomTypeId = r.RoomTypeId,
                                                   RoomTypeName = r.RoomTypeName.Trim(),
-                                                  Price = r.Price,
+                                                  RoomTypePrice = (double)r.Price,
                                               }
                                           ).ToListAsync();
                     return roomTypeList;
@@ -452,5 +441,3 @@ namespace HotelManagement.Model.Services
 }
 
         
-    }
-}
