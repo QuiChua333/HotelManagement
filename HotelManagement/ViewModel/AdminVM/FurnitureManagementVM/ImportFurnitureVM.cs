@@ -1,5 +1,6 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
+using HotelManagement.Utils;
 using HotelManagement.View.Admin;
 using IronXL.Formatting;
 using System;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static HotelManagement.Utilities.Helper;
 
 namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
 {

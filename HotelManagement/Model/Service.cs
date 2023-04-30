@@ -24,8 +24,8 @@ namespace HotelManagement.Model
         public string ServiceId { get; set; }
         public string ServiceName { get; set; }
         public string ServiceType { get; set; }
-        public byte[] ServiceAvatar { get; set; }
         public Nullable<double> ServicePrice { get; set; }
+        public byte[] ServiceAvatar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }

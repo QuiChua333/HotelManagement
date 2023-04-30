@@ -188,6 +188,9 @@
     <Compile Include="Model\FurnitureStorage.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GoodsReceipt.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GoodsStorage.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
@@ -256,7 +259,6 @@
     <Compile Include="Model\Services\RoomTypeService.cs" />
     <Compile Include="Model\Services\RentalContractService.cs" />
     <Compile Include="Utils\EmailFormat.cs" />
-    <Compile Include="Utils\Helper.cs" />
     <Compile Include="Utils\RegexUtilities.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\StaffDTO.cs" />
@@ -277,80 +279,9 @@
     <Compile Include="DTOs\FurnitureDTO.cs" />
     <Compile Include="DTOs\FurnituresRoomDTO.cs" />
     <Compile Include="DTOs\ServiceDTO.cs" />
-    <Compile Include="Model\Bill.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Customer.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Furniture.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\FurnitureReceipt.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\FurnitureStorage.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GoodsReceipt.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GoodsStorage.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\HotelManagementDatabase.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelManagementDatabase.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\HotelManagementDatabase.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\HotelManagementDatabase.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RentalContract.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Review.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Room.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RoomCustomer.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RoomFurnituresDetail.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\RoomType.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Service.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Services\FurnitureService.cs" />
     <Compile Include="Model\Services\FurnituresRoomService.cs" />
     <Compile Include="Model\Services\ServiceHelper.cs" />
-    <Compile Include="Model\ServiceUsing.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Staff.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Trouble.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TroubleByCustomer.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Utils.cs" />
-    <Compile Include="ViewModel\AdminVM\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\AddFurnitureVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\EditFurnitureVM.cs" />
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\ImportFurnitureVM.cs" />
@@ -1181,16 +1112,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\HotelManagementDatabase.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
-      <LastGenOutput>HotelManagementDatabase.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\HotelManagementDatabase.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HotelManagementDatabase.edmx</DependentUpon>
-      <LastGenOutput>HotelManagementDatabase.cs</LastGenOutput>
-    </Content>
     <Resource Include="Resources\Images\bgLogin.png" />
   </ItemGroup>
   <ItemGroup>

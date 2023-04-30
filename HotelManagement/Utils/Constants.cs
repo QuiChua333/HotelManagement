@@ -15,7 +15,8 @@ namespace HotelManagement.Utils
         UPDATE,
         DELETE,
         UPDATE_PASSWORD,
-        UPDATE_PROD_QUANTITY
+        UPDATE_PROD_QUANTITY,
+        UPDATECLEAN
     }
     public class ROOM_TYPE
     {

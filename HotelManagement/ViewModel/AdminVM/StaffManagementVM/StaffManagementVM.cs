@@ -20,6 +20,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using System.IO;
 using HotelManagement.Model;
 using HotelManagement.View.CustomMessageBoxWindow;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
 {
@@ -293,7 +294,7 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
         }
         private (bool isvalid, string mess) IsValidData(Operation oper)
         {
-            if (oper == Operation.CREATE || oper == Operation.UPDATE_PASS)
+            if (oper == Operation.CREATE || oper == Operation.UPDATE_PASSWORD)
             {
                 if (String.IsNullOrEmpty(Password))
                 {

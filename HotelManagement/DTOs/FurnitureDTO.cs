@@ -1,4 +1,5 @@
 ﻿using CinemaManagementProject.Utilities;
+using HotelManagement.Utilities;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;

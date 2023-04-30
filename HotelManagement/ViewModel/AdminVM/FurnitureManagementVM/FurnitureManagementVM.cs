@@ -3,6 +3,8 @@ using HotelManagement.Components.Search;
 using HotelManagement.DTOs;
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utilities;
+using HotelManagement.Utils;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.FurnitureManagement;
 using HotelManagement.View.CustomMessageBoxWindow;

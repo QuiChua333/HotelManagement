@@ -15,6 +15,8 @@ using System.Windows;
 using Microsoft.Win32;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Admin.ServiceManagement.OtherServices;
+using HotelManagement.Utilities;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
 {

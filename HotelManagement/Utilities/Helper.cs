@@ -60,6 +60,19 @@ namespace HotelManagement.Utilities
         {
             return Path.Combine(Environment.CurrentDirectory, @"..\..\Resources\EmailTemplates", $"{rESET_PASSWORD_FILE}" /*SelectedItem.Image*/);
         }
+        public static class Number
+        {
+            public static bool IsNumeric(string value)
+            {
+                return value.All(char.IsNumber) ||
+                     ((value.Substring(1, value.Length - 1).All(char.IsNumber) && value[0] == '-'));
+            }
+            public static bool IsPositive(string value)
+            {
+                return value[0] != '-' && value != "0";
+            }
+
+        }
     }
     
 }

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows;
 using HotelManagement.Utilities;
 using System.Linq;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
 {

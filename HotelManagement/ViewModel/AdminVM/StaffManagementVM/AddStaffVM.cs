@@ -6,6 +6,7 @@ using System.Windows;
 using HotelManagement.DTOs;
 using System.IO;
 using HotelManagement.Model.Services;
+using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
 {

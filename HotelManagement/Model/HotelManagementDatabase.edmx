@@ -144,8 +144,8 @@
           <Property Name="ServiceId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ServiceName" Type="nvarchar(max)" />
           <Property Name="ServiceType" Type="nvarchar(max)" />
-          <Property Name="ServiceAvatar" Type="varbinary(max)" />
           <Property Name="ServicePrice" Type="float" />
+          <Property Name="ServiceAvatar" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="ServiceUsing">
           <Key>
@@ -731,8 +731,8 @@
           <Property Name="ServiceId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ServiceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ServiceType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceAvatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ServicePrice" Type="Double" />
+          <Property Name="ServiceAvatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="GoodsReceipts" Relationship="Self.FK_GoodsReceipt_Service" FromRole="Service" ToRole="GoodsReceipt" />
           <NavigationProperty Name="GoodsStorage" Relationship="Self.FK_GoodsStorage_Service" FromRole="Service" ToRole="GoodsStorage" />
           <NavigationProperty Name="ServiceUsings" Relationship="Self.FK_ServiceUsing_Service" FromRole="Service" ToRole="ServiceUsing" />
@@ -768,6 +768,7 @@
           <Property Name="dateOfStart" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="FurnitureReceipts" Relationship="Self.FK_FurnitureReceiptId_Staff" FromRole="Staff" ToRole="FurnitureReceipt" />
+          <NavigationProperty Name="GoodsReceipts" Relationship="Self.FK_GoodsReceipt_Staff" FromRole="Staff" ToRole="GoodsReceipt" />
           <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="Staff" ToRole="RentalContract" />
           <NavigationProperty Name="Troubles" Relationship="Self.FK_Trouble_Staff" FromRole="Staff" ToRole="Trouble" />
         </EntityType>
@@ -1314,8 +1315,8 @@
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
                 <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="ServiceAvatar" ColumnName="ServiceAvatar" />
                 <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
+                <ScalarProperty Name="ServiceAvatar" ColumnName="ServiceAvatar" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

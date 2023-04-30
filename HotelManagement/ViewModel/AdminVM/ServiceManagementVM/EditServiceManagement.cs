@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HotelManagement.View.Admin;
+using HotelManagement.Utils;
+using static HotelManagement.Utilities.Helper;
 
 namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
 {

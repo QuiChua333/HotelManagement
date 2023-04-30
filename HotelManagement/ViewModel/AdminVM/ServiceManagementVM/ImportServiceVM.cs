@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utils;
 using HotelManagement.View.Admin;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static HotelManagement.Utilities.Helper;
 
 namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
 {
