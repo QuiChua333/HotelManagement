@@ -83,6 +83,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.8.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.4.8.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
@@ -115,6 +118,12 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Interactive.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.Async.6.0.1\lib\net48\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -138,6 +147,9 @@
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.1\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -156,6 +168,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\BookingRoomManagementDTO.cs" />
+    <Compile Include="DTOs\RoomDTO.cs" />
+    <Compile Include="DTOs\RoomTypeDTO.cs" />
     <Compile Include="ViewModel\AdminVM\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
@@ -179,6 +194,9 @@
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Furniture.cs">
+      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FurnitureReceipt.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FurnitureStorage.cs">
@@ -223,6 +241,8 @@
     <Compile Include="Model\Service.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Services\RoomService.cs" />
+    <Compile Include="Model\Services\RoomTypeService.cs" />
     <Compile Include="Model\Services\RentalContractService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\ServiceUsing.cs">
@@ -240,6 +260,22 @@
     <Compile Include="Model\TroubleByCustomer.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\EmailFormat.cs" />
+    <Compile Include="Utils\Helper.cs" />
+    <Compile Include="Utils\RegexUtilities.cs" />
+    <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomManagementVM\AddNewRoomVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomManagementVM\EditRoomVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\EditRoomTypeVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
+    <Compile Include="ViewModel\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
+    <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
+    <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
     <Compile Include="ViewModel\StaffVM\TroubleReportVM\TroubleReportVM.cs" />
@@ -251,6 +287,12 @@
     </Compile>
     <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureManagementPage.xaml.cs">
       <DependentUpon>RoomFurnitureManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\NoteRoom.xaml.cs">
+      <DependentUpon>NoteRoom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomTypeManagement\NoteRoomType.xaml.cs">
+      <DependentUpon>NoteRoomType.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\ServiceManagement\AddProductWindow.xaml.cs">
       <DependentUpon>AddProductWindow.xaml</DependentUpon>
@@ -270,6 +312,15 @@
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomInfoVM\RoomInfoVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomOrderVM\RoomOrderVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomPaymentVM\RoomPaymentVM.cs" />
+    <Compile Include="View\BookingRoomManagement\Booking.xaml.cs">
+      <DependentUpon>Booking.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BookingRoomManagement\BookingRoomManagementPage.xaml.cs">
+      <DependentUpon>BookingRoomManagementPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BookingRoomManagement\DetailRent.xaml.cs">
+      <DependentUpon>DetailRent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBox.cs" />
     <Compile Include="View\CustomMessageBoxWindow\CustomMessageBoxWindow.xaml.cs">
       <DependentUpon>CustomMessageBoxWindow.xaml</DependentUpon>
@@ -399,15 +450,6 @@
     <Compile Include="View\Admin\FurnitureManagement\FurnitureInfoWindow.xaml.cs">
       <DependentUpon>FurnitureInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\BookingRoomManagement\Booking.xaml.cs">
-      <DependentUpon>Booking.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\BookingRoomManagement\BookingRoomManagementPage.xaml.cs">
-      <DependentUpon>BookingRoomManagementPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\BookingRoomManagement\DetailRent.xaml.cs">
-      <DependentUpon>DetailRent.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml.cs">
       <DependentUpon>FurnitureManagementPage.xaml</DependentUpon>
     </Compile>
@@ -419,9 +461,6 @@
     </Compile>
     <Compile Include="View\Admin\RoomManagement\RoomManagementPage.xaml.cs">
       <DependentUpon>RoomManagementPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Admin\RoomTypeManagement\AddRoomType.xaml.cs">
-      <DependentUpon>AddRoomType.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\RoomTypeManagement\EditRoomType.xaml.cs">
       <DependentUpon>EditRoomType.xaml</DependentUpon>
@@ -550,6 +589,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\RoomManagement\NoteRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomTypeManagement\NoteRoomType.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Admin\ServiceManagement\AddProductWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -567,6 +614,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ServiceManagement\OtherServices\OtherServicesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BookingRoomManagement\Booking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BookingRoomManagement\BookingRoomManagementPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BookingRoomManagement\DetailRent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -747,18 +806,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Admin\BookingRoomManagement\Booking.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\BookingRoomManagement\BookingRoomManagementPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\BookingRoomManagement\DetailRent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Admin\FurnitureManagement\FurnitureManagementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -772,10 +819,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\RoomManagement\RoomManagementPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\RoomTypeManagement\AddRoomType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

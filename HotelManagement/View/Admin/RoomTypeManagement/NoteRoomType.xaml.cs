@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.BookingRoomManagement
+namespace HotelManagement.View.Admin.RoomTypeManagement
 {
     /// <summary>
-    /// Interaction logic for DetailRent.xaml
+    /// Interaction logic for NoteRoomType.xaml
     /// </summary>
-    public partial class DetailRent : Window
+    public partial class NoteRoomType : Window
     {
-        public DetailRent()
+        public NoteRoomType()
         {
             InitializeComponent();
         }

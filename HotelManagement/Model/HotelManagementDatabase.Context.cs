@@ -28,6 +28,7 @@ namespace HotelManagement.Model
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Furniture> Furnitures { get; set; }
+        public virtual DbSet<FurnitureReceipt> FurnitureReceipts { get; set; }
         public virtual DbSet<FurnitureStorage> FurnitureStorages { get; set; }
         public virtual DbSet<GoodsStorage> GoodsStorages { get; set; }
         public virtual DbSet<RentalContract> RentalContracts { get; set; }

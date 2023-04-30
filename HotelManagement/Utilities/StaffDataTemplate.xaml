@@ -4,6 +4,8 @@
                     xmlns:RoomCatalogVM="clr-namespace:HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM"
                     xmlns:TroubleRpView="clr-namespace:HotelManagement.View.Staff.TroubleReport"
                     xmlns:TroubleRpVM="clr-namespace:HotelManagement.ViewModel.StaffVM.TroubleReportVM"
+                    xmlns:BookingRoomView="clr-namespace:HotelManagement.View.BookingRoomManagement"
+                    xmlns:BookingRoomVM="clr-namespace:HotelManagement.ViewModel.BookingRoomManagementVM"
                     >
 
     <DataTemplate DataType="{x:Type RoomCatalogVM:RoomCatalogManagementVM}">
@@ -11,5 +13,8 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type TroubleRpVM:TroubleReportVM}">
         <TroubleRpView:TroubleReportPage></TroubleRpView:TroubleReportPage>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type BookingRoomVM:BookingRoomManagementVM}">
+        <BookingRoomView:BookingRoomManagementPage></BookingRoomView:BookingRoomManagementPage>
     </DataTemplate>
 </ResourceDictionary>

@@ -5,6 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.HelpScreen"
         mc:Ignorable="d"
+        x:Name="term_of_use"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        DataContext="{StaticResource HelpScreenVM}"
         Title="TermOfUse" Height="650" Width="800">
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
@@ -37,6 +41,8 @@
                     VerticalAlignment="Top" 
                     Margin="0 10 10 0" 
                     Height="50" Width="50" 
+                    Command="{Binding CloseCM}"
+                    CommandParameter="{Binding ElementName=term_of_use}"
                     HorizontalContentAlignment="Center" 
                     VerticalContentAlignment="Center">
                 <Image Source="{StaticResource Button_X}" 

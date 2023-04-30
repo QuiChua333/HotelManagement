@@ -28,6 +28,7 @@
         <AssociationConnector Association="HotelManagementModel.FK_RoomCustomer_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_FurnitureStorage_Furniture" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_RoomFurnituresDetail_Furniture" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_FurnitureReceiptId_Staff" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_GoodsStorage_Service" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_Room" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_Staff" ManuallyRouted="false" />

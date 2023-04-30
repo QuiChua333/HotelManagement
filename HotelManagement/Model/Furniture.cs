@@ -17,6 +17,7 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Furniture()
         {
+            this.FurnitureReceipts = new HashSet<FurnitureReceipt>();
             this.RoomFurnituresDetails = new HashSet<RoomFurnituresDetail>();
         }
     
@@ -25,6 +26,8 @@ namespace HotelManagement.Model
         public string FurnitureType { get; set; }
         public byte[] FurnitureAvatar { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FurnitureReceipt> FurnitureReceipts { get; set; }
         public virtual FurnitureStorage FurnitureStorage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }

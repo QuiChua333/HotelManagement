@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,13 @@ namespace HotelManagement.DTOs
     {
         public string RoomTypeId { get; set; }
         public string RoomTypeName { get; set; }
-        public Nullable<double> Price { get; set; }
+        public double RoomTypePrice { get; set; }
+        public string RoomTypeNote { get; set; }
+        public bool IsDeleted { get; set; }
+        public string RoomTypePriceStr
+        {
+            get {  return Helper.FormatVNMoney(RoomTypePrice); }
+        }
         public IList<RoomDTO> Rooms { get; set; }
     }
 }

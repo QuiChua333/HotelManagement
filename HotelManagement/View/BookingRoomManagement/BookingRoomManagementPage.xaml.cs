@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.RoomTypeManagement
+namespace HotelManagement.View.BookingRoomManagement
 {
     /// <summary>
-    /// Interaction logic for AddRoomType.xaml
+    /// Interaction logic for BookingRoomManagementPage.xaml
     /// </summary>
-    public partial class AddRoomType : Window
+    public partial class BookingRoomManagementPage : Page
     {
-        public AddRoomType()
+        public BookingRoomManagementPage()
         {
             InitializeComponent();
         }
