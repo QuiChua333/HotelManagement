@@ -162,6 +162,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         Label lbRoomTypeC;
         private bool TimeChange = false;
         private bool Refresh = false;
+        private bool IsLoad = false;
         DispatcherTimer timer = new DispatcherTimer();
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRoomInfoCM { get; set; }
@@ -263,6 +264,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
+                if (IsLoad == true) return;
                 if (Refresh == true)
                 {
                     Refresh= false;
@@ -523,6 +525,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ListBox1 = (ListBox) MainPage.FindName("listRoom1");
             ListBox2 = (ListBox)MainPage.FindName("listRoom2");
             ListBox3 = (ListBox)MainPage.FindName("listRoom3");
+            IsLoad= true;
         }
       
      

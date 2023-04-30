@@ -32,7 +32,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    Troublelist = (from s in context.Trouble
+                    Troublelist = (from s in context.Troubles
                                    select new TroubleDTO {
                                        TroubleId = s.TroubleId,
                                        Title = s.Title,
@@ -61,7 +61,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {                    
-                    var maxId = await context.Trouble.MaxAsync(p => p.TroubleId);
+                    var maxId = await context.Troubles.MaxAsync(p => p.TroubleId);
 
                     Trouble newtrouble = new Trouble { 
                         TroubleId = CreateNextTroubleId(maxId),
@@ -82,10 +82,10 @@ namespace HotelManagement.Model.Services
                             TroubleId=newtrouble.TroubleId,
                             RentalContractId=id
                         };
-                        context.TroubleByCustomer.Add(tb);
+                        context.TroubleByCustomers.Add(tb);
                     }
                     s.TroubleId = newtrouble.TroubleId;
-                    context.Trouble.Add(newtrouble);
+                    context.Troubles.Add(newtrouble);
                     await context.SaveChangesAsync();
                 }
             }
@@ -108,43 +108,43 @@ namespace HotelManagement.Model.Services
                 {
                     if (s.Status == STATUS.PREDIT)
                     {
-                        var troublebycus = await context.TroubleByCustomer.FindAsync(s.TroubleId);
+                        var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
                         troublebycus.PredictedPrice=preprice;
-                        var trouble = await context.Trouble.FindAsync(s.TroubleId);
+                        var trouble = await context.Troubles.FindAsync(s.TroubleId);
                         trouble.Status=STATUS.PREDIT;
                     }
                     else if(s.Status == STATUS.IN_PROGRESS)
                     {
-                        var trouble = await context.Trouble.FindAsync(s.TroubleId);
+                        var trouble = await context.Troubles.FindAsync(s.TroubleId);
                         trouble.Status = STATUS.IN_PROGRESS;
                         trouble.FixedDate = s.FixedDate;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomer.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
                             troublebycus.PredictedPrice = preprice;
                         }
                     }
                     else if(s.Status == STATUS.DONE)
                     {
-                        var trouble = await context.Trouble.FindAsync(s.TroubleId);
+                        var trouble = await context.Troubles.FindAsync(s.TroubleId);
                         trouble.Status = STATUS.DONE;
                         trouble.FixedDate = s.FixedDate;
                         trouble.FinishDate = s.FinishDate;
                         trouble.Price = s.Price;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomer.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
                             troublebycus.PredictedPrice = s.Price;
                         }
                         
                     }
                     else if (s.Status == STATUS.CANCLE)
                     {
-                        var trouble = await context.Trouble.FindAsync(s.TroubleId);
+                        var trouble = await context.Troubles.FindAsync(s.TroubleId);
                         trouble.Status = STATUS.CANCLE;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomer.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
                             troublebycus.PredictedPrice = 0;
                         }
                     }
@@ -167,7 +167,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    var trouble = await context.Trouble.FindAsync(s.TroubleId);
+                    var trouble = await context.Troubles.FindAsync(s.TroubleId);
                     trouble.Title = s.Title;
                     trouble.Avatar = s.Avatar;
                     trouble.Description = s.Description;
@@ -175,7 +175,7 @@ namespace HotelManagement.Model.Services
                     trouble.StartDate = DateTime.Now;
                     trouble.StaffId = s.StaffId;
                     trouble.Level = s.Level ;
-                    var tb = await context.TroubleByCustomer.FindAsync(s.TroubleId);
+                    var tb = await context.TroubleByCustomers.FindAsync(s.TroubleId);
                     if (id != null)
                     {
                         if(tb != null)
@@ -189,7 +189,7 @@ namespace HotelManagement.Model.Services
                                 TroubleId = trouble.TroubleId,
                                 RentalContractId = id
                             };
-                            context.TroubleByCustomer.Add(tbb);
+                            context.TroubleByCustomers.Add(tbb);
                         }               
                     }
                     else
@@ -221,7 +221,7 @@ namespace HotelManagement.Model.Services
             string staffname;
             using ( var context = new HotelManagementEntities())
             {
-                var staff = await context.Staff.FindAsync(id);
+                var staff = await context.Staffs.FindAsync(id);
                 staffname = staff.StaffName;
             }
             return staffname;
@@ -231,7 +231,7 @@ namespace HotelManagement.Model.Services
             TroubleByCustomerDTO tb;
             using(var context = new HotelManagementEntities())
             {
-                var trouble = await context.TroubleByCustomer.FindAsync(id);
+                var trouble = await context.TroubleByCustomers.FindAsync(id);
                 tb = new TroubleByCustomerDTO
                 {
                     TroubleId=trouble.TroubleId,

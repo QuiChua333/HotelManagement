@@ -17,7 +17,7 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Trouble()
         {
-            this.TroubleByCustomer = new HashSet<TroubleByCustomer>();
+            this.TroubleByCustomers = new HashSet<TroubleByCustomer>();
         }
     
         public string TroubleId { get; set; }
@@ -35,6 +35,6 @@ namespace HotelManagement.Model
     
         public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TroubleByCustomer> TroubleByCustomer { get; set; }
+        public virtual ICollection<TroubleByCustomer> TroubleByCustomers { get; set; }
     }
 }

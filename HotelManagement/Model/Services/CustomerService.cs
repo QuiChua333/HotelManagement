@@ -30,7 +30,7 @@ namespace HotelManagement.Model.Services
             {
                 using(var context = new HotelManagementEntities())
                 {
-                    customerList=(from s in context.Customer
+                    customerList=(from s in context.Customers
                                   where s.IsDeleted == false
                                   select new CustomerDTO {
                                         CustomerId = s.CustomerId,
@@ -58,9 +58,9 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    bool isCccdExist = await context.Customer.AnyAsync(s => newCus.CCCD == s.CCCD);
+                    bool isCccdExist = await context.Customers.AnyAsync(s => newCus.CCCD == s.CCCD);
                     if(isCccdExist) return (false, "CCCD đã tồn tại!", null);
-                    var maxId = await context.Customer.MaxAsync(s => s.CustomerId );
+                    var maxId = await context.Customers.MaxAsync(s => s.CustomerId );
                     
                     Customer cus = new Customer();
                     cus.CustomerId = CreateNextCustomerId(maxId);
@@ -75,7 +75,7 @@ namespace HotelManagement.Model.Services
                     cus.IsDeleted=newCus.IsDeleted;
 
                     newCus.CustomerId = cus.CustomerId;
-                    context.Customer.Add(cus);
+                    context.Customers.Add(cus);
                     await context.SaveChangesAsync();
                 }
             }
@@ -95,9 +95,9 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    bool isCccdExist = await context.Customer.AnyAsync(s => s.CustomerId!=customer.CustomerId && s.CCCD == customer.CCCD);
+                    bool isCccdExist = await context.Customers.AnyAsync(s => s.CustomerId!=customer.CustomerId && s.CCCD == customer.CCCD);
                     if (isCccdExist) return (false, "CCCD đã tồn tại!");
-                    Customer selectedCus = await context.Customer.FindAsync(customer.CustomerId);
+                    Customer selectedCus = await context.Customers.FindAsync(customer.CustomerId);
                     selectedCus.CustomerName = customer.CustomerName;
                     selectedCus.DateOfBirth = customer.DateOfBirth;
                     selectedCus.PhoneNumber = customer.PhoneNumber;
@@ -126,7 +126,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    Customer selectedCus = await ( from s in context.Customer
+                    Customer selectedCus = await ( from s in context.Customers
                                                    where s.CustomerId==id && s.IsDeleted==false
                                                    select s).FirstOrDefaultAsync();
                     if(selectedCus is null || selectedCus.IsDeleted == true)

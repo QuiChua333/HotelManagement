@@ -48,7 +48,7 @@ namespace HotelManagement.Utilities
         {
             using (var context = new HotelManagementEntities())
             {
-                foreach(var staff in context.Staff)
+                foreach(var staff in context.Staffs)
                 {
                     if (staff.Email == currentEmail) return true;
                 }

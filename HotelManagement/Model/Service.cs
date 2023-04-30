@@ -17,7 +17,7 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Service()
         {
-            this.ServiceUsing = new HashSet<ServiceUsing>();
+            this.ServiceUsings = new HashSet<ServiceUsing>();
         }
     
         public string ServiceId { get; set; }
@@ -27,6 +27,6 @@ namespace HotelManagement.Model
     
         public virtual GoodsStorage GoodsStorage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceUsing> ServiceUsing { get; set; }
+        public virtual ICollection<ServiceUsing> ServiceUsings { get; set; }
     }
 }

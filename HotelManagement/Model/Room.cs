@@ -17,8 +17,8 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Room()
         {
-            this.RentalContract = new HashSet<RentalContract>();
-            this.RoomFurnituresDetail = new HashSet<RoomFurnituresDetail>();
+            this.RentalContracts = new HashSet<RentalContract>();
+            this.RoomFurnituresDetails = new HashSet<RoomFurnituresDetail>();
         }
     
         public string RoomId { get; set; }
@@ -29,9 +29,9 @@ namespace HotelManagement.Model
         public string RoomCleaningStatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalContract> RentalContract { get; set; }
+        public virtual ICollection<RentalContract> RentalContracts { get; set; }
         public virtual RoomType RoomType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoomFurnituresDetail> RoomFurnituresDetail { get; set; }
+        public virtual ICollection<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }
     }
 }

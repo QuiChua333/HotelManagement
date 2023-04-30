@@ -124,6 +124,7 @@
           <Property Name="RoomTypeId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="RoomTypeName" Type="nvarchar(max)" />
           <Property Name="Price" Type="float" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -545,9 +546,9 @@
           <Property Name="CustomerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CustomerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="RentalContract" Relationship="Self.FK_RentalContractDetail_Customer" FromRole="Customer" ToRole="RentalContract" />
-          <NavigationProperty Name="Review" Relationship="Self.FK_Review_Customer" FromRole="Customer" ToRole="Review" />
-          <NavigationProperty Name="RoomCustomer" Relationship="Self.FK_RoomCustomer_Customer" FromRole="Customer" ToRole="RoomCustomer" />
+          <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Customer" FromRole="Customer" ToRole="RentalContract" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Customer" FromRole="Customer" ToRole="Review" />
+          <NavigationProperty Name="RoomCustomers" Relationship="Self.FK_RoomCustomer_Customer" FromRole="Customer" ToRole="RoomCustomer" />
         </EntityType>
         <EntityType Name="Furniture">
           <Key>
@@ -557,9 +558,9 @@
           <Property Name="FurnitureName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FurnitureType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FurnitureAvatar" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="FurnitureReceipt" Relationship="Self.FK_FurnitureReceiptId_Furniture" FromRole="Furniture" ToRole="FurnitureReceipt" />
+          <NavigationProperty Name="FurnitureReceipts" Relationship="Self.FK_FurnitureReceiptId_Furniture" FromRole="Furniture" ToRole="FurnitureReceipt" />
           <NavigationProperty Name="FurnitureStorage" Relationship="Self.FK_FurnitureStorage_Furniture" FromRole="Furniture" ToRole="FurnitureStorage" />
-          <NavigationProperty Name="RoomFurnituresDetail" Relationship="Self.FK_RoomFurnituresDetail_Furniture" FromRole="Furniture" ToRole="RoomFurnituresDetail" />
+          <NavigationProperty Name="RoomFurnituresDetails" Relationship="Self.FK_RoomFurnituresDetail_Furniture" FromRole="Furniture" ToRole="RoomFurnituresDetail" />
         </EntityType>
         <EntityType Name="FurnitureReceipt">
           <Key>
@@ -602,13 +603,13 @@
           <Property Name="CustomerId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="RoomId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Validated" Type="Boolean" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_RentalContract" FromRole="RentalContract" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_RentalContract" FromRole="RentalContract" ToRole="Bill" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_RentalContractDetail_Customer" FromRole="RentalContract" ToRole="Customer" />
           <NavigationProperty Name="Room" Relationship="Self.FK_RentalContractDetail_Room" FromRole="RentalContract" ToRole="Room" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="RentalContract" ToRole="Staff" />
-          <NavigationProperty Name="RoomCustomer" Relationship="Self.FK_RoomCustomer_RentalContract" FromRole="RentalContract" ToRole="RoomCustomer" />
-          <NavigationProperty Name="ServiceUsing" Relationship="Self.FK_ServiceUsing_RentalContract" FromRole="RentalContract" ToRole="ServiceUsing" />
-          <NavigationProperty Name="TroubleByCustomer" Relationship="Self.FK_TroubleByCustomer_RentalContract" FromRole="RentalContract" ToRole="TroubleByCustomer" />
+          <NavigationProperty Name="RoomCustomers" Relationship="Self.FK_RoomCustomer_RentalContract" FromRole="RentalContract" ToRole="RoomCustomer" />
+          <NavigationProperty Name="ServiceUsings" Relationship="Self.FK_ServiceUsing_RentalContract" FromRole="RentalContract" ToRole="ServiceUsing" />
+          <NavigationProperty Name="TroubleByCustomers" Relationship="Self.FK_TroubleByCustomer_RentalContract" FromRole="RentalContract" ToRole="TroubleByCustomer" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -630,9 +631,9 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RoomStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RoomCleaningStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RentalContract" Relationship="Self.FK_RentalContractDetail_Room" FromRole="Room" ToRole="RentalContract" />
+          <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Room" FromRole="Room" ToRole="RentalContract" />
           <NavigationProperty Name="RoomType" Relationship="Self.FK_Room_RoomType" FromRole="Room" ToRole="RoomType" />
-          <NavigationProperty Name="RoomFurnituresDetail" Relationship="Self.FK_RoomFurnituresDetail_Room" FromRole="Room" ToRole="RoomFurnituresDetail" />
+          <NavigationProperty Name="RoomFurnituresDetails" Relationship="Self.FK_RoomFurnituresDetail_Room" FromRole="Room" ToRole="RoomFurnituresDetail" />
         </EntityType>
         <EntityType Name="RoomCustomer">
           <Key>
@@ -662,7 +663,8 @@
           <Property Name="RoomTypeId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoomTypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
-          <NavigationProperty Name="Room" Relationship="Self.FK_Room_RoomType" FromRole="RoomType" ToRole="Room" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_RoomType" FromRole="RoomType" ToRole="Room" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -673,7 +675,7 @@
           <Property Name="ServiceType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ServicePrice" Type="Double" />
           <NavigationProperty Name="GoodsStorage" Relationship="Self.FK_GoodsStorage_Service" FromRole="Service" ToRole="GoodsStorage" />
-          <NavigationProperty Name="ServiceUsing" Relationship="Self.FK_ServiceUsing_Service" FromRole="Service" ToRole="ServiceUsing" />
+          <NavigationProperty Name="ServiceUsings" Relationship="Self.FK_ServiceUsing_Service" FromRole="Service" ToRole="ServiceUsing" />
         </EntityType>
         <EntityType Name="ServiceUsing">
           <Key>
@@ -705,9 +707,9 @@
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="dateOfStart" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="FurnitureReceipt" Relationship="Self.FK_FurnitureReceiptId_Staff" FromRole="Staff" ToRole="FurnitureReceipt" />
-          <NavigationProperty Name="RentalContract" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="Staff" ToRole="RentalContract" />
-          <NavigationProperty Name="Trouble" Relationship="Self.FK_Trouble_Staff" FromRole="Staff" ToRole="Trouble" />
+          <NavigationProperty Name="FurnitureReceipts" Relationship="Self.FK_FurnitureReceiptId_Staff" FromRole="Staff" ToRole="FurnitureReceipt" />
+          <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="Staff" ToRole="RentalContract" />
+          <NavigationProperty Name="Troubles" Relationship="Self.FK_Trouble_Staff" FromRole="Staff" ToRole="Trouble" />
         </EntityType>
         <EntityType Name="Trouble">
           <Key>
@@ -726,7 +728,7 @@
           <Property Name="StaffId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_Trouble_Staff" FromRole="Trouble" ToRole="Staff" />
-          <NavigationProperty Name="TroubleByCustomer" Relationship="Self.FK_TroubleByCustomer_Trouble" FromRole="Trouble" ToRole="TroubleByCustomer" />
+          <NavigationProperty Name="TroubleByCustomers" Relationship="Self.FK_TroubleByCustomer_Trouble" FromRole="Trouble" ToRole="TroubleByCustomer" />
         </EntityType>
         <EntityType Name="TroubleByCustomer">
           <Key>
@@ -968,98 +970,98 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="HotelManagementEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bill" EntityType="Self.Bill" />
-          <EntitySet Name="Customer" EntityType="Self.Customer" />
-          <EntitySet Name="Furniture" EntityType="Self.Furniture" />
-          <EntitySet Name="FurnitureReceipt" EntityType="Self.FurnitureReceipt" />
-          <EntitySet Name="FurnitureStorage" EntityType="Self.FurnitureStorage" />
-          <EntitySet Name="GoodsStorage" EntityType="Self.GoodsStorage" />
-          <EntitySet Name="RentalContract" EntityType="Self.RentalContract" />
-          <EntitySet Name="Review" EntityType="Self.Review" />
-          <EntitySet Name="Room" EntityType="Self.Room" />
-          <EntitySet Name="RoomCustomer" EntityType="Self.RoomCustomer" />
-          <EntitySet Name="RoomFurnituresDetail" EntityType="Self.RoomFurnituresDetail" />
-          <EntitySet Name="RoomType" EntityType="Self.RoomType" />
-          <EntitySet Name="Service" EntityType="Self.Service" />
-          <EntitySet Name="ServiceUsing" EntityType="Self.ServiceUsing" />
-          <EntitySet Name="Staff" EntityType="Self.Staff" />
-          <EntitySet Name="Trouble" EntityType="Self.Trouble" />
-          <EntitySet Name="TroubleByCustomer" EntityType="Self.TroubleByCustomer" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Furnitures" EntityType="Self.Furniture" />
+          <EntitySet Name="FurnitureReceipts" EntityType="Self.FurnitureReceipt" />
+          <EntitySet Name="FurnitureStorages" EntityType="Self.FurnitureStorage" />
+          <EntitySet Name="GoodsStorages" EntityType="Self.GoodsStorage" />
+          <EntitySet Name="RentalContracts" EntityType="Self.RentalContract" />
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="RoomCustomers" EntityType="Self.RoomCustomer" />
+          <EntitySet Name="RoomFurnituresDetails" EntityType="Self.RoomFurnituresDetail" />
+          <EntitySet Name="RoomTypes" EntityType="Self.RoomType" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="ServiceUsings" EntityType="Self.ServiceUsing" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="Troubles" EntityType="Self.Trouble" />
+          <EntitySet Name="TroubleByCustomers" EntityType="Self.TroubleByCustomer" />
           <AssociationSet Name="FK_Bill_RentalContract" Association="Self.FK_Bill_RentalContract">
-            <End Role="RentalContract" EntitySet="RentalContract" />
-            <End Role="Bill" EntitySet="Bill" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
+            <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalContractDetail_Customer" Association="Self.FK_RentalContractDetail_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="RentalContract" EntitySet="RentalContract" />
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
           </AssociationSet>
           <AssociationSet Name="FK_Review_Customer" Association="Self.FK_Review_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Review" EntitySet="Review" />
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomCustomer_Customer" Association="Self.FK_RoomCustomer_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="RoomCustomer" EntitySet="RoomCustomer" />
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="RoomCustomer" EntitySet="RoomCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_FurnitureReceiptId_Furniture" Association="Self.FK_FurnitureReceiptId_Furniture">
-            <End Role="Furniture" EntitySet="Furniture" />
-            <End Role="FurnitureReceipt" EntitySet="FurnitureReceipt" />
+            <End Role="Furniture" EntitySet="Furnitures" />
+            <End Role="FurnitureReceipt" EntitySet="FurnitureReceipts" />
           </AssociationSet>
           <AssociationSet Name="FK_FurnitureStorage_Furniture" Association="Self.FK_FurnitureStorage_Furniture">
-            <End Role="Furniture" EntitySet="Furniture" />
-            <End Role="FurnitureStorage" EntitySet="FurnitureStorage" />
+            <End Role="Furniture" EntitySet="Furnitures" />
+            <End Role="FurnitureStorage" EntitySet="FurnitureStorages" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomFurnituresDetail_Furniture" Association="Self.FK_RoomFurnituresDetail_Furniture">
-            <End Role="Furniture" EntitySet="Furniture" />
-            <End Role="RoomFurnituresDetail" EntitySet="RoomFurnituresDetail" />
+            <End Role="Furniture" EntitySet="Furnitures" />
+            <End Role="RoomFurnituresDetail" EntitySet="RoomFurnituresDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_FurnitureReceiptId_Staff" Association="Self.FK_FurnitureReceiptId_Staff">
-            <End Role="Staff" EntitySet="Staff" />
-            <End Role="FurnitureReceipt" EntitySet="FurnitureReceipt" />
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="FurnitureReceipt" EntitySet="FurnitureReceipts" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsStorage_Service" Association="Self.FK_GoodsStorage_Service">
-            <End Role="Service" EntitySet="Service" />
-            <End Role="GoodsStorage" EntitySet="GoodsStorage" />
+            <End Role="Service" EntitySet="Services" />
+            <End Role="GoodsStorage" EntitySet="GoodsStorages" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalContractDetail_Room" Association="Self.FK_RentalContractDetail_Room">
-            <End Role="Room" EntitySet="Room" />
-            <End Role="RentalContract" EntitySet="RentalContract" />
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalContractDetail_Staff" Association="Self.FK_RentalContractDetail_Staff">
-            <End Role="Staff" EntitySet="Staff" />
-            <End Role="RentalContract" EntitySet="RentalContract" />
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomCustomer_RentalContract" Association="Self.FK_RoomCustomer_RentalContract">
-            <End Role="RentalContract" EntitySet="RentalContract" />
-            <End Role="RoomCustomer" EntitySet="RoomCustomer" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
+            <End Role="RoomCustomer" EntitySet="RoomCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceUsing_RentalContract" Association="Self.FK_ServiceUsing_RentalContract">
-            <End Role="RentalContract" EntitySet="RentalContract" />
-            <End Role="ServiceUsing" EntitySet="ServiceUsing" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
+            <End Role="ServiceUsing" EntitySet="ServiceUsings" />
           </AssociationSet>
           <AssociationSet Name="FK_TroubleByCustomer_RentalContract" Association="Self.FK_TroubleByCustomer_RentalContract">
-            <End Role="RentalContract" EntitySet="RentalContract" />
-            <End Role="TroubleByCustomer" EntitySet="TroubleByCustomer" />
+            <End Role="RentalContract" EntitySet="RentalContracts" />
+            <End Role="TroubleByCustomer" EntitySet="TroubleByCustomers" />
           </AssociationSet>
           <AssociationSet Name="FK_Room_RoomType" Association="Self.FK_Room_RoomType">
-            <End Role="RoomType" EntitySet="RoomType" />
-            <End Role="Room" EntitySet="Room" />
+            <End Role="RoomType" EntitySet="RoomTypes" />
+            <End Role="Room" EntitySet="Rooms" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomFurnituresDetail_Room" Association="Self.FK_RoomFurnituresDetail_Room">
-            <End Role="Room" EntitySet="Room" />
-            <End Role="RoomFurnituresDetail" EntitySet="RoomFurnituresDetail" />
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="RoomFurnituresDetail" EntitySet="RoomFurnituresDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceUsing_Service" Association="Self.FK_ServiceUsing_Service">
-            <End Role="Service" EntitySet="Service" />
-            <End Role="ServiceUsing" EntitySet="ServiceUsing" />
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ServiceUsing" EntitySet="ServiceUsings" />
           </AssociationSet>
           <AssociationSet Name="FK_Trouble_Staff" Association="Self.FK_Trouble_Staff">
-            <End Role="Staff" EntitySet="Staff" />
-            <End Role="Trouble" EntitySet="Trouble" />
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Trouble" EntitySet="Troubles" />
           </AssociationSet>
           <AssociationSet Name="FK_TroubleByCustomer_Trouble" Association="Self.FK_TroubleByCustomer_Trouble">
-            <End Role="Trouble" EntitySet="Trouble" />
-            <End Role="TroubleByCustomer" EntitySet="TroubleByCustomer" />
+            <End Role="Trouble" EntitySet="Troubles" />
+            <End Role="TroubleByCustomer" EntitySet="TroubleByCustomers" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1068,7 +1070,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HotelManagementModelStoreContainer" CdmEntityContainer="HotelManagementEntities">
-          <EntitySetMapping Name="Bill">
+          <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="HotelManagementModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
                 <ScalarProperty Name="BillId" ColumnName="BillId" />
@@ -1082,7 +1084,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customer">
+          <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="HotelManagementModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1098,7 +1100,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Furniture">
+          <EntitySetMapping Name="Furnitures">
             <EntityTypeMapping TypeName="HotelManagementModel.Furniture">
               <MappingFragment StoreEntitySet="Furniture">
                 <ScalarProperty Name="FurnitureId" ColumnName="FurnitureId" />
@@ -1108,7 +1110,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FurnitureReceipt">
+          <EntitySetMapping Name="FurnitureReceipts">
             <EntityTypeMapping TypeName="HotelManagementModel.FurnitureReceipt">
               <MappingFragment StoreEntitySet="FurnitureReceipt">
                 <ScalarProperty Name="FurnitureReceiptId" ColumnName="FurnitureReceiptId" />
@@ -1120,7 +1122,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FurnitureStorage">
+          <EntitySetMapping Name="FurnitureStorages">
             <EntityTypeMapping TypeName="HotelManagementModel.FurnitureStorage">
               <MappingFragment StoreEntitySet="FurnitureStorage">
                 <ScalarProperty Name="FurnitureId" ColumnName="FurnitureId" />
@@ -1128,7 +1130,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="GoodsStorage">
+          <EntitySetMapping Name="GoodsStorages">
             <EntityTypeMapping TypeName="HotelManagementModel.GoodsStorage">
               <MappingFragment StoreEntitySet="GoodsStorage">
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
@@ -1136,7 +1138,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RentalContract">
+          <EntitySetMapping Name="RentalContracts">
             <EntityTypeMapping TypeName="HotelManagementModel.RentalContract">
               <MappingFragment StoreEntitySet="RentalContract">
                 <ScalarProperty Name="RentalContractId" ColumnName="RentalContractId" />
@@ -1150,7 +1152,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Review">
+          <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="HotelManagementModel.Review">
               <MappingFragment StoreEntitySet="Review">
                 <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
@@ -1160,7 +1162,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Room">
+          <EntitySetMapping Name="Rooms">
             <EntityTypeMapping TypeName="HotelManagementModel.Room">
               <MappingFragment StoreEntitySet="Room">
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
@@ -1172,7 +1174,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RoomCustomer">
+          <EntitySetMapping Name="RoomCustomers">
             <EntityTypeMapping TypeName="HotelManagementModel.RoomCustomer">
               <MappingFragment StoreEntitySet="RoomCustomer">
                 <ScalarProperty Name="RoomCustomerId" ColumnName="RoomCustomerId" />
@@ -1181,7 +1183,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RoomFurnituresDetail">
+          <EntitySetMapping Name="RoomFurnituresDetails">
             <EntityTypeMapping TypeName="HotelManagementModel.RoomFurnituresDetail">
               <MappingFragment StoreEntitySet="RoomFurnituresDetail">
                 <ScalarProperty Name="RoomFurnituresDetailId" ColumnName="RoomFurnituresDetailId" />
@@ -1191,16 +1193,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RoomType">
+          <EntitySetMapping Name="RoomTypes">
             <EntityTypeMapping TypeName="HotelManagementModel.RoomType">
               <MappingFragment StoreEntitySet="RoomType">
                 <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
                 <ScalarProperty Name="RoomTypeName" ColumnName="RoomTypeName" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Service">
+          <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="HotelManagementModel.Service">
               <MappingFragment StoreEntitySet="Service">
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
@@ -1210,7 +1213,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ServiceUsing">
+          <EntitySetMapping Name="ServiceUsings">
             <EntityTypeMapping TypeName="HotelManagementModel.ServiceUsing">
               <MappingFragment StoreEntitySet="ServiceUsing">
                 <ScalarProperty Name="ServiceUsingId" ColumnName="ServiceUsingId" />
@@ -1221,7 +1224,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Staff">
+          <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="HotelManagementModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
                 <ScalarProperty Name="StaffId" ColumnName="StaffId" />
@@ -1241,7 +1244,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Trouble">
+          <EntitySetMapping Name="Troubles">
             <EntityTypeMapping TypeName="HotelManagementModel.Trouble">
               <MappingFragment StoreEntitySet="Trouble">
                 <ScalarProperty Name="TroubleId" ColumnName="TroubleId" />
@@ -1259,7 +1262,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TroubleByCustomer">
+          <EntitySetMapping Name="TroubleByCustomers">
             <EntityTypeMapping TypeName="HotelManagementModel.TroubleByCustomer">
               <MappingFragment StoreEntitySet="TroubleByCustomer">
                 <ScalarProperty Name="TroubleByCustomerId" ColumnName="TroubleByCustomerId" />
@@ -1283,7 +1286,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

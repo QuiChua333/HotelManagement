@@ -85,7 +85,7 @@ namespace HotelManagement.ViewModel.LoginVM
                 {
                     using (var context = new HotelManagementEntities())
                     {
-                        var staff = await context.Staff.FirstOrDefaultAsync(s => s.Email == CurrentEmail);
+                        var staff = await context.Staffs.FirstOrDefaultAsync(s => s.Email == CurrentEmail);
                         if (staff == null) return;
                         staff.Password = NewPass;
                         await context.SaveChangesAsync();

@@ -17,10 +17,10 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RentalContract()
         {
-            this.Bill = new HashSet<Bill>();
-            this.RoomCustomer = new HashSet<RoomCustomer>();
-            this.ServiceUsing = new HashSet<ServiceUsing>();
-            this.TroubleByCustomer = new HashSet<TroubleByCustomer>();
+            this.Bills = new HashSet<Bill>();
+            this.RoomCustomers = new HashSet<RoomCustomer>();
+            this.ServiceUsings = new HashSet<ServiceUsing>();
+            this.TroubleByCustomers = new HashSet<TroubleByCustomer>();
         }
     
         public string RentalContractId { get; set; }
@@ -33,15 +33,15 @@ namespace HotelManagement.Model
         public Nullable<bool> Validated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bill> Bill { get; set; }
+        public virtual ICollection<Bill> Bills { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Room Room { get; set; }
         public virtual Staff Staff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoomCustomer> RoomCustomer { get; set; }
+        public virtual ICollection<RoomCustomer> RoomCustomers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceUsing> ServiceUsing { get; set; }
+        public virtual ICollection<ServiceUsing> ServiceUsings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TroubleByCustomer> TroubleByCustomer { get; set; }
+        public virtual ICollection<TroubleByCustomer> TroubleByCustomers { get; set; }
     }
 }
