@@ -9,7 +9,8 @@
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Background="Transparent" 
-        
+        Name="SolveSC"
+        DataContext="{StaticResource TroubleManagementVM}"
         WindowStyle="none" 
         ResizeMode="NoResize"
         AllowsTransparency="True" 
@@ -62,7 +63,7 @@
                                         Direction="270"/>
                     </Border.Effect>
                     <Border.Background>
-                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding Image}"/>
+                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding SelectedItem.ImagesourgeTrouble}"/>
                     </Border.Background>
                 </Border>
                 <Grid Grid.Column="1" Margin="0 20 0 0">
@@ -75,39 +76,64 @@
                     <Grid Grid.Row="0">
                         <TextBlock Text="Nhân viên báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding StaffName}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                            <TextBlock Name="staffname" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1">
                         <TextBlock Text="Ngày báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding ReportDate, StringFormat=dd/MM/yyyy}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedItem.StartDate, StringFormat=dd/MM/yyyy HH:mm:ss}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
-                        <Border Margin="0 0 0 5" Height="30.5" Width="150" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding TroubleLevel}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
-                        </Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Nguyên nhân" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding SelectedItem.Reason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Column="1" Name="MSPgrid" Visibility="Collapsed">
+                            <TextBlock Text="Mã số phiếu" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Name="rentalcontractid" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <TextBlock Text="Nguyên nhân" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
-                        <Border Margin="0 0 0 5" Height="30.5" Width="150" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
-                        </Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding SelectedItem.Level}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Column="1" Name="predictgrid" Visibility="Collapsed">
+                            <TextBlock Text="Giá dự đoán" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBox Text="{Binding PredictPrice, Mode=TwoWay}"  Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" PreviewTextInput="TextBox_PreviewTextInput_1"/>
+                            </Border>
+                        </Grid>
+
                     </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Margin="15 10 15 0">
                 <TextBlock Text="Tiêu đề:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 4" Height="30.5" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBlock Text="{Binding TroubleTitle}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Bottom"/>
+                    <TextBlock Text="{Binding SelectedItem.Title}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="3" Margin="15 0 15 0">
                 <TextBlock Text="Mô tả sự cố:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 4" Height="60" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBlock Text="{Binding TroubleDescription}" Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"/>
+                    <TextBlock Text="{Binding SelectedItem.Description}" Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="4" Margin="15 0 15 0 " >
@@ -115,20 +141,45 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="0" Name="gridByCus" Visibility="Collapsed">
                     <TextBlock Text="Tình trạng" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                         <ComboBox Padding="12,7" 
+                                  Visibility="Collapsed"
                                   BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
-                                  SelectedIndex="0"
+                                  SelectedItem="{Binding Status, Mode=TwoWay}"
                                   FontWeight="Regular"
-                                  UseLayoutRounding="False"
+                                  materialDesign:HintAssist.Hint="{Binding SelectedItem.Status}"
                                   FontSize="14" 
                                   SelectedValuePath="Tag"
                                   BorderThickness="0" 
-                                  
+                                  Name="cbbStatusByCustomer"                                            
                                   FontFamily="{DynamicResource MaterialDesignFont}"
-                                  HorizontalContentAlignment="Left">
+                                  HorizontalContentAlignment="Left" RenderTransformOrigin="0.481,0.322"  
+                                  SelectionChanged="cbbStatus1_SelectionChanged">
+                            <ComboBoxItem  Content="Dự đoán giá" Tag="Dự đoán giá" FontSize="14" />
+                            <ComboBoxItem  Content="Đang giải quyết" Tag="Đang giải quyết" FontSize="14" />
+                            <ComboBoxItem  Content="Đã giải quyết" Tag="Đã giải quyết" FontSize="14"/>
+                            <ComboBoxItem  Content="Đã hủy" Tag="Đã hủy" FontSize="14"/>
+                        </ComboBox>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="0" Name="gridbyHotel">
+                    <TextBlock Text="Tình trạng" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                    <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                        <ComboBox Padding="12,7" 
+                                  Visibility="Visible"
+                                  BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                                  SelectedItem="{Binding Status, Mode=TwoWay}"
+                                  FontWeight="Regular"
+                                  materialDesign:HintAssist.Hint="{Binding SelectedItem.Status}"
+                                  FontSize="14" 
+                                  SelectedValuePath="Tag"
+                                  BorderThickness="0" 
+                                  Name="cbbStatus"                                            
+                                  FontFamily="{DynamicResource MaterialDesignFont}"
+                                  HorizontalContentAlignment="Left" RenderTransformOrigin="0.481,0.322"  
+                                  SelectionChanged="cbbStatus_SelectionChanged">
 
                             <ComboBoxItem  Content="Đang giải quyết" Tag="Đang giải quyết" FontSize="14" />
                             <ComboBoxItem  Content="Đã giải quyết" Tag="Đã giải quyết" FontSize="14"/>
@@ -136,11 +187,11 @@
                         </ComboBox>
                     </Border>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Visibility="Collapsed" Name="fixdate">
                     <TextBlock Text="Ngày sửa" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
                         <Grid>
-                            <DatePicker BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
+                            <DatePicker SelectedDate="{Binding FixedDate, Mode=TwoWay, StringFormat=dd/MM/yyyy}" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
                             <materialDesign:PackIcon Kind="CalendarBadgeOutline" Foreground="{DynamicResource SecondTextColor}" Width="18" Margin="0 0 10 0" Height="18" HorizontalAlignment="Right" VerticalAlignment="Center" />
                         </Grid>
                     </Border>
@@ -151,30 +202,36 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="0" Visibility="Collapsed" Name="fixprice">
                     <TextBlock Text="Giá sửa chữa" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
+                        <TextBox x:Name="tb" Text="{Binding Price, Mode=TwoWay}" 
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 TextChanged="TextBox_TextChanged" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderThickness="0" VerticalAlignment="Bottom"  />
                     </Border>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Visibility="Collapsed" Name="finishdate">
                     <TextBlock Text="Ngày kết thúc" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
                         <Grid>
-                            <DatePicker BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
+                            <DatePicker SelectedDate="{Binding FinishDate, Mode=TwoWay, StringFormat=dd/MM/yyyy }" BorderThickness="0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" BorderBrush="Transparent" VerticalAlignment="Stretch"   Margin="5 0 10 0"/>
                             <materialDesign:PackIcon Kind="CalendarBadgeOutline" Foreground="{DynamicResource SecondTextColor}" Width="18" Margin="0 0 10 0" Height="18" HorizontalAlignment="Right" VerticalAlignment="Center" />
                         </Grid>
                     </Border>
                 </Grid>
             </Grid>
             <Grid Grid.Row="6" Margin="0 0 15 15">
-                <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource SecondBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 100 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="137*"/>
+                    <ColumnDefinition Width="406*"/>
+                </Grid.ColumnDefinitions>
+                <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource SecondBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 100 0" Grid.Column="1">
                     <Button Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Button_Click" >
                         <TextBlock Text="Thoát" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Button>
                 </Border>
-                <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                    <Button Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                <Border Height="34" Width="80" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1" >
+                    <Button Command="{Binding UpdateTroubleCM}" CommandParameter="{Binding ElementName=SolveSC}" Height="34" BorderBrush="Transparent"  Width="80" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
                         <TextBlock Text="Lưu" FontSize="15" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Button>
                 </Border>

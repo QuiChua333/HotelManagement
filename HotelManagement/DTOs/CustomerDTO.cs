@@ -17,5 +17,6 @@ namespace HotelManagement.DTOs
         public string Gender { get; set; }
         public string CustomerType { get; set; }
         public string CustomerAddress { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

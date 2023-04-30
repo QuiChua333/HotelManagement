@@ -42,7 +42,7 @@
                             FontFamily="{StaticResource MaterialDesignFont}"
                             FontSize="16"
                             IsChecked="True"
-                            Content="Nhap kho"
+                            Content="Nhập kho"
                             Cursor="Hand"
                             Command="{Binding LoadImportPageCM}"
                             CommandParameter="{Binding ElementName=MainListViewFrame}"
@@ -57,7 +57,7 @@
                             FontSize="16"
                             IsChecked="False"
                             Margin="10,5,0,0"
-                            Content="Hoa don"
+                            Content="Hóa đơn"
                             Command="{Binding LoadExportPageCM}"
                             CommandParameter="{Binding ElementName=MainListViewFrame}"/>
         </StackPanel>

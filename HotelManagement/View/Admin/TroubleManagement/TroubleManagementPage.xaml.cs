@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,20 @@ namespace HotelManagement.View.Admin.TroubleManagement
         public TroubleManagementPage()
         {
             InitializeComponent();
+        }
+
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(FilterBox.Text)) return true;
+
+            return ((item as TroubleDTO).Title.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+
+        }
+        private void filterbox_textchange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_ListView.ItemsSource);
+            view.Filter = Filter;
+            CollectionViewSource.GetDefaultView(_ListView.ItemsSource).Refresh();
         }
     }
 }

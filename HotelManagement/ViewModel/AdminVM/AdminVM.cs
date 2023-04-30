@@ -1,4 +1,5 @@
 ﻿using CinemaManagementProject.Utilities;
+using HotelManagement.DTOs;
 using HotelManagement.View.Admin.StatisticalManagement;
 using HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM;
 using System;
@@ -8,12 +9,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 
 namespace HotelManagement.ViewModel.AdminVM
 {
     public class AdminVM : BaseVM
     {
+
+        public static StaffDTO CurrentStaff;
+
+        private string _staffname;
+        public string StaffName
+        {
+            get { return _staffname; }
+            set { _staffname = value; OnPropertyChanged(); }
+        }
+        private ImageSource _staffimgsource;
+        public ImageSource Staffimgsource
+        {
+            get { return _staffimgsource; }
+            set { _staffimgsource = value; OnPropertyChanged(); }
+        }
         private object _currentView;
         public object CurrentView
         {
