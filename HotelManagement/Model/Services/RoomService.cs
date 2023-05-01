@@ -1,8 +1,11 @@
 ﻿using Google.Apis.Util;
 using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -23,7 +26,9 @@ namespace HotelManagement.Model.Services
             get
             {
                 if (_ins == null)
+                {
                     _ins = new RoomService();
+                }
                 return _ins;
             }
             private set { _ins = value; }
@@ -35,13 +40,14 @@ namespace HotelManagement.Model.Services
                 using (HotelManagementEntities db = new HotelManagementEntities())
                 {
                     List<RoomDTO> RoomDTOs = await (
-                        from r in db.Rooms join temp in db.RoomTypes
+                        from r in db.Rooms
+                        join temp in db.RoomTypes
                         on r.RoomTypeId equals temp.RoomTypeId into gj
                         from d in gj.DefaultIfEmpty()
                         select new RoomDTO
                         {
                             // DTO = db
-                            RoomID = r.RoomId,
+                            RoomId = r.RoomId,
                             RoomNumber = (int)r.RoomNumber,
                             RoomTypeName = d.RoomTypeName,
                             RoomTypeId = d.RoomTypeId,
@@ -81,21 +87,9 @@ namespace HotelManagement.Model.Services
 
                     if (r != null)
                     {
-                        if (r.IsDeleted == false)
-                        {
-                            return (false, "Phòng này đã tồn tại", null);
-                        }
-                        //Khi loại phòng đã bị xóa nhưng được add lại với cùng tên => update lại loại phòng đã xóa đó với thông tin là 
-                        // loại phòng mới thêm thay vì add thêm
-                        r.RoomNumber = newRoom.RoomNumber;
-                        r.RoomStatus = newRoom.RoomStatus;
-                        r.RoomCleaningStatus = newRoom.RoomCleaningStatus;
-                        r.RoomTypeId = newRoom.RoomTypeId;
-                        r.Note = newRoom.Note;
-                        r.IsDeleted = false;
+                                 
+                            return (false, $"Phòng {r.RoomNumber} đã tồn tại!", null);
 
-                        await context.SaveChangesAsync();
-                        newRoom.RoomID = r.RoomId;
                     }
                     else
                     {
@@ -113,11 +107,10 @@ namespace HotelManagement.Model.Services
                             Note = newRoom.Note,
                             RoomStatus = newRoom.RoomStatus,
                             RoomCleaningStatus = newRoom.RoomCleaningStatus,
-                            IsDeleted = false,
                         };
                         context.Rooms.Add(room);
                         await context.SaveChangesAsync();
-                        newRoom.RoomID = room.RoomId;
+                        newRoom.RoomId = room.RoomId;
                     }
                 }
             }
@@ -151,13 +144,12 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
                     Room room = await (from p in context.Rooms
-                                               where p.RoomId == Id && p.IsDeleted == false
-                                               select p).FirstOrDefaultAsync();
+                                       where p.RoomId == Id 
+                                       select p).FirstOrDefaultAsync();
                     if (room == null)
                     {
                         return (false, "Loại phòng này không tồn tại!");
                     }
-                    room.IsDeleted = true;
                     context.Rooms.Remove(room);
                     await context.SaveChangesAsync();
                 }
@@ -175,7 +167,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    Room room = context.Rooms.Find(updatedRoom.RoomID);
+                    Room room = context.Rooms.Find(updatedRoom.RoomId);
 
                     if (room is null)
                     {
@@ -191,13 +183,13 @@ namespace HotelManagement.Model.Services
                     //    return (false, "Phòng đang được sử dụng không thể chỉnh sửa!");
                     //}
 
-                    room.RoomId = updatedRoom.RoomID;
+                    room.RoomId = updatedRoom.RoomId;
                     room.RoomNumber = updatedRoom.RoomNumber;
                     room.RoomStatus = updatedRoom.RoomStatus;
                     room.Note = updatedRoom.Note;
                     room.RoomCleaningStatus = updatedRoom.RoomCleaningStatus;
                     room.RoomTypeId = updatedRoom.RoomTypeId;
-                   
+
                     await context.SaveChangesAsync();
                     return (true, "Cập nhật thành công");
                 }
@@ -214,6 +206,238 @@ namespace HotelManagement.Model.Services
             {
                 return (false, "Lỗi hệ thống");
             }
+
         }
+
+        public async Task<List<RoomDTO>> GetRooms()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var roomList = await (from r in context.Rooms
+                                          join t in context.RoomTypes
+                                          on r.RoomTypeId equals t.RoomTypeId
+                                          select new RoomDTO
+                                          {
+                                              RoomId = r.RoomId,
+                                              RoomNumber = r.RoomNumber,
+                                              RoomTypeId = r.RoomTypeId,
+                                              Note = r.Note,
+                                              RoomStatus = r.RoomStatus,
+                                              RoomCleaningStatus = r.RoomCleaningStatus,
+                                              Price = t.Price,
+                                          }
+                                          ).ToListAsync();
+                    return roomList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public async Task AutoUpdateDb()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var roomRentingList = await context.Rooms.Where(x => x.RoomStatus == ROOM_STATUS.RENTING).Select(x => x.RoomId).ToListAsync();
+
+
+                    var list1 = await context.RentalContracts.ToListAsync();
+                    var rentalContractListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay
+                    && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RentalContractId).ToList();
+                    string t = "";
+                    for (int i = 0; i < rentalContractListId.Count; i++)
+                    {
+
+                        t += $@"'{rentalContractListId[i]}'";
+                        if (i != rentalContractListId.Count - 1)
+                        {
+                            t += ",";
+                        }
+                    }
+                    if (t == "") return;
+                    var sql1 = $@"Update [RentalContract] SET Validated = 0  WHERE RentalContractId IN ({t})";
+                    await context.Database.ExecuteSqlCommandAsync(sql1);
+
+
+                    list1 = await context.RentalContracts.ToListAsync();
+                    var roomListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
+                    t = "";
+                    for (int i = 0; i < roomListId.Count; i++)
+                    {
+
+                        t += $@"'{roomListId[i]}'";
+                        if (i != roomListId.Count - 1)
+                        {
+                            t += ",";
+                        }
+                    }
+                    if (t == "") return;
+                    var sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.READY}'  WHERE RoomId  IN ({t})";
+                    await context.Database.ExecuteSqlCommandAsync(sql2);
+
+                    list1 = await context.RentalContracts.ToListAsync();
+                    roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
+                    t = "";
+                    for (int i = 0; i < roomListId.Count; i++)
+                    {
+
+                        t += $@"'{roomListId[i]}'";
+                        if (i != roomListId.Count - 1)
+                        {
+                            t += ",";
+                        }
+                    }
+                    if (t == "") return;
+                    sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.BOOKED}'  WHERE RoomId  IN ({t})";
+                    await context.Database.ExecuteSqlCommandAsync(sql2);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public async Task<List<RoomSettingDTO>> GetRoomsByRoomType(string RoomTypeId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    RoomType rt = await context.RoomTypes.FindAsync(RoomTypeId);
+                    int roomNumber = context.Rooms.Select(x => x.RoomTypeId == RoomTypeId).Count();
+
+
+                    var roomList = await (from r in context.Rooms
+                                          join c in context.RentalContracts
+                                          on r.RoomId equals c.RoomId into ps
+                                          from c in ps.DefaultIfEmpty()
+                                          join cu in context.Customers
+                                          on c.CustomerId equals cu.CustomerId into pi
+                                          from cu in pi.DefaultIfEmpty()
+                                          where r.RoomTypeId == RoomTypeId
+
+                                          orderby r.RoomId
+                                          select new RoomSettingDTO
+                                          {
+                                              RoomId = r.RoomId,
+                                              RoomNumber = r.RoomNumber,
+                                              RoomTypeId = r.RoomTypeId,
+                                              RoomTypeName = rt.RoomTypeName.Trim(),
+                                              RoomStatus = r.RoomStatus.Trim(),
+                                              RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                                              StartDate = c.StartDate,
+                                              StartTime = c.StartTime,
+                                              CheckOutDate = c.CheckOutDate,
+                                              Validated = c.Validated,
+                                              CustomerId = cu.CustomerId,
+                                              CustomerName = cu.CustomerName,
+                                              RentalContractId = c.RentalContractId,
+
+                                          }
+
+                                          ).ToListAsync();
+                    List<RoomSettingDTO> roomList2 = new List<RoomSettingDTO>();
+                    var t = DateTime.Today + DateTime.Now.TimeOfDay;
+                    Dictionary<string, List<RoomSettingDTO>> dic = new Dictionary<string, List<RoomSettingDTO>>();
+                    foreach (var item in roomList)
+                    {
+                        if (!dic.Keys.Contains(item.RoomId))
+                        {
+                            dic.Add(item.RoomId, new List<RoomSettingDTO>());
+                        }
+                    }
+                    foreach (var item in dic.Keys)
+                    {
+                        foreach (var room in roomList)
+                        {
+                            if (room.RoomId == item)
+                            {
+                                dic[item].Add(room);
+                            }
+                        }
+                    }
+                    foreach (var item in dic.Values)
+                    {
+                        if (item.Count > 1)
+                        {
+                            item.Sort();
+                        }
+                    }
+                    foreach (var item in dic.Values)
+                    {
+                        if (item.Count > 1)
+                        {
+                            bool flat = false;
+                            foreach (var item2 in item)
+                            {
+                                if (item2.StartDate + item2.StartTime <= t && t < item2.CheckOutDate + item2.StartTime)
+                                {
+                                    roomList2.Add(item2);
+                                    flat = true;
+                                    break;
+                                }
+
+                            }
+                            if (flat == false) roomList2.Add(item[0]);
+
+
+                        }
+                        else roomList2.Add(item[0]);
+                    }
+                    foreach (var item in roomList2)
+                    {
+                        if (item.RoomStatus == ROOM_STATUS.READY)
+                        {
+
+                            item.StartDate = null;
+                            item.StartTime = null;
+                            item.CheckOutDate = null;
+                            item.CustomerId = null;
+                            item.CustomerName = null;
+                        }
+                    }
+                    return roomList2;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public async Task<List<RoomTypeDTO>> GetRoomTypes()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var roomTypeList = await (from r in context.RoomTypes
+                                              select new RoomTypeDTO
+                                              {
+                                                  RoomTypeId = r.RoomTypeId,
+                                                  RoomTypeName = r.RoomTypeName.Trim(),
+                                                  RoomTypePrice = (double)r.Price,
+                                              }
+                                          ).ToListAsync();
+                    return roomTypeList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
     }
 }
+
+        

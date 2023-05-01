@@ -1,4 +1,5 @@
-﻿using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+﻿using HotelManagement.DTOs;
+using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,33 +22,26 @@ namespace HotelManagement.View.Admin.ServiceManagement
     /// </summary>
     public partial class ServiceManagementPage : Page
     {
-        public class Service
-        {
-            public string name;
-            public string type;
-            public string quantity;
-            public Service() { }
-            public Service(string name, string type, string quantity)
-            {
-                this.name = name;
-                this.type = type;
-                this.quantity = quantity;
-            }
-        }
-        public List<Service> furnitures;
-
         public ServiceManagementPage()
         {
             InitializeComponent();
-            furnitures = new List<Service>();
-            Service f;
-            for (int i = 0; i < 9; i++)
-            {
-                f = new Service("Giuong Rolex Diamond " + i.ToString(), "Giuong ngu", "38" + i.ToString());
-                furnitures.Add(f);
-            }
+        }
 
-            ListViewProducts.ItemsSource = furnitures;
+        private void Search_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewProducts.ItemsSource);
+            if (view != null)
+            {
+                view.Filter = Filter;
+                CollectionViewSource.GetDefaultView(ListViewProducts.ItemsSource).Refresh();
+            }
+        }
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as ServiceDTO).ServiceName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
     }
 }

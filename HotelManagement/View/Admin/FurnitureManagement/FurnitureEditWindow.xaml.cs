@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,23 @@ namespace HotelManagement.View.Admin.FurnitureManagement
             {
                 DragMove();
             }    
+        }
+        private void BtnAdd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectTypeFurniture.Visibility = Visibility.Collapsed;
+            AddNewTypeFurniture.Visibility = Visibility.Visible;
+            AddNewTypeFurniture.IsEnabled = true;
+            TypeBoxAddNewTypeFurniture.Text = "";
+            TypeBoxAddNewTypeFurniture.Focus();
+            SelectTypeFurniture.IsEnabled = false;
+        }
+
+        private void BtnFilter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectTypeFurniture.Visibility = Visibility.Visible;
+            AddNewTypeFurniture.Visibility = Visibility.Collapsed;
+            AddNewTypeFurniture.IsEnabled = false;
+            SelectTypeFurniture.IsEnabled = true;
         }
     }
 }

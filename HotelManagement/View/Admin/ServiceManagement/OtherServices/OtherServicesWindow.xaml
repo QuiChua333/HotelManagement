@@ -4,16 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.ServiceManagement"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        x:Name="OtherServicesWD" Height="260" Width="490"
+        x:Name="OtherServicesWD" Height="260" Width="500"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent"
         MouseDown="OtherServicesWD_MouseDown"
+        DataContext="{StaticResource ServiceManagementVM}"
 >
 
-    <Grid Height="250" Width="480">
+    <Grid Height="250" Width="490">
         <Border CornerRadius="5" VerticalAlignment="Stretch" BorderThickness="0.3" BorderBrush="Black"  HorizontalAlignment="Stretch" Background="White">
             <Border.Effect>
                 <DropShadowEffect
@@ -36,163 +39,112 @@
                         <TextBlock Text="SaiGon Hotel" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="SemiBold" Foreground="#777777" HorizontalAlignment="Center"/>
                     </StackPanel>
                     <TextBlock Name="Title" Text="DỊCH VỤ KHÁC" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{StaticResource PrimaryBackgroundColor}"/>
-                    <materialDesign:PackIcon Width="20" Height="20" Kind="Close" Cursor="Hand" MouseLeftButtonDown="PackIcon_MouseLeftButtonDown" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0"/>
+                    <Grid  Width="20" Height="20" Cursor="Hand" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
+                        <materialDesign:PackIcon Kind="Close" MouseLeftButtonDown="PackIcon_MouseLeftButtonDown" >
+                        </materialDesign:PackIcon>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding CloseOtherServiceWindowCM}" CommandParameter="{Binding ElementName=OtherServicesWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Grid>
                     <Rectangle Height="6" VerticalAlignment="Bottom" Margin="20 0 20 0" Fill="{StaticResource PrimaryBackgroundColor}" RadiusX="3" RadiusY="3"/>
                 </Grid>
                 <Grid Name="Content" VerticalAlignment="Top" Margin="0 20 0 0" Grid.Row="1">
                     <Grid>
-                        <Border Margin="20 0 0 0" HorizontalAlignment="Left" BorderThickness="1" Width="200" Height="150" BorderBrush="Black" CornerRadius="4" Padding="0 10 0 0">
-                            <Grid>
-                                <StackPanel>
-                                    <TextBlock Text="Dọn dẹp" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" FontSize="24" HorizontalAlignment="Center"/>
-                                    <Grid Margin="10 10 0 0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="38"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="Loại: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="Vệ sinh" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Giá: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <StackPanel Grid.Column="1" Grid.Row="1">
-                                            <TextBlock Text="20000đ/ Thường" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                            <TextBlock Text="40000đ/ Vip" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                            <TextBlock Text="80000đ/ Thương gia" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </StackPanel>
-                                <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="25" Height="55" Margin="0 6 -12 0">
-                                    <StackPanel x:Name="EditAndRemove" VerticalAlignment="Center">
-                                        <Border x:Name="EditButton" CornerRadius="20" Width="25" Height="25" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
-                                            <Border.Effect>
-                                                <DropShadowEffect 
-                                                        BlurRadius="4"
-                                                        Color="Black"
-                                                        ShadowDepth="2"
-                                                        Opacity=".22"
-                                                        Direction="270"
-                                                    />
-                                            </Border.Effect>
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="Background" Value="White"></Setter>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="Wheat">
+                        <ListView Name="ListCleanService" ItemsSource="{Binding CleaningService}" SelectedItem="{Binding SelectedProduct}"
+                                  materialDesign:ListBoxItemAssist.ShowSelection="False">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="2" Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="IsSelected" Value="True"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ListViewItem>
+                                        <Border Margin="20 0 0 0" HorizontalAlignment="Left" BorderThickness="1" Width="200" Height="150" BorderBrush="Black" CornerRadius="4" Padding="0 10 0 0">
+                                        <Grid>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding ServiceName}" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" FontSize="24" HorizontalAlignment="Center"/>
+                                                <Grid Margin="10 10 0 0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="38"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="30"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="Loại: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                    <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding ServiceType}" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Giá: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                    <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding PriceStr}" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                        <TextBlock Text="/ " Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                        <TextBlock Text="{Binding Unit}" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                            <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="25" Height="55" Margin="0 6 -12 0">
+                                                <StackPanel x:Name="EditAndRemove" VerticalAlignment="Center">
+                                                    <Border x:Name="EditButton" CornerRadius="20" Width="25" Height="25" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
+                                                        <Border.Effect>
+                                                            <DropShadowEffect 
+                                                                BlurRadius="4"
+                                                                Color="Black"
+                                                                ShadowDepth="2"
+                                                                Opacity=".22"
+                                                                Direction="270"
+                                                            />
+                                                        </Border.Effect>
+                                                        <Border.Style>
+                                                            <Style TargetType="{x:Type Border}">
+                                                                <Setter Property="Background" Value="White"></Setter>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Background" Value="Wheat">
 
-                                                            </Setter>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="14"/>
-                                        </Border>
-                                        <Border x:Name="RemoveButton" Cursor="Hand" CornerRadius="25" Width="25" Height="25" Margin="0,5,0,0" BorderThickness="0.5" BorderBrush="Black">
-                                            <Border.Effect>
-                                                <DropShadowEffect 
-                                                            BlurRadius="4"
-                                                            Color="Black"
-                                                            ShadowDepth="2"
-                                                            Opacity=".22"
-                                                            Direction="270"
-                                                        />
-                                            </Border.Effect>
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="Background" Value="White"></Setter>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#FFF09E9E"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="18" Height="18"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                            
-                        </Border>
-                        <Border Margin="0 0 20 0" HorizontalAlignment="Right" BorderThickness="1" Width="200" Height="150" BorderBrush="Black" CornerRadius="4" Padding="0 10 0 0">
-                            <Grid>
-                                <StackPanel>
-                                    <TextBlock Text="Dọn dẹp" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" FontSize="24" HorizontalAlignment="Center"/>
-                                    <Grid Margin="10 10 0 0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="38"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="Loại: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="Vệ sinh" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Giá: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <StackPanel Grid.Column="1" Grid.Row="1">
-                                            <TextBlock Text="20000đ/ Thường" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                            <TextBlock Text="40000đ/ Vip" Margin="0 0 0 3" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                            <TextBlock Text="80000đ/ Thương gia" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </StackPanel>
-                                <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Width="25" Height="55" Margin="0 6 -12 0">
-                                    <StackPanel x:Name="EditAndRemove2" VerticalAlignment="Center">
-                                        <Border x:Name="EditButton2" CornerRadius="20" Width="25" Height="25" Cursor="Hand" BorderThickness="0.5" BorderBrush="Black">
-                                            <Border.Effect>
-                                                <DropShadowEffect 
-                                                        BlurRadius="4"
-                                                        Color="Black"
-                                                        ShadowDepth="2"
-                                                        Opacity=".22"
-                                                        Direction="270"
-                                                    />
-                                            </Border.Effect>
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="Background" Value="White"></Setter>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="Wheat">
+                                                                        </Setter>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=ListCleanService, Path=DataContext.OpenEditCleanServiceWindowCM}"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                        <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="14"/>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
 
-                                                            </Setter>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="14" Height="14"/>
-                                        </Border>
-                                        <Border x:Name="RemoveButton2" Cursor="Hand" CornerRadius="25" Width="25" Height="25" Margin="0,5,0,0" BorderThickness="0.5" BorderBrush="Black">
-                                            <Border.Effect>
-                                                <DropShadowEffect 
-                                                            BlurRadius="4"
-                                                            Color="Black"
-                                                            ShadowDepth="2"
-                                                            Opacity=".22"
-                                                            Direction="270"
-                                                        />
-                                            </Border.Effect>
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="Background" Value="White"></Setter>
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#FFF09E9E"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="18" Height="18"/>
-                                        </Border>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-
-                        </Border>
+                                    </Border>
+                                    </ListViewItem>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
                     </Grid>
                 </Grid>

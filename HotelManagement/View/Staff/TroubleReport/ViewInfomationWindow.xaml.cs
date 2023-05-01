@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HotelManagement.View.Admin.TroubleManagement
+namespace HotelManagement.View.Staff.TroubleReport
 {
     /// <summary>
-    /// Interaction logic for PricePredictionWindow.xaml
+    /// Interaction logic for ViewInfomationWindow.xaml
     /// </summary>
-    public partial class PricePredictionWindow : Window
+    public partial class ViewInfomationWindow : Window
     {
-        public PricePredictionWindow()
+        public ViewInfomationWindow()
         {
             InitializeComponent();
         }

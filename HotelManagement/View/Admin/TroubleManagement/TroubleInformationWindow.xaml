@@ -83,16 +83,41 @@
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
-                        <Border Margin="0 0 0 5" Height="30.5" Width="150" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding TroubleLevel}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
-                        </Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Nguyên nhân" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Mã số phiếu" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <TextBlock Text="Nguyên nhân" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
-                        <Border Margin="0 0 0 5" Height="30.5" Width="150" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
-                        </Border>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="Giá dự đoán" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                            <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
                     </Grid>
                 </Grid>
             </Grid>

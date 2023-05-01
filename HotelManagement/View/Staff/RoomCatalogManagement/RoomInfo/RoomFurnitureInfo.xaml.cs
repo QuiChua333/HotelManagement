@@ -17,9 +17,9 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
     /// <summary>
     /// Interaction logic for RoomFunitureInfo.xaml
     /// </summary>
-    public partial class RoomFunitureInfo : Window
+    public partial class RoomFurnitureInfo : Window
     {
-        public RoomFunitureInfo()
+        public RoomFurnitureInfo()
         {
             InitializeComponent();
         }
@@ -34,6 +34,9 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
             this.Close();
         }
 
-     
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

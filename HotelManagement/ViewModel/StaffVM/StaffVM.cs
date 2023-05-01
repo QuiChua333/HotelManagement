@@ -1,15 +1,33 @@
 ﻿using CinemaManagementProject.Utilities;
+using HotelManagement.DTOs;
+using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
+using HotelManagement.ViewModel.AdminVM.ServiceManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace HotelManagement.ViewModel.StaffVM
 {
     public class StaffVM : BaseVM
     {
+        public static StaffDTO CurrentStaff;
+
+        private string _staffname;
+        public string StaffName
+        {
+            get { return _staffname; }
+            set { _staffname = value; OnPropertyChanged(); }
+        }
+        private ImageSource _staffimgsource;
+        public ImageSource Staffimgsource
+        {
+            get { return _staffimgsource; }
+            set { _staffimgsource = value; OnPropertyChanged(); }
+        }
         private object _currentView;
         public object CurrentView
         {

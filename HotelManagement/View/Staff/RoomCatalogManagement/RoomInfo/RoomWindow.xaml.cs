@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -21,42 +22,11 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
 
     public partial class RoomWindow : Window
     {
-        public class DV
-        {
-            public string Dichvu { get; set; }
-            public int Soluong { get; set; }
-            public int Dongia { get; set; }
-            public int Thanhtien { get; set; }
-        }
-        public string qui { get; set; }
-        public ObservableCollection<DV> dssv = new ObservableCollection<DV>() { new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-        new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-        new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20, Thanhtien = 300 },
-         new DV { Dichvu = "COCA", Soluong = 200, Dongia = 20000, Thanhtien = 301000 },
-        };
-        public ObservableCollection<DV> DSDV
-        {
-            get { return dssv; }
-            set { dssv = value; }
-        }
+        
 
         public RoomWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
-          
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -71,37 +41,10 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
-        }
-
-        private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("ok");
-        }
-
-        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Button_MouseEnter(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show("OK");
-        }
-
-        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("OK");
-        }
-
-        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
+            if (e.LeftButton== MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

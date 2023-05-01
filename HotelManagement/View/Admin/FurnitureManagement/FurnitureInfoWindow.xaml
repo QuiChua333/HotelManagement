@@ -8,9 +8,13 @@
         mc:Ignorable="d"
         x:Name="FurnitureInfoWD" Height="312" Width="512"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+        
         AllowsTransparency="True"
         Background="Transparent"
-        MouseDown="FurnitureInfoWindow_MouseDown">
+        MouseDown="FurnitureInfoWindow_MouseDown"
+        DataContext="{StaticResource FurnitureManagementVM}">
     <Grid Height="300" Width="500">
         <Border CornerRadius="5" VerticalAlignment="Stretch" BorderThickness="0.3" BorderBrush="Black"  HorizontalAlignment="Stretch" Background="White">
             <Border.Effect>
@@ -70,22 +74,24 @@
                     <StackPanel Orientation="Horizontal" Margin="20">
                         <Border Height="200" Width="200" CornerRadius="5" BorderThickness="1" BorderBrush="#4C1D242E" VerticalAlignment="Top">
                             <Border.Background>
-                                <ImageBrush ImageSource="{StaticResource Giuong}"/>
+                                <ImageBrush ImageSource="{Binding furnitureCache.FurnitureAvatar}"/>
                             </Border.Background>
                         </Border>
                         <Grid>
                             <StackPanel Margin="20 0 0 0">
-                                <StackPanel Orientation="Horizontal" Height="27" >
-                                    <TextBlock Text="Tên: " FontSize="16" FontWeight="Regular" VerticalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
-                                    <TextBlock TextWrapping="Wrap" Text="Giường Rolex Diamond Hello em " FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tên: " FontSize="16" FontWeight="Regular" VerticalAlignment="Top" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                                    <StackPanel Width="202">
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding furnitureCache.FurnitureName}" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Height="27" >
                                     <TextBlock Text="Loại: " FontSize="16" FontWeight="Regular" VerticalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
-                                    <TextBlock Text="Giường ngủ" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                                    <TextBlock Text="{Binding furnitureCache.FurnitureType}" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Height="27" >
                                     <TextBlock Text="Số lượng: " FontSize="16" FontWeight="Regular" VerticalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
-                                    <TextBlock Text="38" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                                    <TextBlock Text="{Binding furnitureCache.Quantity}" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
                             
@@ -120,7 +126,11 @@
                         </Style>
                         
                     </Button.Style>
-                    
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding CloseInfoFunitureCM}" CommandParameter="{Binding ElementName=FurnitureInfoWD}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <TextBlock Text="Đóng" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                 </Button>
             </Grid>

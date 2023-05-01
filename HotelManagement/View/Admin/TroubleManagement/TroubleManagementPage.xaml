@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:HotelManagement.View.Admin.TroubleManagement"
+      xmlns:local="clr-namespace:HotelManagement.ViewModel.AdminVM.TroubleManagementVM"
       mc:Ignorable="d" 
       x:Name="TroubleMPage"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
@@ -11,6 +11,11 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       ShowsNavigationUI="False"
       DataContext="{StaticResource TroubleManagementVM}">
+    <Page.Resources>
+        <local:EditConverter x:Key="hindorshow"/>
+        <local:StatusBGBrushConverter x:Key="bgCV"/>
+        <local:StatusBrushConverter x:Key="brushCV"/>
+    </Page.Resources>
     <Page.Triggers>
         <EventTrigger RoutedEvent="Page.Loaded">
             <BeginStoryboard>
@@ -50,7 +55,7 @@
                                             Opacity=".2"
                                             Direction="270"/>
                 </Border.Effect>
-                <Search:Search IndicatorBrush="White"  Width="350"  Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Search:Search x:Name="FilterBox" SearchTextChange="filterbox_textchange" IndicatorBrush="White"  Width="350"  Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Border>
             <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
                 <Grid.ColumnDefinitions>
@@ -71,11 +76,19 @@
                                   UseLayoutRounding="False"
                                   FontSize="14" 
                                   SelectedValuePath="Tag"
+                              SelectedItem="{Binding SelectedFilteritem, Mode=TwoWay}"
                                   BorderThickness="0" 
                                   x:Name="cbbFilter" 
                                   FontFamily="{DynamicResource MaterialDesignFont}"
                                   HorizontalContentAlignment="Left">
-                        <ComboBoxItem  Content="Chờ giải quyết" Tag="Chờ giải quyết" FontSize="14" />
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding FilterListTroubleCM}"
+                                                   CommandParameter="{Binding ElementName=cbbFilter}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBoxItem  Content="Toàn bộ" Tag="Toàn bộ" FontSize="14" />
+                        <ComboBoxItem  Content="Chờ tiếp nhận" Tag="Chờ tiếp nhận" FontSize="14" />
                         <ComboBoxItem  Content="Đang giải quyết" Tag="Đang giải quyết" FontSize="14"/>
                         <ComboBoxItem  Content="Đã giải quyết" Tag="Đã giải quyết" FontSize="14" />
                         <ComboBoxItem  Content="Đã hủy" Tag="Đã hủy" FontSize="14" />
@@ -95,7 +108,7 @@
             </Border.Effect>
             <materialDesign:Card UniformCornerRadius="5" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto"  >
-                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding TroubleList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                         <ListView.ItemContainerStyle>
                             <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
                         </ListView.ItemContainerStyle>
@@ -110,8 +123,8 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding CustomerCode}"
-                                                           FontSize="14" 
+                                            <TextBlock Text="{Binding TroubleId}"
+                                                           FontSize="14" Margin="8 25 0 0"
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -125,27 +138,20 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Height="70" Width="60" CornerRadius="3" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" >
-                                                    <Border.Effect>
-                                                        <DropShadowEffect
-                                                                    BlurRadius="6"
-                                                                    Color="Black"
-                                                                    ShadowDepth="4"
-                                                                    Opacity=".2"
-                                                                    Direction="270"/>
-                                                    </Border.Effect>
+                                            <StackPanel Margin="6 0 0 0" Orientation="Horizontal">
+                                                <Border Height="70" Width="60"  CornerRadius="3" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.8" >
                                                     <Border.Background>
-                                                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding Image}"/>
+                                                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding ImagesourgeTrouble}"/>
                                                     </Border.Background>
                                                 </Border>
                                                 <StackPanel>
-                                                    <TextBlock Text="{Binding TroubleTitle}" FontSize="15" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="{Binding Title}" FontSize="15" Margin="10 10 0 0" FontWeight="Medium"/>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <Label  Content="Gia'"
-                                                                FontSize="14" />
-                                                        <Label  Content="{Binding RepairCostStr}"
-                                                                FontSize="14" />
+                                                        <Label  Content="Gia':"
+                                                                FontSize="13" 
+                                                                Margin="7 0 0 0"/>
+                                                        <Label  Content="{Binding PriceFixStr}"
+                                                                FontSize="13" />
                                                     </StackPanel>
                                                 </StackPanel>
                                             </StackPanel>
@@ -161,8 +167,8 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding ReportDate,StringFormat=dd/MM/yyyy}" 
-                                                           FontSize="14" 
+                                            <TextBlock Text="{Binding StartDate, StringFormat=dd/MM/yyyy}" 
+                                                           FontSize="14" Margin="18 25 0 0"
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -176,8 +182,8 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding TroubleReason}" 
-                                                           FontSize="14" 
+                                            <TextBlock Text="{Binding Reason}" 
+                                                           FontSize="14" Margin="18 25 0 0"
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -191,8 +197,8 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Border CornerRadius="4" Background="{Binding TroubleLevel}" BorderBrush="{Binding TroubleLevel}" BorderThickness="1" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding TroubleLevel}" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{Binding TroubleLevel}"/>
+                                            <Border  Margin="10 22 0 0" Padding="3" CornerRadius="4" Background="{Binding Level, Converter={StaticResource bgCV}}" BorderBrush="{Binding Level, Converter={StaticResource brushCV}}" BorderThickness="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Level}" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{Binding Level, Converter={StaticResource brushCV}}"/>
                                             </Border>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -206,8 +212,8 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Border CornerRadius="4" Background="{Binding TroubleStatus}" BorderBrush="{Binding TroubleStatus}" BorderThickness="1" VerticalAlignment="Center">
-                                                <TextBlock Text="{Binding TroubleStatus}" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{Binding TroubleStatus}"/>
+                                            <Border Margin="10 22 0 0" Padding="3" CornerRadius="4"  Background="{Binding Status, Converter={StaticResource bgCV}}" BorderBrush="{Binding Status, Converter={StaticResource brushCV}}" BorderThickness="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Status}"  FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{Binding Status, Converter={StaticResource brushCV}}"/>
                                             </Border>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
@@ -224,11 +230,12 @@
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center"
                                                             Orientation="Horizontal" 
-                                                            Margin="0 6 0 0">
+                                                            Margin="0 6 0 0" >
                                                 <Border BorderBrush="Black"
-                                                            BorderThickness="1"
-                                                            CornerRadius="3"
-                                                            Cursor="Hand">
+                                                        BorderThickness="1"
+                                                        CornerRadius="3"
+                                                        Visibility="{Binding Status, Converter={StaticResource hindorshow}}"
+                                                        Cursor="Hand" Margin="38 18 0 0">
                                                     <Border.Style>
                                                         <Style TargetType="{x:Type Border}">
                                                             <Style.Triggers>
@@ -240,18 +247,15 @@
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Border.Style>
-                                                    <materialDesign:PackIcon Kind="Pencil"
+                                                    <materialDesign:PackIcon Kind="SpannerOutline"
                                                                                  Width="22"
                                                                                  Height="22"
                                                                                  Cursor="Hand" />
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.OpenEditCustomerCM}" />
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=_ListView, Path=DataContext.OpenSolveTroubleWindowCM}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
-                                                </Border>
-                                                <Border CornerRadius="4" Visibility="{Binding TroubleReason}"   BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="1" VerticalAlignment="Center">
-                                                    <TextBlock Text="Dự đoán giá" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" Foreground="{DynamicResource PrimaryBackgroundColor}"/>
                                                 </Border>
                                             </StackPanel>
                                         </DataTemplate>

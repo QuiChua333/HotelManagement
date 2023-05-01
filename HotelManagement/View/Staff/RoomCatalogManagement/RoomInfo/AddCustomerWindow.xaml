@@ -158,7 +158,7 @@
                                       HorizontalContentAlignment="Center"
                                       SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
                                 <ComboBoxItem  Content="Nước ngoài" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                <ComboBoxItem  Content="Quạt" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                <ComboBoxItem  Content="Nội địa" FontSize="14" Foreground="{StaticResource Gray1}"/>
                                 
 
                             </ComboBox>
@@ -222,7 +222,7 @@
                                       HorizontalContentAlignment="Center"
                                       SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
                                 <ComboBoxItem  Content="Nam" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                <ComboBoxItem  Content="Quạt" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                <ComboBoxItem  Content="Nữ" FontSize="14" Foreground="{StaticResource Gray1}"/>
 
 
                             </ComboBox>

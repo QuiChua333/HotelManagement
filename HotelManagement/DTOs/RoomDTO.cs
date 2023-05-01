@@ -8,15 +8,15 @@ namespace HotelManagement.DTOs
 {
     public class RoomDTO
     {
-        public string RoomID { get; set; }
-        public int RoomNumber { get; set; }
-        public string RoomTypeName { get; set; }
+        public string RoomId { get; set; }
+        public Nullable<int> RoomNumber { get; set; }
         public string RoomTypeId { get; set; }
+        public string RoomTypeName { get; set; }
         public string Note { get; set; }
         public string RoomStatus { get; set; }
-        public string RoomCleaningStatus { get; set;}
+        public string RoomCleaningStatus { get; set; }
+        public Nullable<double> Price { get; set; }
         public bool IsDeleted { get; set; }
-        public bool IsLoanding { get; set; }
 
     }
 }

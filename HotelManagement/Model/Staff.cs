@@ -18,6 +18,7 @@ namespace HotelManagement.Model
         public Staff()
         {
             this.FurnitureReceipts = new HashSet<FurnitureReceipt>();
+            this.GoodsReceipts = new HashSet<GoodsReceipt>();
             this.RentalContracts = new HashSet<RentalContract>();
             this.Troubles = new HashSet<Trouble>();
         }
@@ -25,6 +26,7 @@ namespace HotelManagement.Model
         public string StaffId { get; set; }
         public string StaffName { get; set; }
         public string PhoneNumber { get; set; }
+        public string StaffAddress { get; set; }
         public string Email { get; set; }
         public string CCCD { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
@@ -33,9 +35,13 @@ namespace HotelManagement.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public byte[] Avatar { get; set; }
+        public Nullable<System.DateTime> dateOfStart { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FurnitureReceipt> FurnitureReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalContract> RentalContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

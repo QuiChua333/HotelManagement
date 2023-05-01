@@ -24,7 +24,8 @@ namespace HotelManagement.Model
         public string Title { get; set; }
         public byte[] Avatar { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> Reason { get; set; }
+        public string Reason { get; set; }
+        public Nullable<double> Price { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> FixedDate { get; set; }
         public Nullable<System.DateTime> FinishDate { get; set; }

@@ -31,6 +31,7 @@ namespace HotelManagement.Model
         public string Gender { get; set; }
         public string CustomerType { get; set; }
         public string CustomerAddress { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalContract> RentalContracts { get; set; }

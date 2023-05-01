@@ -44,6 +44,7 @@ namespace HotelManagement.View.Staff.TroubleReport
                     case 1:
                         {
                             txtboxMPT.Visibility = Visibility.Hidden;
+                            masophieu.Text = null;
                             break;
                         }
                 }
