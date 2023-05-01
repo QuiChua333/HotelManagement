@@ -24,7 +24,7 @@ using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
 {
-    public partial class StaffManagementVM :BaseVM
+    public partial class StaffManagementVM : BaseVM
     {
         private ObservableCollection<StaffDTO> _staffList;
         public ObservableCollection<StaffDTO> StaffList
@@ -34,8 +34,9 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
         }
 
         private StaffDTO _selectedItem;
-        public StaffDTO SelectedItem { 
-            get { return _selectedItem; } 
+        public StaffDTO SelectedItem
+        {
+            get { return _selectedItem; }
             set { _selectedItem = value; OnPropertyChanged(); }
         }
         private bool _isSaving;
@@ -205,7 +206,7 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
             {
                 ChangePasswordWindow wd = new ChangePasswordWindow();
                 Password = null;
-                Repass = null;                
+                Repass = null;
                 wd.ShowDialog();
             });
             DeleteStaffCM = new RelayCommand<Window>(p => true, async p =>
@@ -242,14 +243,14 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
             _image.UriSource = new Uri(filepath, UriKind.RelativeOrAbsolute);
             _image.EndInit();
             ImageSource = _image;
-            
+
         }
 
         private async void Reload()
         {
             StaffList = new ObservableCollection<StaffDTO>(await StaffService.Ins.GetAllStaff());
         }
-        
+
         private async void ResetData()
         {
             StaffId = null;
@@ -305,7 +306,7 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
                     return (false, "Mật khẩu và mật khẩu nhập lại không trùng khớp!");
                 }
             }
-            if (String.IsNullOrEmpty(FullName) || String.IsNullOrEmpty(Phonenumber) || String.IsNullOrEmpty(Username)  || String.IsNullOrEmpty(Address) || String.IsNullOrEmpty(Cccd) || Gender is null || Startdate is null || Birthday is null)
+            if (String.IsNullOrEmpty(FullName) || String.IsNullOrEmpty(Phonenumber) || String.IsNullOrEmpty(Username) || String.IsNullOrEmpty(Address) || String.IsNullOrEmpty(Cccd) || Gender is null || Startdate is null || Birthday is null)
             {
                 return (false, "Vui lòng nhập đủ thông tin nhân viên!");
             }

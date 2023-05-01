@@ -8,5 +8,6 @@ namespace HotelManagement.ViewModel.SettingVM
 {
     public class SettingVM:BaseVM
     {
+        public SettingVM() { }  
     }
 }

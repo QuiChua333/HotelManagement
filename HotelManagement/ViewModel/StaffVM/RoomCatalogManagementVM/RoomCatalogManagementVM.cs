@@ -440,37 +440,37 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
                
             });
-            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
-            {
-                if (SelectedRoom != null)
-                {
-                    try
-                    {
-                        RoomWindow wd = new RoomWindow();
-                        var rentalContractId = (await RentalContractService.Ins.GetRentalContractsNow()).Where(x => x.RoomId == SelectedRoom.RoomId).Select(x=> x.RentalContractId).FirstOrDefault();
-                        int personNumber = (await RentalContractService.Ins.GetPersonNumber(rentalContractId));
-                        wd.lbPersonNumber.Content = personNumber.ToString();
-                        SelectedRoomCleaningStatus.Content = SelectedRoom.RoomCleaningStatus;
-                        wd.ShowDialog();
-                    }
-                    catch (Exception ex)
-                    {
-                        CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
-                    }
-                }
-            });
-            LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
-            {
-                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
-                RoomRentalContractInfo wd = new RoomRentalContractInfo();
-                wd.ShowDialog();
-            });
-            LoadRoomCustomerInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
-            {
-                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
-                RoomCustomerInfo wd = new RoomCustomerInfo();
-                wd.ShowDialog();
-            });
+            //OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            //{
+            //    if (SelectedRoom != null)
+            //    {
+            //        try
+            //        {
+            //            RoomWindow wd = new RoomWindow();
+            //            var rentalContractId = (await RentalContractService.Ins.GetRentalContractsNow()).Where(x => x.RoomId == SelectedRoom.RoomId).Select(x=> x.RentalContractId).FirstOrDefault();
+            //            int personNumber = (await RentalContractService.Ins.GetPersonNumber(rentalContractId));
+            //            wd.lbPersonNumber.Content = personNumber.ToString();
+            //            SelectedRoomCleaningStatus.Content = SelectedRoom.RoomCleaningStatus;
+            //            wd.ShowDialog();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
+            //        }
+            //    }
+            //});
+            //LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            //{
+            //    ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+            //    RoomRentalContractInfo wd = new RoomRentalContractInfo();
+            //    wd.ShowDialog();
+            //});
+            //LoadRoomCustomerInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            //{
+            //    ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+            //    RoomCustomerInfo wd = new RoomCustomerInfo();
+            //    wd.ShowDialog();
+            //});
 
             LoadAddCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {

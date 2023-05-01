@@ -96,9 +96,9 @@
                                     HorizontalContentAlignment="Center"
                                     x:Name="loaiphong"
                                     SelectedItem="{Binding CbRoomType,Mode=OneWayToSource}"> 
-                            <ComboBoxItem Tag="Phòng thương gia" Content="Phòng thương gia" FontSize="16" Foreground="Black"/>
                             <ComboBoxItem Tag="Phòng thường" Content="Phòng thường" FontSize="16" Foreground="Black"/>
                             <ComboBoxItem Tag="Phòng vip" Content="Phòng vip" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="Phòng thương gia" Content="Phòng thương gia" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </Border>
                 </Grid>

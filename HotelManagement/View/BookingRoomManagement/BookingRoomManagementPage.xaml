@@ -9,8 +9,7 @@
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       Title="BookingRoomManagementPage"
-      DataContext="{StaticResource BookingRoomManagementVM}"
->
+      DataContext="{StaticResource BookingRoomManagementVM}">
 
     <Grid Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -71,7 +70,7 @@
                 <materialDesign:Card UniformCornerRadius="5">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
 
-                        <ListView 
+                        <ListView x:Name="BookingRoomListView"
                                 Focusable="True"
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 Foreground="Black"
@@ -186,7 +185,7 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 40 0">
             <Label Content="Kết quả: " FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
-            <Label Content="8" FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
+            <Label x:Name="result" Content="3" FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
         </StackPanel>
     </Grid>
 </Page>

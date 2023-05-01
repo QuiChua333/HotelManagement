@@ -106,7 +106,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         public ICommand LoadNoteRoomCM { get; set; }
         public ICommand SaveRoomCM { get; set; }
         public ICommand UpdateRoomCM { get; set; }
-        public RoomManagementVM() 
+        public RoomManagementVM()
         {
             FirstLoadCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, async (p) =>
             {
@@ -218,7 +218,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         }
         public void LoadRoomListView(Operation oper = Operation.READ, RoomDTO r = null)
         {
-           
+
             switch (oper)
             {
                 case Operation.CREATE:
@@ -230,7 +230,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                     break;
                 case Operation.DELETE:
                     for (int i = 0; i < RoomList.Count; i++)
-                    { 
+                    {
                         if (RoomList[i].RoomTypeId == SelectedItem?.RoomTypeId)
                         {
                             RoomList.Remove(RoomList[i]);
@@ -244,7 +244,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         }
         public void RenewWindowData()
         {
-             
+
             RoomId = null;
             RoomNumber = 0;
             RoomNote = null;
