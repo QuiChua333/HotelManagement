@@ -15,23 +15,28 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
 {
     /// <summary>
-    /// Interaction logic for AddCustomerWindow.xaml
+    /// Interaction logic for EditCustomerWindow.xaml
     /// </summary>
-    public partial class AddCustomerWindow : Window
+    public partial class EditCusWindow : Window
     {
-        public AddCustomerWindow()
+        public EditCusWindow()
         {
             InitializeComponent();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+       
     }
 }

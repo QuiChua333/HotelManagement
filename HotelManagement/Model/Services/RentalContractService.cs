@@ -81,50 +81,6 @@ namespace HotelManagement.Model.Services
                 throw ex;
             }
         }
-        public async Task<List<RoomCustomerDTO>> GetCustomersOfRoom(string RentalContractId)
-        {
-            try
-            {
-                using (var context = new HotelManagementEntities())
-                {
-                    var listCustomerId = await context.RoomCustomers.Where(x=> x.RentalContractId == RentalContractId).Select(x=> x.CustomerId).ToListAsync();
-                    var listCustomer = await context.Customers.Where(x => listCustomerId.Contains(x.CustomerId)).Select(x => new RoomCustomerDTO
-                    {
-                        CustomerName = x.CustomerName,
-                        CustomerType = x.CustomerType,
-                        CCCD = x.CCCD,
-                        CustomerAddress= x.CustomerAddress,
-                    }).ToListAsync();
-                    for (int i=0; i<listCustomer.Count; i++)
-                    {
-                        listCustomer[i].STT = i + 1;
-                    }
-                   
-                    return listCustomer;
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task<int> GetPersonNumber(string rentalContractId)
-        {
-            try
-            {
-                using (var context = new HotelManagementEntities())
-                {
-                    var customerList = await context.RoomCustomers.Where(x => x.RentalContractId == rentalContractId).Select(x => x.CustomerId).CountAsync();
-                    return customerList;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+       
     }
 }

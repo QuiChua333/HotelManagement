@@ -38,7 +38,7 @@ namespace HotelManagement.DTOs
                     if (!(bool)Validated) return 0;
                 }
                 TimeSpan t = (TimeSpan)(CheckOutDate - StartDate);
-                int res = (int)t.TotalDays +1;
+                int res = (int)t.TotalDays;
                 return res;
             }
         }

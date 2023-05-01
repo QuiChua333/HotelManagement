@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo"
         mc:Ignorable="d"
         Width="802"
-        Height="516"
+        VerticalAlignment="Top"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" 
         Background="Transparent"
@@ -27,7 +27,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="500" Width="800">
+    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" VerticalAlignment="Top" Width="800">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
@@ -100,8 +100,8 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="30,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="6*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -183,6 +183,22 @@
                                FontSize="16"
                                Foreground="Black"
                                FontWeight="Regular"/>
+                            <Label Content="Giờ vào:"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                            Margin="40,0,0,0"
+                           FontWeight="Medium"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"/>
+                            <TextBlock Text="{Binding SelectedRoom.StartTime}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                                       Margin="5,0,0,0"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
                             <Label Content="Ngày kết thúc thuê:"
@@ -208,6 +224,9 @@
                 <Grid Grid.Row="1" Margin="0,15,0,0" Background="#F5F3F2">
                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 ItemsSource="{Binding ListCustomer}"
+                              VerticalAlignment="Top"
+                              MinHeight="110"
+                              MaxHeight="242"
                                 Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}"
                               BorderThickness="3" BorderBrush="#292D32"
                               x:Name="lsvCustomerInfo">

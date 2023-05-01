@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
 {
     /// <summary>
-    /// Interaction logic for RoomRentalContractInfo.xaml
+    /// Interaction logic for AddCustomerWindow.xaml
     /// </summary>
-    public partial class RoomRentalContractInfo : Window
+    public partial class AddCusWindow : Window
     {
-        public RoomRentalContractInfo()
+        public AddCusWindow()
         {
             InitializeComponent();
         }
@@ -37,9 +37,6 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
             this.Close();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        
     }
 }

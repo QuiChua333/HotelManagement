@@ -175,6 +175,7 @@
                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 ItemsSource="{Binding ListCustomer}"
                               VerticalAlignment="Top"
+                              MinHeight="110"
                                 Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}"
                                 SelectedItem="{Binding SelectedCustomer, UpdateSourceTrigger=PropertyChanged}"
                               x:Name="lsvCustomerInfo"
@@ -327,7 +328,12 @@
                                                                                  Height="22"
                                                                                  Cursor="Hand">
                                                     </materialDesign:PackIcon>
-
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=lsvCustomerInfo, Path=DataContext.LoadEditCustomerWindowCM}"
+                                                                                    />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                 </Border>
                                                 <Border Margin="10 0 0 0"
                                                             BorderBrush="Black"
@@ -350,6 +356,12 @@
                                                                                  Width="22"
                                                                                  Height="22"
                                                                                  Cursor="Hand" />
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=lsvCustomerInfo, Path=DataContext.DeleteCustomerCM}"
+                                                                                    />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                 </Border>
                                             </StackPanel>
                                         </DataTemplate>

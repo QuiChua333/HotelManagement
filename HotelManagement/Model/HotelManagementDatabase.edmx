@@ -117,7 +117,10 @@
           </Key>
           <Property Name="RoomCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RentalContractId" Type="varchar" MaxLength="10" />
-          <Property Name="CustomerId" Type="varchar" MaxLength="10" />
+          <Property Name="CustomerName" Type="nvarchar(max)" />
+          <Property Name="CustomerType" Type="nvarchar(max)" />
+          <Property Name="CCCD" Type="nvarchar" MaxLength="12" />
+          <Property Name="CustomerAddress" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RoomFurnituresDetail">
           <Key>
@@ -346,18 +349,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RoomCustomer_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="RoomCustomer" Type="Self.RoomCustomer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="RoomCustomer">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoomCustomer_RentalContract">
           <End Role="RentalContract" Type="Self.RentalContract" Multiplicity="0..1" />
           <End Role="RoomCustomer" Type="Self.RoomCustomer" Multiplicity="*" />
@@ -521,10 +512,6 @@
             <End Role="RoomType" EntitySet="RoomType" />
             <End Role="Room" EntitySet="Room" />
           </AssociationSet>
-          <AssociationSet Name="FK_RoomCustomer_Customer" Association="Self.FK_RoomCustomer_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="RoomCustomer" EntitySet="RoomCustomer" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomCustomer_RentalContract" Association="Self.FK_RoomCustomer_RentalContract">
             <End Role="RentalContract" EntitySet="RentalContract" />
             <End Role="RoomCustomer" EntitySet="RoomCustomer" />
@@ -593,7 +580,6 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Customer" FromRole="Customer" ToRole="RentalContract" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Review_Customer" FromRole="Customer" ToRole="Review" />
-          <NavigationProperty Name="RoomCustomers" Relationship="Self.FK_RoomCustomer_Customer" FromRole="Customer" ToRole="RoomCustomer" />
         </EntityType>
         <EntityType Name="Furniture">
           <Key>
@@ -699,8 +685,10 @@
           </Key>
           <Property Name="RoomCustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RentalContractId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CustomerId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_RoomCustomer_Customer" FromRole="RoomCustomer" ToRole="Customer" />
+          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CCCD" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RentalContract" Relationship="Self.FK_RoomCustomer_RentalContract" FromRole="RoomCustomer" ToRole="RentalContract" />
         </EntityType>
         <EntityType Name="RoomFurnituresDetail">
@@ -834,18 +822,6 @@
               <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="Review">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RoomCustomer_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="RoomCustomer" Type="Self.RoomCustomer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="RoomCustomer">
               <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1085,10 +1061,6 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK_RoomCustomer_Customer" Association="Self.FK_RoomCustomer_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="RoomCustomer" EntitySet="RoomCustomers" />
-          </AssociationSet>
           <AssociationSet Name="FK_FurnitureReceiptId_Furniture" Association="Self.FK_FurnitureReceiptId_Furniture">
             <End Role="Furniture" EntitySet="Furnitures" />
             <End Role="FurnitureReceipt" EntitySet="FurnitureReceipts" />
@@ -1285,7 +1257,10 @@
               <MappingFragment StoreEntitySet="RoomCustomer">
                 <ScalarProperty Name="RoomCustomerId" ColumnName="RoomCustomerId" />
                 <ScalarProperty Name="RentalContractId" ColumnName="RentalContractId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="CCCD" ColumnName="CCCD" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

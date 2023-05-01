@@ -1,4 +1,4 @@
-﻿<Window x:Class="HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo.AddCustomerWindow"
+﻿<Window x:Class="HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo.AddCusWindow"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,13 +8,15 @@
         xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo"
         mc:Ignorable="d"
         Width="606"
-        Height="516"
+        Height="416"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="500" Width="600">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        x:Name="window"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
+    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="400" Width="600">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
@@ -83,28 +85,17 @@
             </Grid>
             <Grid Grid.Row="2" Margin="25,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="20"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Label 
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Content="THÔNG TIN KHÁCH HÀNG"
-                                FontWeight="Medium"
-                               FontSize="18"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               Foreground="#C95D3B">
-                    </Label>
-                </Grid>
+                
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -124,9 +115,11 @@
                                  Background="#F1F8FE"
                                  BorderBrush="#009099"
                                  Width="250"
-                                            Height="35"
+                                 Height="35"
                                  Padding="5,0,0,0"
                                  FontSize="16"
+                                 x:Name="tbName"
+                              
                                  HorizontalAlignment="Left"/>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -156,7 +149,7 @@
                                       FontSize="16"
                                       FontFamily="{DynamicResource MaterialDesignFont}"
                                       HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
+                                      SelectedItem="{Binding SelectedType,Mode=OneWayToSource}">
                                 <ComboBoxItem  Content="Nước ngoài" FontSize="14" Foreground="{StaticResource Gray1}"/>
                                 <ComboBoxItem  Content="Nội địa" FontSize="14" Foreground="{StaticResource Gray1}"/>
                                 
@@ -167,8 +160,8 @@
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -188,7 +181,9 @@
                                  Background="#F1F8FE"
                                  BorderBrush="#009099"
                                  Width="250"
-                                            Height="35"
+                                 Height="35"
+                                
+                                 x:Name="tbCCCD"
                                  FontSize="16"
                                  Padding="5,0,0,0"
                                  HorizontalAlignment="Left"/>
@@ -201,7 +196,7 @@
                         <Label Grid.Row="0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Bottom"
-                               Content="Giới tính"
+                               Content="Địa chỉ"
                                 FontWeight="Medium"
                                FontSize="16"
                                FontFamily="{DynamicResource MaterialDesignFont}"
@@ -211,51 +206,23 @@
                                        
                             Height="35">
 
-                            <ComboBox     
-                                      Padding="20,8"
-                                      BorderBrush="#009099"
-                                      Foreground="#1D242E"
-                                      SelectedIndex="0"
-                                      FontWeight="Normal"
-                                      FontSize="16"
-                                      FontFamily="{DynamicResource MaterialDesignFont}"
-                                      HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                                <ComboBoxItem  Content="Nam" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                <ComboBoxItem  Content="Nữ" FontSize="14" Foreground="{StaticResource Gray1}"/>
-
-
-                            </ComboBox>
+                            <TextBox Grid.Row="1"
+                                 Background="#F1F8FE"
+                                 BorderBrush="#009099"
+                                 Width="250"
+                                 Height="35"
+                                 Padding="5,0,0,0"
+                                     x:Name="tbAddress"
+                                 FontSize="16"
+                             
+                                 HorizontalAlignment="Left" />
                         </Border>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="3">
                     
                 </Grid>
-                <Grid Grid.Row="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom"
-                               Content="Địa chỉ"
-                           FontWeight="Medium"
-                               FontSize="16"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               Foreground="#1D242E">
-                    </Label>
-                    <TextBox Grid.Row="1"
-                             FontSize="16"
-                                 Background="#F1F8FE"
-                                 BorderBrush="#009099"
-                                 AcceptsReturn="True"
-                              Padding="5,0,0,0"
-                             VerticalContentAlignment="Top"
-                             TextWrapping="Wrap"
-                                 />
-                </Grid>
+           
             </Grid>
             <Grid Grid.Row="3">
                 <Button HorizontalAlignment="Right"
@@ -265,6 +232,8 @@
                         FontSize="14"
                         Background="{StaticResource ButtonOk}"
                         Margin="0,0,20,0"
+                        Command="{Binding SaveCustomerCM}"
+                        CommandParameter="{Binding ElementName=window}"
                         Width="70" 
                         />
             </Grid>

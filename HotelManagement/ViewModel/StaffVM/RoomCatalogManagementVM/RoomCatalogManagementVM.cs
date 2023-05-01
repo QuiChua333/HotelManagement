@@ -176,6 +176,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
         public ICommand LoadAddCustomerWindowCM { get; set; }
         public ICommand LoadRoomFurnitureInfoCM { get; set; }
+        public ICommand SaveCustomerCM { get; set; }
+        public ICommand LoadEditCustomerWindowCM { get; set; }
+        public ICommand SaveEditCustomerCM { get; set; }
+        public ICommand DeleteCustomerCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -184,6 +188,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
+                
                 PageSetting(p);
                 await AutoUpdateDb();
                 await GenerateRoom();
@@ -239,22 +244,23 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
-                if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
-                else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus= p;
-                else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus= p;
+                
+                    if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
+                    else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
+                    else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
 
-                if (TimeChange == false)
-                {
-                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
-                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
-                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
-                }
-                else
-                {
-                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini);
-                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini);
-                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini);
-                }
+                    if (TimeChange == false)
+                    {
+                        ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
+                        ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
+                        ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+                    }
+                    else
+                    {
+                        ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini);
+                        ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini);
+                        ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini);
+                    }
                
 
 
@@ -264,7 +270,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
-                if (IsLoad == true) return;
+                
                 if (Refresh == true)
                 {
                     Refresh= false;
@@ -290,6 +296,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                         }
                     }
                 }
+                if (IsLoad == true) return;
                 ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -447,8 +454,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     try
                     {
                         RoomWindow wd = new RoomWindow();
-                        var rentalContractId = (await RentalContractService.Ins.GetRentalContractsNow()).Where(x => x.RoomId == SelectedRoom.RoomId).Select(x=> x.RentalContractId).FirstOrDefault();
-                        int personNumber = (await RentalContractService.Ins.GetPersonNumber(rentalContractId));
+                        int personNumber = (await RoomCustomerService.Ins.GetPersonNumberOfRoom(SelectedRoom.RentalContractId));
                         wd.lbPersonNumber.Content = personNumber.ToString();
                         SelectedRoomCleaningStatus.Content = SelectedRoom.RoomCleaningStatus;
                         wd.ShowDialog();
@@ -461,21 +467,45 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
                 RoomRentalContractInfo wd = new RoomRentalContractInfo();
                 wd.ShowDialog();
             });
             LoadRoomCustomerInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RentalContractService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+                ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
                 RoomCustomerInfo wd = new RoomCustomerInfo();
                 wd.ShowDialog();
             });
 
             LoadAddCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                AddCustomerWindow wd  = new AddCustomerWindow();
+                AddCusWindow wd = new AddCusWindow();
+                wd.tbName.Text= string.Empty;
+                wd.tbAddress.Text= string.Empty;
+                wd.tbCCCD.Text= string.Empty;
                 wd.ShowDialog();
+            });
+            SaveCustomerCM = new RelayCommand<AddCusWindow>((p) => { return true; }, async (p) =>
+            {
+                 await SaveCustomerFunc(p);
+            });
+            LoadEditCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                EditCusWindow wd = new EditCusWindow();
+                SelectedType.Content = SelectedCustomer.CustomerType;
+                CustomerName = SelectedCustomer.CustomerName;
+                CustomerAddress= SelectedCustomer.CustomerAddress;
+                CCCD= SelectedCustomer.CCCD;
+                wd.ShowDialog();
+            });
+            SaveEditCustomerCM = new RelayCommand<EditCusWindow>((p) => { return true; }, async (p) =>
+            {
+                await SaveEditCustomerFunc(p);
+            });
+            DeleteCustomerCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await DeleteCustomerFunc();
             });
             LoadRoomFurnitureInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {

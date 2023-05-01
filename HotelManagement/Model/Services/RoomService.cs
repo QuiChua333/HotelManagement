@@ -246,7 +246,6 @@ namespace HotelManagement.Model.Services
                 {
                     var roomRentingList = await context.Rooms.Where(x => x.RoomStatus == ROOM_STATUS.RENTING).Select(x => x.RoomId).ToListAsync();
 
-
                     var list1 = await context.RentalContracts.ToListAsync();
                     var rentalContractListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay
                     && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RentalContractId).ToList();
@@ -260,9 +259,12 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
-                    if (t == "") return;
-                    var sql1 = $@"Update [RentalContract] SET Validated = 0  WHERE RentalContractId IN ({t})";
-                    await context.Database.ExecuteSqlCommandAsync(sql1);
+                    if (t != "")
+                    {
+                        var sql1 = $@"Update [RentalContract] SET Validated = 0  WHERE RentalContractId IN ({t})";
+                        await context.Database.ExecuteSqlCommandAsync(sql1);
+                    }
+                    
 
 
                     list1 = await context.RentalContracts.ToListAsync();
@@ -277,9 +279,13 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
-                    if (t == "") return;
-                    var sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.READY}'  WHERE RoomId  IN ({t})";
-                    await context.Database.ExecuteSqlCommandAsync(sql2);
+                    string sql2 = "";
+                    if (t != "")
+                    {
+                        sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.READY}'  WHERE RoomId  IN ({t})";
+                        await context.Database.ExecuteSqlCommandAsync(sql2);
+                    }
+                   
 
                     list1 = await context.RentalContracts.ToListAsync();
                     roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
@@ -293,9 +299,12 @@ namespace HotelManagement.Model.Services
                             t += ",";
                         }
                     }
-                    if (t == "") return;
-                    sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.BOOKED}'  WHERE RoomId  IN ({t})";
-                    await context.Database.ExecuteSqlCommandAsync(sql2);
+                    if (t != "")
+                    {
+                        sql2 = $@"Update [Room] SET RoomStatus = N'{ROOM_STATUS.BOOKED}'  WHERE RoomId  IN ({t})";
+                        await context.Database.ExecuteSqlCommandAsync(sql2);
+                    }
+                   
 
                 }
             }
