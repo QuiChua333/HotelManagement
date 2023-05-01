@@ -82,7 +82,6 @@ namespace HotelManagement.DTOs
         }
 
 
-
         public FurnitureDTO()
         {
             FurnitureName = "";

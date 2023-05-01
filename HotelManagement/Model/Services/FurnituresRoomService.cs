@@ -6,9 +6,11 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace HotelManagement.Model.Services
 {
@@ -113,6 +115,12 @@ namespace HotelManagement.Model.Services
                 {
                     listFurniture = await (
                         from p in db.Furnitures
+                        let Sum =
+                        (
+                            from rfd in db.RoomFurnituresDetails
+                            where p.FurnitureId == rfd.FurnitureId
+                            select rfd.Quantity
+                        ).Sum()
                         select new FurnitureDTO
                         {
                             FurnitureID = p.FurnitureId,
@@ -120,7 +128,7 @@ namespace HotelManagement.Model.Services
                             FurnitureName = p.FurnitureName,
                             FurnitureType = p.FurnitureType,
                             Quantity = (int)p.FurnitureStorage.QuantityFurniture,
-                            TotalUseQuantity = (int)p.RoomFurnituresDetails.Sum(item => item.Quantity)
+                            TotalUseQuantity = (int)(Sum == null ? 0 : Sum),
                         }
                     ).ToListAsync();
                 }
@@ -191,11 +199,9 @@ namespace HotelManagement.Model.Services
                         return (false, "Không tìm thấy thông tin trong cơ sở dữ liệu");
 
                     db.RoomFurnituresDetails.Remove(roomFurnituresDetail);
-                    return (true, "Xóa tiện nghi thành công");
                     await db.SaveChangesAsync();
+                    return (true, "Xóa tiện nghi thành công");
                 }
-
-                return (true, "");
             }
             catch (EntityException e)
             {
@@ -206,5 +212,35 @@ namespace HotelManagement.Model.Services
                 return (false, "Lỗi hệ thống");
             }
         }
+        public async Task<(bool, string)> DeleteListFurnitureRoom(string roomFurnitureSelectedID, ObservableCollection<FurnitureDTO> DeleteList)
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    int lengh = DeleteList.Count();
+                    for(int i = 0; i <lengh; i++ )
+                    {
+                        FurnitureDTO temp = DeleteList[i];
+                        RoomFurnituresDetail roomFurnituresDetail = await db.RoomFurnituresDetails.FirstOrDefaultAsync(item => item.RoomId == roomFurnitureSelectedID && item.FurnitureId == temp.FurnitureID);
+                        if (roomFurnituresDetail == null)
+                            return (false, "Không tìm thấy thông tin trong cơ sở dữ liệu");
+
+                        db.RoomFurnituresDetails.Remove(roomFurnituresDetail);
+                    }    
+                    await db.SaveChangesAsync();
+                    return (true, "Xóa tiện nghi thành công");
+                }
+            }
+            catch (EntityException e)
+            {
+                return (false, "Mất kết nối cơ sở dữ liệu");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Lỗi hệ thống");
+            }
+        }
+        
     }
 }

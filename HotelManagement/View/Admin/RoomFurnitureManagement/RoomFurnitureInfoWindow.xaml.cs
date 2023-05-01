@@ -52,6 +52,7 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
 
         }
         DispatcherTimer timer2 = new DispatcherTimer();
+        List<CheckBox> checkboxList = new List<CheckBox>();
 
         private void RoomFurnitureInfoWD_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -83,6 +84,8 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
             ListRadio.Visibility = Visibility.Collapsed;
             TopDeleteControl.Visibility = Visibility.Collapsed;
             BottomDeleteControl.Visibility = Visibility.Collapsed;
+            for (int i = 0; i < checkboxList.Count; i++)
+                checkboxList[i].IsChecked = false;
         }
 
         private void RoundBox_MouseUp(object sender, MouseButtonEventArgs e)
@@ -91,6 +94,24 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
             Grid grid = sender as Grid;
             Rectangle rec = (Rectangle)grid.FindName("Mask");
             rec.Opacity = 0;
+        }
+
+        private void CheckBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            checkboxList.Add(sender as CheckBox);
+        }
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            for (int i = 0; i < checkboxList.Count; i++)
+                checkboxList[i].IsChecked = true ;
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
         }
     }
 }

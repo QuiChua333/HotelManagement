@@ -131,5 +131,10 @@ namespace HotelManagement.DTOs
                     AllFurnitureString += (", " + furnitureType[i]);
             }
         }
+        public void DeleteListFurniture(ObservableCollection<FurnitureDTO> listDelete)
+        {
+            foreach (FurnitureDTO item in listDelete)
+                ListFurnitureRoom.Remove(item);
+        }
     }
 }

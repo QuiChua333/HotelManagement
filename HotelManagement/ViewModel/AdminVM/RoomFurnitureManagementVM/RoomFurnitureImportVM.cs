@@ -104,6 +104,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             {
                 CustomMessageBox.ShowOk(messageReturn, "Thành công", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                 LoadListViewFurnitureInRoom(listFurniture);
+                furnituresRoomCache.SetQuantityAndStringTypeFurniture();
             }
             else
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
