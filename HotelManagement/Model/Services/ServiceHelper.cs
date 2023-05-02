@@ -238,5 +238,48 @@ namespace HotelManagement.Model.Services
                 return null;
             }
         }
+        public async Task<ServiceDTO> GetCleaningService()
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    var service = await db.Services.Select(x => new ServiceDTO
+                    {
+                        ServiceId = x.ServiceId,
+                        ServiceType = x.ServiceType,
+                        ServiceName = x.ServiceName,
+                        ServicePrice = (double)x.ServicePrice,
+                    }).FirstOrDefaultAsync(x => x.ServiceName == "Dọn dẹp");
+                    return service;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<ServiceDTO> GetLaundryService()
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    var service = await db.Services.Select(x => new ServiceDTO
+                    {
+                        ServiceId = x.ServiceId,
+                        ServiceType = x.ServiceType,
+                        ServiceName = x.ServiceName,
+                        ServicePrice = (double)x.ServicePrice,
+                    }).FirstOrDefaultAsync(x => x.ServiceName == "Giặt sấy");
+                    return service;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }

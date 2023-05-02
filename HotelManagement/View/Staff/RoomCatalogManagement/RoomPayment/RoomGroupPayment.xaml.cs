@@ -33,5 +33,7 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment
         {
             this.Close();
         }
+
+      
     }
 }

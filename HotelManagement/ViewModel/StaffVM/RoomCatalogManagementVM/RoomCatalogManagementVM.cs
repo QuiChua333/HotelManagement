@@ -4,7 +4,9 @@ using HotelManagement.Model.Services;
 using HotelManagement.Utils;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
+using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
 using IronXL.Formatting;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -180,6 +182,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand LoadEditCustomerWindowCM { get; set; }
         public ICommand SaveEditCustomerCM { get; set; }
         public ICommand DeleteCustomerCM { get; set; }
+        public ICommand FirstLoadRoomFurnitureInfoCM { get; set; }
+        public ICommand LoadRoomOrderCleaningCM { get; set; }
+        public ICommand LoadRoomOrderLaundryCM { get; set; }
+        public ICommand ConfirmCleaningServiceCM { get; set; }
+        public ICommand ConfirmLaundryServiceCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -509,14 +516,67 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             LoadRoomFurnitureInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                ListRoomFurniture = new ObservableCollection<RoomFurnituresDetailDTO>(await FurnituresRoomService.Ins.GetRoomFurnituresDetail(SelectedRoom.RoomId));
+                ListRoomFurnitureTemp = new ObservableCollection<RoomFurnituresDetailDTO>(await FurnituresRoomService.Ins.GetRoomFurnituresDetail(SelectedRoom.RoomId));
+                
+                
                 RoomFurnitureInfo wd = new RoomFurnitureInfo();
+               
+                List<string> listType = new List<string>(await FurnitureService.Ins.GetAllFurnitureType());
+                ListFurnitureType = new List<string>();
+                for (int i = 0; i < listType.Count; i++)
+                {
+                    if (!ListFurnitureType.Contains(listType[i])) ListFurnitureType.Add(listType[i]);
+                }
+                wd.cbbFurnitureType.SelectedIndex = 0;
                 wd.ShowDialog();
             });
-        
+            LoadRoomOrderCleaningCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                RoomOrderCleaning wd = new RoomOrderCleaning();
+                CleaningService = await ServiceHelper.Ins.GetCleaningService();
+                wd.ShowDialog();
+            });
+            LoadRoomOrderLaundryCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                RoomOrderLaundry wd = new RoomOrderLaundry();
+                LaundryService = await ServiceHelper.Ins.GetLaundryService();
+                wd.tbKg.Text = "";
+                wd.ShowDialog();
+            });
+            ConfirmCleaningServiceCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                await SaveUsingCleaningService(p);
+               
+            });
+            ConfirmLaundryServiceCM = new RelayCommand<RoomOrderLaundry>((p) => { return true; }, async (p) =>
+            {
+                try
+                {
+                    if (p.tbKg.Text == "")
+                    {
+                        CustomMessageBox.ShowOk("Hãy nhập số Kg!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                        return;
+                    }
+                    if (int.Parse(p.tbKg.Text) < 0)
+                    {
+                        CustomMessageBox.ShowOk("Số Kg phải lớn hơn 0!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                        return;
+                    }
+                    await SaveUsingLaundryService(p);
+                }
+                catch (Exception ex)
+                {
+                    CustomMessageBox.ShowOk("Lỗi định dạng nhập!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
+                }
+               
+
+            });
+
 
         }
 
-       
+
         public async Task GenerateRoom()
         {
             RoomTypes = new List<RoomTypeDTO>(await RoomService.Ins.GetRoomTypes());

@@ -40,6 +40,16 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+            
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            
+            PrintDialog printDialog = new PrintDialog();
+           
+                printDialog.PrintVisual(invoice, "Invoice");
+           
         }
     }
 }

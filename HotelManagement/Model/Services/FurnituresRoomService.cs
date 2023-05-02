@@ -206,5 +206,40 @@ namespace HotelManagement.Model.Services
                 return (false, "Lỗi hệ thống");
             }
         }
+
+        public async Task<List<RoomFurnituresDetailDTO>> GetRoomFurnituresDetail(string roomId)
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    var listRoomFurniture = await (from a in db.RoomFurnituresDetails
+                                                   join b in db.Furnitures
+                                                   on a.FurnitureId equals b.FurnitureId
+                                                   where a.RoomId == roomId
+                                                   select new RoomFurnituresDetailDTO
+                                                   {
+                                                       RoomId = roomId,
+                                                       FurnitureId= a.FurnitureId,
+                                                       FurnitureName= b.FurnitureName,
+                                                       FurnitureType= b.FurnitureType,
+                                                       Quantity = a.Quantity,
+                                                       FurnitureAvatarData = b.FurnitureAvatar
+                                                   }
+                                                   ).ToListAsync();
+                    foreach (var item in listRoomFurniture)
+                    {
+                        item.SetAvatar();
+                    }
+                    return listRoomFurniture;
+                }
+
+               
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

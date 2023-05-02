@@ -76,7 +76,23 @@ namespace HotelManagement.Model.Services
                 return null;
             }
         }
-        
+        public async Task<List<string>> GetAllFurnitureType()
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                   var list = await db.Furnitures.Select(x => x.FurnitureType).ToListAsync();
+                    list.Insert(0, "Tất cả");
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<(bool, string)> SaveEditFurniture(FurnitureDTO furnitureSelected)
         {
             try

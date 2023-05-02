@@ -359,14 +359,12 @@
                                             <Image Source="{StaticResource TienNghi}" 
                                                    Width="40"
                                                    Height="40"/>
-                                            <Label 
-                                                          Margin="5,0,0,0"
+                                            <Label
                                                            Content="Xem tiện nghi trong phòng"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
-                                                           VerticalContentAlignment="Center">
-                                            </Label>
+                                                           VerticalContentAlignment="Center"/>
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                                     <i:InvokeCommandAction Command="{Binding LoadRoomFurnitureInfoCM}"
@@ -584,7 +582,17 @@
                                                 <RowDefinition Height="*" />
                                                 <RowDefinition Height="*" />
                                             </Grid.RowDefinitions>
-                                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" Grid.Row="0" Cursor="Hand"
+                                                        x:Name="spOrderCleaning">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="StackPanel.IsMouseOver" Value="true">
+                                                                <Setter Property="StackPanel.Opacity" Value="0.8" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
                                                 <Image Source="{StaticResource Plus_circle}"
                                                        Cursor="Hand"
                                                        Width="30"
@@ -599,8 +607,24 @@
                                                        Margin="10,0,0,0">
 
                                                 </Label>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown" >
+                                                        <i:InvokeCommandAction Command="{Binding LoadRoomOrderCleaningCM}"
+                                                                               CommandParameter="{Binding ElementName=spOrderCleaning}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                             </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                            <StackPanel Orientation="Horizontal" Grid.Row="1" Cursor="Hand"
+                                                        x:Name="spOrderLaundry">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="StackPanel.IsMouseOver" Value="true">
+                                                                <Setter Property="StackPanel.Opacity" Value="0.8" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
                                                 <Image Source="{StaticResource Plus_circle}"
                                                        Cursor="Hand"
                                                        Width="30"
@@ -615,6 +639,12 @@
                                                        Margin="10,0,0,0">
 
                                                 </Label>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown" >
+                                                        <i:InvokeCommandAction Command="{Binding LoadRoomOrderLaundryCM}"
+                                                                               CommandParameter="{Binding ElementName=spOrderLaundry}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                             </StackPanel>
                                         </Grid>
 

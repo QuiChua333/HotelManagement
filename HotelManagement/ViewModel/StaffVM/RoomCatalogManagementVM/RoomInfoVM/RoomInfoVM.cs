@@ -26,7 +26,17 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _SelectedRoomCleaningStatus; }
             set { _SelectedRoomCleaningStatus = value; OnPropertyChanged(); }
         }
-
+        
+        private string _SelectedFurnitureTypeCbbFilter;
+        public string SelectedFurnitureTypeCbbFilter
+        {
+            get { return _SelectedFurnitureTypeCbbFilter; }
+            set 
+            { 
+                _SelectedFurnitureTypeCbbFilter = value; OnPropertyChanged();
+              
+            }
+        }
         private ObservableCollection<RoomCustomerDTO> _ListCustomer;
         public ObservableCollection<RoomCustomerDTO> ListCustomer
         {
@@ -44,6 +54,16 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         {
             get { return _CustomerAddress; }
             set { _CustomerAddress = value; OnPropertyChanged(); }
+        }
+        private List<string> _ListFurnitureType;
+        public List<string> ListFurnitureType
+        {
+            get => _ListFurnitureType;
+            set
+            {
+                _ListFurnitureType = value;
+                OnPropertyChanged();
+            }
         }
         private string _CCCD;
         public string CCCD
@@ -63,8 +83,18 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _SelectedType; }
             set { _SelectedType = value; OnPropertyChanged(); }
         }
-       
-
+        private ObservableCollection<RoomFurnituresDetailDTO> _ListRoomFurniture;
+        public ObservableCollection<RoomFurnituresDetailDTO> ListRoomFurniture
+        {
+            get { return _ListRoomFurniture; }
+            set { _ListRoomFurniture = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<RoomFurnituresDetailDTO> _ListRoomFurnitureTemp;
+        public ObservableCollection<RoomFurnituresDetailDTO> ListRoomFurnitureTemp
+        {
+            get { return _ListRoomFurnitureTemp; }
+            set { _ListRoomFurnitureTemp = value; OnPropertyChanged(); }
+        }
         public async Task SaveCustomerFunc(AddCusWindow p)
         {
             
@@ -148,7 +178,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 CustomMessageBox.ShowOk(mess, "Lỗi", "OK", CustomMessageBoxImage.Error);
             }
         }
-
+        private void ChangeListFurnitureType()
+        {
+            if (SelectedFurnitureTypeCbbFilter==null) return;
+            ListRoomFurniture = new ObservableCollection<RoomFurnituresDetailDTO>(ListRoomFurnitureTemp);
+            if (SelectedFurnitureTypeCbbFilter == "Tất cả")
+            {
+                return;
+            }
+            else
+            {
+                ListRoomFurniture = new ObservableCollection<RoomFurnituresDetailDTO>(ListRoomFurnitureTemp.Where(x=> x.FurnitureType == SelectedFurnitureTypeCbbFilter).ToList());
+            }
+        }
 
     }
 }

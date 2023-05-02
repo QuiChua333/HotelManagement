@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,27 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private bool Filter(object item)
+        {
+            if (String.IsNullOrEmpty(SearchBox.Text))
+                return true;
+            else
+                return ((item as RoomFurnituresDetailDTO).FurnitureName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                    || (item as RoomFurnituresDetailDTO).FurnitureType.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                    
+
+        }
+
+        private void Search_SearchTextChange(object sender, EventArgs e)
+        {
+            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(listFurniture.ItemsSource);
+            if (view1 != null)
+            {
+                view1.Filter = Filter;
+                //result.Text = Listviewmini.Items.Count.ToString();
+                CollectionViewSource.GetDefaultView(listFurniture.ItemsSource).Refresh();
+            }
         }
     }
 }

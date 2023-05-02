@@ -10,14 +10,16 @@
         xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo"
         mc:Ignorable="d"
         Width="852"
-        Height="716"
+        VerticalAlignment="Top"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         DataContext="{StaticResource RoomCatalogManagementVM}">
-    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="700" Width="850">
+
+ 
+    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3"  Width="850" VerticalAlignment="Top">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
@@ -124,21 +126,24 @@
                                       Padding="20,8"
                                       BorderBrush="#009099"
                                       Foreground="#1D242E"
-                                      SelectedIndex="0"
+                                      x:Name="cbbFurnitureType"
                                       FontWeight="Normal"
                                       FontSize="16"
+                                 
+                                      ItemsSource="{Binding ListFurnitureType}"
                                       FontFamily="{DynamicResource MaterialDesignFont}"
                                       HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedCbbFilter,Mode=OneWayToSource}">
-                                <ComboBoxItem  Content="Đèn" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                <ComboBoxItem  Content="Quạt" FontSize="14" Foreground="{StaticResource Gray1}"/>
-                                <ComboBoxItem  Content="Tủ lạnh" FontSize="14" Foreground="{StaticResource Gray1}"/>
+                                      IsSynchronizedWithCurrentItem="True"
+                                      SelectedItem="{Binding SelectedFurnitureTypeCbbFilter, Mode=TwoWay}"
+                                 >
+                                
+                                   
 
                             </ComboBox>
                         </Border>
                     </StackPanel>
                     <Search:Search 
-                        
+                        x:Name="SearchBox"
                          
                         Width="260" Height="38"
                         FontSize="12"
@@ -146,6 +151,7 @@
                         IconSize="18"
                         IndicatorBrush="White"
                         Corner="10"
+                        SearchTextChange="Search_SearchTextChange" 
                          
                         
                     />
@@ -189,12 +195,13 @@
 
                         </Grid>
                         <Rectangle Height="1" Fill="#C95D3B" Margin="-5,2,-5,0"></Rectangle>
-                        <Grid Margin="0,10,0,0" Height="410">
+                        <Grid Margin="0,10,0,0">
                             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                        ItemsSource="{Binding ListSeat1}"
-                                         x:Name="SeatListBox1"
+                                        ItemsSource="{Binding ListRoomFurniture}"
+                                         x:Name="listFurniture"
                                          VerticalAlignment="Top"
-                                         SelectedItem="{Binding SelectedSeat}">
+                                     MinHeight="70"
+                                     MaxHeight="280">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems2}" />
                                 </ListBox.ItemContainerStyle>
@@ -222,13 +229,14 @@
                                                 <Grid Grid.Column="0">
 
                                                     <Image 
-                                                   Width="80" Height="50" VerticalAlignment="Center"></Image>
+                                                   Width="80" Height="50" VerticalAlignment="Center"
+                                                        Source="{Binding FurnitureAvatar}"></Image>
 
 
                                                 </Grid>
                                                 <Grid Grid.Column="1">
                                                     <TextBlock  
-                                                       
+                                                       Text="{Binding FurnitureName}"
                                    
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -239,7 +247,7 @@
                                FontWeight="Regular"/>
                                                 </Grid>
                                             </Grid>
-                                            <TextBlock Text="100,000"
+                                            <TextBlock Text="{Binding FurnitureType}"
                                                        Grid.Column="1"
                                    
                                FontFamily="{DynamicResource MaterialDesignFont}"
@@ -250,7 +258,7 @@
                                FontWeight="Regular"/>
                                             <TextBlock 
                                                        Grid.Column="2"
-                                   
+                                   Text="{Binding Quantity}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
@@ -266,7 +274,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
-                                <ListBoxItem>
+                                <!--<ListBoxItem>
                                     <Grid VerticalAlignment="Center" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -318,61 +326,8 @@
                                FontWeight="Regular"/>
                                  
                                     </Grid>
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="3*" />
-                                                <ColumnDefinition Width="7*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid Grid.Column="0">
-
-                                                <Image Source="{StaticResource Logo2}"
-                                                   Width="80" Height="50" VerticalAlignment="Center"></Image>
-
-
-                                            </Grid>
-                                            <Grid Grid.Column="1">
-                                                <TextBlock  Text="Giường Diamond"
-                                                       
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                                                            Margin="20,0,0,0"
-                               FontSize="14"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                            </Grid>
-                                        </Grid>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="14"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="2"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="14"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-
-                                    </Grid>
-                                </ListBoxItem>
-
+                                </ListBoxItem>-->
+                       
 
                             </ListBox>
 
@@ -391,8 +346,7 @@
                         FontSize="14"
                         Background="{StaticResource ButtonCancel}"
                         Margin="0,0,25,0"
-                        Width="70" Click="Button_Click_1" 
-                        >
+                        Width="70" Click="Button_Click_1" >
                 </Button>
             </Grid>
         </Grid>
