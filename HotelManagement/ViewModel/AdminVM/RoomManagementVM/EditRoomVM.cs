@@ -23,7 +23,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             RoomId = SelectedItem.RoomId;
             RoomNumber = (int)SelectedItem.RoomNumber;
             RoomNote = SelectedItem.Note;
-
+            RoomStatus = SelectedItem.RoomStatus;
             if (SelectedItem.RoomTypeId == "LP001")
             {
                 w1.loaiphong.SelectedIndex = 0;
@@ -34,7 +34,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             }
             else w1.loaiphong.SelectedIndex = 2;
 
-            w1.trangthaiphong.Text = SelectedItem.RoomStatus;
             w1.tinhtrangphong.Text = SelectedItem.RoomCleaningStatus;
         }
         
@@ -53,7 +52,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                     RoomTypeId = rti,
                     RoomCleaningStatus = CbRoomTinhTrang.Tag.ToString(),
                     RoomTypeName = CbRoomType.Tag.ToString(),
-                    RoomStatus = CbRoomStatus.Tag.ToString(),
+                    RoomStatus = RoomStatus,
                 };
 
                 (bool successUpdateRoom, string messageFromUpdateRoom) = await RoomService.Ins.UpdateRoom(room);

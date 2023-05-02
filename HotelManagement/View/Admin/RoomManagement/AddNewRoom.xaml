@@ -120,21 +120,19 @@
                         <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="Trạng thái phòng:" Foreground="#606060" FontSize="14" FontWeight="Bold" Margin="20 0 0 0" VerticalAlignment="Bottom"/>
-                    <Border Grid.Row="1" Background="White" CornerRadius="5" Width="240" Height="36">
-                        <ComboBox     Width="240" Height="36"
-                                      Padding="10 5"
-                                      BorderBrush="#606060"
-                                      BorderThickness="0.5"
-                                      Foreground="Black"
-                                      FontSize="16"
-                                      HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding CbRoomStatus,Mode=OneWayToSource}">
-                            <ComboBoxItem Tag="Phòng trống" Content="Phòng trống" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Tag="Phòng đang thuê" Content="Phòng đang thuê" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Tag="Phòng đã đặt" Content="Phòng đã đặt" FontSize="16" Foreground="Black"/>
-
-                        </ComboBox>
-                    </Border>
+                    <TextBox Grid.Row="1"
+                             Padding="10 5 0 0" 
+                             HorizontalAlignment="Left" 
+                             FontSize="16" 
+                             VerticalAlignment="Center"
+                             Foreground="Black" 
+                             Height="36" 
+                             BorderBrush="#606060"
+                             BorderThickness="0.5"
+                             Focusable="False"
+                             Margin="30 0 0 0"
+                             Width="240" 
+                             Text="{Binding RoomStatus, Mode=TwoWay}"/>
                 </Grid>
 
                 <Grid Grid.Column="1">

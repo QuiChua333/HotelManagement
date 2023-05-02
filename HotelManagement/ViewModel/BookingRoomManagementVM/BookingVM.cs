@@ -1,10 +1,17 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Model;
+using HotelManagement.Model.Services;
+using HotelManagement.Utilities;
+using HotelManagement.Utils;
+using HotelManagement.View.CustomMessageBoxWindow;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -13,93 +20,118 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 {
     public partial class BookingRoomManagementVM : BaseVM
     {
-        private string _customerName;
-        public string CustomerName
+        public (bool isvalid, string error) ValidateBooking()
         {
-            get { return _customerName; }
-            set { _customerName = value; OnPropertyChanged(); }
-        }
-
-        private string _phoneNumber;
-        public string PhoneNumber
-        {
-            get { return _phoneNumber; }
-            set { _phoneNumber = value; OnPropertyChanged(); }
-        }
-        
-        private string _CCCD;
-        public string CCCD
-        {
-            get { return _CCCD; }
-            set { _CCCD = value; OnPropertyChanged(); }
-        }
-
-        private string _Email;
-        public string Email
-        {
-            get { return _Email; }
-            set { _Email = value; OnPropertyChanged(); }
-        }
-
-        private string _Address;
-        public string Address
-        {
-            get { return _Address; }
-            set { _Address = value; OnPropertyChanged(); }
-        }
-        
-        private ComboBoxItem _Gender;
-        public ComboBoxItem Gender
-        {
-            get { return _Gender; }
-            set { _Gender = value; OnPropertyChanged(); }
-        }
-
-        private ComboBoxItem _CustomerType;
-        public ComboBoxItem CustomerType
-        {
-            get { return _CustomerType; }
-            set { _CustomerType = value; OnPropertyChanged(); }
-        }
-
-        private DateTime _StartDate;
-        public DateTime StartDate
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; OnPropertyChanged(); }
-        }
-
-        private DateTime _CheckoutDate;
-        public DateTime CheckoutDate
-        {
-            get { return _CheckoutDate; }
-            set { _CheckoutDate = value; OnPropertyChanged(); }
-        }
-
-        private DateTime _StartTime;
-        public DateTime StartTime
-        {
-            get { return _StartTime; }
-            set { _StartTime = value; OnPropertyChanged(); }
-        }
-
-        private ComboBoxItem _PersonNumber;
-        public ComboBoxItem PersonNumber
-        {
-            get { return _PersonNumber; }
-            set { _PersonNumber = value; OnPropertyChanged(); }
-        }
-
-        private ObservableCollection<RoomDTO> _ListReadyRoom;
-        public ObservableCollection<RoomDTO> ListReadyRoom
-        {
-            get => _ListReadyRoom;
-            set
+            if (string.IsNullOrEmpty(CustomerName) ||
+                string.IsNullOrEmpty(CCCD) ||
+                string.IsNullOrEmpty(PhoneNumber) ||
+                string.IsNullOrEmpty(Email) ||
+                string.IsNullOrEmpty(Address) ||
+                string.IsNullOrEmpty(DayOfBirth.TimeOfDay.ToString()) ||
+                string.IsNullOrEmpty(StartDate.TimeOfDay.ToString()) ||
+                string.IsNullOrEmpty(CheckoutDate.TimeOfDay.ToString()) ||
+                string.IsNullOrEmpty(StartTime.TimeOfDay.ToString()) ||
+                string.IsNullOrEmpty(Gender.Content.ToString()) ||
+                string.IsNullOrEmpty(CustomerType.Content.ToString()) ||
+                string.IsNullOrEmpty(PersonNumber.Content.ToString()))
             {
-                _ListReadyRoom = value;
-                OnPropertyChanged();
+                return (false, "Vui lòng nhập đủ thông tin khách hàng!");
+            }
+            else
+            {
+                if (Email != null)
+                {
+                    if (Email.Trim() == "") Email = null;
+                    else
+                    {
+                        if (!Utilities.RegexUtilities.IsValidEmail(Email))
+                        {
+                            return (false, "Email không hợp lệ");
+                        }
+                    }
+                }
+                if (!Helper.IsPhoneNumberTinh(PhoneNumber)) return (false, "Số điện thoại không hợp lệ!");
+                (bool isv, string err) = IsValidAge((DateTime)DayOfBirth);
+                if (!isv) return (false, err);
+                if (StartDate >= CheckoutDate) return (false, "Vui lòng kiểm tra lại ngày bắt đầu thuê và ngày trả phòng!");
+                if (SelectedRoom is null) return (false, "Vui lòng chọn phòng để đặt!");
+                // check CMND
+                return (true, null);
             }
         }
+        
+        private (bool isvalid, string err) IsValidAge(DateTime birthday)
+        {
+            // Save today's date.
+            var today = DateTime.Today;
+
+            // Calculate the age.
+            var age = today.Year - birthday.Year;
+
+            // Go back to the year in which the person was born in case of a leap year
+            if (birthday.DayOfYear > today.DayOfYear) age--;
+
+            if (age < 16) return (false, "Khách hàng chưa đủ 16 tuổi!");
+            return (true, null);
+        }
+
+        public async Task SaveRentalContract(Window p)
+        {
+            RentalContractDTO temp = new RentalContractDTO
+            {
+                CheckOutDate = CheckoutDate,
+                StartDate = StartDate,
+                StartTime = StartTime.TimeOfDay,
+                //StaffId = StaffId,
+                CustomerId = CustomerId,
+                PersonNumber = int.Parse(PersonNumber.Content.ToString()),
+                RoomId = SelectedRoom.RoomId,
+                Validated = true,
+            };
+            (bool isSucsses, string message) = await BookingRoomService.Ins.SaveBooking(temp);
+            if (isSucsses)
+            {
+                CustomMessageBox.ShowOk(message, "Thong bao", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+                p.Close();
+            }
+            else
+            {
+                CustomMessageBox.ShowOk(message, "Lỗi", "OK", CustomMessageBoxImage.Error);
+            }
+        }
+        // oke rồi, giờ hỏi đáp =)) trong cái SaveCustomer có cần CustomerId ko 
+        public async Task SaveCustomer()
+        {
+            CustomerDTO customerDTO = new CustomerDTO
+            {
+                CustomerName = CustomerName,
+                PhoneNumber = PhoneNumber, // ko cần, nó ở chỗ này
+                DateOfBirth = (DateTime)DayOfBirth,
+                Email = Email,
+                CCCD = CCCD,
+                CustomerType = CustomerType.Content.ToString(),
+                Gender = Gender.Content.ToString(),
+                CustomerAddress = Address,
+                IsDeleted = false,
+            };
+            (bool isSucsses, string message, string customerId) = await BookingRoomService.Ins.SaveCustomer(customerDTO);
+            if (isSucsses)
+            {
+                CustomerId = customerId;
+                IsSucceedSavingCustomer = true;
+            }
+            else
+            {
+                CustomMessageBox.ShowOk(message, "Lỗi", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+            }
+        }
+
+        public async Task LoadReadyRoom()
+        {
+            ListReadyRoom = new ObservableCollection<RoomDTO>(await BookingRoomService.Ins.GetListReadyRoom(StartDate,StartTime,CheckoutDate));
+        }
+
+        
 
     }
 }

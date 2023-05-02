@@ -47,11 +47,11 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             set { _roomNote = value; OnPropertyChanged(); }
         }
 
-        private ComboBoxItem _cbRoomStatus;
-        public ComboBoxItem CbRoomStatus
+        private string _RoomStatus;
+        public string RoomStatus
         {
-            get { return _cbRoomStatus; }
-            set { _cbRoomStatus = value; OnPropertyChanged(); }
+            get { return _RoomStatus; }
+            set { _RoomStatus = value; OnPropertyChanged(); }
         }
 
         private ComboBoxItem _cbRoomType;
@@ -249,14 +249,14 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             RoomNumber = 0;
             RoomNote = null;
             RoomTypeID = null;
-            CbRoomStatus = null;
+            RoomStatus = "Phòng trống";
             CbRoomTinhTrang = null;
             CbRoomType = null;
         }
         public bool IsValidData()
         {
             return !string.IsNullOrEmpty(RoomNote) &&
-                !string.IsNullOrEmpty(CbRoomStatus.Tag.ToString()) &&
+                !string.IsNullOrEmpty(RoomStatus) &&
                 !string.IsNullOrEmpty(CbRoomTinhTrang.Tag.ToString()) &&
                 !string.IsNullOrEmpty(CbRoomType.Tag.ToString());
         }

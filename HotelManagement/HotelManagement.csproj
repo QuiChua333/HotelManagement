@@ -171,6 +171,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DTOs\BookingRoomManagementDTO.cs" />
+    <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RoomDTO.cs" />
     <Compile Include="DTOs\RoomTypeDTO.cs" />
     <Compile Include="Model\Bill.cs">
@@ -230,6 +231,7 @@
     <Compile Include="Model\Service.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Services\BookingRoomService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\ServiceUsing.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
@@ -252,7 +254,6 @@
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\BookingRoomManagementVM\BookingVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
-    <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RentalContractDTO.cs" />
     <Compile Include="DTOs\RoomCustomerDTO.cs" />
     <Compile Include="DTOs\RoomSettingDTO.cs" />
@@ -260,7 +261,6 @@
     <Compile Include="Model\Services\RentalContractService.cs" />
     <Compile Include="Utils\EmailFormat.cs" />
     <Compile Include="Utils\RegexUtilities.cs" />
-    <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\StaffDTO.cs" />
     <Compile Include="DTOs\TroubleByCustomerDTO.cs" />
     <Compile Include="DTOs\TroubleDTO.cs" />
