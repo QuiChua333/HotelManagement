@@ -255,26 +255,33 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
                 
-                    if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
-                    else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
-                    else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
-
-                    if (TimeChange == false)
+                    try
                     {
-                        ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
-                        ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
-                        ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+                        if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
+                        else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
+                        else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
+
+                        if (TimeChange == false)
+                        {
+                            ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini);
+                            ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini);
+                            ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini);
+                        }
+                        else
+                        {
+                            ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini);
+                            ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini);
+                            ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini);
+                        }
+
+
+
+                        ChangView();
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini);
-                        ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini);
-                        ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini);
+                    CustomMessageBox.ShowOk("Lỗi hệ thống!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
                     }
-               
-
-
-                ChangView();
 
                 
             });
