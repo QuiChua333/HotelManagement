@@ -95,6 +95,36 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _ListRoomFurnitureTemp; }
             set { _ListRoomFurnitureTemp = value; OnPropertyChanged(); }
         }
+        public async Task ChangeRoomStatusFunc(RoomWindow p)
+        {
+
+            (bool isSucessed, string mess) = await RoomService.Ins.ChangeRoomStatus(SelectedRoom.RoomId, SelectedRoom.RentalContractId);
+            if (isSucessed)
+            {
+                CustomMessageBox.ShowOk(mess, "Thông báo", "OK", CustomMessageBoxImage.Success);
+                p.Close();
+                RefreshCM.Execute(MainPage);
+            }
+            else
+            {
+                CustomMessageBox.ShowOk(mess, "Lỗi", "OK", CustomMessageBoxImage.Error);
+            }
+        }
+        public async Task UpdateRoomInfoFunc(RoomWindow p)
+        {
+
+            (bool isSucessed, string mess) = await RoomService.Ins.UpdateRoomInfo(SelectedRoom.RoomId, SelectedRoomCleaningStatus.Content.ToString());
+            if (isSucessed)
+            {
+                CustomMessageBox.ShowOk(mess, "Thông báo", "OK", CustomMessageBoxImage.Success);
+                p.Close();
+                RefreshCM.Execute(MainPage);
+            }
+            else
+            {
+                CustomMessageBox.ShowOk(mess, "Lỗi", "OK", CustomMessageBoxImage.Error);
+            }
+        }
         public async Task SaveCustomerFunc(AddCusWindow p)
         {
             

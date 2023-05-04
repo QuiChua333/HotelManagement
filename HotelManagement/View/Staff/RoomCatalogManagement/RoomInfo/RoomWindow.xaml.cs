@@ -29,10 +29,7 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

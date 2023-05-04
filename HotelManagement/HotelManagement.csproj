@@ -170,6 +170,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTOs\BillDTO.cs" />
     <Compile Include="DTOs\BookingRoomManagementDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RoomDTO.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Model\Service.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Services\BillService.cs" />
     <Compile Include="Model\Services\RoomCustomerService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\Services\ServiceUsingHelper.cs" />

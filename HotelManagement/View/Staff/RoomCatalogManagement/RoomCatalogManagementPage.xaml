@@ -766,7 +766,7 @@
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom}">
+                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
@@ -901,11 +901,11 @@
                                         </Border>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom2, Path=DataContext.LoadRoomInfoCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom2, Path=DataContext.OpenRoomWindowCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
 
                                             </i:EventTrigger>
@@ -1041,7 +1041,7 @@
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom}">
+                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
                             </ListBox.ItemContainerStyle>
@@ -1176,11 +1176,11 @@
                                         </Border>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom3, Path=DataContext.LoadRoomInfoCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
                                             </i:EventTrigger>
                                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom3, Path=DataContext.OpenRoomWindowCM}"
                                                                        CommandParameter="{Binding ElementName=grid}" />
 
                                             </i:EventTrigger>

@@ -4,6 +4,7 @@ using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _LaundryService; }
             set { _LaundryService = value; OnPropertyChanged(); }
         }
-
+        private ObservableCollection<ServiceUsingDTO> _ListService;
+        public ObservableCollection<ServiceUsingDTO> ListService
+        {
+            get { return _ListService; }
+            set { _ListService = value; OnPropertyChanged(); }
+        }
         public async Task SaveUsingCleaningService(Window p)
         {
             ServiceUsingDTO serviceUsingDTO = new ServiceUsingDTO
@@ -39,6 +45,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             if (isSucceed)
             {
                 CustomMessageBox.ShowOk(message, "Thông báo", "Ok", CustomMessageBoxImage.Success);
+                ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
                 p.Close();
             }
             else
@@ -60,6 +67,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             if (isSucceed)
             {
                 CustomMessageBox.ShowOk(message, "Thông báo", "Ok", CustomMessageBoxImage.Success);
+                ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
                 p.Close();
             }
             else

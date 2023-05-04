@@ -57,9 +57,9 @@
                     Padding="0"
                     BorderThickness="0"
                     HorizontalAlignment="Right"
-                    Margin="0,-20,20,0" Click="Button_Click"
-                    Command="{Binding CloseWindowCM}"
-                    CommandParameter="{Binding ElementName=window}">
+                    Margin="0,-20,20,0" 
+                    Command="{Binding CloseRoomWindowCM}"
+                    CommandParameter="{Binding ElementName=mainRoomWindow}">
                     <materialDesign:PackIcon Kind="Close" 
                                      Height="30"
                                      Width="30"
@@ -426,7 +426,7 @@
                                     <ComboBox   
                                       x:Name="cbbRoomCleaningStatus"
                                       Padding="12,8"
-                                      SelectedIndex="0"
+                                    
                                       BorderBrush="{StaticResource White}"
                                       Foreground="{StaticResource White}"
                                       FontWeight="Medium"
@@ -469,7 +469,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
                                     <ListView Margin="30,0,35,25" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                ItemsSource="{Binding DSDV}"
+                                ItemsSource="{Binding ListService}"
                                 Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}">
 
                                         <ListView.View>
@@ -489,7 +489,7 @@
                                                     </GridViewColumn.Header>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBlock Text="{Binding Dichvu}"
+                                                            <TextBlock Text="{Binding ServiceName}"
                                                                 Margin="5,0,0,0"
                                                                Foreground="#000000"
                                                                      FontWeight="Regular"  
@@ -510,7 +510,7 @@
                                                     </GridViewColumn.Header>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBlock Text="{Binding Soluong}"
+                                                            <TextBlock Text="{Binding Quantity}"
                                                                        Foreground="#000000"
                                                                      FontWeight="Regular" 
                                                        Margin="20,0,0,0"
@@ -531,7 +531,7 @@
                                                     </GridViewColumn.Header>
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <TextBlock Text="{Binding Dongia}"
+                                                            <TextBlock Text="{Binding UnitPriceStr}"
                                                                        Foreground="#000000"
                                                                      FontWeight="Regular" 
                                                        Margin="5,0,0,0"
@@ -555,7 +555,7 @@
                                                     <GridViewColumn.CellTemplate>
                                                         <DataTemplate>
 
-                                                            <TextBlock Text="{Binding Thanhtien}"
+                                                            <TextBlock Text="{Binding TotalMoneyStr}"
                                                        Margin="5,0,0,0"
                                                                      Foreground="#000000"
                                                                      FontWeight="Regular"       
@@ -669,20 +669,37 @@
                         Background="{StaticResource ButtonOk}"
                         Margin="20,0,0,0"
                         Width="120" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        x:Name="btnAddService"
+                         
+                       >
                 </Button>
-                <Button HorizontalAlignment="Left"
+                <StackPanel Orientation="Horizontal"
+                            Margin="540,0,0,0">
+                    <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Style="{StaticResource CustomButton}"
                         Content="Thanh toán"
                         FontFamily="{DynamicResource MaterialDesignFont}"
                         FontSize="14"
                         Background="{StaticResource ButtonOk}"
-                        Margin="540,0,0,0"
-                        Width="110" 
-                        >
-                </Button>
+                        x:Name="btnPayment"
+                        Width="110"
+                        Command="{Binding PaymentCM}"
+                        CommandParameter="{Binding ElementName=mainRoomWindow}"/>
+                    <Button 
+                        VerticalAlignment="Center"
+                        Style="{StaticResource CustomButton}"
+                        Content="Nhận phòng"
+                        x:Name="btnCheckIn"
+                        FontFamily="{DynamicResource MaterialDesignFont}"
+                        FontSize="14"
+                        Background="{StaticResource ButtonOk}"
+                        HorizontalAlignment="Right"
+                        Width="110"
+                        Command="{Binding CheckInRoomCM}"
+                        CommandParameter="{Binding ElementName=mainRoomWindow}"/>
+
+                </StackPanel>
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Style="{StaticResource CustomButton}"
@@ -691,8 +708,8 @@
                         Background="{StaticResource ButtonOk}"
                         Margin="0,0,130,0"
                         Width="70" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        Command="{Binding UpdateRoomInfoCM}"
+                        CommandParameter="{Binding ElementName=mainRoomWindow}">
                 </Button>
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Center"
@@ -702,7 +719,8 @@
                         Background="{StaticResource ButtonCancel}"
                         Margin="0,0,20,0"
                         Width="70" 
-                        />
+                        Command="{Binding CloseRoomWindowCM}"
+                        CommandParameter="{Binding ElementName=mainRoomWindow}"/>
             </Grid>
         </Grid>
     </Border>

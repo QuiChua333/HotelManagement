@@ -446,6 +446,56 @@ namespace HotelManagement.Model.Services
 
         }
 
+        public async Task<(bool, string)> ChangeRoomStatus(string roomId, string rentalContractId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    Room room = await context.Rooms.FindAsync(roomId);
+                    RentalContract rentalContract = await context.RentalContracts.FindAsync(rentalContractId);
+                    string mess = "";
+                    if (room.RoomStatus == ROOM_STATUS.BOOKED) 
+                    {
+                        room.RoomStatus = ROOM_STATUS.RENTING;
+                        mess = "Nhận phòng thành công!";
+                    }
+                    else if (room.RoomStatus == ROOM_STATUS.RENTING)
+                    {
+                        room.RoomStatus = ROOM_STATUS.READY;
+                        rentalContract.Validated = false;
+                        mess = "Thanh toán thành công!";
+
+                    }
+                    await context.SaveChangesAsync();
+                    return (true, mess);
+                    
+                }
+            }
+            catch(Exception ex)
+            {
+                return (false, "Lỗi hệ thống!");
+            }
+        }
+        public async Task<(bool, string)> UpdateRoomInfo(string roomId, string roomCleaningStatus)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    Room room = await context.Rooms.FindAsync(roomId);
+                    room.RoomCleaningStatus= roomCleaningStatus;
+                    await context.SaveChangesAsync();
+                    return (true, "Cập nhật thành công!");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, "Lỗi hệ thống!");
+            }
+        }
+
     }
 }
 

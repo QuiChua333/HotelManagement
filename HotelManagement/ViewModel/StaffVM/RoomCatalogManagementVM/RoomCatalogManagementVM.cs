@@ -171,11 +171,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand ChangeViewCM { get; set; }
         public ICommand SelectedDateTimeCM { get; set; }
         public ICommand OpenRoomWindowCM { get; set; }
+        public ICommand CheckInRoomCM { get; set; }
+        public ICommand UpdateRoomInfoCM { get; set; }
         public ICommand FirstLoadRoomWindowCM { get; set; }
+        public ICommand CloseRoomWindowCM { get; set; }
         public ICommand RefreshCM { get; set; }
         public ICommand LoadRoomRentalContractInfoCM { get; set; }
         public ICommand LoadRoomCustomerInfoCM { get; set; }
-
         public ICommand LoadAddCustomerWindowCM { get; set; }
         public ICommand LoadRoomFurnitureInfoCM { get; set; }
         public ICommand SaveCustomerCM { get; set; }
@@ -187,6 +189,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand LoadRoomOrderLaundryCM { get; set; }
         public ICommand ConfirmCleaningServiceCM { get; set; }
         public ICommand ConfirmLaundryServiceCM { get; set; }
+        public ICommand PaymentCM { get; set; }
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -463,8 +466,35 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                         RoomWindow wd = new RoomWindow();
                         int personNumber = (await RoomCustomerService.Ins.GetPersonNumberOfRoom(SelectedRoom.RentalContractId));
                         wd.lbPersonNumber.Content = personNumber.ToString();
-                        SelectedRoomCleaningStatus.Content = SelectedRoom.RoomCleaningStatus;
-                        wd.ShowDialog();
+                        if (SelectedRoom.RoomCleaningStatus == ROOM_CLEANING_STATUS.CLEANED)
+                        {
+                            wd.cbbRoomCleaningStatus.SelectedIndex = 0;
+                        }
+                        else if (SelectedRoom.RoomCleaningStatus == ROOM_CLEANING_STATUS.NOT_CLEANING_YET)
+                        {
+                            wd.cbbRoomCleaningStatus.SelectedIndex = 1;
+                        }
+                        else wd.cbbRoomCleaningStatus.SelectedIndex = 2;
+                        ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
+                        if (SelectedRoom.RoomStatus == ROOM_STATUS.READY)
+                        {
+                            wd.btnAddService.Visibility = Visibility.Collapsed;
+                            wd.btnPayment.Visibility = Visibility.Collapsed;
+                            wd.btnCheckIn.Visibility = Visibility.Collapsed;
+                        }
+                        else if (SelectedRoom.RoomStatus == ROOM_STATUS.BOOKED)
+                        {
+                            wd.btnAddService.Visibility = Visibility.Collapsed;
+                            wd.btnPayment.Visibility = Visibility.Collapsed;
+                            wd.btnCheckIn.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            wd.btnAddService.Visibility = Visibility.Visible;
+                            wd.btnPayment.Visibility = Visibility.Visible;
+                            wd.btnCheckIn.Visibility = Visibility.Collapsed;
+                        }
+                            wd.ShowDialog();
                     }
                     catch (Exception ex)
                     {
@@ -472,6 +502,23 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     }
                 }
             });
+
+            CheckInRoomCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
+            {
+               
+                await ChangeRoomStatusFunc(p);
+            });
+            UpdateRoomInfoCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
+            {
+
+                await UpdateRoomInfoFunc(p);
+            });
+            CloseRoomWindowCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
+            {
+                p.Close();
+                RefreshCM.Execute(MainPage);
+            });
+
             LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
@@ -572,7 +619,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                
 
             });
+            PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
 
+            });
 
         }
 
