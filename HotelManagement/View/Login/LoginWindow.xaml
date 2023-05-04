@@ -36,12 +36,12 @@
                 <ColumnDefinition Width="480"/>
                 <ColumnDefinition Width="320"/>
             </Grid.ColumnDefinitions>
-            <Border Background="Black" CornerRadius="6 0 0 6" Grid.Column="0">
-                <Rectangle  >
-                    <Rectangle.Fill>
+            <Border Background="Black" CornerRadius="6 0 0 6" Grid.Column="0" >
+                <Border CornerRadius="6,0,0,6">
+                    <Border.Background>
                         <ImageBrush ImageSource="{StaticResource BGLogin}" ></ImageBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                    </Border.Background>
+                </Border>
             </Border>
             <Border Grid.Column="1" Background="White" CornerRadius="0 6 6 0">
                 <Grid>

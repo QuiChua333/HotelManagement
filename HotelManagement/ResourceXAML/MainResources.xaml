@@ -7,8 +7,7 @@
                 xmlns:VM5="clr-namespace:HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM"
                 xmlns:VM6="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM"
                 xmlns:VM7="clr-namespace:HotelManagement.ViewModel.SettingVM"
-                    
-                xmlns:VM8="clr-namespace:HotelManagement.ViewModel.AdminVM.BookingRoomManagementVM"
+                xmlns:VM8="clr-namespace:HotelManagement.ViewModel.BookingRoomManagementVM"
                 xmlns:VM9="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomManagementVM"
                 xmlns:VM10="clr-namespace:HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM"
                 xmlns:VM11="clr-namespace:HotelManagement.ViewModel.AdminVM.StatisticalManagementVM"
@@ -39,6 +38,5 @@
     <VM17:TroubleReportVM x:Key="TroubleReportVM"/>
     <VM18:ForgotPassVM x:Key="ForgotPassVM"/>
     <VM18:LoginVM x:Key="LoginVM"/>
-
 
 </ResourceDictionary>

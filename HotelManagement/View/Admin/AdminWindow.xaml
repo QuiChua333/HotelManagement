@@ -88,7 +88,7 @@
                             <Border Height="40" Width="40"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center">
                                 <Ellipse>
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{StaticResource Logo}"/>
+                                        <ImageBrush ImageSource="{Binding Staffimgsource}"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
                             </Border>
@@ -117,7 +117,8 @@
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"
+                                                  Command="{Binding RoomCatalogCommand}"/>
                         </StackPanel>
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý đặt phòng" VerticalAlignment="Center" Command="{Binding BookingRoomCommand}"/>
@@ -189,6 +190,8 @@
                 </CheckBox>
             </Grid>
         </Border>
-        
+
+        <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" x:Name="MaskOverSideBar" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
+
     </Grid>
 </Window>

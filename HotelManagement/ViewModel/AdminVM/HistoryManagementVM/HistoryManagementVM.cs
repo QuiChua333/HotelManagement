@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Windows.Input;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ using System.Windows.Input;
 
 namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
 {
-    public class HistoryManagementVM:BaseVM
+    public class HistoryManagementVM : BaseVM
     {
         public ICommand FirstLoadCM { get; set; }
         public HistoryManagementVM()

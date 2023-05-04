@@ -11,7 +11,9 @@
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        x:Name="window"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
     <Border CornerRadius="15" Background="#F5F5F5" BorderBrush="Gray" BorderThickness="0.3" Height="180" Width="360">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
@@ -83,14 +85,14 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Margin="80,0,0,0">
-                    <TextBlock Text="20,000"
+                    <TextBlock Text="{Binding CleaningService.ServicePrice}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
                                FontSize="16"
                                Foreground="Black"
                                FontWeight="Regular"/>
-                    <TextBlock Text="VNĐ/1kg"
+                    <TextBlock Text="VNĐ/1 lần"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -109,11 +111,11 @@
                         Style="{StaticResource CustomButton}"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Content="Lưu"
+                        Content="Xác nhận"
                         Background="{StaticResource ButtonOk}"
-                        Width="70"
-                        Command="{Binding MoreEmailCM}"
-                            x:Name="addnewemail">
+                        Width="90"
+                        Command="{Binding ConfirmCleaningServiceCM}"
+                           CommandParameter="{Binding ElementName=window}">
 
                 </Button>
 
@@ -125,9 +127,8 @@
                         FontSize="14"
                         Background="{StaticResource ButtonCancel}"
                         Margin="0,0,20,0"
-                        Width="70" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        Width="70" Click="Button_Click_1" 
+                        >
                     </Button>
                 </Grid>
             </Grid>

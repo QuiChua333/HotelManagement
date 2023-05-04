@@ -24,14 +24,17 @@ namespace HotelManagement.View.Admin.ServiceManagement
             InitializeComponent();
         }
 
-        private void ProductAddWD_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void ProductAddWD_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }    
         }
     }
 }

@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.Utilities
 {
-    public enum Operation
-    {
-        CREATE,
-        UPDATE,
-        DELETE,
-        UPDATE_PASS,
-
-    }
+    
     public class LEVEL
     {
         public static readonly string NORMAL = "Bình thường";

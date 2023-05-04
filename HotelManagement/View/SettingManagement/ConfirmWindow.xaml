@@ -8,7 +8,7 @@
         Background="Transparent"
         WindowStyle="None"
         AllowsTransparency="True"
-        
+        DataContext="{StaticResource SettingVM}"
         WindowStartupLocation="CenterScreen"
         Title="ConfirmWindow" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid Width="400"

@@ -251,7 +251,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
-                                <ListBoxItem>
+                                <ListBoxItem >
                                     <Grid VerticalAlignment="Center" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>

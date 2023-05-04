@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
+using HotelManagement.Utils;
 using HotelManagement.View.Admin.TroubleManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.TroubleReport;

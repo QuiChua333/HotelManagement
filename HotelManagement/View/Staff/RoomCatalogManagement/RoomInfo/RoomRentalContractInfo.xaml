@@ -8,12 +8,13 @@
         xmlns:local="clr-namespace:HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo"
         mc:Ignorable="d"
         Width="802"
-        Height="516"
+        VerticalAlignment="Top"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
     <Window.Resources>
         <Style x:Key="GridHeader" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Template">
@@ -26,7 +27,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="500" Width="800">
+    <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" VerticalAlignment="Top" Width="800" x:Name="invoice">
         <Border.Effect>
             <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
@@ -99,8 +100,8 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="30,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="6*" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
@@ -118,7 +119,7 @@
                                                                FontSize="16">
 
                                 </Label>
-                                <TextBlock Text="P102"
+                                <TextBlock Text="{Binding SelectedRoom.RoomNumber}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
@@ -144,7 +145,7 @@
                                                                FontSize="16">
 
                                 </Label>
-                                <TextBlock Text="Nguyễn Văn Phát"
+                                <TextBlock Text="{Binding SelectedRoom.CustomerName}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
@@ -174,7 +175,23 @@
                            Foreground="#000000"
                            FontSize="16"
                            FontFamily="{DynamicResource MaterialDesignFont}"/>
-                            <TextBlock Text="01/04/2023"
+                            <TextBlock Text="{Binding SelectedRoom.StartDateSting}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                                       Margin="5,0,0,0"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                            <Label Content="Giờ vào:"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                            Margin="40,0,0,0"
+                           FontWeight="Medium"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"/>
+                            <TextBlock Text="{Binding SelectedRoom.StartTime}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
@@ -192,7 +209,7 @@
                            Foreground="#000000"
                            FontSize="16"
                            FontFamily="{DynamicResource MaterialDesignFont}"/>
-                            <TextBlock Text="01/04/2023"
+                            <TextBlock Text="{Binding SelectedRoom.CheckOutDateSting}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
@@ -206,9 +223,13 @@
                 </Grid>
                 <Grid Grid.Row="1" Margin="0,15,0,0" Background="#F5F3F2">
                     <ListView ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                ItemsSource="{Binding DSDV}"
-                                Focusable="False" d:ItemsSource="{d:SampleData ItemCount=5}"
-                              BorderThickness="3" BorderBrush="#292D32">
+                                ItemsSource="{Binding ListCustomer}"
+                              VerticalAlignment="Top"
+                              MinHeight="110"
+                           
+                                Focusable="False" d:ItemsSource="{d:SampleData ItemCount=}"
+                              BorderThickness="3" BorderBrush="#292D32"
+                              x:Name="lsvCustomerInfo">
 
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridHeader}">
@@ -249,7 +270,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding TenKhachHang}"
+                                            <TextBlock Text="{Binding CustomerName}"
                                                                        Foreground="#000000"
                                                                      FontWeight="Regular" 
                                                        Margin="10,0,0,0"
@@ -270,7 +291,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding LoaiKhach}"
+                                            <TextBlock Text="{Binding CustomerType}"
                                                                        Foreground="#000000"
                                                                      FontWeight="Regular" 
                                                        Margin="5,0,0,0"
@@ -294,7 +315,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
 
-                                            <TextBlock Text="{Binding CMNDCCCD}"
+                                            <TextBlock Text="{Binding CCCD}"
                                                        Margin="5,0,0,0"
                                                                      Foreground="#000000"
                                                                      FontWeight="Regular"       
@@ -318,7 +339,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
 
-                                            <TextBlock Text="{Binding CMNDCCCD}"
+                                            <TextBlock Text="{Binding CustomerAddress}"
                                                        Margin="5,0,0,0"
                                                                      Foreground="#000000"
                                                                      FontWeight="Regular"       
@@ -339,7 +360,11 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="3">
-                <Button HorizontalAlignment="Left" Margin="10,0,0,0">
+                <Button HorizontalAlignment="Left" Margin="10,0,0,0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        
+                        Click="Button_Click_2">
                     <materialDesign:PackIcon Kind="Printer"
                                                                      Width="27"
                                                                      Height="27"
@@ -352,9 +377,8 @@
                         FontSize="14"
                         Background="{StaticResource ButtonCancel}"
                         Margin="0,0,25,0"
-                        Width="70" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        Width="70" Click="Button_Click_1" 
+                        >
                 </Button>
             </Grid>
         </Grid>

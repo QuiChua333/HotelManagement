@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.HelpScreen"
         mc:Ignorable="d"
-        Title="AboutUs" Height="650" Width="800">
+        Title="AboutUs" Height="650" Width="800"
+        x:Name="about_us"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        DataContext="{StaticResource HelpScreenVM}">
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"/>
@@ -38,7 +42,9 @@
                     Margin="0 10 10 0" 
                     Height="50" Width="50" 
                     HorizontalContentAlignment="Center" 
-                    VerticalContentAlignment="Center">
+                    VerticalContentAlignment="Center"
+                    Command="{Binding CloseCM}"
+                    CommandParameter="{Binding ElementName=about_us}">
                 <Image Source="{StaticResource Button_X}" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"  

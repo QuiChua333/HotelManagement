@@ -39,30 +39,5 @@ namespace HotelManagement.View.Admin.FurnitureManagement
             Close();
         }
 
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if(TextTypeImport.Tag.ToString() == "NhapDanhSach")
-            {
-                TextTypeImport.Text = "Nhập đơn";
-                TextTypeImport.Tag = "NhapDon";
-                ImportButton.Visibility = Visibility.Collapsed;
-                DoubleAnimation animation = new DoubleAnimation(900, TimeSpan.FromSeconds(0.2));
-                MainWindow.BeginAnimation(Border.WidthProperty, animation);
-                FurnitureImportWD.BeginAnimation(Border.WidthProperty, animation);
-                FurnitureImportWD.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                FurnitureImportWD.Margin = new Thickness(225, 0, 0, 0);
-            }
-            else
-            {
-                TextTypeImport.Text = "Nhập danh sách";
-                TextTypeImport.Tag = "NhapDanhSach";
-                ImportButton.Visibility = Visibility.Visible;
-                DoubleAnimation animation = new DoubleAnimation(450, TimeSpan.FromSeconds(0.2));
-                MainWindow.BeginAnimation(Border.WidthProperty, animation);
-                FurnitureImportWD.BeginAnimation(Border.WidthProperty, animation);
-                FurnitureImportWD.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                FurnitureImportWD.Margin = new Thickness(0, 0, 0, 0);
-            }
-        }
     }
 }

@@ -55,24 +55,40 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Search:Search 
+                    x:Name="SearchBox"
                         Width="350" Height="38"
                         FontSize="14"
                         IconSize="18"
                         Corner="10"
                         Margin="0 0 38 0"
                         IndicatorBrush="{StaticResource LightBlue_Search}"
+                        SearchTextChange="Search_SearchTextChange"
                     />
-                <Rectangle Width="205" Height="38" RadiusX="10" RadiusY="10" Fill="White">
-                    <Rectangle.Effect>
-                        <DropShadowEffect
-                            BlurRadius="10"
-                            Color="Black"
-                            ShadowDepth="4"
-                            Opacity=".25"
-                            Direction="270"
-                        />
-                    </Rectangle.Effect>
-                </Rectangle>
+                <StackPanel Width="205" Height="38" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
+                    <Border CornerRadius="10" Width="173" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="10"
+                                Color="Black"
+                                ShadowDepth="4"
+                                Opacity=".25"
+                                Direction="270"
+                            />
+                        </Border.Effect>
+                        <ComboBox Background="Transparent" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" ItemsSource="{Binding CurrentListFurnitureType}" SelectedItem="{Binding SelectedItemFilter}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionFilterChangeCM}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ComboBoxItem Content="Tất cả" IsSelected="True" Tag="All"/>
+                            <ComboBoxItem Content="Đồ ăn"  Tag="Food"/>
+                            <ComboBoxItem Content="Nước uống" Tag="Drink"/>
+                        </ComboBox>
+
+                    </Border>
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -82,6 +98,11 @@
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
                         <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Dịch vụ khác" FontSize="15" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
                     </StackPanel>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenOtherServiceCM}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Grid>
                 <Rectangle Width="45" Height="46" Fill="Transparent"/>
                 <StackPanel Orientation="Horizontal" Margin="0 -6 0 0">
@@ -94,7 +115,7 @@
                     >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenAddFoodCM}" />
+                                <i:InvokeCommandAction Command="{Binding OpenImportFoodCM}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <Rectangle
@@ -141,7 +162,7 @@
                     >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenImportFoodCM}" />
+                                <i:InvokeCommandAction Command="{Binding OpenAddFoodCM}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <Rectangle
@@ -184,7 +205,9 @@
 
         <!--Content-->
         <Grid x:Name="ContentItems" Grid.Row="1" Margin="14 10 14 10">
-            <ListBox Name="ListViewProducts" ItemsSource="{Binding Furnitures}" HorizontalAlignment="Stretch" Width="{Binding WidthItem, Mode=OneWayToSource}" 
+            <ListBox Name="ListViewProducts" ItemsSource="{Binding ProductList}" HorizontalAlignment="Stretch" 
+                     SelectedItem="{Binding SelectedProduct}"
+                     VerticalAlignment="Top"
                      materialDesign:ListBoxItemAssist.ShowSelection="False">
                 <ListBox.Resources>
                     <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
@@ -252,6 +275,11 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Border.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding ElementName=ListViewProducts, Path=DataContext.OpenEditWindowCM}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                                 <materialDesign:PackIcon Kind="Pencil" HorizontalAlignment="Center" VerticalAlignment="Center" Width="18" Height="18"/>
                                             </Border>
                                             <Border x:Name="RemoveButton" Cursor="Hand" CornerRadius="30" Width="30" Height="30" Margin="0,5,0,0" BorderThickness="0.5" BorderBrush="Black">
@@ -274,6 +302,11 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Border.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding ElementName=ListViewProducts, Path=DataContext.DeleteProductCM}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
                                                 <materialDesign:PackIcon Kind="Trash" HorizontalAlignment="Center" VerticalAlignment="Center" Width="18" Height="18"/>
                                             </Border>
                                         </StackPanel>
@@ -295,21 +328,21 @@
                                                 />
                                             </Border.Effect>
                                             <Border.Background>
-                                                <ImageBrush ImageSource="{StaticResource Giuong}" Stretch="UniformToFill">
+                                                <ImageBrush ImageSource="{Binding ServiceAvatar}" Stretch="UniformToFill">
 
                                                 </ImageBrush>
                                             </Border.Background>
                                         </Border>
                                     </Grid>
                                     <StackPanel HorizontalAlignment="Center" Margin="0 5 0 0">
-                                        <TextBlock Text="Popcorn" FontSize="23" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding ServiceName}" FontSize="23" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" HorizontalAlignment="Left"/>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 6">
                                             <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="Số lượng: " ></TextBlock>
-                                            <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="56" ></TextBlock>
+                                            <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="{Binding Quantity}" ></TextBlock>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="Giá: " ></TextBlock>
-                                            <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="10,000đ"></TextBlock>
+                                            <TextBlock FontSize="15" FontWeight="Regular" HorizontalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Text="{Binding ServicePrice}"></TextBlock>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
@@ -319,6 +352,37 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+        </Grid>
+
+        <!--LoadBar-->
+        <Grid
+            Grid.RowSpan="2"
+            Background="Transparent"
+            VerticalAlignment="Stretch"
+        >
+            <ProgressBar
+                IsIndeterminate="{Binding IsLoadding}"
+                BorderThickness="0"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0"
+                x:Name="load"
+                Height="3" 
+                Background="{StaticResource PrimaryBackgroundColor}"
+            />
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility"
+                        Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=load,Path=IsIndeterminate}"
+                                    Value="True">
+                            <Setter Property="Visibility"
+                                Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </Grid.Style>
         </Grid>
     </Grid>
 </Page>

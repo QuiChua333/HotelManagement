@@ -4,16 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.ServiceManagement"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        x:Name="EditCleanServiceWD" Height="270" Width="280"
+        x:Name="EditCleanServiceWD" Height="220" Width="280"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         MouseDown="EditCleanServiceWD_MouseDown"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource ServiceManagementVM}"
+        
 >
 
-    <Grid Height="260" Width="270">
+    <Grid Height="210" Width="270">
         <Border CornerRadius="5" BorderThickness="0.3" BorderBrush="Black" Background="White">
             <Border.Effect>
                 <DropShadowEffect
@@ -38,35 +42,24 @@
                 </Grid>
                 <Grid Name="Content" VerticalAlignment="Top" Margin="0 0 0 0" Grid.Row="1">
                     <Grid>
-                        <Border Margin="0 0 0 0" HorizontalAlignment="Center" Height="160" CornerRadius="4" Padding="0 10 0 0">
+                        <Border Margin="0 0 0 0" HorizontalAlignment="Center" Height="100" CornerRadius="4" Padding="0 10 0 0">
                             <Grid HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="140"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Padding="0 0 0 3" Text="Tên dịch vụ: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14" Grid.ColumnSpan="2"/>
-                                <TextBox Grid.Column="2" VerticalAlignment="Center" Text="Vệ sinh" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                <TextBlock  Grid.Column="2" VerticalAlignment="Center" Text="{Binding ServiceCache.ServiceName}" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
                                 <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Padding="0 0 0 3" Text="Loại: " Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14" Grid.ColumnSpan="2"/>
-                                <ComboBox Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Padding="0" Text="Vệ sinh" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding ServiceCache.ServiceType}" VerticalAlignment="Center" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Giá: " Padding="0 5 0 0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14" Grid.ColumnSpan="2"/>
-                                <StackPanel Grid.Column="2" Grid.Row="2" Margin="0 3 0 0">
-                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
-                                        <TextBox Text="20000đ" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Text="/ Thường" Height="20" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 4">
-                                        <TextBox Text="20000đ" Margin="0 0 0 3" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Text="/ VIP" Height="20" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBox Text="20000đ" Margin="0 0 0 3" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                        <TextBlock Text="/ Thương gia" Height="20" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
-                                    </StackPanel>
+                                <StackPanel Grid.Column="1" Grid.Row="2" Margin="0 3 0 0">
+                                <TextBox Text="{Binding ServiceCache.ServicePrice}" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
                                 </StackPanel>
                             </Grid>
 
@@ -75,7 +68,7 @@
                     </Grid>
                 </Grid>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 0 25 20" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                    <Button Name="CloseButton" Cursor="Hand" Margin="0 0 10 0" Width="60" Height="32" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
+                    <Button Name="CloseButton" Click="CloseButton_Click" Cursor="Hand" Margin="0 0 10 0" Width="60" Height="32" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="Transparent"/>
@@ -132,8 +125,12 @@
                             </Style>
 
                         </Button.Style>
-
-                        <TextBlock Text="Thêm" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding SaveEditOtherServiceCM}" CommandParameter="{Binding ElementName=EditCleanServiceWD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="Lưu" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
                     </Button>
                 </StackPanel>
             </Grid>

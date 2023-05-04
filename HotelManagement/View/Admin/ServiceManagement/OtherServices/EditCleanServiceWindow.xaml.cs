@@ -33,5 +33,10 @@ namespace HotelManagement.View.Admin.ServiceManagement.OtherServices
         {
             Close();
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

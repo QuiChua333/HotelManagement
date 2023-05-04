@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
+using HotelManagement.Utils;
 using HotelManagement.View.Staff.TroubleReport;
 using System;
 using System.Collections.Generic;

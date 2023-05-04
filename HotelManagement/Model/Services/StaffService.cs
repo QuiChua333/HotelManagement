@@ -26,7 +26,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    staffList = (from s in context.Staff
+                    staffList = (from s in context.Staffs
                                     where s.IsDeleted == false
                                     select new StaffDTO
                                     {
@@ -59,18 +59,18 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    bool isCccdExist = await context.Staff.AnyAsync(s => staff.CCCD == s.CCCD);
+                    bool isCccdExist = await context.Staffs.AnyAsync(s => staff.CCCD == s.CCCD);
                     if (isCccdExist) return (false, "CCCD đã tồn tại!", null);
-                    bool IsphoneExist = await context.Staff.AnyAsync(s => staff.PhoneNumber == s.PhoneNumber);
+                    bool IsphoneExist = await context.Staffs.AnyAsync(s => staff.PhoneNumber == s.PhoneNumber);
                     if (IsphoneExist) return (false, "Số điện thoại đã tồn tại!", null);
-                    bool IsUserNameExist = await context.Staff.AnyAsync(s => staff.Username == s.Username);
+                    bool IsUserNameExist = await context.Staffs.AnyAsync(s => staff.Username == s.Username);
                     if (IsUserNameExist) return (false, "Tên đăng nhập đã tồn tại!", null);
                     if(staff.Email != null)
                     {
-                        bool IsemailExist = await context.Staff.AnyAsync(s => staff.Email == s.Email);
+                        bool IsemailExist = await context.Staffs.AnyAsync(s => staff.Email == s.Email);
                         if (IsemailExist) return (false, "Email đã được đăng ký!", null);
                     }
-                    var maxId = await context.Staff.MaxAsync(s => s.StaffId);
+                    var maxId = await context.Staffs.MaxAsync(s => s.StaffId);
 
                     Staff newstaff = new Staff();
                     newstaff.StaffId = CreateNextStaffId(maxId);
@@ -89,7 +89,7 @@ namespace HotelManagement.Model.Services
                     newstaff.IsDeleted = false;
 
                     staff.StaffId = newstaff.StaffId;
-                    context.Staff.Add(newstaff);
+                    context.Staffs.Add(newstaff);
                     await context.SaveChangesAsync();
                 }
             }
@@ -109,18 +109,18 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    bool isCccdExist = await context.Staff.AnyAsync(s => staff.StaffId!=s.StaffId && staff.CCCD == s.CCCD);
+                    bool isCccdExist = await context.Staffs.AnyAsync(s => staff.StaffId!=s.StaffId && staff.CCCD == s.CCCD);
                     if (isCccdExist) return (false, "CCCD đã tồn tại!");
-                    bool IsphoneExist = await context.Staff.AnyAsync(s => staff.StaffId != s.StaffId && staff.PhoneNumber == s.PhoneNumber);
+                    bool IsphoneExist = await context.Staffs.AnyAsync(s => staff.StaffId != s.StaffId && staff.PhoneNumber == s.PhoneNumber);
                     if (IsphoneExist) return (false, "Số điện thoại đã tồn tại!");
-                    bool IsUserNameExist = await context.Staff.AnyAsync(s => staff.StaffId != s.StaffId && staff.Username == s.Username);
+                    bool IsUserNameExist = await context.Staffs.AnyAsync(s => staff.StaffId != s.StaffId && staff.Username == s.Username);
                     if (IsUserNameExist) return (false, "Tên đăng nhập đã tồn tại!");
                     if (staff.Email != null)
                     {
-                        bool IsemailExist = await context.Staff.AnyAsync(s => staff.StaffId != s.StaffId && staff.Email == s.Email);
+                        bool IsemailExist = await context.Staffs.AnyAsync(s => staff.StaffId != s.StaffId && staff.Email == s.Email);
                         if (IsemailExist) return (false, "Email đã được đăng ký!");
                     }
-                    var selectStaff = await context.Staff.FindAsync(staff.StaffId);
+                    var selectStaff = await context.Staffs.FindAsync(staff.StaffId);
                     selectStaff.StaffName= staff.StaffName;
                     selectStaff.PhoneNumber= staff.PhoneNumber;
                     selectStaff.StaffAddress = staff.StaffAddress;
@@ -152,7 +152,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    Staff selectedStaff = await (from s in context.Staff
+                    Staff selectedStaff = await (from s in context.Staffs
                                                   where s.StaffId == id && s.IsDeleted == false
                                                   select s).FirstOrDefaultAsync();
                     if (selectedStaff is null || selectedStaff.IsDeleted == true)
@@ -181,7 +181,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    var selectStaff = await context.Staff.FindAsync(staffid);
+                    var selectStaff = await context.Staffs.FindAsync(staffid);
                     selectStaff.Password=pass;
 
                     await context.SaveChangesAsync();
@@ -204,7 +204,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    var staff = await (from s in context.Staff
+                    var staff = await (from s in context.Staffs
                                        where (username == s.Username || username == s.Email) && password == s.Password
                                        select new StaffDTO
                                        {
