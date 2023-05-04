@@ -17,16 +17,20 @@ namespace HotelManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Service()
         {
-            this.ServiceUsing = new HashSet<ServiceUsing>();
+            this.GoodsReceipts = new HashSet<GoodsReceipt>();
+            this.ServiceUsings = new HashSet<ServiceUsing>();
         }
     
         public string ServiceId { get; set; }
         public string ServiceName { get; set; }
         public string ServiceType { get; set; }
         public Nullable<double> ServicePrice { get; set; }
+        public byte[] ServiceAvatar { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
         public virtual GoodsStorage GoodsStorage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceUsing> ServiceUsing { get; set; }
+        public virtual ICollection<ServiceUsing> ServiceUsings { get; set; }
     }
 }

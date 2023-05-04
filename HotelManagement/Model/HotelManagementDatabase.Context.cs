@@ -25,22 +25,23 @@ namespace HotelManagement.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bill> Bill { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Furniture> Furniture { get; set; }
-        public virtual DbSet<FurnitureReceipt> FurnitureReceipt { get; set; }
-        public virtual DbSet<FurnitureStorage> FurnitureStorage { get; set; }
-        public virtual DbSet<GoodsStorage> GoodsStorage { get; set; }
-        public virtual DbSet<RentalContract> RentalContract { get; set; }
-        public virtual DbSet<Review> Review { get; set; }
-        public virtual DbSet<Room> Room { get; set; }
-        public virtual DbSet<RoomCustomer> RoomCustomer { get; set; }
-        public virtual DbSet<RoomFurnituresDetail> RoomFurnituresDetail { get; set; }
-        public virtual DbSet<RoomType> RoomType { get; set; }
-        public virtual DbSet<Service> Service { get; set; }
-        public virtual DbSet<ServiceUsing> ServiceUsing { get; set; }
-        public virtual DbSet<Staff> Staff { get; set; }
-        public virtual DbSet<Trouble> Trouble { get; set; }
-        public virtual DbSet<TroubleByCustomer> TroubleByCustomer { get; set; }
+        public virtual DbSet<Bill> Bills { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Furniture> Furnitures { get; set; }
+        public virtual DbSet<FurnitureReceipt> FurnitureReceipts { get; set; }
+        public virtual DbSet<FurnitureStorage> FurnitureStorages { get; set; }
+        public virtual DbSet<GoodsReceipt> GoodsReceipts { get; set; }
+        public virtual DbSet<GoodsStorage> GoodsStorages { get; set; }
+        public virtual DbSet<RentalContract> RentalContracts { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<RoomCustomer> RoomCustomers { get; set; }
+        public virtual DbSet<RoomFurnituresDetail> RoomFurnituresDetails { get; set; }
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<ServiceUsing> ServiceUsings { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
+        public virtual DbSet<Trouble> Troubles { get; set; }
+        public virtual DbSet<TroubleByCustomer> TroubleByCustomers { get; set; }
     }
 }
