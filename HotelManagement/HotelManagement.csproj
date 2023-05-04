@@ -236,6 +236,7 @@
     </Compile>
     <Compile Include="Model\Services\BillService.cs" />
     <Compile Include="Model\Services\RoomCustomerService.cs" />
+    <Compile Include="Model\Services\BookingRoomService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\Services\ServiceUsingHelper.cs" />
     <Compile Include="Model\ServiceUsing.cs">
@@ -252,13 +253,13 @@
     </Compile>
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
+    <Compile Include="ViewModel\BookingRoomManagementVM\BookingVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
-    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
-    <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="DTOs\RentalContractDTO.cs" />
     <Compile Include="DTOs\RoomCustomerDTO.cs" />
     <Compile Include="DTOs\RoomSettingDTO.cs" />
@@ -276,9 +277,7 @@
     <Compile Include="Utilities\Helper.cs" />
     <Compile Include="Utilities\RegexUtilities.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\AddCustomerVM.cs" />
-    <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\EditCustomerVM.cs" />
-    <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\AddNewRoomVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\EditRoomVM.cs" />
     <Compile Include="DTOs\FurnitureDTO.cs" />
@@ -292,24 +291,18 @@
     <Compile Include="ViewModel\AdminVM\FurnitureManagementVM\ImportFurnitureVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureImportVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureInfoVM.cs" />
-    <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\EditRoomTypeVM.cs" />
-    <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\AddStaffVM.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\ChangePassCM.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\EditStaffVM.cs" />
-    <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\ServiceManagementVM\EditServiceManagement.cs" />
     <Compile Include="ViewModel\AdminVM\ServiceManagementVM\ImportServiceVM.cs" />
-    <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\TroubleManagementVM\EditConverter.cs" />
-    <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
-    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\LoginVM\ForgotPassVM.cs" />
     <Compile Include="ViewModel\LoginVM\LoginVM.cs" />
-    <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="Utils\Constants.cs" />
+    <Compile Include="ViewModel\SettingVM\SettingVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomCatalogManagementVM.cs" />
     <Compile Include="ViewModel\StaffVM\TroubleReportVM\AddTroubleReportVM.cs" />
     <Compile Include="ViewModel\StaffVM\TroubleReportVM\EditConverter.cs" />

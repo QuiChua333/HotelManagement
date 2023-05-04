@@ -15,12 +15,12 @@ using HotelManagement.Utils;
 namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
 {
     public partial class CustomerManagementVM : BaseVM
-    {           
+    {
         private ObservableCollection<CustomerDTO> _customerList;
         public ObservableCollection<CustomerDTO> CustomerList
         {
             get { return _customerList; }
-            set { _customerList = value;  OnPropertyChanged(); }
+            set { _customerList = value; OnPropertyChanged(); }
         }
         private CustomerDTO _selectedItem;
         public CustomerDTO SelectedItem
@@ -51,7 +51,7 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
         {
             get { return _phonenumber; }
             set
-            { _phonenumber = value; OnPropertyChanged();}
+            { _phonenumber = value; OnPropertyChanged(); }
         }
         private string _email;
         public string Email
@@ -64,7 +64,7 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
         {
             get { return _cccd; }
             set
-            { _cccd = value;OnPropertyChanged();}
+            { _cccd = value; OnPropertyChanged(); }
         }
         private Nullable<System.DateTime> _birthday;
         public Nullable<System.DateTime> Birthday
@@ -73,7 +73,7 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
             set { _birthday = value; OnPropertyChanged(); }
         }
         private ComboBoxItem _gender;
-        public ComboBoxItem Gender 
+        public ComboBoxItem Gender
         {
             get { return _gender; }
             set { _gender = value; OnPropertyChanged(); }
@@ -100,10 +100,10 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
         public ICommand DeleteCustomerCM { get; set; }
         public CustomerManagementVM()
         {
-            
-            FirstLoadCM = new RelayCommand<object>((p) => { return true; } , async (p) =>
+
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                CustomerList = new ObservableCollection<CustomerDTO>(await Task.Run(()=> CustomerService.Ins.GetAllCustomer()));
+                CustomerList = new ObservableCollection<CustomerDTO>(await Task.Run(() => CustomerService.Ins.GetAllCustomer()));
             });
             OpenAddCustomerCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
@@ -117,18 +117,18 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
                 Reload();
                 IsSaving = false;
             });
-            OpenEditCustomerCM = new RelayCommand<object>((p) => {return true; }, async (p) =>
+            OpenEditCustomerCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 EditCustomerWindow wd = new EditCustomerWindow();
                 ResetData();
-                FullName=SelectedItem.CustomerName;
+                FullName = SelectedItem.CustomerName;
                 Phonenumber = SelectedItem.PhoneNumber;
                 Email = SelectedItem.Email;
-                Cccd = SelectedItem.CCCD;                
+                Cccd = SelectedItem.CCCD;
                 Address = SelectedItem.CustomerAddress;
                 CustomerId = SelectedItem.CustomerId;
                 wd.birthday.Text = SelectedItem.DateOfBirth.ToString();
-                wd.Gender.Text=SelectedItem.Gender;
+                wd.Gender.Text = SelectedItem.Gender;
                 wd.custype.Text = SelectedItem.CustomerType;
                 wd.ShowDialog();
             });
@@ -141,7 +141,7 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
             });
             DeleteCustomerCM = new RelayCommand<Window>(p => true, async p =>
             {
-                var kq=  CustomMessageBox.ShowOkCancel("Bạn có chắc muốn xoá khách hàng này không?", "Cảnh báo", "OK", "Cancel", CustomMessageBoxImage.Warning);
+                var kq = CustomMessageBox.ShowOkCancel("Bạn có chắc muốn xoá khách hàng này không?", "Cảnh báo", "OK", "Cancel", CustomMessageBoxImage.Warning);
                 if (kq == CustomMessageBoxResult.OK)
                 {
                     (bool issucced, string mess) = await CustomerService.Ins.DeleteCustomer(SelectedItem.CustomerId);
@@ -156,7 +156,7 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
             });
         }
 
-       private void LoadCustomerList(Operation oper, CustomerDTO cus = null)
+        private void LoadCustomerList(Operation oper, CustomerDTO cus = null)
         {
             switch (oper)
             {
@@ -164,11 +164,11 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
                     CustomerList.Add(cus);
                     break;
                 case Operation.UPDATE:
-                    var updcus = CustomerList.FirstOrDefault(s=> s.CustomerId == cus.CustomerId);
+                    var updcus = CustomerList.FirstOrDefault(s => s.CustomerId == cus.CustomerId);
                     CustomerList[CustomerList.IndexOf(updcus)] = cus;
                     break;
                 case Operation.DELETE:
-                    for ( int i=0; i< CustomerList.Count(); i++)
+                    for (int i = 0; i < CustomerList.Count(); i++)
                     {
                         if (CustomerList[i].CustomerId == SelectedItem.CustomerId)
                         {

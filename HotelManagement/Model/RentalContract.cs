@@ -27,6 +27,7 @@ namespace HotelManagement.Model
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.TimeSpan> StartTime { get; set; }
         public Nullable<System.DateTime> CheckOutDate { get; set; }
+        public Nullable<int> PersonNumber { get; set; }
         public string StaffId { get; set; }
         public string CustomerId { get; set; }
         public string RoomId { get; set; }

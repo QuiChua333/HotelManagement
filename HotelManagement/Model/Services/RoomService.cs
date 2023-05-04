@@ -226,7 +226,7 @@ namespace HotelManagement.Model.Services
                                               Note = r.Note,
                                               RoomStatus = r.RoomStatus,
                                               RoomCleaningStatus = r.RoomCleaningStatus,
-                                              Price = t.Price,
+                                              Price = (double)t.Price,
                                           }
                                           ).ToListAsync();
                     return roomList;

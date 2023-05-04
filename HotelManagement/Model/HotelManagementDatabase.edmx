@@ -86,6 +86,7 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="StartTime" Type="time" Precision="7" />
           <Property Name="CheckOutDate" Type="datetime" />
+          <Property Name="PersonNumber" Type="int" />
           <Property Name="StaffId" Type="varchar" MaxLength="10" />
           <Property Name="CustomerId" Type="varchar" MaxLength="10" />
           <Property Name="RoomId" Type="varchar" MaxLength="10" />
@@ -643,6 +644,7 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="StartTime" Type="Time" Precision="7" />
           <Property Name="CheckOutDate" Type="DateTime" Precision="3" />
+          <Property Name="PersonNumber" Type="Int32" />
           <Property Name="StaffId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CustomerId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="RoomId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -1223,6 +1225,7 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+                <ScalarProperty Name="PersonNumber" ColumnName="PersonNumber" />
                 <ScalarProperty Name="StaffId" ColumnName="StaffId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />

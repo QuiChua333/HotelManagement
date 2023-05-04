@@ -25,6 +25,14 @@ namespace HotelManagement.ViewModel.AdminVM
             get { return _staffname; }
             set { _staffname = value; OnPropertyChanged(); }
         }
+
+        private string _StaffId;
+        public string StaffId
+        {
+            get { return _StaffId; }
+            set { _StaffId = value; OnPropertyChanged(); }
+        }
+
         private ImageSource _staffimgsource;
         public ImageSource Staffimgsource
         {
@@ -85,6 +93,11 @@ namespace HotelManagement.ViewModel.AdminVM
             HistoryCommand=new RelayCommand(History);
             TroubleCommand=new RelayCommand(Trouble);
             RoomCatalogCommand = new RelayCommand(RoomCatalog);
+            FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                StaffName = CurrentStaff.StaffName;
+                StaffId = CurrentStaff.StaffId;
+            });
         }
     }
 }

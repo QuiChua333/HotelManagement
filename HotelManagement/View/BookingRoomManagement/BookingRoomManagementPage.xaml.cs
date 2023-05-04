@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitMiracle.LibTiff.Classic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,15 @@ namespace HotelManagement.View.BookingRoomManagement
         {
             InitializeComponent();
         }
+        //private void Search_SearchTextChange(object sender, EventArgs e)
+        //{
+        //    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BookingRoomListView.ItemsSource);
+        //    if (view != null)
+        //    {
+        //        view.Filter = Filter;
+        //        result.Content = BookingRoomListView.Items.Count;
+        //        CollectionViewSource.GetDefaultView(BookingRoomListView.ItemsSource).Refresh();
+        //    }
+        //}
     }
 }

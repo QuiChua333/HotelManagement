@@ -16,7 +16,7 @@ using HotelManagement.Utils;
 
 namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
 {
-    public partial class RoomTypeManagementVM:BaseVM
+    public partial class RoomTypeManagementVM : BaseVM
     {
         private string _roomTypeID;
         public string RoomTypeID
@@ -84,7 +84,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
         public ICommand SaveRoomTypeCM { get; set; }
         public ICommand UpdateRoomTypeCM { get; set; }
 
-        public RoomTypeManagementVM() 
+        public RoomTypeManagementVM()
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {

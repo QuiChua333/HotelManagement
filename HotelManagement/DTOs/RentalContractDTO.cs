@@ -13,9 +13,20 @@ namespace HotelManagement.DTOs
         public Nullable<System.TimeSpan> StartTime { get; set; }
         public Nullable<System.DateTime> CheckOutDate { get; set; }
         public string StaffId { get; set; }
+        public string StaffName { get; set; }
         public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public string RoomId { get; set; }
         public Nullable<bool> Validated { get; set; }
+        public int PersonNumber { get; set; }
         public IList<CustomerDTO> CustomersOfRoom { get; set; }
+        public string StartDateStr
+        {
+            get { return ((DateTime)StartDate).ToString("dd/MM/yyyy");}
+        }
+        public string CheckOutDateStr
+        {
+            get { return ((DateTime)CheckOutDate).ToString("dd/MM/yyyy"); }
+        }
     }
 }
