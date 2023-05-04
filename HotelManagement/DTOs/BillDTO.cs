@@ -16,5 +16,6 @@ namespace HotelManagement.DTOs
         public Nullable<double> TotalPrice { get; set; }
         public Nullable<double> DiscountPrice { get; set; }
         public Nullable<double> Price { get; set; }
+        
     }
 }

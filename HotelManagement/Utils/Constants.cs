@@ -41,4 +41,10 @@ namespace HotelManagement.Utils
     {
         public static readonly int TIME_EXPIRED = 10;
     }
+    public class ROOM_INFO
+    {
+        public static readonly int PERSON_NUMBER = 3;
+
+    }
+
 }

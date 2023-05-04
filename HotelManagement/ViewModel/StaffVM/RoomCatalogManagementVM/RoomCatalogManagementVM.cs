@@ -541,6 +541,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
             LoadAddCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                if (ListCustomer.Count == ROOM_INFO.PERSON_NUMBER)
+                {
+                    CustomMessageBox.ShowOk("Lượng khách trong phòng đã đạt tối đa!","Thông báo","Ok",CustomMessageBoxImage.Error);
+                    return;
+                }
                 AddCusWindow wd = new AddCusWindow();
                 wd.tbName.Text= string.Empty;
                 wd.tbAddress.Text= string.Empty;
@@ -628,7 +633,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-
+                await Payment();
             });
 
         }

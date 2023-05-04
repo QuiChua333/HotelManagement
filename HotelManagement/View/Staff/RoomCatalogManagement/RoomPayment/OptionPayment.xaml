@@ -96,7 +96,8 @@
                            Foreground="#000000"
                            FontSize="16"
                            FontFamily="{DynamicResource MaterialDesignFont}"/>
-                    <TextBlock Text="Nguyễn Văn Phát"
+                    <TextBlock Text=""
+                               x:Name="lbCustomerName"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left"
@@ -107,7 +108,7 @@
                 </Grid>
                 <Grid Grid.Row="1" Margin="8,0,0,10">
                     <ListBox            ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                        ItemsSource="{Binding ListSeat1}"
+                                        ItemsSource="{Binding ListRoomByCustomer}"
                                          x:Name="SeatListBox1"
                                          VerticalAlignment="Center"
                                          Margin="20,0,20,0"
@@ -126,13 +127,13 @@
                             <DataTemplate>
                                 <Grid>
                                     <CheckBox Style="{StaticResource myCheckboxStyle}" 
-                                                VerticalAlignment="Center" 
+                                              VerticalAlignment="Center" 
                                               Cursor="Hand"
                                               HorizontalAlignment="Left">
 
                                     </CheckBox>
                                     <Label VerticalAlignment="Center"
-                                       Content="Phòng P1.02"
+                                       Content="{Binding }"
                                        Margin="25,0,0,0"
                                        FontWeight="Medium"
                                        Foreground="#000000"
