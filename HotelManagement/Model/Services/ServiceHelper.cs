@@ -238,6 +238,41 @@ namespace HotelManagement.Model.Services
                 return null;
             }
         }
+
+        public async Task<(bool, string, List<ServiceDTO>)> GetAllProduct()
+        {
+            try
+            {
+                List<ServiceDTO> listProduct = new List<ServiceDTO>();
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    listProduct = await (
+                        from p in db.Services
+                        where p.ServiceType != "Vệ sinh"
+                        select new ServiceDTO
+                        {
+                            ServiceId = p.ServiceId,
+                            ServiceName = p.ServiceName,
+                            ServiceAvatarData = p.ServiceAvatar,
+                            ServiceType = p.ServiceType,
+                            Quantity = (int)p.GoodsStorage.QuantityService,
+                            ServicePrice = (double)p.ServicePrice,
+                        }
+                    ).ToListAsync();
+                    listProduct.ForEach(item => item.SetAvatar());
+                }
+
+                return (true, "Thành công", listProduct);
+            }
+            catch (EntityException e)
+            {
+                return (false, "Mất kết nối cơ sở dữ liệu", null);
+            }
+            catch (Exception ex)
+            {
+                return (false, "Lỗi hệ thống", null);
+            }
+        }
         public async Task<ServiceDTO> GetCleaningService()
         {
             try

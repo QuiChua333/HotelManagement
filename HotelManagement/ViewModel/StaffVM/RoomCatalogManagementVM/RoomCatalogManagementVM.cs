@@ -190,6 +190,17 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand ConfirmCleaningServiceCM { get; set; }
         public ICommand ConfirmLaundryServiceCM { get; set; }
         public ICommand PaymentCM { get; set; }
+
+        // Đặt sản phẩm
+        public ICommand FirstLoadOrderProductPage { get; set; }
+        public ICommand SelectionFilterChangeCM { get; set; }
+        public ICommand SelectedProductToBillCM { get; set; }
+        public ICommand DecreaseQuantityOrderItemCM { get; set; }
+        public ICommand IncreaseQuantityOrderItemCM { get; set; }
+        public ICommand DeleteItemInBillStackCM { get; set; }
+        public ICommand CloseOrderProductWindowCM { get; set; }
+        public ICommand AddOrderProductCM { get; set; }
+
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
@@ -630,7 +641,75 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             {
 
             });
+            FirstLoadOrderProductPage = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                IsLoad = true;
 
+                await LoadAllProduct();
+
+                IsLoad = false;
+            });
+            SelectionFilterChangeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItemFilter != null)
+                {
+                    if (SelectedItemFilter.Tag.ToString() == "All")
+                        ProductList = new ObservableCollection<ServiceDTO>(AllProducts);
+                    else
+                        ProductList = new ObservableCollection<ServiceDTO>(ServiceHelper.Ins.GetAllServiceByType(SelectedItemFilter.Content.ToString(), AllProducts));
+                }
+            });
+
+            SelectedProductToBillCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    LoadProductToBill();
+                }
+            });
+
+            DecreaseQuantityOrderItemCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    DecreaseProductInBill();
+                }
+            });
+
+            IncreaseQuantityOrderItemCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    IncreaseProductInBill();
+                }
+            });
+
+            DeleteItemInBillStackCM = new RelayCommand<ListBox>((p) => { return true; }, (p) => 
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    DeleteProductInBill();
+                }
+            });
+
+            CloseOrderProductWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                OrderList = null;
+                p.Close();
+            });
+
+            AddOrderProductCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                IsLoad = true;
+
+                await AddOrderProduct(p);
+
+                IsLoad = false;
+            });
         }
 
 
