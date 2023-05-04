@@ -12,7 +12,8 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         Name="ResetPassWD"
-        MouseLeftButtonDown="ResetPassWD_MouseLeftButtonDown">
+        MouseLeftButtonDown="ResetPassWD_MouseLeftButtonDown"
+        DataContext="{StaticResource SettingVM}">
     <Grid Width="340">
         <Grid.Style>
             <Style TargetType="Grid">

@@ -44,7 +44,7 @@
                     <StackPanel Margin="20 20 0 0">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Nhân viên: " FontSize="16" FontWeight="Regular" VerticalAlignment="Top" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding furnitureCache.FurnitureName}" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding StaffName}" FontSize="16" VerticalAlignment="Center" FontWeight="Regular" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Height="27" >
                             <TextBlock Text="Ngày tạo: " FontSize="16" FontWeight="Regular" VerticalAlignment="Center" FontFamily="{StaticResource MaterialDesignFont}" Foreground="#063538"></TextBlock>

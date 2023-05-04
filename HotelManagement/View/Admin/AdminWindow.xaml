@@ -88,7 +88,7 @@
                             <Border Height="40" Width="40"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center">
                                 <Ellipse>
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{StaticResource Logo}"/>
+                                        <ImageBrush ImageSource="{Binding Staffimgsource}"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
                             </Border>

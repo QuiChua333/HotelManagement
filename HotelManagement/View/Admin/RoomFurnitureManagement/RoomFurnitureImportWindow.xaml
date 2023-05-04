@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:Search="clr-namespace:HotelManagement.Components.Search"
         mc:Ignorable="d"
         x:Name="RoomFurnitureImportWD"
-        Height="632" Width="922"
+        Height="652" Width="922"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
@@ -34,7 +34,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid x:Name="MainWindow" Width="910" Height="620">
+    <Grid x:Name="MainWindow" Width="910" Height="640">
         <Border CornerRadius="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderThickness="0.3" BorderBrush="Black" Background="White">
             <Border.Effect>
                 <DropShadowEffect
@@ -96,7 +96,7 @@
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>
-                                <Border Padding="0 0 0 5" Margin="20 5 10 10" Background="White" BorderThickness="0.3" BorderBrush="Black" CornerRadius="10">
+                                <Border Padding="0 0 0 5" Margin="20 10 10 10" Background="White" BorderThickness="0.3" BorderBrush="Black" CornerRadius="10">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="430"/>
@@ -224,12 +224,12 @@
                             </StackPanel>
                         </Grid>
 
-                        <Rectangle Width="1" Fill="Gray" Opacity="0.5" Margin="0 10 0 70"/>
+                        <Rectangle Width="1" Fill="Gray" Opacity="0.5" Margin="0 75 0 70"/>
 
                         <Grid x:Name="AddMoreFurniture" Width="450">
                             <StackPanel Margin="0,26,0,0">
                                 <TextBlock Text="DANH SÁCH NHẬP" FontFamily="{StaticResource MaterialDesignFont}" FontSize="24" FontWeight="SemiBold" Margin="0 0 0 10" HorizontalAlignment="Center"/>
-                                <Border Padding="0 0 0 5" Margin="10 0 10 10" Background="White" BorderThickness="0.3" BorderBrush="Black" CornerRadius="10">
+                                <Border Padding="0 0 0 5" Margin="10 5 10 10" Background="White" BorderThickness="0.3" BorderBrush="Black" CornerRadius="10">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="430"/>
@@ -361,7 +361,7 @@
                                         </ListBox>
                                     </Grid>
                                 </Border>
-                                <StackPanel Orientation="Horizontal" Margin="0 0 20 20" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <StackPanel Orientation="Horizontal" Margin="0 10 20 20" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                     <Button  Cursor="Hand" Click="CloseButton2_Click" Margin="0 0 10 0" Width="60" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">

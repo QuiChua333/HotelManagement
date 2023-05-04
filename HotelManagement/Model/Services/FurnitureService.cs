@@ -134,15 +134,18 @@ namespace HotelManagement.Model.Services
                     {
                         return (false, "Đã có tiện nghi trong cơ sở dữ liệu", "-1");
                     }
-
-                    string ID;
-                    if (db.Furnitures.Count() != 0)
-                        ID = (int.Parse(db.Furnitures.ToList().Last().FurnitureId) + 1).ToString();
+                    int ID = db.Furnitures.ToList().Count();
+                    string mainID;
+                    if (ID == 0)
+                        mainID = "0001";
                     else
-                        ID = "1";
+                    {
+                        ID = int.Parse(db.Furnitures.ToList().Max(item => item.FurnitureId));
+                        mainID = getID(++ID);
+                    }
                     Furniture fnt = new Furniture
                     {
-                        FurnitureId = ID,
+                        FurnitureId = mainID,
                         FurnitureName = furnitureSelected.FurnitureName,
                         FurnitureType = furnitureSelected.FurnitureType,
                         FurnitureAvatar = furnitureSelected.FurnitureAvatarData,
@@ -155,7 +158,7 @@ namespace HotelManagement.Model.Services
                     db.Furnitures.Add(fnt);
                     db.FurnitureStorages.Add(furnitureStorage);
                     await db.SaveChangesAsync();
-                    return (true, "Thêm tiện nghi thành công", ID);
+                    return (true, "Thêm tiện nghi thành công", mainID);
                 }
             }
             catch (EntityException ex)
@@ -205,15 +208,19 @@ namespace HotelManagement.Model.Services
                     if (furniture == null)
                         return (false, "Không tìm thấy tiện nghi trong cơ sở dữ liệu");
 
-                    string ID;
-                    if (db.FurnitureReceipts.ToList().Count() == 0)
-                        ID = "1";
+                    int ID = db.FurnitureReceipts.ToList().Count();
+                    string mainID;
+                    if (ID == 0)
+                        mainID = "0001";
                     else
-                        ID = (int.Parse(db.FurnitureReceipts.ToList().Last().FurnitureReceiptId) + 1).ToString();
+                    {
+                        ID = int.Parse(db.FurnitureReceipts.ToList().Max(item => item.FurnitureReceiptId));
+                        mainID = getID(++ID);
+                    }
 
                     FurnitureReceipt furnitureReceipt = new FurnitureReceipt
                     {
-                        FurnitureReceiptId = ID,
+                        FurnitureReceiptId = mainID,
                         FurnitureId = furniture.FurnitureId,
                         ImportPrice = float.Parse(importPrice),
                         Quantity = int.Parse(importQuantity),
@@ -243,11 +250,14 @@ namespace HotelManagement.Model.Services
                 using (HotelManagementEntities db = new HotelManagementEntities())
                 {
                     int Length = orderList.Count;
-                    int ID;
-                    if (db.FurnitureReceipts.ToList().Count() == 0)
-                        ID = 1;
+                    int ID = db.FurnitureReceipts.ToList().Count();
+                    string mainID;
+                    if (ID == 0)
+                        mainID = "0001";
                     else
-                        ID = int.Parse(db.FurnitureReceipts.ToList().Last().FurnitureReceiptId);
+                    {
+                        ID = int.Parse(db.FurnitureReceipts.ToList().Max(item => item.FurnitureReceiptId));
+                    }
 
                     for (int i = 0; i < Length; i++)
                     {
@@ -256,11 +266,11 @@ namespace HotelManagement.Model.Services
                         if (furniture == null)
                             return (false, "Không tìm thấy tiện nghi " + furniture.FurnitureName + " trong cơ sở dữ liệu",null);
 
-                        ID++;
+                        mainID = getID(++ID);
 
                         FurnitureReceipt furnitureReceipt = new FurnitureReceipt
                         {
-                            FurnitureReceiptId = ID.ToString(),
+                            FurnitureReceiptId = mainID,
                             FurnitureId = furniture.FurnitureId,
                             ImportPrice = temp.ImportPrice,
                             Quantity = temp.ImportQuantity,
@@ -295,7 +305,17 @@ namespace HotelManagement.Model.Services
             _image.EndInit();
             return _image;
         }
+        public string getID(int id)
+        {
+            if (id < 10)
+                return "000" + id;
+            if (id < 100)
+                return "00" + id;
+            if (id < 1000)
+                return "0" + id;
 
+            return id.ToString();
+        }
         public BitmapImage LoadAvatarImage(byte[] data)
         {
             MemoryStream stream = new MemoryStream();

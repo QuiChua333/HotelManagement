@@ -78,7 +78,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
         public ICommand DecreaseQuantityOrderItem { get; set; }
         public ICommand DeleteItemInBillStackCM { get; set; }
         public ICommand DeleteItemInRoomFurnitureInfoCM { get; set; }
-        public ICommand OpenDeleteSelectionMode { get; set; }
 
         public RoomFurnitureManagementVM()
         {
@@ -149,6 +148,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             {
                 if (FurnituresRoomCache == null)
                     return;
+                ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>();
                 IsLoading = true;
 
                 await LoadFurniture();
@@ -173,7 +173,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 
                 RoomFurnitureImportWindow roomFurnitureImportWindow = new RoomFurnitureImportWindow();
 
-                roomFurnitureImportWindow.ShowDialog();
+                roomFurnitureImportWindow.Show();
 
                 IsLoading = false;
             });
@@ -200,6 +200,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 
                 IsLoading = false;
             });
+
             DecreaseQuantityOrderItem = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedFurniture == null)
@@ -281,9 +282,38 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 }
             });
 
-            OpenDeleteSelectionMode = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ChooseItemToListNeedDelete = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                MessageBox.Show("ok");
+                if (SelectedFurniture == null)
+                    return;
+                FurnitureCache = SelectedFurniture;
+                ListFurnitureNeedDelete.Add(FurnitureCache);
+            });
+
+            RemoveItemToListNeedDelete = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurniture == null)
+                    return;
+                FurnitureCache = SelectedFurniture;
+                ListFurnitureNeedDelete.Remove(FurnitureCache);
+            });
+
+            ChooseAllFurnitureToDeleteCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>(FurnituresRoomCache.ListFurnitureRoom);
+            });
+
+            DeleteListFurnitureCM = new RelayCommand<object>((p) => { return true; },async (p) =>
+            {
+                IsLoading = true;
+
+                await DeleteListFurniture();
+
+                IsLoading = false;
+            });
+            CloseDeleteControlCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                ListFurnitureNeedDelete.Clear();
             });
         }
     }

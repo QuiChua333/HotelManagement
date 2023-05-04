@@ -102,6 +102,8 @@ namespace HotelManagement.Model.Services
                    
         //            return listCustomer;
 
+                    //return listCustomer;
+                    return new List<RoomCustomerDTO>();
 
         //        }
         //    }

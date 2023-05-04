@@ -239,6 +239,7 @@
     <Compile Include="Model\Services\BookingRoomService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
     <Compile Include="Model\Services\ServiceUsingHelper.cs" />
+    <Compile Include="Model\Services\SettingService.cs" />
     <Compile Include="Model\ServiceUsing.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
@@ -260,6 +261,7 @@
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\BookingRoomManagementVM\BookingVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
+    <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RentalContractDTO.cs" />
     <Compile Include="DTOs\RoomCustomerDTO.cs" />
     <Compile Include="DTOs\RoomSettingDTO.cs" />
@@ -299,6 +301,7 @@
     <Compile Include="ViewModel\AdminVM\ServiceManagementVM\ImportServiceVM.cs" />
     <Compile Include="ViewModel\BookingRoomManagementVM\BookingRoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\TroubleManagementVM\EditConverter.cs" />
+    <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
     <Compile Include="ViewModel\LoginVM\ForgotPassVM.cs" />
     <Compile Include="ViewModel\LoginVM\LoginVM.cs" />
     <Compile Include="Utils\Constants.cs" />
@@ -367,6 +370,7 @@
     <Compile Include="View\HelpScreen\TermOfUse.xaml.cs">
       <DependentUpon>TermOfUse.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\LanguageManager.cs" />
     <Compile Include="View\Login\ChangePassPage.xaml.cs">
       <DependentUpon>ChangePassPage.xaml</DependentUpon>
     </Compile>
@@ -599,6 +603,14 @@
     <Page Include="Resources\Images\Images.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Languages\ResourceString.en-US.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Languages\ResourceString.vi-VN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\Button.xaml">
       <SubType>Designer</SubType>

@@ -77,7 +77,7 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand RoomCatalogCommand { get; set; }
         public AdminVM()
         {
-            _currentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM(); 
+            _currentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM();
 
             FurnitureCommand = new RelayCommand(Furniture);
             ServiceCommand = new RelayCommand(Service);
