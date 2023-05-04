@@ -1,7 +1,9 @@
 ﻿using HotelManagement.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +92,52 @@ namespace HotelManagement.Model.Services
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public async Task<(bool, string)> SaveUsingProduct(ObservableCollection<ServiceDTO> orderList, RoomSettingDTO selectedRoom)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    int length = orderList.Count();
+                    for(int i = 0; i < length; i++)
+                    {
+                        ServiceDTO s = orderList[i];
+                        ServiceUsing serviceUsing = await context.ServiceUsings.FirstOrDefaultAsync(item => item.ServiceId == s.ServiceId && item.RentalContractId == selectedRoom.RentalContractId) ;
+                        if (serviceUsing == null)
+                        {
+                            serviceUsing = new ServiceUsing
+                            {
+                                RentalContractId = selectedRoom.RentalContractId,
+                                ServiceId = s.ServiceId,
+                                UnitPrice = s.ServicePrice,
+                                Quantity = s.ImportQuantity,
+                            };
+                            context.ServiceUsings.Add(serviceUsing);
+                        }
+                        else
+                            serviceUsing.Quantity += s.ImportQuantity;
+
+                        GoodsStorage serviceStorage = await context.GoodsStorages.FirstOrDefaultAsync(item => item.ServiceId == s.ServiceId);
+                        if (serviceStorage == null)
+                            return (false, "Sản phẩm không tồn tại trong kho lưu trữ");
+                        else
+                            serviceStorage.QuantityService -= s.ImportQuantity;
+                    }
+
+                    await context.SaveChangesAsync();
+                    return (true, "Đặt sản phẩm thành công!");
+                }
+            }
+            catch(EntityException e)
+            {
+                return (false, "Mất kết nối cơ sở dữ liệu");
+            }
+            catch (Exception ex)
+            {
+                return (false, "Lỗi hệ thống!");
             }
         }
 
