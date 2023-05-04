@@ -89,6 +89,7 @@ namespace HotelManagement.Model.Services
                             FurnitureAvatarData = p.Furniture.FurnitureAvatar,
                             FurnitureType = p.Furniture.FurnitureType,
                             InUseQuantity = (int)p.Quantity,
+                            DeleteInRoomQuantity = (int)p.Quantity,
                         }
                     ).ToListAsync();
 
@@ -226,8 +227,12 @@ namespace HotelManagement.Model.Services
                         if (roomFurnituresDetail == null)
                             return (false, "Không tìm thấy thông tin trong cơ sở dữ liệu");
 
-                        db.RoomFurnituresDetails.Remove(roomFurnituresDetail);
+                        if (temp.DeleteInRoomQuantity == temp.InUseQuantity)
+                            db.RoomFurnituresDetails.Remove(roomFurnituresDetail);
+                        else
+                            roomFurnituresDetail.Quantity -= temp.DeleteInRoomQuantity;
                     }    
+
                     await db.SaveChangesAsync();
                     return (true, "Xóa tiện nghi thành công");
                 }

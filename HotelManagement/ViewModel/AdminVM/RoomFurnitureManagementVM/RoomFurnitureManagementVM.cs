@@ -173,7 +173,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 
                 RoomFurnitureImportWindow roomFurnitureImportWindow = new RoomFurnitureImportWindow();
 
-                roomFurnitureImportWindow.ShowDialog();
+                roomFurnitureImportWindow.Show();
 
                 IsLoading = false;
             });
@@ -200,6 +200,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 
                 IsLoading = false;
             });
+
             DecreaseQuantityOrderItem = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedFurniture == null)

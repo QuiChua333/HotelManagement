@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HotelManagement.View.Admin.RoomFurnitureManagement
 {
@@ -53,6 +55,7 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
         }
         DispatcherTimer timer2 = new DispatcherTimer();
         List<CheckBox> checkboxList = new List<CheckBox>();
+        List<StackPanel> stackPanelList = new List<StackPanel>();
 
         private void RoomFurnitureInfoWD_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -86,6 +89,8 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
             BottomDeleteControl.Visibility = Visibility.Collapsed;
             for (int i = 0; i < checkboxList.Count; i++)
                 checkboxList[i].IsChecked = false;
+            foreach (StackPanel item in stackPanelList)
+                item.Visibility = Visibility.Collapsed;
         }
 
         private void RoundBox_MouseUp(object sender, MouseButtonEventArgs e)
@@ -104,7 +109,7 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             for (int i = 0; i < checkboxList.Count; i++)
-                checkboxList[i].IsChecked = true ;
+                checkboxList[i].IsChecked = true;
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -112,6 +117,32 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
             ScrollViewer scv = (ScrollViewer)sender;
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
+        }
+
+        private void DeleteCountBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            stackPanelList.Add(sender as StackPanel);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            stackPanelList[checkboxList.IndexOf(sender as CheckBox)].Visibility = Visibility.Visible;
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            stackPanelList[checkboxList.IndexOf(sender as CheckBox)].Visibility = Visibility.Collapsed;
+        }
+
+        private void TextCountBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void DeleteText_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            checkboxList.ForEach(item => item.IsChecked = false);
         }
     }
 }

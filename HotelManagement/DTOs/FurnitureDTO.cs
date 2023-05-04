@@ -65,8 +65,14 @@ namespace HotelManagement.DTOs
 
         public string TotalImportPriceStr { get;  set; }
 
-        public int InUseQuantity { get; set; }
+        public int inUseQuantity;
+        public int InUseQuantity
+        {
+            get { return inUseQuantity; }
+            set { SetField(ref inUseQuantity, value, "InUseQuantity"); }
+        }
         public int TotalUseQuantity { get; set; }
+
         private int remainingQuantity;
         public int RemainingQuantity
         {
@@ -81,6 +87,12 @@ namespace HotelManagement.DTOs
             set { SetField(ref quantityImportRoom, value, "QuantityImportRoom"); }
         }
 
+        private int deleteInRoomQuantity;
+        public int DeleteInRoomQuantity
+        {
+            get { return deleteInRoomQuantity; }
+            set { SetField(ref deleteInRoomQuantity, value, "DeleteInRoomQuantity"); }
+        }
 
         public FurnitureDTO()
         {
@@ -107,13 +119,18 @@ namespace HotelManagement.DTOs
             TotalImportPriceStr = Helper.FormatVNMoney(TotalImportPrice);
         }
 
+        public bool IsDeleteLessThanInUse()
+        {
+            return DeleteInRoomQuantity <= InUseQuantity;
+        }
+
         public void SetRemaining()
         {
             RemainingQuantity = Quantity - TotalUseQuantity;
         }
         public void SetInUseQuantity(int number)
         {
-            InUseQuantity = number;
+            InUseQuantity = DeleteInRoomQuantity = number;
         }
         public void IncreaseImport(int length)
         {
@@ -176,8 +193,6 @@ namespace HotelManagement.DTOs
                 return true;
             if (FurnitureAvatarData.Length == 0)
                 return true;
-            //if (string.IsNullOrWhiteSpace(Quantity))
-            //    return true;
             return false;   
         }
     }

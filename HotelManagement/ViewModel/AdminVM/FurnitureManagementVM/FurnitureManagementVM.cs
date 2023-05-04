@@ -38,6 +38,12 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             get { return isLoading; }
             set { isLoading = value; OnPropertyChanged(); }
         }
+        private string _staffname;
+        public string StaffName
+        {
+            get { return _staffname; }
+            set { _staffname = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<FurnitureDTO> furnitureList;
         public ObservableCollection<FurnitureDTO> FurnitureList
@@ -123,7 +129,10 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
         public FurnitureManagementVM()
         {
             AdminWindow tk = System.Windows.Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
-
+            if (AdminVM.CurrentStaff != null)
+                StaffName = AdminVM.CurrentStaff.StaffName;
+            else
+                StaffName = "CurrentAdmin";
             FirstLoadCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, async (p) =>
             {
                 IsChanged = false;

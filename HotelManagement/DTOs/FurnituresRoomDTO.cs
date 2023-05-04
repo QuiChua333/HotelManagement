@@ -134,7 +134,15 @@ namespace HotelManagement.DTOs
         public void DeleteListFurniture(ObservableCollection<FurnitureDTO> listDelete)
         {
             foreach (FurnitureDTO item in listDelete)
-                ListFurnitureRoom.Remove(item);
+            {
+                if (item.DeleteInRoomQuantity == item.InUseQuantity)
+                    ListFurnitureRoom.Remove(item);
+                else
+                {
+                    item.InUseQuantity -= item.DeleteInRoomQuantity;
+                    item.DeleteInRoomQuantity = item.InUseQuantity;
+                }    
+            }    
         }
     }
 }

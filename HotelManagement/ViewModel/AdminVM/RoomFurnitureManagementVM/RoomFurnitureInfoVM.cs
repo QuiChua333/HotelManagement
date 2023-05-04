@@ -1,6 +1,8 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
+using HotelManagement.Utilities;
 using HotelManagement.View.CustomMessageBoxWindow;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,7 +65,19 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
         {
             if (ListFurnitureNeedDelete.Count() == 0)
                 return;
-
+            foreach(var item in ListFurnitureNeedDelete)
+            {
+                if(!item.IsDeleteLessThanInUse())
+                {
+                    CustomMessageBox.ShowOk("Số lượng cần xóa phải nhỏ hơn lượng tiện nghi trong phòng!", "Cảnh báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                } 
+                if(item.DeleteInRoomQuantity < 0)
+                {
+                    CustomMessageBox.ShowOk("Số lượng cần xóa không được âm", "Cảnh báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                }    
+            }
             if (CustomMessageBox.ShowOkCancel("Bạn có muốn xóa những tiện nghi được chọn ra khỏi phòng không?", "Cảnh báo", "Có", "Không", CustomMessageBoxImage.Warning)
                 == CustomMessageBoxResult.OK)
             {

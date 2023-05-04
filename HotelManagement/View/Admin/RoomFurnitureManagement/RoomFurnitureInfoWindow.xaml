@@ -155,7 +155,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <CheckBox Loaded="CheckBox_Loaded" Style="{StaticResource MaterialDesignAccentCheckBox}" VerticalAlignment="Center" Grid.Column="0">
+                                            <CheckBox Loaded="CheckBox_Loaded" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Style="{StaticResource MaterialDesignAccentCheckBox}" VerticalAlignment="Center" Grid.Column="0">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Checked">
                                                         <i:InvokeCommandAction Command="{Binding ElementName=ListRadio, Path=DataContext.ChooseItemToListNeedDelete}"/>
@@ -239,37 +239,39 @@
                                                                 Text="{Binding FurnitureName}"
                                                             />
                                                             <TextBlock 
-                                                        FontFamily="{StaticResource MaterialDesignFont}"
-                                                        FontWeight="Regular"
-                                                        FontSize="14"
-                                                        Height="18"
-                                                        Padding="0 1 0 0"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="#7E6E6E"
-                                                        Text="{Binding FurnitureType}"
-                                                    />
-                                                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
-                                                                <TextBlock 
-                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                            FontWeight="Regular"
-                                                            FontSize="14"
-                                                            Height="18"
-                                                            Padding="0 1 0 0"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="#7E6E6E"
-                                                            Text="Số lượng: "
-                                                        />
-                                                                <TextBlock 
-                                                            FontFamily="{StaticResource MaterialDesignFont}"
-                                                            FontWeight="Regular"
-                                                            FontSize="14"
-                                                            Height="18"
-                                                            Padding="0 1 0 0"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="#7E6E6E"
-                                                            Text="{Binding InUseQuantity}"
-                                                        />
-                                                            </StackPanel>
+                                                                FontFamily="{StaticResource MaterialDesignFont}"
+                                                                FontWeight="Regular"
+                                                                FontSize="14"
+                                                                Height="18"
+                                                                Padding="0 1 0 0"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="#7E6E6E"
+                                                                Text="{Binding FurnitureType}"
+                                                            />
+                                                            <Grid  Margin="0 5 0 0">
+                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                                                    <TextBlock 
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontWeight="Regular"
+                                                                        FontSize="14"
+                                                                        Height="18"
+                                                                        Padding="0 1 0 0"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="#7E6E6E"
+                                                                        Text="Số lượng: "
+                                                                    />
+                                                                    <TextBlock 
+                                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                                        FontWeight="Regular"
+                                                                        FontSize="14"
+                                                                        Height="18"
+                                                                        Padding="0 1 0 0"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="#7E6E6E"
+                                                                        Text="{Binding InUseQuantity}"
+                                                                    />
+                                                                </StackPanel>
+                                                            </Grid>
                                                         </StackPanel>
                                                     </Grid>
                                                     <Border Cursor="Hand" Width="20" Background="Transparent" Height="20" CornerRadius="20" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0">
@@ -284,6 +286,35 @@
                                                 </Border.InputBindings>
                                                 <materialDesign:PackIcon Kind="Minimize" Width="20" Height="20"/>
                                             </Border>
+                                            <StackPanel Name="DeleteCountBox" Visibility="Collapsed" Loaded="DeleteCountBox_Loaded" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 10" VerticalAlignment="Bottom">
+                                                <materialDesign:PackIcon Kind="GarbageCan" VerticalAlignment="Center"/>
+                                                <TextBox 
+                                                    Name="TextCountBox"
+                                                        FontFamily="{StaticResource MaterialDesignFont}"
+                                                        FontWeight="Regular"
+                                                        FontSize="16"
+                                                        BorderBrush="Gray"
+                                                        BorderThickness="0.5"
+                                                        Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"
+                                                        Text="{Binding DeleteInRoomQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        Width="30"
+                                                        PreviewTextInput="TextCountBox_PreviewTextInput"
+                                                    >
+                                                    <TextBox.Style>
+                                                        <Style TargetType="TextBox">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="Wheat"></Setter>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="False">
+                                                                    <Setter Property="Background" Value="Transparent"></Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBox.Style>
+                                                </TextBox>
+                                            </StackPanel>
+
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -300,7 +331,7 @@
                                 </i:Interaction.Triggers>
                                 <materialDesign:PackIcon  Kind="Close" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" />
                             </Border>
-                            <TextBlock Text="Xóa" Cursor="Hand" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Margin="0 0 10 0" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Medium">
+                            <TextBlock Text="Xóa" Cursor="Hand" Name="DeleteText" MouseLeftButtonDown="DeleteText_MouseLeftButtonDown" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Right" Margin="0 0 10 0" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Medium">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding DeleteListFurnitureCM}"/>
@@ -310,21 +341,20 @@
                             <Rectangle Height="1" Fill="Black" Opacity="0.25" VerticalAlignment="Bottom"/>
                         </Grid>
                     </Border>
-                    <Border Name="BottomDeleteControl" Visibility="Collapsed" Grid.ColumnSpan="2" Background="White" CornerRadius="10" Height="30" VerticalAlignment="Bottom">
-                            <Grid>
-                                <TextBlock Text="Chọn tất cả" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" VerticalAlignment="Center" Margin="10 6 0 0" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Medium">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding ChooseAllFurnitureToDeleteCM}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBlock>
-                                <Rectangle Height="1" Fill="Black" Opacity="0.25" VerticalAlignment="Top"/>
-                            </Grid>
-                        </Border>
+                    <Border Name="BottomDeleteControl" Margin="-0.4 0 -0.5 -15" BorderThickness="0.3" BorderBrush="Gray" Visibility="Collapsed" Grid.ColumnSpan="2" Background="White" CornerRadius="0 0 5 5" Height="30" VerticalAlignment="Bottom">
+                        <Grid>
+                            <TextBlock Text="Chọn tất cả" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" VerticalAlignment="Center" Margin="10 1 0 0" FontSize="14" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Medium">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding ChooseAllFurnitureToDeleteCM}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
-            <Grid Margin="40 0 40 0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <Grid Margin="40 5 40 0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                 <Button Name="CloseButton" Command="{Binding CloseFurnitureRoomInfoCM}" CommandParameter="{Binding ElementName=RoomFurnitureInfoWD}" Cursor="Hand" HorizontalAlignment="Left" Margin="0 0 10 0" Width="120" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">

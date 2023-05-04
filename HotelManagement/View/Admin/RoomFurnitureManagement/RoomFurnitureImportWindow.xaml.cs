@@ -27,7 +27,8 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
 
         private void RoomFurnitureImportWD_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            if(e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
 
         private void CloseButton2_Click(object sender, RoutedEventArgs e)
