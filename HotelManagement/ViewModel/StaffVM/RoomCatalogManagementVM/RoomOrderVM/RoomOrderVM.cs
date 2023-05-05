@@ -99,9 +99,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             (bool isSucceed, string message) = await ServiceUsingHelper.Ins.SaveService(serviceUsingDTO);
             if (isSucceed)
             {
+                p.Close();
                 CustomMessageBox.ShowOk(message, "Thông báo", "Ok", CustomMessageBoxImage.Success);
                 ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
-                p.Close();
+
             }
             else
             {
@@ -121,9 +122,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             (bool isSucceed, string message) = await ServiceUsingHelper.Ins.SaveService(serviceUsingDTO);
             if (isSucceed)
             {
+                p.Close();
                 CustomMessageBox.ShowOk(message, "Thông báo", "Ok", CustomMessageBoxImage.Success);
                 ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
-                p.Close();
+
             }
             else
             {

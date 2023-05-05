@@ -30,7 +30,16 @@ namespace HotelManagement.Utilities
                 return "0 ₫";
             }
             return String.Format(CultureInfo.InvariantCulture,
-                                "{0:#,#} ₫", money);
+                                "{0:#,#} đ", money);
+        }
+        public static string FormatVNMoney2(double money)
+        {
+            if (money == 0)
+            {
+                return "0 VNĐ";
+            }
+            return String.Format(CultureInfo.InvariantCulture,
+                                "{0:#,#} VNĐ", money);
         }
         public static BitmapImage LoadBitmapImage(byte[] imageData)
         {

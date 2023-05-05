@@ -241,6 +241,30 @@ namespace HotelManagement.Model.Services
             }
             return tb;
         }
+        public async Task<List<TroubleByCustomerDTO>> GetListTroubleByCustomer(string rentalContractId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var listTroubleByCustomer = await context.TroubleByCustomers.Where(x=> x.RentalContractId ==rentalContractId)
+                        .Select(x=> new TroubleByCustomerDTO
+                        {
+                           RentalContractId = x.RentalContractId,
+                           TroubleId=x.TroubleId,
+                           Title = x.Trouble.Title,
+                           PredictedPrice=x.PredictedPrice,
+                           Level = x.Trouble.Level,
+                        }).ToListAsync();
+                    return listTroubleByCustomer;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         private string CreateNextTroubleId(string maxId)
         {
             if (maxId is null)

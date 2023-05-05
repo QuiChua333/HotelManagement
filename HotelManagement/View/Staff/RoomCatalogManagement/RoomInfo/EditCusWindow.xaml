@@ -18,7 +18,7 @@
         DataContext="{StaticResource RoomCatalogManagementVM}">
     <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="400" Width="600">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            <DropShadowEffect BlurRadius="5" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>

@@ -5,6 +5,7 @@ using HotelManagement.Utils;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
+using HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment;
 using IronXL.Formatting;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -165,6 +166,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         private bool TimeChange = false;
         private bool Refresh = false;
         private bool IsLoad = false;
+        public StaffDTO CurrentStaff;
         DispatcherTimer timer = new DispatcherTimer();
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRoomInfoCM { get; set; }
@@ -189,7 +191,6 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand LoadRoomOrderLaundryCM { get; set; }
         public ICommand ConfirmCleaningServiceCM { get; set; }
         public ICommand ConfirmLaundryServiceCM { get; set; }
-        public ICommand PaymentCM { get; set; }
 
         // Đặt sản phẩm
         public ICommand FirstLoadOrderProductPage { get; set; }
@@ -200,13 +201,20 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand DeleteItemInBillStackCM { get; set; }
         public ICommand CloseOrderProductWindowCM { get; set; }
         public ICommand AddOrderProductCM { get; set; }
+        public ICommand LoadRoomOrderProductsCM { get; set; }
+
+        // Thanh toán
+        public ICommand PaymentCM { get; set; }
+        public ICommand StoreListPaymentRoomCM { get; set; }
+        public ICommand LoadRoomGroupPaymentCM { get; set; }
+        public ICommand FirstLoadRoomBillCM { get; set; }
 
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
             FormatStringDate();
+            CurrentStaff = StaffVM.CurrentStaff;
 
-            
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 
@@ -482,8 +490,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     try
                     {
                         RoomWindow wd = new RoomWindow();
-                        int personNumber = (await RoomCustomerService.Ins.GetPersonNumberOfRoom(SelectedRoom.RentalContractId));
-                        wd.lbPersonNumber.Content = personNumber.ToString();
+                        
                         if (SelectedRoom.RoomCleaningStatus == ROOM_CLEANING_STATUS.CLEANED)
                         {
                             wd.cbbRoomCleaningStatus.SelectedIndex = 0;
@@ -557,6 +564,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     CustomMessageBox.ShowOk("Lượng khách trong phòng đã đạt tối đa!","Thông báo","Ok",CustomMessageBoxImage.Error);
                     return;
                 }
+
+                if (ListCustomer.Count == (await RentalContractService.Ins.GetRentalContractById(SelectedRoom.RentalContractId)).PersonNumber)
+                {
+                    CustomMessageBox.ShowOk("Lượng khách trong phòng đã đủ!!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
+                    return;
+                }    
                 AddCusWindow wd = new AddCusWindow();
                 wd.tbName.Text= string.Empty;
                 wd.tbAddress.Text= string.Empty;
@@ -642,9 +655,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                
 
             });
-            PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            
+            LoadRoomOrderProductsCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                await Payment();
+                RoomOrderProducts wd = new RoomOrderProducts();
+                wd.ShowDialog();
+               
             });
             FirstLoadOrderProductPage = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
@@ -714,6 +730,32 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 await AddOrderProduct(p);
 
                 IsLoad = false;
+            });
+
+            // Thanh toán
+            PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await Payment();
+            });
+            StoreListPaymentRoomCM = new RelayCommand<Label>((p) => { return true; }, async (p) =>
+            {
+                string roomID = "MP" + p.Content.ToString().Substring(6);
+                if (ListPaymentRoomId.Contains(roomID))
+                {
+                    ListPaymentRoomId.Remove(roomID);
+                }
+                else ListPaymentRoomId.Add(roomID);
+            });
+            LoadRoomGroupPaymentCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                RoomGroupPayment wd = new RoomGroupPayment();
+                
+                p.Close();
+                wd.ShowDialog();
+            });
+            FirstLoadRoomBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await LoadRoomBillFunc();
             });
         }
 

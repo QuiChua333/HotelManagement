@@ -11,10 +11,11 @@
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Border CornerRadius="5" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="520" Width="650">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        DataContext="{StaticResource RoomCatalogManagementVM}">
+    <Border CornerRadius="5" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="520" Width="900">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            <DropShadowEffect BlurRadius="5" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
 
         <Grid>
@@ -33,8 +34,7 @@
                     BorderThickness="0"
                     HorizontalAlignment="Right"
                     Margin="0,-20,26,0" Click="Button_Click"
-                    Command="{Binding CloseWindowCM}"
-                    CommandParameter="{Binding ElementName=window}">
+                    >
                     <materialDesign:PackIcon Kind="Close" 
                                      Height="30"
                                      Width="30"
@@ -96,7 +96,7 @@
                            FontSize="16"
                                        Width="100"  
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                <TextBlock Text="Nguyễn Văn Phát"
+                                <TextBlock Text="{Binding SelectedRoom.CustomerName}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -114,7 +114,7 @@
                            FontSize="16"
                             Width="100"     
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                <TextBlock Text="01/04/2023"
+                                <TextBlock Text="{Binding CreateDateStr}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -132,7 +132,7 @@
                            FontSize="16"
                                        Width="100"  
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                <TextBlock Text="Huỳnh Ngọc Quí"
+                                <TextBlock Text="{Binding CurrentStaff.StaffName}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -153,6 +153,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label  Grid.Column="0"
                             VerticalAlignment="Center"
@@ -166,7 +169,7 @@
                             <Label  Grid.Column="1"
                             VerticalAlignment="Center"
                            HorizontalAlignment="Center"
-                            Content="Tổng tiền"
+                            Content="Số ngày thuê"
                            FontWeight="Bold"
                            Foreground="#000000"
                            FontSize="16"
@@ -174,7 +177,7 @@
                             <Label  Grid.Column="2"
                             VerticalAlignment="Center"
                            HorizontalAlignment="Center"
-                            Content="Xem hóa đơn"
+                            Content="Đơn giá"
                            FontWeight="Bold"
                            Foreground="#000000"
                            FontSize="16"
@@ -182,11 +185,36 @@
                             <Label  Grid.Column="3"
                             VerticalAlignment="Center"
                            HorizontalAlignment="Center"
-                            Content="In hóa đơn"
+                            Content="Dịch vụ"
                            FontWeight="Bold"
                            Foreground="#000000"
                            FontSize="16"
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
+                            <Label  Grid.Column="4"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Content="Sự Cố"
+                           FontWeight="Bold"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"></Label>
+                            <Label  Grid.Column="5"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Content="Thành tiền"
+                           FontWeight="Bold"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"></Label>
+                            <Label  Grid.Column="6"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Content="Xem hóa đơn"
+                           FontWeight="Bold"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"></Label>
+
 
                         </Grid>
                         <Rectangle Height="1" Fill="#C95D3B" Margin="-5,2,-5,0"></Rectangle>
@@ -211,6 +239,9 @@
                                     <DataTemplate>
                                         <Grid VerticalAlignment="Center" >
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
@@ -251,46 +282,7 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
 
-                                <ListBoxItem >
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
+                             
                                 <ListBoxItem>
                                     <Grid VerticalAlignment="Center" >
                                         <Grid.ColumnDefinitions>
@@ -536,9 +528,8 @@
                         FontSize="14"
                         Background="{StaticResource ButtonCancel}"
                         Margin="0,0,32,0"
-                        Width="70" 
-                        Command="{Binding AcceptEmailCM}"
-                        CommandParameter="{Binding ElementName=window}">
+                        Width="70" Click="Button_Click_1" 
+                        >
                     </Button>
                
             </Grid>

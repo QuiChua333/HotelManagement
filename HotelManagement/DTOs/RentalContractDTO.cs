@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,16 @@ namespace HotelManagement.DTOs
         public string StaffName { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
         public string RoomId { get; set; }
+        public string RoomTypeName { get; set; }
+        public Nullable<int> RoomNumber { get; set; }
+        public Nullable<double> RoomPrice { get; set; }
+       
+        public string RoomName
+        {
+            get { return "Phòng " + RoomNumber.ToString(); }
+        }
         public Nullable<bool> Validated { get; set; }
         public int PersonNumber { get; set; }
         public IList<CustomerDTO> CustomersOfRoom { get; set; }
@@ -27,6 +37,23 @@ namespace HotelManagement.DTOs
         public string CheckOutDateStr
         {
             get { return ((DateTime)CheckOutDate).ToString("dd/MM/yyyy"); }
+        }
+        public int DayNumber
+        {
+            get
+            {
+                if (CheckOutDate == null || StartDate == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (!(bool)Validated) return 0;
+                }
+                TimeSpan t = (TimeSpan)(CheckOutDate - StartDate);
+                int res = (int)t.TotalDays;
+                return res;
+            }
         }
     }
 }

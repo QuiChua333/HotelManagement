@@ -1,4 +1,5 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -81,6 +82,62 @@ namespace HotelManagement.Model.Services
                 throw ex;
             }
         }
+        public async Task<RentalContractDTO> GetRentalContractById(string rentalContractId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var res = await context.RentalContracts.Select(x=> new RentalContractDTO
+                    {
+                        RentalContractId=x.RentalContractId,
+                        RoomId=x.RoomId, 
+                        PersonNumber = (int)x.PersonNumber,
+                        CheckOutDate= x.CheckOutDate,
+                        CustomerId = x.CustomerId,
+                        StartDate = x.StartDate,
+                        StartTime= x.StartTime, 
+                        Validated= x.Validated,
+                    }).FirstAsync(x => x.RentalContractId == rentalContractId);
+                    return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<List<RentalContractDTO>> GetRentalContractByCustomer(string customerId)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var list = await context.RentalContracts.Where(x => x.CustomerId == customerId && x.Room.RoomStatus == ROOM_STATUS.RENTING).Select(x => new RentalContractDTO
+                    {
+                        RentalContractId = x.RentalContractId,
+                        RoomId = x.RoomId,
+                        RoomTypeName = x.Room.RoomType.RoomTypeName,
+                        RoomNumber = x.Room.RoomNumber,
+                        RoomPrice = x.Room.RoomType.Price,
+                        CustomerId = x.CustomerId,
+                        CustomerName = x.Customer.CustomerName,
+                        CustomerAddress= x.Customer.CustomerAddress,
+                        PersonNumber = (int)x.PersonNumber,
+                        StartDate = x.StartDate,
+                        StartTime = x.StartTime,
+                        CheckOutDate = x.CheckOutDate,
+                        Validated = x.Validated,
+                    }).ToListAsync();
+                    return list;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         //public async Task<List<RoomCustomerDTO>> GetCustomersOfRoom(string RentalContractId)
         //{
         //    try
@@ -99,11 +156,11 @@ namespace HotelManagement.Model.Services
         //            {
         //                listCustomer[i].STT = i + 1;
         //            }
-                   
+
         //            return listCustomer;
 
-                    //return listCustomer;
-                    //return new List<RoomCustomerDTO>();
+        //return listCustomer;
+        //return new List<RoomCustomerDTO>();
 
         //        }
         //    }

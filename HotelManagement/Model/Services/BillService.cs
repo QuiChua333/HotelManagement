@@ -25,22 +25,7 @@ namespace HotelManagement.Model.Services
             }
             private set { _ins = value; }
         }
-        public async Task<List<string>> GetRentalContractByCustomer(string customerId)
-        {
-            try
-            {
-                using (var context = new HotelManagementEntities())
-                {
-                    var listId = await context.RentalContracts.Where(x => x.CustomerId == customerId && x.Room.RoomStatus == ROOM_STATUS.RENTING).Select(x => x.RentalContractId).ToListAsync();
-                    return listId;
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         //public async Task<List<BillDTO>> GetBillsByRentalContracts(List<string> rentalContractIds)
         //{

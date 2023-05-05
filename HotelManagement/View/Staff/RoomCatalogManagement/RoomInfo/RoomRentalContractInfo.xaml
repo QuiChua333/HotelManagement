@@ -29,7 +29,7 @@
     </Window.Resources>
     <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" VerticalAlignment="Top" Width="800" x:Name="invoice">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            <DropShadowEffect BlurRadius="5" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
@@ -217,6 +217,22 @@
                                FontSize="16"
                                Foreground="Black"
                                FontWeight="Regular"/>
+                            <Label Content="Số người:"
+                            VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                            Margin="35,0,0,0"
+                           FontWeight="Medium"
+                           Foreground="#000000"
+                           FontSize="16"
+                           FontFamily="{DynamicResource MaterialDesignFont}"/>
+                            <TextBlock Text="{Binding ListCustomer.Count}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                                       Margin="5,0,0,0"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
                         </StackPanel>
 
                     </Grid>
@@ -227,7 +243,7 @@
                               VerticalAlignment="Top"
                               MinHeight="110"
                            
-                                Focusable="False" d:ItemsSource="{d:SampleData ItemCount=}"
+                                Focusable="False" 
                               BorderThickness="3" BorderBrush="#292D32"
                               x:Name="lsvCustomerInfo">
 
