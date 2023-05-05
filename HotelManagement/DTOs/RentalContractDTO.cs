@@ -17,8 +17,14 @@ namespace HotelManagement.DTOs
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string RoomId { get; set; }
+        public string RoomNumber { get; set; }  
+        public string PriceRental { get; set; }
         public Nullable<bool> Validated { get; set; }
         public int PersonNumber { get; set; }
+        public string PersonNumberStr
+        {
+            get { return PersonNumber.ToString(); } 
+        }
         public IList<CustomerDTO> CustomersOfRoom { get; set; }
         public string StartDateStr
         {
@@ -27,6 +33,17 @@ namespace HotelManagement.DTOs
         public string CheckOutDateStr
         {
             get { return ((DateTime)CheckOutDate).ToString("dd/MM/yyyy"); }
+        }
+        public string TotalDateRental
+        {
+            get { return NumberDateRental(); }
+        }
+        public string NumberDateRental ()
+        {
+            DateTime ngaymuon = Convert.ToDateTime(StartDateStr);
+            DateTime ngaytra = Convert.ToDateTime(CheckOutDateStr);
+            TimeSpan Time = ngaytra - ngaymuon;
+            return Time.Days.ToString();
         }
     }
 }

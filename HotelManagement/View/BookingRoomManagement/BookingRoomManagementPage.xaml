@@ -11,6 +11,13 @@
       Title="BookingRoomManagementPage"
       DataContext="{StaticResource BookingRoomManagementVM}">
 
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
@@ -32,7 +39,41 @@
                         IconSize="18"
                         Corner="5"
                         Margin="30 0 0 0"
+                        SearchTextChange="Search_SearchTextChange"
+                        x:Name="SearchBox"
                     />
+                <Border Height="38" Width="180" 
+                        CornerRadius="4"  
+                        Background="#fff" 
+                        BorderBrush="#1D242E" 
+                        HorizontalAlignment="Left" 
+                        BorderThickness="0.5"
+                        Margin="30 0 0 0">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
+                    </Border.Effect>
+                    <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                              SelectedIndex="0"
+                              FontWeight="Regular"
+                              UseLayoutRounding="False"
+                              FontSize="14" 
+                              SelectedValuePath="Tag"
+                              BorderThickness="0" 
+                              x:Name="cbbFilterRentalContract" 
+                              FontFamily="{DynamicResource MaterialDesignFont}"
+                              HorizontalContentAlignment="Left"
+                              SelectedItem="{Binding FiltercbbItem,Mode=OneWayToSource}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding FilterListRentalContractCommand}"
+                                                   CommandParameter="{Binding ElementName=cbbFilterRentalContract}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBoxItem  Content="Tất cả" Tag="Tất cả" FontSize="14" />
+                        <ComboBoxItem  Content="Còn hiệu lực" Tag="Còn hiệu lực" FontSize="14"/>
+                        <ComboBoxItem  Content="Hết hiệu lực" Tag="Hết hiệu lực" FontSize="14" />
+                    </ComboBox>
+                </Border>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 30 0">
@@ -52,8 +93,9 @@
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 30 0">
                 <Button Background="#009099"
-                            Width="200"
-                            Height="46">
+                        Width="200"
+                        Height="46"
+                        Command="{Binding ExportExcelFileCM}">
                     <StackPanel Orientation="Horizontal" 
                                 Width="180" 
                                 HorizontalAlignment="Center" 
@@ -153,27 +195,53 @@
                                                 <Grid Width="150">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
-                                                        <ColumnDefinition Width="10"/>
+                                                        <ColumnDefinition Width="6"/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Button Background="#009099" Grid.Column="0" Margin="15 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Border BorderBrush="#009099"
+                                                            Background="#009099"
+                                                            Width="40"
+                                                            Height="36"
+                                                            BorderThickness="0.5"
+                                                            CornerRadius="5"
+                                                            Cursor="Hand"
+                                                            Margin="15 0 0 0"
+                                                            Grid.Column="0">
                                                         <Image Source="{StaticResource iconChiTiet}" 
                                                                Width="22"
                                                                Height="22"
                                                                VerticalAlignment="Center" 
                                                                HorizontalAlignment="Center"/>
-
-                                                    </Button>
-
-                                                    <Button Background="#D63127" Grid.Column="2" Margin="0 0 15 0">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=BookingRoomListView, Path=DataContext.LoadDetailRentalContractRoomCM}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
+                                                    
+                                                    <Border BorderBrush="#D63127"
+                                                            Background="#D63127"
+                                                            BorderThickness="0.5"
+                                                            CornerRadius="5"
+                                                            Cursor="Hand"
+                                                            Width="40"
+                                                            Height="36"
+                                                            Margin="0 0 15 0"
+                                                             Grid.Column="2">
                                                         <Image Source="{StaticResource iconXoa}"
                                                                     Width="22"
                                                                     Height="22" 
                                                                     VerticalAlignment="Center" 
                                                                     HorizontalAlignment="Center"/>
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                                <i:InvokeCommandAction Command="{Binding ElementName=BookingRoomListView, Path=DataContext.LoadDeleteRentalContractRoomCM}" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Border>
 
-                                                    </Button>
+                                                    
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>

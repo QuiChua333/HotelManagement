@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        Title="DetailRent" Height="700" Width="1000">
+        Title="DetailRent" Height="700" Width="1000"
+        x:Name="DetailRentalContral"
+        DataContext="{StaticResource BookingRoomManagementVM}">
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="14*"/>
@@ -42,7 +45,9 @@
                     Margin="0 20 20 0" 
                     Height="60" Width="60" 
                     HorizontalContentAlignment="Center" 
-                    VerticalContentAlignment="Center">
+                    VerticalContentAlignment="Center"
+                    Command="{Binding CloseCM}"
+                    CommandParameter="{Binding ElementName=DetailRentalContral}">
                 <Image Source="{StaticResource Button_X}" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"  
@@ -75,7 +80,17 @@
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
                             <TextBlock Text="Khách hàng:" FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBox Margin="10 0 0 0" Width="270" BorderBrush="Black" BorderThickness="0 0 0 1" Height="32" FontSize="24" Foreground="Black" Padding="0 0 10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                            <TextBox Margin="10 0 0 0" 
+                                     Width="270" 
+                                     BorderBrush="Black" 
+                                     BorderThickness="0 0 0 1" 
+                                     Height="32" 
+                                     FontSize="24" 
+                                     Foreground="Black" 
+                                     Padding="0 0 10 0" 
+                                     VerticalContentAlignment="Center" 
+                                     HorizontalContentAlignment="Left"
+                                     Text="{Binding CustomerName}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" 
@@ -84,7 +99,7 @@
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
                             <TextBlock Text="Ngày bắt đầu: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBlock Text="01/01/2023" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                            <TextBlock Text="{Binding StartDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
                         </StackPanel>
                     </Grid>
 
@@ -102,7 +117,17 @@
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
                             <TextBlock Text="Nhân viên:" FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBox Margin="10 0 0 0" Width="270" BorderBrush="Black" BorderThickness="0 0 0 1" Height="32" FontSize="24" Foreground="Black" Padding="0 0 10 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                            <TextBox Margin="10 0 0 0" 
+                                     Width="270" 
+                                     BorderBrush="Black" 
+                                     BorderThickness="0 0 0 1" 
+                                     Height="32" 
+                                     FontSize="24" 
+                                     Foreground="Black" 
+                                     Padding="0 0 10 0" 
+                                     VerticalContentAlignment="Center" 
+                                     HorizontalContentAlignment="Left"
+                                     Text="{Binding StaffName}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" 
@@ -111,7 +136,7 @@
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
                             <TextBlock Text="Ngày kết thúc: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBlock Text="04/01/2023" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                            <TextBlock Text="{Binding CheckoutDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
                         </StackPanel>
                     </Grid>
 
@@ -125,12 +150,13 @@
                 <materialDesign:Card UniformCornerRadius="5">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
 
-                        <ListView 
-                                Focusable="True"
-                                FontFamily="{StaticResource MaterialDesignFont}"
-                                Foreground="Black"
-                                FontSize="14"
-                                ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=20}">
+                        <ListView ItemsSource="{Binding BookingRoomList}"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                  Focusable="True"
+                                  FontFamily="{StaticResource MaterialDesignFont}"
+                                  Foreground="Black"
+                                  FontSize="14"
+                                  ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=20}">
                             <ListView.View>
 
                                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
@@ -138,7 +164,7 @@
                                     <GridViewColumn Width="240" Header="Số phòng">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="101" 
+                                                <TextBlock Text="{Binding RoomNumber}" 
                                                            Width="210"
                                                            FontSize="14" 
                                                            Margin="0 8 0 0"
@@ -151,7 +177,7 @@
                                     <GridViewColumn Width="240" Header="Số người">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="2" 
+                                                <TextBlock Text="{Binding PersonNumberStr}" 
                                                            Width="210"
                                                            FontSize="14" 
                                                            Margin="0 8 0 0"
@@ -164,7 +190,7 @@
                                     <GridViewColumn Width="240" Header="Số ngày thuê">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="2" 
+                                                <TextBlock Text="{Binding TotalDateRental}" 
                                                            Width="210"
                                                            FontSize="14" 
                                                            Margin="0 8 0 0"
@@ -177,7 +203,7 @@
                                     <GridViewColumn Width="240" Header="Giá phòng thuê / Ngày">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="100 000 đ" 
+                                                <TextBlock Text="{Binding PriceRental}" 
                                                            Width="210"
                                                            FontSize="14" 
                                                            Margin="0 8 0 0"

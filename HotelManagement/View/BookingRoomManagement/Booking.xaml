@@ -500,9 +500,9 @@
                                   SelectedItem="{Binding PersonNumber}"
                                   FontSize="16"
                                   HorizontalContentAlignment="Center">
-                            <ComboBoxItem Content="1" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Content="2" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Content="3" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="1"  Content="1" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="2" Content="2" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem Tag="3" Content="3" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </Border>
                 </Grid>

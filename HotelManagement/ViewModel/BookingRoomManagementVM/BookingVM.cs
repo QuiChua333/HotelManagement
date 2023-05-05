@@ -82,9 +82,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 CheckOutDate = CheckoutDate,
                 StartDate = StartDate,
                 StartTime = StartTime.TimeOfDay,
-                //StaffId = StaffId,
+                StaffId = StaffId,
                 CustomerId = CustomerId,
-                PersonNumber = int.Parse(PersonNumber.Content.ToString()),
+                PersonNumber = int.Parse(PersonNumber.Tag.ToString()),
                 RoomId = SelectedRoom.RoomId,
                 Validated = true,
             };
@@ -99,13 +99,12 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 CustomMessageBox.ShowOk(message, "Lỗi", "OK", CustomMessageBoxImage.Error);
             }
         }
-        // oke rồi, giờ hỏi đáp =)) trong cái SaveCustomer có cần CustomerId ko 
         public async Task SaveCustomer()
         {
             CustomerDTO customerDTO = new CustomerDTO
             {
                 CustomerName = CustomerName,
-                PhoneNumber = PhoneNumber, // ko cần, nó ở chỗ này
+                PhoneNumber = PhoneNumber,
                 DateOfBirth = (DateTime)DayOfBirth,
                 Email = Email,
                 CCCD = CCCD,
@@ -125,13 +124,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 CustomMessageBox.ShowOk(message, "Lỗi", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
         }
-
         public async Task LoadReadyRoom()
         {
             ListReadyRoom = new ObservableCollection<RoomDTO>(await BookingRoomService.Ins.GetListReadyRoom(StartDate,StartTime,CheckoutDate));
         }
-
-        
-
     }
 }

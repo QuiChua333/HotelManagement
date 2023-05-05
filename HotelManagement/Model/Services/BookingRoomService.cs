@@ -39,6 +39,10 @@ namespace HotelManagement.Model.Services
                         on r.StaffId equals s.StaffId
                         join c in db.Customers
                         on r.CustomerId equals c.CustomerId
+                        join room in db.Rooms
+                        on r.RoomId equals room.RoomId
+                        join rt in db.RoomTypes
+                        on room.RoomTypeId equals rt.RoomTypeId
                         select new RentalContractDTO
                         {
                             RentalContractId = r.RentalContractId,
@@ -47,7 +51,9 @@ namespace HotelManagement.Model.Services
                             StartDate = r.StartDate,
                             CheckOutDate = r.CheckOutDate,
                             StartTime = r.StartTime,
-
+                            RoomNumber = room.RoomNumber.ToString(),
+                            PriceRental = rt.Price.ToString() + "đ",
+                            Validated = r.Validated,
                         }
                     ).ToListAsync();
                     RentalContractDTOs.Reverse();
@@ -135,12 +141,13 @@ namespace HotelManagement.Model.Services
 
                     context.RentalContracts.Add(rc);
                     await context.SaveChangesAsync();
-                    return (true, "Them thanh cong");
+                    rentalContract.RentalContractId = rc.RentalContractId;
+                    return (true, "Đặt phòng thành công!");
                 }
             }
             catch (Exception e)
             {
-                return (false, "Loi he thong");
+                return (false, "Lỗi hệ thống");
             }
         }
         public async Task<(bool, string, string)> SaveCustomer(CustomerDTO customer)
@@ -184,6 +191,31 @@ namespace HotelManagement.Model.Services
                 return (false, "Lỗi hệ thống",null);
             }
         }
+
+        public async Task<(bool, string)> DeleteRentalContract(string Id)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    RentalContract rental = await (from p in context.RentalContracts
+                                       where p.RentalContractId == Id
+                                       select p).FirstOrDefaultAsync();
+                    if (rental == null)
+                    {
+                        return (false, "Phiếu thuê phòng này không tồn tại!");
+                    }
+                    context.RentalContracts.Remove(rental);
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return (false, "Phiếu thuê phòng này đã có khách đặt. Không thể xóa!");
+            }
+            return (true, "Xóa phiếu thuê phòng thành công");
+        }
+
         private string CreateNextCustomerId(string maxId)
         {
             //KHxxx

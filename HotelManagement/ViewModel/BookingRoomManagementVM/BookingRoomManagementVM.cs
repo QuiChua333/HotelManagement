@@ -1,8 +1,11 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utils;
 using HotelManagement.View.BookingRoomManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.ViewModel.AdminVM;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,7 +45,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             }
             get { return _StaffId; }
         }
-
 
         private string _customerName;
         public string CustomerName
@@ -118,9 +120,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             get { return _CheckoutDate; }
             set { _CheckoutDate = value; OnPropertyChanged(); }
         }
-
-       
-
         private string _RentalContractId;
         public string RentalContractId
         {
@@ -153,7 +152,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 OnPropertyChanged();
             }
         }
-
+        public static ObservableCollection<RentalContractDTO> GetAllBookingRoom { get; set; }
         private ObservableCollection<RentalContractDTO> _BookingRoomList;
         public ObservableCollection<RentalContractDTO> BookingRoomList
         {
@@ -187,11 +186,21 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             }
         }
 
+        private ComboBoxItem _filtercbbItem;
+        public ComboBoxItem FiltercbbItem
+        {
+            get => _filtercbbItem;
+            set { _filtercbbItem = value; OnPropertyChanged(); }
+        }
 
         public ICommand CloseCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadBookingCM { get; set; }
         public ICommand ConfirmBookingRoomCM { get; set; }
+        public ICommand ExportExcelFileCM { get; set; }
+        public ICommand LoadDeleteRentalContractRoomCM { get; set; }
+        public ICommand LoadDetailRentalContractRoomCM { get; set; }
+        public ICommand FilterListRentalContractCommand { get; set; }
         
         public BookingRoomManagementVM() 
         {
@@ -205,11 +214,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 StartTime = DateTime.Now;
                 DayOfBirth = DateTime.Now;
                 SelectedRoom = null;
-
-
-                //currentStaff = AdminVM.AdminVM.CurrentStaff;
-                //StaffName = currentStaff.StaffName;
-                //StaffId = currentStaff.StaffId;
+                currentStaff = AdminVM.AdminVM.CurrentStaff;
+                StaffName = currentStaff.StaffName;
+                StaffId = currentStaff.StaffId;
 
                 IsSucceedSavingCustomer = false;
                 await  LoadReadyRoom();
@@ -217,11 +224,21 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 await LoadBookingRoom();
 
             });
-
+            FilterListRentalContractCommand = new RelayCommand<System.Windows.Controls.ComboBox>((p) => { return true; }, (p) =>
+            {
+                FilterRentalContractList();
+            });
             LoadBookingCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-               Booking booking = new Booking();
-               booking.ShowDialog();
+                RenewWindowData();
+                Booking booking = new Booking();
+                booking.ShowDialog();
+            });
+
+            LoadDetailRentalContractRoomCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                DetailRent r = new DetailRent();
+                r.ShowDialog();
             });
 
             ConfirmBookingRoomCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
@@ -235,11 +252,38 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                         return;
                     }
                     await SaveRentalContract(p);
+
+                    await LoadBookingRoom();
                 }
                 else
                 {
                     CustomMessageBox.ShowOk(error, "Cảnh báo", "OK", CustomMessageBoxImage.Warning);
                 }
+            });
+            LoadDeleteRentalContractRoomCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+
+                string message = "Bạn có chắc muốn xoá phiếu thuê này không? Dữ liệu không thể phục hồi sau khi xoá!";
+                CustomMessageBoxResult kq = CustomMessageBox.ShowOkCancel(message, "Cảnh báo", "Xác nhận", "Hủy", CustomMessageBoxImage.Warning);
+
+                if (kq == CustomMessageBoxResult.OK)
+                {
+                    (bool successDeleteRentalContract, string messageFromDelRentalContract) = await BookingRoomService.Ins.DeleteRentalContract(SelectedItem.RentalContractId);
+                    if (successDeleteRentalContract)
+                    {
+                        LoadBookingRoomListView(Operation.DELETE);
+                        SelectedItem = null;
+                        CustomMessageBox.ShowOk(messageFromDelRentalContract, "Thông báo", "OK", CustomMessageBoxImage.Success);
+                    }
+                    else
+                    {
+                        CustomMessageBox.ShowOk(messageFromDelRentalContract, "Lỗi", "OK", CustomMessageBoxImage.Error);
+                    }
+                }
+            });
+            ExportExcelFileCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                ExportToFileFunc();
             });
 
             CloseCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
@@ -249,7 +293,179 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
         }
         public async Task LoadBookingRoom()
         {
-            BookingRoomList = new ObservableCollection<RentalContractDTO>(await BookingRoomService.Ins.GetBookingList());
+            //BookingRoomList = new ObservableCollection<RentalContractDTO>(await BookingRoomService.Ins.GetBookingList());
+
+            BookingRoomList = new ObservableCollection<RentalContractDTO>();
+            GetAllBookingRoom = new ObservableCollection<RentalContractDTO>();
+            await GetData();
+        }
+        public async Task GetData()
+        {
+            GetAllBookingRoom = new ObservableCollection<RentalContractDTO>(await BookingRoomService.Ins.GetBookingList());
+            BookingRoomList = new ObservableCollection<RentalContractDTO>();
+
+            foreach (RentalContractDTO rentalContractDTO in GetAllBookingRoom)
+            {
+                RentalContractDTO newRT = new RentalContractDTO
+                {
+                    RentalContractId = rentalContractDTO.RentalContractId,
+                    StaffName = rentalContractDTO.StaffName,
+                    CustomerName = rentalContractDTO.CustomerName,
+                    StartDate = rentalContractDTO.StartDate,
+                    CheckOutDate = rentalContractDTO.CheckOutDate,
+                    StartTime = rentalContractDTO.StartTime,
+                    RoomNumber = rentalContractDTO.RoomNumber,
+                    PriceRental = rentalContractDTO.PriceRental,
+                };
+                BookingRoomList.Add(newRT);
+            }
+        }
+        public void FilterRentalContractList()
+        {
+            BookingRoomList = new ObservableCollection<RentalContractDTO>();
+
+            if (FiltercbbItem.Tag.ToString() == "Tất cả")
+            {
+                foreach (RentalContractDTO rentalContractDTO in GetAllBookingRoom)
+                {
+                    RentalContractDTO newRT = new RentalContractDTO
+                    {
+                        RentalContractId = rentalContractDTO.RentalContractId,
+                        StaffName = rentalContractDTO.StaffName,
+                        CustomerName = rentalContractDTO.CustomerName,
+                        StartDate = rentalContractDTO.StartDate,
+                        CheckOutDate = rentalContractDTO.CheckOutDate,
+                        StartTime = rentalContractDTO.StartTime,
+                        RoomNumber = rentalContractDTO.RoomNumber,
+                        PriceRental = rentalContractDTO.PriceRental,
+                    };
+
+                    BookingRoomList.Add(newRT);
+                }
+            }
+            if (FiltercbbItem.Tag.ToString() == "Còn hiệu lực")
+            {
+                foreach (RentalContractDTO rentalContractDTO in GetAllBookingRoom)
+                {
+                    if (rentalContractDTO.Validated == true)
+                    {
+                        RentalContractDTO newRT = new RentalContractDTO
+                        {
+                            RentalContractId = rentalContractDTO.RentalContractId,
+                            StaffName = rentalContractDTO.StaffName,
+                            CustomerName = rentalContractDTO.CustomerName,
+                            StartDate = rentalContractDTO.StartDate,
+                            CheckOutDate = rentalContractDTO.CheckOutDate,
+                            StartTime = rentalContractDTO.StartTime,
+                            RoomNumber = rentalContractDTO.RoomNumber,
+                            PriceRental = rentalContractDTO.PriceRental,
+                        };
+                        BookingRoomList.Add(newRT);
+                    }
+                }
+            }
+
+            if (FiltercbbItem.Tag.ToString() == "Hết hiệu lực")
+            {
+                foreach (RentalContractDTO rentalContractDTO in GetAllBookingRoom)
+                {
+                    if (rentalContractDTO.Validated == false)
+                    {
+                        RentalContractDTO newRT = new RentalContractDTO
+                        {
+                            RentalContractId = rentalContractDTO.RentalContractId,
+                            StaffName = rentalContractDTO.StaffName,
+                            CustomerName = rentalContractDTO.CustomerName,
+                            StartDate = rentalContractDTO.StartDate,
+                            CheckOutDate = rentalContractDTO.CheckOutDate,
+                            StartTime = rentalContractDTO.StartTime,
+                            RoomNumber = rentalContractDTO.RoomNumber,
+                            PriceRental = rentalContractDTO.PriceRental,
+                        };
+                        BookingRoomList.Add(newRT);
+                    }
+                }
+            }
+
+        }
+        public void ExportToFileFunc()
+        {
+            SaveFileDialog sfd = new SaveFileDialog() { Filter = "Excel Workbook|*.xlsx", ValidateNames = true };
+            if (sfd.ShowDialog() == true)
+            {
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+                Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+                app.Visible = false;
+                Microsoft.Office.Interop.Excel.Workbook wb = app.Workbooks.Add(1);
+                Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
+
+
+                ws.Cells[1, 1] = "Mã phiêu thuê";
+                ws.Cells[1, 2] ="Tên khách hàng";
+                ws.Cells[1, 3] = "Ngày bắt đầu thuê";
+                ws.Cells[1, 4] = "Ngày kết thúc thuê";
+                ws.Cells[1, 5] = "Tên nhân viên";
+
+                int i2 = 2;
+                foreach (var item in BookingRoomList)
+                {
+
+                    ws.Cells[i2, 1] = item.RentalContractId;
+                    ws.Cells[i2, 2] = item.CustomerName;
+                    ws.Cells[i2, 3] = item.StartDateStr;
+                    ws.Cells[i2, 4] = item.CheckOutDateStr;
+                    ws.Cells[i2, 5] = item.StaffName;
+                    i2++;
+                }
+                ws.SaveAs(sfd.FileName);
+                wb.Close();
+                app.Quit();
+
+                Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+
+                CustomMessageBox.ShowOk("Xuất file thành công","Thông báo", "OK", CustomMessageBoxImage.Success);
+
+            }
+        }
+
+
+        public void LoadBookingRoomListView(Operation oper = Operation.READ, RentalContractDTO r = null)
+        {
+
+            switch (oper)
+            {
+                case Operation.CREATE:
+                    BookingRoomList.Add(r);
+                    break;
+                case Operation.DELETE:
+                    for (int i = 0; i < BookingRoomList.Count; i++)
+                    {
+                        if (BookingRoomList[i].RentalContractId == SelectedItem?.RentalContractId)
+                        {
+                            BookingRoomList.Remove(BookingRoomList[i]);
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void RenewWindowData()
+        {
+            CustomerName = null;
+            CCCD = null;
+            PhoneNumber = null;
+            Email = null;
+            Address = null;
+            StartDate = DateTime.Today;
+            CheckoutDate = DateTime.Today.AddDays(1);
+            StartTime = DateTime.Now;
+            DayOfBirth = DateTime.Now;
+            PersonNumber = null;
+            CustomerType = null;
+            Gender = null;
         }
     }
 }
