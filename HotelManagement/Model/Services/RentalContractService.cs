@@ -92,7 +92,7 @@ namespace HotelManagement.Model.Services
                     {
                         RentalContractId=x.RentalContractId,
                         RoomId=x.RoomId, 
-                        PersonNumber = (int)x.PersonNumber,
+                     
                         CheckOutDate= x.CheckOutDate,
                         CustomerId = x.CustomerId,
                         StartDate = x.StartDate,

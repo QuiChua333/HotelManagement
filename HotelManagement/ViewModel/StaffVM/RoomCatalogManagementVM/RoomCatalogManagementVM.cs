@@ -595,6 +595,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             {
                 ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
                 RoomCustomerInfo wd = new RoomCustomerInfo();
+                
                 wd.ShowDialog();
             });
 
@@ -606,11 +607,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     return;
                 }
 
-                if (ListCustomer.Count == (await RentalContractService.Ins.GetRentalContractById(SelectedRoom.RentalContractId)).PersonNumber)
-                {
-                    CustomMessageBox.ShowOk("Lượng khách trong phòng đã đủ!!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
-                    return;
-                }    
+              
                 AddCusWindow wd = new AddCusWindow();
                 wd.tbName.Text= string.Empty;
                 wd.tbAddress.Text= string.Empty;

@@ -182,7 +182,7 @@
                                  BorderBrush="#009099"
                                  Width="250"
                                  Height="35"
-                                
+                                PreviewTextInput="TextBox_PreviewTextInput" 
                                  x:Name="tbCCCD"
                                  FontSize="16"
                                  Padding="5,0,0,0"

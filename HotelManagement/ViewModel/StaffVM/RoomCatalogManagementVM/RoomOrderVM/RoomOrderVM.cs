@@ -261,6 +261,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 CustomMessageBox.ShowOk(message, "Thông báo", "Ok", CustomMessageBoxImage.Success);
                 SumOrder = 0;
                 OrderList = null;
+                ListService = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(SelectedRoom.RentalContractId));
                 p.Close();
             }
             else
