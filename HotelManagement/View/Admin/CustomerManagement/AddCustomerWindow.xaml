@@ -144,7 +144,7 @@
                                   SelectedValuePath="Tag"
                                   BorderThickness="0" 
                                   FontFamily="{DynamicResource MaterialDesignFont}"
-                                  HorizontalContentAlignment="Left">
+                                  HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="146">
                             <ComboBoxItem  Content="Trong nước" Tag="Trong nước" FontSize="14" />
                             <ComboBoxItem  Content="Ngoài nước" Tag="Ngoài nước" FontSize="14"/>
                         </ComboBox>

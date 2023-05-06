@@ -102,20 +102,21 @@ namespace HotelManagement.Model.Services
 
                     if (service != null)
                         return (false, "Đã có sản phẩm trong cơ sở dữ liệu");
-    
-                    int ID = db.Services.ToList().Count();
-                    string mainID;
-                    if (ID == 0)
-                        mainID = "0001";
-                    else
-                    {
-                        ID = int.Parse(db.Services.ToList().Max(item => item.ServiceId));
-                        mainID = getID(++ID);
-                    }    
 
+                    //int ID = db.Services.ToList().Count();
+                    //string mainID;
+                    //if (ID == 0)
+                    //    mainID = "0001";
+                    //else
+                    //{
+                    //    ID = int.Parse(db.Services.ToList().Max(item => item.ServiceId));
+                    //    mainID = getID(++ID);
+                    //}    
+                    string maxId = await db.Services.MaxAsync(x => x.ServiceId);
+                    string newId = CreateServiceID(maxId);
                     Service newService = new Service
                     {
-                        ServiceId = mainID,
+                        ServiceId = newId,
                         ServiceName = productSelected.ServiceName,
                         ServiceType = productSelected.ServiceType,
                         ServicePrice = productSelected.ServicePrice,
@@ -124,7 +125,7 @@ namespace HotelManagement.Model.Services
 
                     GoodsStorage newGoodStorage = new GoodsStorage
                     {
-                        ServiceId = mainID,
+                        ServiceId = newId,
                         QuantityService = 0
                     };
 
@@ -132,7 +133,7 @@ namespace HotelManagement.Model.Services
                     db.GoodsStorages.Add(newGoodStorage);
                     await db.SaveChangesAsync();
 
-                    productSelected.ServiceId = mainID;
+                    productSelected.ServiceId = newId;
                     return (true, "Thêm sản phẩm thành công");
                 }
             }
@@ -172,17 +173,7 @@ namespace HotelManagement.Model.Services
                 return (false, "Lỗi hệ thống");
             }
         }
-        public string getID(int id)
-        {
-            if (id < 10)
-                return "000" + id;
-            if (id < 100)
-                return "00" + id;
-            if (id < 1000)
-                return "0" + id;
-
-            return id.ToString();
-        }
+       
 
         public async Task<(bool, string)> ImportService(ServiceDTO serviceSelected, double importPrice, int importQuantity)
         {
@@ -194,19 +185,20 @@ namespace HotelManagement.Model.Services
                     if (service == null)
                         return (false, "Không tìm thấy sản phẩm trong cơ sở dữ liệu");
 
-                    int ID = db.GoodsReceipts.ToList().Count();
-                    string mainID;
-                    if (ID == 0)
-                        mainID = "0001";
-                    else
-                    {
-                        ID = int.Parse(db.GoodsReceipts.ToList().Max(item => item.GoodsReceiptId));
-                        mainID = getID(++ID);
-                    }
+                    //int ID = db.GoodsReceipts.ToList().Count();
+                    //string mainID;
+                    //if (ID == 0)
+                    //    mainID = "0001";
+                    //else
+                    //{
+                    //    ID = int.Parse(db.GoodsReceipts.ToList().Max(item => item.GoodsReceiptId));
+                    //    mainID = getID(++ID);
+                    //}
+                    string maxId = await db.GoodsReceipts.MaxAsync(x => x.GoodsReceiptId);
 
                     GoodsReceipt goodReceipt = new GoodsReceipt
                     {
-                        GoodsReceiptId = mainID,
+                        GoodsReceiptId = CreateGoodReceiptID(maxId),
                         ServiceId = serviceSelected.ServiceId,
                         ImportPrice = importPrice,
                         Quantity = importQuantity,
@@ -236,6 +228,41 @@ namespace HotelManagement.Model.Services
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public async Task<(bool, string, List<ServiceDTO>)> GetAllProduct()
+        {
+            try
+            {
+                List<ServiceDTO> listProduct = new List<ServiceDTO>();
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    listProduct = await (
+                        from p in db.Services
+                        where p.ServiceType != "Vệ sinh"
+                        select new ServiceDTO
+                        {
+                            ServiceId = p.ServiceId,
+                            ServiceName = p.ServiceName,
+                            ServiceAvatarData = p.ServiceAvatar,
+                            ServiceType = p.ServiceType,
+                            Quantity = (int)p.GoodsStorage.QuantityService,
+                            ServicePrice = (double)p.ServicePrice,
+                        }
+                    ).ToListAsync();
+                    listProduct.ForEach(item => item.SetAvatar());
+                }
+
+                return (true, "Thành công", listProduct);
+            }
+            catch (EntityException e)
+            {
+                return (false, "Mất kết nối cơ sở dữ liệu", null);
+            }
+            catch (Exception ex)
+            {
+                return (false, "Lỗi hệ thống", null);
             }
         }
         public async Task<ServiceDTO> GetCleaningService()
@@ -280,6 +307,27 @@ namespace HotelManagement.Model.Services
                 throw ex;
             }
         }
-        
+        public string CreateServiceID(string maxId)
+        {
+            if (maxId is null)
+            {
+                return "DV001";
+            }
+            string numStr = (int.Parse(maxId.Substring(2)) + 1).ToString();
+            while (numStr.Length < 3) numStr = "0" + numStr;
+            return "DV" + numStr;
+        }
+        public string CreateGoodReceiptID(string maxId)
+        {
+            if (maxId is null)
+            {
+                return "GC001";
+            }
+            string numStr = (int.Parse(maxId.Substring(2)) + 1).ToString();
+            while (numStr.Length < 3) numStr = "0" + numStr;
+            return "GC" + numStr;
+        }
+
     }
+   
 }

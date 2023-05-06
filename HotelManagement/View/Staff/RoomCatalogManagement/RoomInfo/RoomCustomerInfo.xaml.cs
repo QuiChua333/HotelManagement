@@ -60,7 +60,7 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo
             if (view1 != null)
             {
                 view1.Filter = Filter;
-                //result.Text = Listviewmini.Items.Count.ToString();
+                result.Text = lsvCustomerInfo.Items.Count.ToString();
                 CollectionViewSource.GetDefaultView(lsvCustomerInfo.ItemsSource).Refresh();
             }
         }

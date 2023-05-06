@@ -1,10 +1,12 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utilities;
 using HotelManagement.Utils;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
+using HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment;
 using IronXL.Formatting;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -60,6 +62,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             set { _radioButtonRoomCleaningStatus = value; OnPropertyChanged(); }
         }
         Page MainPage;
+        RoomWindow RoomWindow;
+        RoomGroupPayment roomGroupPayment;
         public string RoomTypeA
         {
             get
@@ -165,6 +169,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         private bool TimeChange = false;
         private bool Refresh = false;
         private bool IsLoad = false;
+        private bool IsPageLoad = false;
+        private bool IsViewChange = false;
+        public StaffDTO CurrentStaff;
         DispatcherTimer timer = new DispatcherTimer();
         public ICommand FirstLoadCM { get; set; }
         public ICommand LoadRoomInfoCM { get; set; }
@@ -189,19 +196,39 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand LoadRoomOrderLaundryCM { get; set; }
         public ICommand ConfirmCleaningServiceCM { get; set; }
         public ICommand ConfirmLaundryServiceCM { get; set; }
+
+        // Đặt sản phẩm
+        public ICommand FirstLoadOrderProductPage { get; set; }
+        public ICommand SelectionFilterChangeCM { get; set; }
+        public ICommand SelectedProductToBillCM { get; set; }
+        public ICommand DecreaseQuantityOrderItemCM { get; set; }
+        public ICommand IncreaseQuantityOrderItemCM { get; set; }
+        public ICommand DeleteItemInBillStackCM { get; set; }
+        public ICommand CloseOrderProductWindowCM { get; set; }
+        public ICommand AddOrderProductCM { get; set; }
+        public ICommand LoadRoomOrderProductsCM { get; set; }
+
+        // Thanh toán
         public ICommand PaymentCM { get; set; }
+        public ICommand StoreListPaymentRoomCM { get; set; }
+        public ICommand UnStoreListPaymentRoomCM { get; set; }
+        public ICommand LoadRoomGroupPaymentCM { get; set; }
+        public ICommand LoadRoomBillCM { get; set; }
+        public ICommand FirstLoadRoomBillCM { get; set; }
+   
+        public ICommand SaveBillCM { get; set; }
+
         public RoomCatalogManagementVM()
         {
             Color color = new Color();
             FormatStringDate();
+            CurrentStaff = StaffVM.CurrentStaff;
 
-            
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 
                 PageSetting(p);
-                await AutoUpdateDb();
-                await GenerateRoom();
+                RefreshCM.Execute(p);
                 timer.Interval = TimeSpan.FromSeconds(1);
                 timer.Tick += timer_Tick;
             });
@@ -254,9 +281,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
-                
-                    try
-                    {
+                if (Refresh == true) return;
+               
                         if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
                         else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
                         else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
@@ -276,21 +302,17 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
 
 
-                        ChangView();
-                    }
-                    catch(Exception ex)
-                    {
-                    CustomMessageBox.ShowOk("Lỗi hệ thống!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
-                    }
+                        ChangeView();
+                    
+                    
 
                 
             });
             SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
-                
+
                 if (Refresh == true)
                 {
-                    Refresh= false;
                     return;
                 }
                 TimeChange = true;
@@ -313,7 +335,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                         }
                     }
                 }
-                if (IsLoad == true) return;
+                
+                
                 ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -321,6 +344,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName= r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -335,6 +359,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName = r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -349,6 +374,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName= r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -363,7 +389,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 radioButtonRoomStatus.IsChecked = true;
                 radioButtonRoomCleaningStatus.IsChecked = true;
 
-                ChangView();
+                ChangeView();
 
 
                 List<string> listRentalContractId = (await RentalContractService.Ins.GetAllRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate  + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
@@ -378,7 +404,15 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                             if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
                         }
                     }
-                    else item.RoomStatus = ROOM_STATUS.READY;
+                    else
+                    {
+                        item.RoomStatus = ROOM_STATUS.READY;
+                        item.StartDate = null;
+                        item.StartTime = null;
+                        item.CheckOutDate = null;
+                        item.CustomerId = null;
+                        item.CustomerName = null;
+                    }
 
                 }
                 foreach (var item in ListRoomType2)
@@ -390,7 +424,15 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                             if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
                         }
                     }
-                    else item.RoomStatus = ROOM_STATUS.READY;
+                    else
+                    {
+                        item.RoomStatus = ROOM_STATUS.READY;
+                        item.StartDate = null;
+                        item.StartTime = null;
+                        item.CheckOutDate = null;
+                        item.CustomerId = null;
+                        item.CustomerName = null;
+                    }
 
                 }
                 foreach (var item in ListRoomType3)
@@ -402,7 +444,15 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                             if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
                         }
                     }
-                    else item.RoomStatus = ROOM_STATUS.READY;
+                    else
+                    {
+                        item.RoomStatus = ROOM_STATUS.READY;
+                        item.StartDate = null;
+                        item.StartTime = null;
+                        item.CheckOutDate = null;
+                        item.CustomerId = null;
+                        item.CustomerName = null;
+                    }
                 }
                 ListRoomType1ChangeMini = ListRoomType1.Select(r => new RoomSettingDTO
                 {
@@ -411,6 +461,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName= r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -424,6 +475,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName= r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -437,6 +489,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     RoomTypeId = r.RoomTypeId,
                     RoomTypeName = r.RoomTypeName.Trim(),
                     RoomStatus = r.RoomStatus.Trim(),
+                    CustomerName= r.CustomerName,
                     RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
                     StartDate = r.StartDate,
                     StartTime = r.StartTime,
@@ -449,10 +502,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             RefreshCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 Refresh = true;
+                IsViewChange = false;
                 TimeChange = false;
                 await AutoUpdateDb();
-                SelectedDate = DateTime.Today;
                 Refresh = true;
+                SelectedDate = DateTime.Today;
                 SelectedTime = DateTime.Now;
                 await GenerateRoom();
                 radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
@@ -461,18 +515,20 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 radioButtonRoomType.IsChecked = true;
                 radioButtonRoomStatus.IsChecked = true;
                 radioButtonRoomCleaningStatus.IsChecked = true;
+                ChangeView();
+                Refresh = false;
 
                
             });
-            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            OpenRoomWindowCM = new RelayCommand<Grid>((p) => { return true; }, async (p) =>
             {
-                if (SelectedRoom != null)
-                {
-                    try
+                if (TimeChange == true) return;
+                //MessageBox.Show(SelectedRoom.RoomNumber.ToString());
+                if (SelectedRoom == null) return;
+                try
                     {
                         RoomWindow wd = new RoomWindow();
-                        int personNumber = (await RoomCustomerService.Ins.GetPersonNumberOfRoom(SelectedRoom.RentalContractId));
-                        wd.lbPersonNumber.Content = personNumber.ToString();
+                        
                         if (SelectedRoom.RoomCleaningStatus == ROOM_CLEANING_STATUS.CLEANED)
                         {
                             wd.cbbRoomCleaningStatus.SelectedIndex = 0;
@@ -501,13 +557,15 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                             wd.btnPayment.Visibility = Visibility.Visible;
                             wd.btnCheckIn.Visibility = Visibility.Collapsed;
                         }
+                        ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
+                        RoomWindow = (RoomWindow)wd;
                             wd.ShowDialog();
                     }
                     catch (Exception ex)
                     {
                         CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
                     }
-                }
+                
             });
 
             CheckInRoomCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
@@ -523,7 +581,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             CloseRoomWindowCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
             {
                 p.Close();
-                RefreshCM.Execute(MainPage);
+               
+                
             });
 
             LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
@@ -536,11 +595,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             {
                 ListCustomer = new ObservableCollection<RoomCustomerDTO>(await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedRoom.RentalContractId));
                 RoomCustomerInfo wd = new RoomCustomerInfo();
+                
                 wd.ShowDialog();
             });
 
             LoadAddCustomerWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                if (ListCustomer.Count == ROOM_INFO.PERSON_NUMBER)
+                {
+                    CustomMessageBox.ShowOk("Lượng khách trong phòng đã đạt tối đa!","Thông báo","Ok",CustomMessageBoxImage.Error);
+                    return;
+                }
+
+              
                 AddCusWindow wd = new AddCusWindow();
                 wd.tbName.Text= string.Empty;
                 wd.tbAddress.Text= string.Empty;
@@ -626,11 +693,185 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                
 
             });
-            PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            
+            LoadRoomOrderProductsCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
+                RoomOrderProducts wd = new RoomOrderProducts();
+                wd.ShowDialog();
+               
+            });
+            FirstLoadOrderProductPage = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                IsLoad = true;
 
+                await LoadAllProduct();
+
+                IsLoad = false;
+            });
+            SelectionFilterChangeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItemFilter != null)
+                {
+                    if (SelectedItemFilter.Tag.ToString() == "All")
+                        ProductList = new ObservableCollection<ServiceDTO>(AllProducts);
+                    else
+                        ProductList = new ObservableCollection<ServiceDTO>(ServiceHelper.Ins.GetAllServiceByType(SelectedItemFilter.Content.ToString(), AllProducts));
+                }
             });
 
+            SelectedProductToBillCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    LoadProductToBill();
+                }
+            });
+
+            DecreaseQuantityOrderItemCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    DecreaseProductInBill();
+                }
+            });
+
+            IncreaseQuantityOrderItemCM = new RelayCommand<ListBox>((p) => { return true; }, (p) =>
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    IncreaseProductInBill();
+                }
+            });
+
+            DeleteItemInBillStackCM = new RelayCommand<ListBox>((p) => { return true; }, (p) => 
+            {
+                if (SelectedProduct != null)
+                {
+                    ServiceCache = SelectedProduct;
+                    DeleteProductInBill();
+                }
+            });
+
+            CloseOrderProductWindowCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                OrderList = null;
+                p.Close();
+            });
+
+            AddOrderProductCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                IsLoad = true;
+
+                await AddOrderProduct(p);
+
+                IsLoad = false;
+            });
+
+            // Thanh toán
+            PaymentCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await Payment();
+            });
+            StoreListPaymentRoomCM = new RelayCommand<Label>((p) => { return true; }, async (p) =>
+            {
+                
+                string roomNumber = p.Content.ToString().Substring(6);
+               
+                    ListPaymentRoomNumber.Add(roomNumber);
+              
+                
+              
+          
+
+            });
+            UnStoreListPaymentRoomCM = new RelayCommand<Label>((p) => { return true; }, async (p) =>
+            {
+
+                string roomNumber = p.Content.ToString().Substring(6);
+               
+                    ListPaymentRoomNumber.Remove(roomNumber);
+                
+
+
+
+            });
+            LoadRoomGroupPaymentCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
+            {
+                 await ChooseRoomPayment();
+                if (ListBillByListRentalContract.Count == 0)
+                {
+                    CustomMessageBox.ShowOk("Hãy chọn phòng thanh toán!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                    ListPaymentRoomNumber.Clear();
+                    return;
+                }
+                else if (ListBillByListRentalContract.Count == 1)
+                {
+                    RoomBill rbWd = new RoomBill();
+                    BillPayment = ListBillByListRentalContract[0];
+                    ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(BillPayment.ListTroubleByCustomer);
+                    if (ListTroubleByCustomer.Count == 0)
+                    {
+                        rbWd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    if (BillPayment.PersonNumber < 3)
+                    {
+                        rbWd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    if (BillPayment.IsHasForeignPerson == false)
+                    {
+                        rbWd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    TotalMoneyPayment = 0;
+                    p.Close();
+                    rbWd.ShowDialog();
+                }
+                else
+                {
+                    RoomGroupPayment wd = new RoomGroupPayment();
+                    roomGroupPayment = (RoomGroupPayment)wd;
+                    TotalMoneyPaymentRoomGroup = 0;
+                    foreach (var item in ListBillByListRentalContract)
+                    {
+                        TotalMoneyPaymentRoomGroup += item.TotalPriceTemp;
+                    }
+                    TotalMoneyPaymentRoomGroupStr = Helper.FormatVNMoney2(TotalMoneyPaymentRoomGroup);
+                    p.Close();
+                    wd.ShowDialog();
+
+                }
+
+            });
+            FirstLoadRoomBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await LoadRoomBillFunc();
+            });
+            LoadRoomBillCM = new RelayCommand<StackPanel>((p) => { return true; }, async (p) =>
+            {
+                RoomBill wd = new RoomBill();
+                BillPayment = SelectedRoomBill;
+                ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(BillPayment.ListTroubleByCustomer);
+                if (ListTroubleByCustomer.Count == 0)
+                {
+                    wd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                if (BillPayment.PersonNumber < 3)
+                {
+                    wd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                if (BillPayment.IsHasForeignPerson == false)
+                {
+                    wd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                TotalMoneyPayment = 0;
+                wd.ShowDialog();
+            });
+            SaveBillCM = new RelayCommand<RoomBill>((p) => { return true; }, async (p) =>
+            {
+                await SaveBillFunc(p);
+            });
         }
 
 
@@ -660,11 +901,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         }
         private void PageSetting(Page p)
         {
-            SelectedDate = DateTime.Today;
-            SelectedTime = DateTime.Now;
-            radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
-            radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
-            radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
+           
             lbRoomTypeA = (Label)p.FindName("lbRoomTypeA");
             lbRoomTypeB = (Label)p.FindName("lbRoomTypeB");
             lbRoomTypeC = (Label)p.FindName("lbRoomTypeC");
@@ -672,7 +909,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ListBox1 = (ListBox) MainPage.FindName("listRoom1");
             ListBox2 = (ListBox)MainPage.FindName("listRoom2");
             ListBox3 = (ListBox)MainPage.FindName("listRoom3");
-            IsLoad= true;
+            IsPageLoad= true;
         }
       
      
@@ -727,7 +964,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
            var res = Tuple.Create(res1,res2,res3);
             return res;
         }
-        private void ChangView()
+        private void ChangeView()
         {
 
             (string roomType, string roomStatus, string roomCleaningStatus) =  GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
@@ -750,19 +987,22 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     lbRoomTypeA.Visibility = Visibility.Collapsed;
                     lbRoomTypeB.Visibility = Visibility.Collapsed;
                 }
-        
-                    if (TimeChange == false)
-                {
-                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                }
-                    else
-                {
-                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                }
+                ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomTypeName == roomType).ToList());
+                ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomTypeName == roomType).ToList());
+
+                //if (TimeChange == false)
+                //{
+                //    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                //    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                //    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                //}
+                //    else
+                //{
+                //    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                //    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                //    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                //}
                    
               
               

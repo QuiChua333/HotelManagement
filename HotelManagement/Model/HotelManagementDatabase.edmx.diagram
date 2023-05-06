@@ -24,6 +24,7 @@
         <EntityTypeShape EntityType="HotelManagementModel.Trouble" Width="1.5" PointX="3" PointY="24.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HotelManagementModel.TroubleByCustomer" Width="1.5" PointX="5.25" PointY="16.375" IsExpanded="true" />
         <AssociationConnector Association="HotelManagementModel.FK_Bill_RentalContract" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelManagementModel.FK_Bill_Staff" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_RentalContractDetail_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_Review_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="HotelManagementModel.FK_FurnitureReceiptId_Furniture" ManuallyRouted="false" />
