@@ -102,6 +102,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 return HOTEL_INFO.PHONE;
             }
         }
+        private double _TotalMoneyPaymentRoomGroup;
+        public double TotalMoneyPaymentRoomGroup
+        {
+            get { return _TotalMoneyPaymentRoomGroup; }
+            set { _TotalMoneyPaymentRoomGroup = value; OnPropertyChanged(); }
+        }
+        private string _TotalMoneyPaymentRoomGroupStr;
+        public string TotalMoneyPaymentRoomGroupStr
+        {
+            get { return _TotalMoneyPaymentRoomGroupStr; }
+            set { _TotalMoneyPaymentRoomGroupStr = value; OnPropertyChanged(); }
+        }
+
         public async Task Payment()
         {
             ListRentalContractByCustomer = new List<RentalContractDTO> (await RentalContractService.Ins.GetRentalContractByCustomer(SelectedRoom.CustomerId));
@@ -196,12 +209,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
 
             TotalMoneyPayment = (double)BillPayment.TotalPriceTemp;
-            FormatMoney(TotalMoneyPayment);
-            
+            TotalMoneyPaymentStr = Helper.FormatVNMoney2(TotalMoneyPayment);
+
         }
         private void FormatMoney(double money)
         {
-            TotalMoneyPaymentStr = Helper.FormatVNMoney2(money);
+            
+            TotalMoneyPaymentRoomGroupStr = Helper.FormatVNMoney2(money);
         }
     }
 }

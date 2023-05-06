@@ -123,7 +123,7 @@ namespace HotelManagement.Model.Services
                         CustomerId = x.CustomerId,
                         CustomerName = x.Customer.CustomerName,
                         CustomerAddress= x.Customer.CustomerAddress,
-                        PersonNumber = (int)x.PersonNumber,
+                       
                         StartDate = x.StartDate,
                         StartTime = x.StartTime,
                         CheckOutDate = x.CheckOutDate,

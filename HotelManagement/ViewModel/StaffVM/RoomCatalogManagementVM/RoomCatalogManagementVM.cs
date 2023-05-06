@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model;
 using HotelManagement.Model.Services;
+using HotelManagement.Utilities;
 using HotelManagement.Utils;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
@@ -818,6 +819,14 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     {
                         rbWd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
                     }
+                    if (BillPayment.PersonNumber < 3)
+                    {
+                        rbWd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    if (BillPayment.IsHasForeignPerson == false)
+                    {
+                        rbWd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
+                    }
                     TotalMoneyPayment = 0;
                     p.Close();
                     rbWd.ShowDialog();
@@ -825,7 +834,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 else
                 {
                     RoomGroupPayment wd = new RoomGroupPayment();
-                    roomGroupPayment = (RoomGroupPayment)wd;    
+                    roomGroupPayment = (RoomGroupPayment)wd;
+                    TotalMoneyPaymentRoomGroup = 0;
+                    foreach (var item in ListBillByListRentalContract)
+                    {
+                        TotalMoneyPaymentRoomGroup += item.TotalPriceTemp;
+                    }
+                    TotalMoneyPaymentRoomGroupStr = Helper.FormatVNMoney2(TotalMoneyPaymentRoomGroup);
                     p.Close();
                     wd.ShowDialog();
 
