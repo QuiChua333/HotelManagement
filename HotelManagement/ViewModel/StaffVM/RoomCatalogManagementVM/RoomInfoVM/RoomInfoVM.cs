@@ -98,8 +98,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public async Task ChangeRoomStatusFunc(RoomWindow p)
         {
 
-            (bool isSucessed, string mess) = await RoomService.Ins.ChangeRoomStatus(SelectedRoom.RoomId, SelectedRoom.RentalContractId);
-            if (isSucessed)
+            (bool isSucceed, string mess) = await RoomService.Ins.ChangeRoomStatus(SelectedRoom.RoomId, SelectedRoom.RentalContractId);
+            if (isSucceed)
             {
                 CustomMessageBox.ShowOk(mess, "Thông báo", "OK", CustomMessageBoxImage.Success);
                 p.Close();

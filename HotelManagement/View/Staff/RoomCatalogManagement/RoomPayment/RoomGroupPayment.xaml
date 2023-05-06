@@ -191,7 +191,7 @@
                            FontSize="16"
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
                             <Label  Grid.Column="4"
-                            VerticalAlignment="Center"
+                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Center"
                            Content="Sự Cố"
                            FontWeight="Bold"
@@ -220,10 +220,10 @@
                         <Rectangle Height="1" Fill="#C95D3B" Margin="-5,2,-5,0"></Rectangle>
                         <Grid Margin="0,10,0,0" Height="140">
                             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                        ItemsSource="{Binding ListSeat1}"
+                                        ItemsSource="{Binding ListBillByListRentalContract}"
                                          x:Name="SeatListBox1"
                                          VerticalAlignment="Top"
-                                         SelectedItem="{Binding SelectedSeat}">
+                                         SelectedItem="{Binding SelectedRoomBill}" d:ItemsSource="{d:SampleData ItemCount=5}">
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems}" />
                                 </ListBox.ItemContainerStyle>
@@ -247,8 +247,9 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock  Text="Phòng 1"
+                                            <TextBlock  
                                                        Grid.Column="0"
+                                                        Text="{Binding RoomName}"
                                    Margin="10,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -256,9 +257,45 @@
                                FontSize="16"
                                Foreground="Black"
                                FontWeight="Regular"/>
-                                            <TextBlock Text="100,000"
+                                            <TextBlock 
                                                        Grid.Column="1"
-                                   
+                                   Text="{Binding DayNumber}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                                            <TextBlock 
+                                                       Grid.Column="2"
+                                   Text="{Binding RoomPriceStr}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                                            <TextBlock 
+                                                       Grid.Column="3"
+                                   Text="{Binding ServicePriceTempStr}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                                            <TextBlock 
+                                                       Grid.Column="4"
+                                   Text="{Binding TroublePriceTempStr}"
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               FontSize="16"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                                            <TextBlock 
+                                                       Grid.Column="5"
+                                   Text="{Binding TotalPriceTempStr}"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
@@ -268,14 +305,9 @@
                                             <Image Source="{StaticResource PhieuThue}" 
                                                    Width="30"
                                                    Height="30"
-                                               Grid.Column="2"
+                                               Grid.Column="6"
                                                HorizontalAlignment="Center"/>
-                                            <Button Grid.Column="3">
-                                                <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                            </Button>
+                                           
                                         </Grid>
 
 
@@ -283,211 +315,7 @@
                                 </ListBox.ItemTemplate>
 
                              
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
-
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
-
-
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="120,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="100,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
-
-
-                                <ListBoxItem>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Text="Phòng 1"
-                                                       Grid.Column="0"
-                                   Margin="10,0,0,0"
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <TextBlock Text="120,000"
-                                                       Grid.Column="1"
-                                   
-                               FontFamily="{DynamicResource MaterialDesignFont}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               FontSize="16"
-                               Foreground="Black"
-                               FontWeight="Regular"/>
-                                        <Image Source="{StaticResource PhieuThue}" 
-                                                   Width="30"
-                                                   Height="30"
-                                               Grid.Column="2"
-                                               HorizontalAlignment="Center"/>
-                                        <Button Grid.Column="3">
-                                            <materialDesign:PackIcon Kind="Printer"
-                                                                     Width="27"
-                                                                     Height="27"
-                                                                     Foreground="#948D8D"/>
-                                        </Button>
-                                    </Grid>
-
-                                </ListBoxItem>
+                               
                             </ListBox>
                             
 

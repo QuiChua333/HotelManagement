@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagement.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,8 @@ namespace HotelManagement.DTOs
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string RoomId { get; set; }
-        public string RoomNumber { get; set; }
+        public int RoomNumber { get; set; }
+        public string RoomTypeName { get; set; }
         public string RoomName
         {
             get
@@ -26,6 +28,14 @@ namespace HotelManagement.DTOs
             }
         }
         public Nullable<double> RoomPrice { get; set; }
+        public string RoomPriceStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney((double)RoomPrice);
+            }
+
+        }
         public Nullable<int> NumberOfRentalDays { get; set; }
         public Nullable<double> ServicePrice { get; set; }
         public Nullable<double> TroublePrice { get; set; }
@@ -35,6 +45,7 @@ namespace HotelManagement.DTOs
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.TimeSpan> StartTime { get; set; }
         public Nullable<System.DateTime> CheckOutDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public int DayNumber
         {
             get
@@ -62,6 +73,15 @@ namespace HotelManagement.DTOs
                 }
                 return t;
             }
+
+        }
+        public string ServicePriceTempStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney(ServicePriceTemp);
+            }
+
         }
         public double TroublePriceTemp
         {
@@ -75,12 +95,28 @@ namespace HotelManagement.DTOs
                 return t;
             }
         }
+        public string TroublePriceTempStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney(TroublePriceTemp);
+            }
+
+        }
         public double TotalPriceTemp
         {
             get
             {
-                return ServicePriceTemp + TroublePriceTemp;
+                return ServicePriceTemp + TroublePriceTemp + DayNumber *(double) RoomPrice;
             }
+        }
+        public string TotalPriceTempStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney(TotalPriceTemp);
+            }
+
         }
 
     }

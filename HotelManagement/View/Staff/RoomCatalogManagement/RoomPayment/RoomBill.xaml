@@ -116,7 +116,7 @@
                            FontSize="14"
                                       
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="{Binding RentalContractPayment.CustomerName}"
+                                        <TextBlock Text="{Binding BillPayment.CustomerName}"
                                   Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -135,7 +135,7 @@
                            FontSize="14"
                                  
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="{Binding RentalContractPayment.CustomerAddress}"
+                                        <TextBlock Text="{Binding BillPayment.CustomerAddress}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -153,7 +153,7 @@
                            FontSize="14"
                                       
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="{Binding RentalContractPayment.RoomNumber}"
+                                        <TextBlock Text="{Binding BillPayment.RoomNumber}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -171,7 +171,7 @@
                            FontSize="14"
                                 
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="{Binding RentalContractPayment.RoomTypeName}"
+                                        <TextBlock Text="{Binding BillPayment.RoomTypeName}"
                                    Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -193,7 +193,7 @@
                            FontSize="14"
                                
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="{Binding RentalContractPayment.RentalContractId}"
+                                        <TextBlock Text="{Binding BillPayment.RentalContractId}"
                                   Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -533,8 +533,10 @@
                                FontStyle="Italic"
                                Foreground="Black"
                                FontWeight="Regular"/>
-                                <TextBlock Text="Liên hệ: 0123456789"            
-                               Margin="0,5,0,0"
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                            Margin="0,5,0,0">
+                                    <TextBlock Text="Liên hệ: "            
+                               
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Right"
@@ -542,6 +544,17 @@
                                FontStyle="Italic"
                                Foreground="Black"
                                FontWeight="Regular"/>
+                                    <TextBlock Text="{Binding HotelPhone}"            
+                               
+                               FontFamily="{DynamicResource MaterialDesignFont}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               FontSize="12"
+                               FontStyle="Italic"
+                               Foreground="Black"
+                               FontWeight="Regular"/>
+                                </StackPanel>
+                                
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -560,7 +573,17 @@
                                                                      Height="27"
                                                                      Foreground="#948D8D"/>
                 </Button>
-               
+                <Button HorizontalAlignment="Right"
+                        Margin="0,0,35,0"
+                        Style="{StaticResource CustomButton}"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Content="Hoàn tất"
+                        Background="{StaticResource ButtonOk}"
+                        Width="100"
+                        Command="{Binding SaveBillCM}"
+                        CommandParameter="{Binding ElementName=window}"/>
+
             </Grid>
         </Grid>
     </Border>

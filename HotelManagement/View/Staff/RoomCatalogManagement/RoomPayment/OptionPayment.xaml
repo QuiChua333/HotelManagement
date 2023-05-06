@@ -128,13 +128,22 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid x:Name="grid">
                                     <CheckBox Style="{StaticResource myCheckboxStyle}" 
                                               VerticalAlignment="Center" 
                                               Cursor="Hand"
                                               x:Name="checkBoxRoom"
                                               HorizontalAlignment="Left">
-                                        
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Checked">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listPayMentRoom, Path=DataContext.StoreListPaymentRoomCM}"
+                                                                                   CommandParameter="{Binding ElementName=lbRoomName}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="UnChecked">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listPayMentRoom, Path=DataContext.UnStoreListPaymentRoomCM}"
+                                                                                   CommandParameter="{Binding ElementName=lbRoomName}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
 
                                     </CheckBox>
                                     
@@ -146,13 +155,8 @@
                                            x:Name="lbRoomName"
                                        FontSize="16"
                                        FontFamily="{DynamicResource MaterialDesignFont}" />
-                                   
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding ElementName=listPayMentRoom, Path=DataContext.StoreListPaymentRoomCM}"
-                                                                                   CommandParameter="{Binding ElementName=lbRoomName}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                    
+
                                 </Grid>
 
                             </DataTemplate>

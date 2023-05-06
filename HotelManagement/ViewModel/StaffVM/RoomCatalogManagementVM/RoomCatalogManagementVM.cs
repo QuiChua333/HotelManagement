@@ -61,6 +61,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             set { _radioButtonRoomCleaningStatus = value; OnPropertyChanged(); }
         }
         Page MainPage;
+        RoomWindow RoomWindow;
         public string RoomTypeA
         {
             get
@@ -166,6 +167,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         private bool TimeChange = false;
         private bool Refresh = false;
         private bool IsLoad = false;
+        private bool IsViewChange = false;
         public StaffDTO CurrentStaff;
         DispatcherTimer timer = new DispatcherTimer();
         public ICommand FirstLoadCM { get; set; }
@@ -206,8 +208,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         // Thanh toán
         public ICommand PaymentCM { get; set; }
         public ICommand StoreListPaymentRoomCM { get; set; }
+        public ICommand UnStoreListPaymentRoomCM { get; set; }
         public ICommand LoadRoomGroupPaymentCM { get; set; }
         public ICommand FirstLoadRoomBillCM { get; set; }
+        public ICommand SaveBillCM { get; set; }
 
         public RoomCatalogManagementVM()
         {
@@ -273,9 +277,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
-                
-                    try
-                    {
+                        
+                   
                         if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
                         else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
                         else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
@@ -296,11 +299,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
 
                         ChangView();
-                    }
-                    catch(Exception ex)
-                    {
-                    CustomMessageBox.ShowOk("Lỗi hệ thống!", "Thông báo", "Ok", CustomMessageBoxImage.Error);
-                    }
+                    
+                    
 
                 
             });
@@ -332,7 +332,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                         }
                     }
                 }
-                if (IsLoad == true) return;
+                if (IsLoad == true)
+                {
+                    IsLoad= false;
+                    return;
+                }
                 ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
                 {
                     RoomId = r.RoomId,
@@ -468,6 +472,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             RefreshCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {
                 Refresh = true;
+                IsViewChange = false;
                 TimeChange = false;
                 await AutoUpdateDb();
                 SelectedDate = DateTime.Today;
@@ -519,6 +524,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                             wd.btnPayment.Visibility = Visibility.Visible;
                             wd.btnCheckIn.Visibility = Visibility.Collapsed;
                         }
+                        RoomWindow= (RoomWindow)wd;
                             wd.ShowDialog();
                     }
                     catch (Exception ex)
@@ -541,7 +547,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             CloseRoomWindowCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
             {
                 p.Close();
-                RefreshCM.Execute(MainPage);
+               
+                    RefreshCM.Execute(MainPage);
+                
             });
 
             LoadRoomRentalContractInfoCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
@@ -739,23 +747,65 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             });
             StoreListPaymentRoomCM = new RelayCommand<Label>((p) => { return true; }, async (p) =>
             {
-                string roomID = "MP" + p.Content.ToString().Substring(6);
-                if (ListPaymentRoomId.Contains(roomID))
-                {
-                    ListPaymentRoomId.Remove(roomID);
-                }
-                else ListPaymentRoomId.Add(roomID);
+                
+                string roomNumber = p.Content.ToString().Substring(6);
+               
+                    ListPaymentRoomNumber.Add(roomNumber);
+              
+                
+              
+          
+
+            });
+            UnStoreListPaymentRoomCM = new RelayCommand<Label>((p) => { return true; }, async (p) =>
+            {
+
+                string roomNumber = p.Content.ToString().Substring(6);
+               
+                    ListPaymentRoomNumber.Remove(roomNumber);
+                
+
+
+
             });
             LoadRoomGroupPaymentCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
-                RoomGroupPayment wd = new RoomGroupPayment();
-                
-                p.Close();
-                wd.ShowDialog();
+                 await ChooseRoomPayment();
+                if (ListBillByListRentalContract.Count == 0)
+                {
+                    CustomMessageBox.ShowOk("Hãy chọn phòng thanh toán!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                    ListPaymentRoomNumber.Clear();
+                    return;
+                }
+                else if (ListBillByListRentalContract.Count == 1)
+                {
+                    RoomBill rbWd = new RoomBill();
+                    BillPayment = ListBillByListRentalContract[0];
+                    ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(BillPayment.ListTroubleByCustomer);
+                    if (ListTroubleByCustomer.Count == 0)
+                    {
+                        rbWd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    TotalMoneyPayment = 0;
+                    p.Close();
+                    rbWd.ShowDialog();
+                }
+                else
+                {
+                    RoomGroupPayment wd = new RoomGroupPayment();
+                    p.Close();
+                    wd.ShowDialog();
+
+                }
+
             });
             FirstLoadRoomBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 await LoadRoomBillFunc();
+            });
+            SaveBillCM = new RelayCommand<RoomBill>((p) => { return true; }, async (p) =>
+            {
+                await SaveBillFunc(p);
             });
         }
 

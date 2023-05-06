@@ -1,6 +1,8 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
+using HotelManagement.Utils;
+using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment;
 using System;
 using System.CodeDom;
@@ -9,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 {
@@ -29,11 +32,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _ListRoomByCustomer; }
             set { _ListRoomByCustomer = value; OnPropertyChanged(); }
         }
-        private List<string> _ListPaymentRoomId;
-        public List<string> ListPaymentRoomId
+        private ObservableCollection<string> _ListPaymentRoomNumber;
+        public ObservableCollection<string> ListPaymentRoomNumber
         {
-            get { return _ListPaymentRoomId; }
-            set { _ListPaymentRoomId = value; OnPropertyChanged(); }
+            get { return _ListPaymentRoomNumber; }
+            set { _ListPaymentRoomNumber = value; OnPropertyChanged(); }
         }
         private ObservableCollection<ServiceUsingDTO> _ListServicePayment;
         public ObservableCollection<ServiceUsingDTO> ListServicePayment
@@ -41,17 +44,24 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _ListServicePayment; }
             set { _ListServicePayment = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<RentalContractDTO> _ListRentalContractByCustomer;
-        public ObservableCollection<RentalContractDTO> ListRentalContractByCustomer
+        private List<RentalContractDTO> _ListRentalContractByCustomer;
+        public List<RentalContractDTO> ListRentalContractByCustomer
         {
             get { return _ListRentalContractByCustomer; }
             set { _ListRentalContractByCustomer = value; OnPropertyChanged(); }
         }
-        private RentalContractDTO _RentalContractPayment;
-        public RentalContractDTO RentalContractPayment
+        private ObservableCollection<BillDTO> _ListBillByListRentalContract;
+        public ObservableCollection<BillDTO> ListBillByListRentalContract
         {
-            get { return _RentalContractPayment; }
-            set { _RentalContractPayment = value; OnPropertyChanged(); }
+            get { return _ListBillByListRentalContract; }
+            set { _ListBillByListRentalContract = value; OnPropertyChanged(); }
+        }
+
+        private BillDTO _BillPayment;
+        public BillDTO BillPayment
+        {
+            get { return _BillPayment; }
+            set { _BillPayment = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<TroubleByCustomerDTO> _ListTroubleByCustomer;
@@ -79,10 +89,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _TotalMoneyPaymentStr; }
             set { _TotalMoneyPaymentStr = value; OnPropertyChanged(); }
         }
+        public string HotelPhone
+        {
+            get
+            {
+                return HOTEL_INFO.PHONE;
+            }
+        }
         public async Task Payment()
         {
-            ListRentalContractByCustomer = new ObservableCollection<RentalContractDTO> (await RentalContractService.Ins.GetRentalContractByCustomer(SelectedRoom.CustomerId));
-            ListPaymentRoomId = new List<string>();
+            ListRentalContractByCustomer = new List<RentalContractDTO> (await RentalContractService.Ins.GetRentalContractByCustomer(SelectedRoom.CustomerId));
+            ListBillByListRentalContract = new ObservableCollection<BillDTO>(await BillService.Ins.GetBillByListRentalContract(ListRentalContractByCustomer));
+            ListPaymentRoomNumber = new ObservableCollection<string>();
+            
             if (ListRentalContractByCustomer != null)
             {
                 if (ListRentalContractByCustomer.Count > 1)
@@ -95,8 +114,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 else
                 {
                     RoomBill wd = new RoomBill();
-                    RentalContractPayment = ListRentalContractByCustomer[0];
-                    ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(await TroubleService.Ins.GetListTroubleByCustomer(RentalContractPayment.RentalContractId));
+                    BillPayment = ListBillByListRentalContract[0];
+                    ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(BillPayment.ListTroubleByCustomer);
                     if (ListTroubleByCustomer.Count == 0)
                     {
                         wd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
@@ -106,30 +125,68 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 }
             }
         }
+        public async Task ChooseRoomPayment()
+        {
+            //string res = "";
+            //foreach (var item in ListPaymentRoomNumber) { res += item + " "; }
+            //MessageBox.Show(res);
+            var list = new ObservableCollection<BillDTO>(await BillService.Ins.GetBillByListRentalContract(ListRentalContractByCustomer));
+            ListBillByListRentalContract = new ObservableCollection<BillDTO>(list.Where(x=> ListPaymentRoomNumber.Contains(x.RoomNumber.ToString())).ToList());
+        }
+        public async Task SaveBillFunc(RoomBill p)
+        {
+            BillDTO roomBillDTO = new BillDTO
+            {
+                RentalContractId = BillPayment.RentalContractId,
+                //StaffId = CurrentStaff.StaffId,
+                NumberOfRentalDays = BillPayment.DayNumber,
+                ServicePrice = BillPayment.ServicePriceTemp,
+                TroublePrice = BillPayment.TroublePriceTemp,
+                TotalPrice = BillPayment.TotalPriceTemp,
+                CreateDate = DateTime.Today,
+            };
+            (bool isSucceed, string message) = await BillService.Ins.SaveBill(roomBillDTO);
+            if (isSucceed)
+            {
+                CustomMessageBox.ShowOk(message, "Thông báo", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+                (bool isSucceed2, string message2) = await RoomService.Ins.ChangeRoomStatus(BillPayment.RoomId, BillPayment.RentalContractId);
+                if (isSucceed2)
+                {
+                    
+                    p.Close();
+                    RoomWindow.Close();
+                    RefreshCM.Execute(MainPage);
+                }
+                else
+                {
+                    CustomMessageBox.ShowOk(message2, "Lỗi", "OK", CustomMessageBoxImage.Error);
+                }
+                p.Close();
+            }
+            else
+            {
+                CustomMessageBox.ShowOk(message, "Thông báo", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+            }
+        }
         public async Task LoadRoomBillFunc()
         {
 
-            ListServicePayment = new ObservableCollection<ServiceUsingDTO>(await ServiceUsingHelper.Ins.GetListUsingService(RentalContractPayment.RentalContractId));
+            ListServicePayment = new ObservableCollection<ServiceUsingDTO>(BillPayment.ListListServicePayment);
             ListServicePayment.Insert(0, new ServiceUsingDTO
                 {
-                    ServiceName = RentalContractPayment.RoomName,
-                    UnitPrice = RentalContractPayment.RoomPrice,
-                    Quantity = RentalContractPayment.DayNumber,
+                    ServiceName = BillPayment.RoomName,
+                    UnitPrice = BillPayment.RoomPrice,
+                    Quantity = BillPayment.DayNumber,
                 });
-            foreach (var item in ListServicePayment)
-            {
-                TotalMoneyPayment += item.TotalMoney;
-            }
-            foreach (var item in ListTroubleByCustomer)
-            {
-                TotalMoneyPayment += (double)item.PredictedPrice;
-            }
-            FormatMoney();
+
+
+            TotalMoneyPayment = (double)BillPayment.TotalPriceTemp;
+            FormatMoney(TotalMoneyPayment);
             
         }
-        private void FormatMoney()
+        private void FormatMoney(double money)
         {
-            TotalMoneyPaymentStr = Helper.FormatVNMoney2(TotalMoneyPayment);
+            TotalMoneyPaymentStr = Helper.FormatVNMoney2(money);
         }
     }
 }
