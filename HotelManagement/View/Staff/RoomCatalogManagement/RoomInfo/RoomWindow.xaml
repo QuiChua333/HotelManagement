@@ -242,7 +242,7 @@
                                                                              Margin="0,0,0,3"/>
                                                     <Label 
                                                           Margin="5,0,0,0"
-                                                           Content="Số người ở:"
+                                                           Content="Số người ở :"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
