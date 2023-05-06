@@ -63,6 +63,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _BillPayment; }
             set { _BillPayment = value; OnPropertyChanged(); }
         }
+        private BillDTO _SelectedRoomBill;
+        public BillDTO SelectedRoomBill
+        {
+            get { return _SelectedRoomBill; }
+            set { _SelectedRoomBill = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<TroubleByCustomerDTO> _ListTroubleByCustomer;
         public ObservableCollection<TroubleByCustomerDTO> ListTroubleByCustomer
@@ -162,6 +168,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 {
                     
                     p.Close();
+                    if (roomGroupPayment!=null) roomGroupPayment.Close();
                     RoomWindow.Close();
                     RefreshCM.Execute(MainPage);
                 }

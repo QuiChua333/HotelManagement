@@ -11,6 +11,7 @@
         AllowsTransparency="True" 
         Background="Transparent"
         WindowStyle="None"
+        x:Name="window"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         DataContext="{StaticResource RoomCatalogManagementVM}">
     <Border CornerRadius="5" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3" Height="520" Width="900">
@@ -218,10 +219,10 @@
 
                         </Grid>
                         <Rectangle Height="1" Fill="#C95D3B" Margin="-5,2,-5,0"></Rectangle>
-                        <Grid Margin="0,10,0,0" Height="140">
+                        <Grid Margin="0,10,0,0" MaxHeight="140">
                             <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                         ItemsSource="{Binding ListBillByListRentalContract}"
-                                         x:Name="SeatListBox1"
+                                         x:Name="listRoomBill"
                                          VerticalAlignment="Top"
                                          SelectedItem="{Binding SelectedRoomBill}" d:ItemsSource="{d:SampleData ItemCount=5}">
                                 <ListBox.ItemContainerStyle>
@@ -302,11 +303,40 @@
                                FontSize="16"
                                Foreground="Black"
                                FontWeight="Regular"/>
-                                            <Image Source="{StaticResource PhieuThue}" 
+                                            <StackPanel Grid.Column="6" HorizontalAlignment="Center"
+                                                         Cursor="Hand"
+                                                        x:Name="spXemHoaDon">
+                                                <StackPanel.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Grid.IsMouseOver" Value="true">
+                                                                <Setter Property="Grid.Opacity" Value="0.8" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+                                                <Image Source="{StaticResource PhieuThue}" 
                                                    Width="30"
                                                    Height="30"
-                                               Grid.Column="6"
-                                               HorizontalAlignment="Center"/>
+                                             
+                                               HorizontalAlignment="Center"
+                                                  >
+
+
+                                                    <i:Interaction.Triggers>
+                                                      
+                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                                            <i:InvokeCommandAction Command="{Binding ElementName=listRoomBill, Path=DataContext.LoadRoomBillCM}"
+                                                                       CommandParameter="{Binding ElementName=spXemHoaDon}" />
+                                                        </i:EventTrigger>
+
+                                                    </i:Interaction.Triggers>
+
+
+
+                                                </Image>
+                                            </StackPanel>
+                                            
                                            
                                         </Grid>
 

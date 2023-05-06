@@ -62,6 +62,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         }
         Page MainPage;
         RoomWindow RoomWindow;
+        RoomGroupPayment roomGroupPayment;
         public string RoomTypeA
         {
             get
@@ -211,7 +212,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         public ICommand StoreListPaymentRoomCM { get; set; }
         public ICommand UnStoreListPaymentRoomCM { get; set; }
         public ICommand LoadRoomGroupPaymentCM { get; set; }
+        public ICommand LoadRoomBillCM { get; set; }
         public ICommand FirstLoadRoomBillCM { get; set; }
+   
         public ICommand SaveBillCM { get; set; }
 
         public RoomCatalogManagementVM()
@@ -519,8 +522,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             OpenRoomWindowCM = new RelayCommand<Grid>((p) => { return true; }, async (p) =>
             {
                 if (TimeChange == true) return;
-                if (SelectedRoom==null) return;
-                    try
+                //MessageBox.Show(SelectedRoom.RoomNumber.ToString());
+                if (SelectedRoom == null) return;
+                try
                     {
                         RoomWindow wd = new RoomWindow();
                         
@@ -821,6 +825,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 else
                 {
                     RoomGroupPayment wd = new RoomGroupPayment();
+                    roomGroupPayment = (RoomGroupPayment)wd;    
                     p.Close();
                     wd.ShowDialog();
 
@@ -830,6 +835,26 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             FirstLoadRoomBillCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 await LoadRoomBillFunc();
+            });
+            LoadRoomBillCM = new RelayCommand<StackPanel>((p) => { return true; }, async (p) =>
+            {
+                RoomBill wd = new RoomBill();
+                BillPayment = SelectedRoomBill;
+                ListTroubleByCustomer = new ObservableCollection<TroubleByCustomerDTO>(BillPayment.ListTroubleByCustomer);
+                if (ListTroubleByCustomer.Count == 0)
+                {
+                    wd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                if (BillPayment.PersonNumber < 3)
+                {
+                    wd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                if (BillPayment.IsHasForeignPerson == false)
+                {
+                    wd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                TotalMoneyPayment = 0;
+                wd.ShowDialog();
             });
             SaveBillCM = new RelayCommand<RoomBill>((p) => { return true; }, async (p) =>
             {
