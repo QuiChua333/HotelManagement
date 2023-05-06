@@ -1,4 +1,5 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
@@ -94,17 +95,16 @@ namespace HotelManagement.Model.Services
                     var listReadyRoom = await (
                         from r in context.Rooms
                         join temp in context.RoomTypes
-                        on r.RoomTypeId equals temp.RoomTypeId into gj
-                        from d in gj.DefaultIfEmpty()
+                        on r.RoomTypeId equals temp.RoomTypeId 
                         where listBusyRoomId.Contains(r.RoomId)==false
                         select new RoomDTO
                         {
                             // DTO = db
                             RoomId = r.RoomId,
                             RoomNumber = (int)r.RoomNumber,
-                            RoomTypeName = d.RoomTypeName,
-                            RoomTypeId = d.RoomTypeId,
-                            Price = (double)d.Price,
+                            RoomTypeName = temp.RoomTypeName,
+                            RoomTypeId = temp.RoomTypeId,
+                            Price = (double)temp.Price,
                         }
                     ).ToListAsync();
                    return listReadyRoom;
@@ -135,7 +135,6 @@ namespace HotelManagement.Model.Services
                         CheckOutDate = rentalContract.CheckOutDate,
                         CustomerId = rentalContract.CustomerId,
                         Validated = rentalContract.Validated,
-                        PersonNumber = rentalContract.PersonNumber,
                     };
 
                     context.RentalContracts.Add(rc);
@@ -191,7 +190,7 @@ namespace HotelManagement.Model.Services
             }
         }
 
-        public async Task<(bool, string)> DeleteRentalContract(string Id)
+        public async Task<(bool, string)> DeleteRentalContractBooked(string Id)
         {
             try
             {
@@ -204,17 +203,78 @@ namespace HotelManagement.Model.Services
                     {
                         return (false, "Phiếu thuê phòng này không tồn tại!");
                     }
+
+                    rental.Room.RoomStatus = ROOM_STATUS.READY;
+
                     context.RentalContracts.Remove(rental);
                     await context.SaveChangesAsync();
                 }
             }
             catch (Exception)
             {
-                return (false, "Phiếu thuê phòng này đã có khách đặt. Không thể xóa!");
+                return (false, "Lỗi hệ thống");
             }
             return (true, "Xóa phiếu thuê phòng thành công");
         }
 
+        public async Task<(bool, string)> DeleteRentalContractOutDate(string Id)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    RentalContract rental = await (from p in context.RentalContracts
+                                                   where p.RentalContractId == Id
+                                                   select p).FirstOrDefaultAsync();
+                    if (rental == null)
+                    {
+                        return (false, "Phiếu thuê phòng này không tồn tại!");
+                    }
+
+                    List<ServiceUsing> serviceUsing = await context.ServiceUsings.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
+
+                    if(serviceUsing != null)
+                        context.ServiceUsings.RemoveRange(serviceUsing);
+
+                    List<Bill> bill = await context.Bills.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
+
+                    if (bill != null)
+                        context.Bills.RemoveRange(bill);
+
+                    List<TroubleByCustomer> troubleByCus = await context.TroubleByCustomers.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
+
+                    if (troubleByCus != null)
+                        context.TroubleByCustomers.RemoveRange(troubleByCus);
+
+                    List<RoomCustomer> roomCus = await context.RoomCustomers.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
+
+                    if (roomCus != null)
+                        context.RoomCustomers.RemoveRange(roomCus);
+
+                    context.RentalContracts.Remove(rental);
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                return (false, "Lỗi hệ thống!");
+            }
+            return (true, "Xóa phiếu thuê phòng thành công");
+        }
+        public async Task<string> GetRoomStatusBy(string rtID)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    return (await context.RentalContracts.FindAsync(rtID)).Room.RoomStatus;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task<(bool, CustomerDTO)> CheckCCCD(string cccd)
         {
             try

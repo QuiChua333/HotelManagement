@@ -30,13 +30,8 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 string.IsNullOrEmpty(PhoneNumber) ||
                 string.IsNullOrEmpty(Email) ||
                 string.IsNullOrEmpty(Address) ||
-                string.IsNullOrEmpty(DayOfBirth.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(StartDate.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(CheckoutDate.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(StartTime.TimeOfDay.ToString()) ||
                 string.IsNullOrEmpty(Gender.Content.ToString()) ||
-                string.IsNullOrEmpty(CustomerType.Content.ToString()) ||
-                string.IsNullOrEmpty(PersonNumber.Content.ToString()))
+                string.IsNullOrEmpty(CustomerType.Content.ToString()))
             {
                 return (false, "Vui lòng nhập đủ thông tin khách hàng!");
             }
@@ -83,10 +78,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             {
                 CheckOutDate = CheckoutDate,
                 StartDate = StartDate,
-                StartTime = StartTime.TimeOfDay,
+                StartTime = new TimeSpan(0, StartTime.TimeOfDay.Hours, StartTime.TimeOfDay.Minutes, StartTime.TimeOfDay.Seconds, 0),
                 StaffId = StaffId,
                 CustomerId = CustomerId,
-                PersonNumber = int.Parse(PersonNumber.Tag.ToString()),
                 RoomId = SelectedRoom.RoomId,
                 Validated = true,
             };

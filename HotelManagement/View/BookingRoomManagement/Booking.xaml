@@ -378,7 +378,13 @@
                                     SelectedDate="{Binding StartDate}"
                                     Foreground="#686868" 
                                     Height="30" Width="240" 
-                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy"/>
+                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
                     </Border>
                 </Grid>
 
@@ -410,7 +416,13 @@
                                     SelectedDate="{Binding CheckoutDate}"
                                     Foreground="#686868" 
                                     Height="30" Width="240" 
-                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy"/>
+                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
                     </Border>
                 </Grid>
 
@@ -450,7 +462,13 @@
                                                    SelectedTime="{Binding StartTime}"
                                                    Foreground="#686868" 
                                                    Height="30" Width="240" 
-                                                   materialDesign:HintAssist.Hint="Chọn giờ check-in"/>
+                                                   materialDesign:HintAssist.Hint="Chọn giờ check-in">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedTimeChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </materialDesign:TimePicker>
                     </Border>
                 </Grid>
 

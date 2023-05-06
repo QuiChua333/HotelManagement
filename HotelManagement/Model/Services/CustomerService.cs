@@ -89,6 +89,33 @@ namespace HotelManagement.Model.Services
             }
             return (true, "Thêm khách hàng mới thành công", newCus);
         }
+        public async Task<CustomerDTO> GetCustomerByCCCD(string cccd)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var cus = await context.Customers.FirstOrDefaultAsync(x=> x.CCCD== cccd);
+                    return new CustomerDTO
+                    {
+                        CustomerId = cus.CustomerId,
+                        CustomerName = cus.CustomerName,
+                        PhoneNumber = cus.PhoneNumber,
+                        Email = cus.Email,
+                        CCCD = cus.CCCD,
+                        DateOfBirth = (DateTime)cus.DateOfBirth,
+                        Gender = cus.Gender,
+                        CustomerAddress = cus.CustomerAddress,
+                        CustomerType = cus.CustomerType,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
         public async Task<(bool , string)> UpdateCustomerInfo(CustomerDTO customer)
         {
             try

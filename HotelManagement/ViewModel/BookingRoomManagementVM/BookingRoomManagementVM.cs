@@ -103,8 +103,19 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             get { return _StartDate; }
             set { _StartDate = value; OnPropertyChanged(); }
         }
+        private RentalContractDTO  _RentalContract;
+        public RentalContractDTO RentalContract
+        {
+            get { return _RentalContract; }
+            set { _RentalContract = value; OnPropertyChanged(); }
+        }
+        private List<RoomCustomerDTO> _ListCustomer;
+        public List<RoomCustomerDTO> ListCustomer
+        {
+            get { return _ListCustomer; }
+            set { _ListCustomer = value; OnPropertyChanged(); }
+        }
 
-       
 
         private DateTime _DayOfBirth;
         public DateTime DayOfBirth
@@ -194,6 +205,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 
         public ICommand CloseCM { get; set; }
         public ICommand FirstLoadCM { get; set; }
+        public ICommand SelectedTimeChangedCM { get; set; }
         public ICommand LoadBookingCM { get; set; }
         public ICommand ConfirmBookingRoomCM { get; set; }
         public ICommand ExportExcelFileCM { get; set; }
@@ -237,9 +249,16 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             LoadDetailRentalContractRoomCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 DetailRent r = new DetailRent();
+                RentalContract = await RentalContractService.Ins.GetRentalContractById(SelectedItem.RentalContractId);
+                ListCustomer = await RoomCustomerService.Ins.GetCustomersOfRoom(SelectedItem.RentalContractId);
                 r.ShowDialog();
             });
-
+            SelectedTimeChangedCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                CheckoutDate = StartDate.AddDays(1);
+                await LoadReadyRoom();
+            });
+            
             ConfirmBookingRoomCM = new RelayCommand<Window>((p) => { return true; }, async (p) =>
             {
                 (bool isvalid, string error) = ValidateBooking();
@@ -248,6 +267,10 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                     if(!isExistCustomer)
                     {
                         await SaveCustomer();
+                    }
+                    else
+                    {
+                        CustomerId = (await CustomerService.Ins.GetCustomerByCCCD(CCCD)).CustomerId;
                     }
                     await SaveRentalContract(p);
                     await LoadBookingRoom();
@@ -265,7 +288,34 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 
                 if (kq == CustomMessageBoxResult.OK)
                 {
-                    (bool successDeleteRentalContract, string messageFromDelRentalContract) = await BookingRoomService.Ins.DeleteRentalContract(SelectedItem.RentalContractId);
+                    if (SelectedItem.Validated == true)
+                    {
+                        if ((await BookingRoomService.Ins.GetRoomStatusBy(SelectedItem.RentalContractId)) == ROOM_STATUS.BOOKED)
+                        {
+                            CustomMessageBoxResult kqq = CustomMessageBox.ShowOkCancel("Khách chưa nhận phòng. Bạn có muốn xóa phiếu thuê không!", "Thông báo", "Có", "Không", CustomMessageBoxImage.Warning);
+                            if (kqq == CustomMessageBoxResult.OK)
+                            {
+                                (bool successDeleteRentalContractBooked, string messageFromDelRentalContractBooked) = await BookingRoomService.Ins.DeleteRentalContractBooked(SelectedItem.RentalContractId);
+                                if (successDeleteRentalContractBooked)
+                                {
+                                    LoadBookingRoomListView(Operation.DELETE);
+                                    SelectedItem = null;
+                                    CustomMessageBox.ShowOk(messageFromDelRentalContractBooked, "Thông báo", "OK", CustomMessageBoxImage.Success);
+                                }
+                                else
+                                {
+                                    CustomMessageBox.ShowOk(messageFromDelRentalContractBooked, "Lỗi", "OK", CustomMessageBoxImage.Error);
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            CustomMessageBox.ShowOk("Khách đã nhận phòng. Bạn không thể xóa phiếu thuê này!", "Thông báo", "OK", CustomMessageBoxImage.Warning);
+                        }
+                        return;
+                    }
+                    (bool successDeleteRentalContract, string messageFromDelRentalContract) = await BookingRoomService.Ins.DeleteRentalContractOutDate(SelectedItem.RentalContractId);
                     if (successDeleteRentalContract)
                     {
                         LoadBookingRoomListView(Operation.DELETE);
