@@ -127,13 +127,26 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         }
         public async Task SaveCustomerFunc(AddCusWindow p)
         {
-            
+
             if (string.IsNullOrEmpty(p.tbName.Text) || string.IsNullOrEmpty(p.tbAddress.Text) || string.IsNullOrEmpty(p.tbCCCD.Text))
             {
                 CustomMessageBox.ShowOk("Vui lòng điền đầy đủ thông tin!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
                 return;
             }
-            RoomCustomerDTO newCus = new RoomCustomerDTO
+            foreach (var i in p.tbCCCD.Text)
+            {
+                if (!"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                }
+            }
+            if (p.tbCCCD.Text.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
+            } 
+                RoomCustomerDTO newCus = new RoomCustomerDTO
             {
                 CustomerName = p.tbName.Text,
                 CustomerType = SelectedType.Content.ToString(),
@@ -164,7 +177,19 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 CustomMessageBox.ShowOk("Vui lòng điền đầy đủ thông tin!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
                 return;
             }
-            
+            foreach (var i in p.tbCCCD.Text)
+            {
+                if (!"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                }
+            }
+            if (p.tbCCCD.Text.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
+            }
             RoomCustomerDTO updateCus = new RoomCustomerDTO
             {
                 CustomerName = p.tbName.Text,

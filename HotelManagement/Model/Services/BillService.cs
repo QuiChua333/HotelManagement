@@ -119,6 +119,8 @@ namespace HotelManagement.Model.Services
                         CreateDate= bill.CreateDate,    
                     };
                     context.Bills.Add(newBill);
+                    RentalContract rental = await context.RentalContracts.FindAsync(bill.RentalContractId);
+                    rental.PersonNumber=rental.RoomCustomers.Count();
                     await context.SaveChangesAsync();
                     return (true, "Thanh toán thành công!");
                 }
