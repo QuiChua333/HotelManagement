@@ -3,7 +3,9 @@ using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
 using HotelManagement.Utils;
+using HotelManagement.View.BookingRoomManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
+using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +22,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 {
     public partial class BookingRoomManagementVM : BaseVM
     {
+        private bool isExistCustomer = false;
         public (bool isvalid, string error) ValidateBooking()
         {
             if (string.IsNullOrEmpty(CustomerName) ||
@@ -55,7 +58,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 if (!isv) return (false, err);
                 if (StartDate >= CheckoutDate) return (false, "Vui lòng kiểm tra lại ngày bắt đầu thuê và ngày trả phòng!");
                 if (SelectedRoom is null) return (false, "Vui lòng chọn phòng để đặt!");
-                // check CMND
                 return (true, null);
             }
         }
@@ -117,7 +119,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             if (isSucsses)
             {
                 CustomerId = customerId;
-                IsSucceedSavingCustomer = true;
             }
             else
             {
@@ -127,6 +128,50 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
         public async Task LoadReadyRoom()
         {
             ListReadyRoom = new ObservableCollection<RoomDTO>(await BookingRoomService.Ins.GetListReadyRoom(StartDate,StartTime,CheckoutDate));
+        }
+        public async Task CheckCCCD(string cccd, Booking b)
+        {
+            
+            foreach(var i in cccd)
+            {
+                if( !"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return; 
+                }
+            }
+            if (cccd.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
+            }
+
+            (bool isExist, CustomerDTO cus) = await BookingRoomService.Ins.CheckCCCD(cccd);
+
+            if (isExist)
+            {
+                CCCD = cus.CCCD;
+                CustomerName = cus.CustomerName;
+                Email = cus.Email;
+                Address = cus.CustomerAddress;
+                DayOfBirth = (DateTime)cus.DateOfBirth;
+                if (cus.CustomerType == "Nội địa")
+                    b.cbbCusType.SelectedIndex = 0;
+                else
+                    b.cbbCusType.SelectedIndex = 1;
+
+                if (cus.Gender == "Nam")
+                    b.cbbGender.SelectedIndex = 0;
+                else
+                    b.cbbGender.SelectedIndex = 1;
+                PhoneNumber = cus.PhoneNumber;
+                isExistCustomer = true;
+            }
+            else
+            {
+                RenewWindowData();
+                b.notifyNotExist.Visibility = Visibility.Visible;
+            }
         }
     }
 }

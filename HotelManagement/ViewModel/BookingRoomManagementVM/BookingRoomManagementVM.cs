@@ -5,6 +5,7 @@ using HotelManagement.Utils;
 using HotelManagement.View.BookingRoomManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.ViewModel.AdminVM;
+using IronXL.Formatting;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -53,8 +54,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             set { _customerName = value; OnPropertyChanged(); }
         }
         private string CustomerId;
-        private bool IsSucceedSavingCustomer;
-
 
         private string _phoneNumber;
         public string PhoneNumber
@@ -201,6 +200,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
         public ICommand LoadDeleteRentalContractRoomCM { get; set; }
         public ICommand LoadDetailRentalContractRoomCM { get; set; }
         public ICommand FilterListRentalContractCommand { get; set; }
+        public ICommand CheckCCCDCM { get; set; }
         
         public BookingRoomManagementVM() 
         {
@@ -217,7 +217,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 currentStaff = AdminVM.AdminVM.CurrentStaff;
                 StaffName = currentStaff.StaffName;
                 StaffId = currentStaff.StaffId;
-                IsSucceedSavingCustomer = false;
                 await  LoadReadyRoom();
 
                 await LoadBookingRoom();
@@ -231,6 +230,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             {
                 RenewWindowData();
                 Booking booking = new Booking();
+                isExistCustomer = false;
                 booking.ShowDialog();
             });
 
@@ -245,13 +245,11 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 (bool isvalid, string error) = ValidateBooking();
                 if (isvalid)
                 {
-                    await SaveCustomer();
-                    if (!IsSucceedSavingCustomer)
+                    if(!isExistCustomer)
                     {
-                        return;
+                        await SaveCustomer();
                     }
                     await SaveRentalContract(p);
-
                     await LoadBookingRoom();
                 }
                 else
@@ -279,6 +277,11 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                         CustomMessageBox.ShowOk(messageFromDelRentalContract, "Lỗi", "OK", CustomMessageBoxImage.Error);
                     }
                 }
+            });
+
+            CheckCCCDCM = new RelayCommand<Booking>((p) => { return true; }, async (p) =>
+            {
+                await CheckCCCD(CCCD,p);
             });
             ExportExcelFileCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
@@ -416,8 +419,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 
             }
         }
-
-
         public void LoadBookingRoomListView(Operation oper = Operation.READ, RentalContractDTO r = null)
         {
 

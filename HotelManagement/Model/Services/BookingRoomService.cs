@@ -1,4 +1,5 @@
 ﻿using HotelManagement.DTOs;
+using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -214,6 +215,41 @@ namespace HotelManagement.Model.Services
             return (true, "Xóa phiếu thuê phòng thành công");
         }
 
+        public async Task<(bool, CustomerDTO)> CheckCCCD(string cccd)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    Customer cus = await context.Customers.FirstOrDefaultAsync(x => x.CCCD == cccd);
+                    if (cus != null)
+                    {
+                        CustomerDTO customerDTO = new CustomerDTO
+                        {
+                            CustomerId = cus.CustomerId,
+                            CustomerName = cus.CustomerName,
+                            CCCD = cus.CCCD,
+                            CustomerAddress = cus.CustomerAddress,
+                            DateOfBirth = cus.DateOfBirth,
+                            CustomerType = cus.CustomerType,
+                            Email = cus.Email,
+                            Gender = cus.Gender,
+                            PhoneNumber = cus.PhoneNumber,
+                        };
+
+                        return (true, customerDTO);
+                    }
+                    else
+                    {
+                        return (false, null);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         private string CreateNextCustomerId(string maxId)
         {
             //KHxxx

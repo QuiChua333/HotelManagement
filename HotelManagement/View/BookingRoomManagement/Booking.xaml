@@ -111,7 +111,8 @@
                         Foreground="White" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
-                        />
+                        Command="{Binding CheckCCCDCM}"
+                        CommandParameter="{Binding ElementName=BookingRoom}"/>
 
             </Grid>
 
@@ -129,6 +130,8 @@
                            TextWrapping="Wrap"
                            FontWeight="Bold"
                            Foreground="Red"
+                           Visibility="Hidden"
+                           x:Name="notifyNotExist"
                            Text="Khách hàng mới chưa đăng ký. Vui lòng đăng ký!"/>
             </Grid>
 
@@ -189,7 +192,7 @@
                              VerticalContentAlignment="Center" 
                              FontSize="16" 
                              MaxLength="10"
-                             PreviewTextInput="TextBox_PreviewTextInput"
+                             PreviewTextInput="TextBox_PreviewTextInput" 
                              Foreground="#686868" 
                              Margin="28 0 0 0" 
                              Height="30" Width="240" 
@@ -329,6 +332,7 @@
                                   BorderThickness="0.5"
                                   Foreground="#686868"
                                   FontSize="16"
+                                  x:Name="cbbGender"
                                   materialDesign:HintAssist.Hint="Chọn giới tính"
                                   SelectedItem="{Binding Gender}"
                                   HorizontalContentAlignment="Left">
@@ -473,12 +477,13 @@
                                   BorderBrush="#606060"
                                   BorderThickness="0.5"
                                   Foreground="#686868"
-                                  materialDesign:HintAssist.Hint="Chọn loại khách hàngh"
+                                  materialDesign:HintAssist.Hint="Chọn loại khách hàng"
                                   FontSize="16"
+                                  x:Name="cbbCusType"
                                   SelectedItem="{Binding CustomerType}"
                                   HorizontalContentAlignment="Left">
-                            <ComboBoxItem  Content="Khách nước ngoài" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Khách nội địa" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem  Content="Nội địa" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem  Content="Nước ngoài" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </Border>
                 </Grid>
