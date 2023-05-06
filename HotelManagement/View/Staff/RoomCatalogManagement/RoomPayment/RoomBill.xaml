@@ -14,7 +14,7 @@
         WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Width="666"
-        MinHeight="650"
+        MinHeight="550"
         x:Name="window"
      
         DataContext="{StaticResource RoomCatalogManagementVM}">
@@ -243,7 +243,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Label VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                            Content="Khách sạn:"
+                            Content="Số người:"
                            FontWeight="Bold"
                            Foreground="#000000"
                            FontSize="14"
@@ -502,6 +502,45 @@
                             </StackPanel>
                         </Border>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
+                                Margin="0,25,0,0"
+                                    x:Name="ptKhachThu3">
+                            <Label Content="Phụ thu khách thứ 3:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontFamily="{DynamicResource MaterialDesignFont}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#000000"/>
+                            <Label Content="{Binding BillPayment.PhuThuKhachThu3MoneyStr}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontFamily="{DynamicResource MaterialDesignFont}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#000000"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
+                                Margin="0,5,0,-14"
+                                    x:Name="ptNuocNgoai">
+                            <Label Content="Phụ thu khách nước ngoài:"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontFamily="{DynamicResource MaterialDesignFont}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#000000"/>
+                            <Label Content="{Binding BillPayment.PhuThuKhachNuocNgoaiMoneyStr}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontFamily="{DynamicResource MaterialDesignFont}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#000000"/>
+
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
                                 Margin="0,25,0,-14">
                             <Label Content="Tổng tiền:"
                            VerticalAlignment="Center"
@@ -517,8 +556,9 @@
                            FontSize="18"
                            FontWeight="Bold"
                            Foreground="#EA5454"/>
-                            
+
                         </StackPanel>
+                        
                         <Grid HorizontalAlignment="Right"
                       
                       VerticalAlignment="Bottom" Margin="0,40,0,0">

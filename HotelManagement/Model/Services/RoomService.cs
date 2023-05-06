@@ -412,6 +412,7 @@ namespace HotelManagement.Model.Services
                             item.CheckOutDate = null;
                             item.CustomerId = null;
                             item.CustomerName = null;
+                            item.RentalContractId= null;
                         }
                     }
                     return roomList2;

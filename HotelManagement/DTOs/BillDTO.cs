@@ -27,6 +27,7 @@ namespace HotelManagement.DTOs
                 return "Phòng " + RoomNumber;
             }
         }
+        public int PersonNumber { get; set; }
         public Nullable<double> RoomPrice { get; set; }
         public string RoomPriceStr
         {
@@ -36,6 +37,7 @@ namespace HotelManagement.DTOs
             }
 
         }
+        public Nullable<bool> IsHasForeignPerson { get; set; }
         public Nullable<int> NumberOfRentalDays { get; set; }
         public Nullable<double> ServicePrice { get; set; }
         public Nullable<double> TroublePrice { get; set; }
@@ -62,6 +64,7 @@ namespace HotelManagement.DTOs
         }
         public IList<ServiceUsingDTO> ListListServicePayment { get; set; }
         public IList<TroubleByCustomerDTO> ListTroubleByCustomer { get; set; }
+        
         public double ServicePriceTemp
         {
             get
@@ -107,7 +110,7 @@ namespace HotelManagement.DTOs
         {
             get
             {
-                return ServicePriceTemp + TroublePriceTemp + DayNumber *(double) RoomPrice;
+                return ServicePriceTemp + TroublePriceTemp + DayNumber *(double) RoomPrice + PhuThuKhachThu3Money + PhuThuKhachNuocNgoaiMoney;
             }
         }
         public string TotalPriceTempStr
@@ -118,6 +121,37 @@ namespace HotelManagement.DTOs
             }
 
         }
+        public double PhuThuKhachThu3Money
+        {
+            get
+            {
+                if (PersonNumber < 3) return 0;
+                return ((double)(0.25 *RoomPrice * DayNumber));
+            }
+        }
+        public string PhuThuKhachThu3MoneyStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney(PhuThuKhachThu3Money);
+            }
 
+        }
+        public double PhuThuKhachNuocNgoaiMoney
+        {
+            get
+            {
+                if (IsHasForeignPerson == false) return 0;
+                return ((double)(1.5 * RoomPrice * DayNumber));
+            }
+        }
+        public string PhuThuKhachNuocNgoaiMoneyStr
+        {
+            get
+            {
+                return Helper.FormatVNMoney(PhuThuKhachNuocNgoaiMoney);
+            }
+
+        }
     }
 }

@@ -516,11 +516,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
                
             });
-            OpenRoomWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            OpenRoomWindowCM = new RelayCommand<Grid>((p) => { return true; }, async (p) =>
             {
                 if (TimeChange == true) return;
-                if (SelectedRoom != null)
-                {
+                if (SelectedRoom==null) return;
                     try
                     {
                         RoomWindow wd = new RoomWindow();
@@ -561,7 +560,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     {
                         CustomMessageBox.ShowOk("Lỗi hệ thống!", "Lỗi", "Ok", CustomMessageBoxImage.Error);
                     }
-                }
+                
             });
 
             CheckInRoomCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
@@ -577,7 +576,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             CloseRoomWindowCM = new RelayCommand<RoomWindow>((p) => { return true; }, async (p) =>
             {
                 p.Close();
-                
+               
                 
             });
 

@@ -34,38 +34,41 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
                    var listRentalContractId = rentalContractDTOs.Select(x=> x.RentalContractId).ToList();
-                   var list = await context.RentalContracts.Where(x=> listRentalContractId.Contains(x.RentalContractId))
-                        .Select(x=> new BillDTO
-                        {
-                            RentalContractId=x.RentalContractId,    
-                            CustomerId =x.CustomerId,
-                            CustomerName = x.Customer.CustomerName,
-                            CustomerAddress= x.Customer.CustomerAddress,    
-                            RoomId=x.RoomId,
-                            RoomNumber = (int)x.Room.RoomNumber,
-                            RoomTypeName = x.Room.RoomType.RoomTypeName,
-                            StartDate = x.StartDate,
-                            StartTime = x.StartTime,
-                            CheckOutDate= x.CheckOutDate,
-                            RoomPrice = x.Room.RoomType.Price,
-                            ListListServicePayment = x.ServiceUsings.Select( t=> new ServiceUsingDTO
-                            {
-                                RentalContractId = t.RentalContractId,
-                                ServiceId = t.ServiceId,
-                                ServiceName = t.Service.ServiceName,
-                                ServiceType = t.Service.ServiceType,
-                                UnitPrice = t.Service.ServicePrice,
-                                Quantity = t.Quantity,
-                            }).ToList(),
-                            ListTroubleByCustomer = x.TroubleByCustomers.Select(t=> new TroubleByCustomerDTO{
-                                RentalContractId = t.RentalContractId,
-                                TroubleId = t.TroubleId,
-                                Title = t.Trouble.Title,
-                                PredictedPrice = t.PredictedPrice,
-                                Level = t.Trouble.Level,
-                            }).ToList(),
 
-                        }).ToListAsync();
+                    var list = await context.RentalContracts.Where(x => listRentalContractId.Contains(x.RentalContractId))
+                         .Select(x => new BillDTO
+                         {
+                             RentalContractId = x.RentalContractId,
+                             CustomerId = x.CustomerId,
+                             CustomerName = x.Customer.CustomerName,
+                             CustomerAddress = x.Customer.CustomerAddress,
+                             RoomId = x.RoomId,
+                             RoomNumber = (int)x.Room.RoomNumber,
+                             RoomTypeName = x.Room.RoomType.RoomTypeName,
+                             StartDate = x.StartDate,
+                             StartTime = x.StartTime,
+                             CheckOutDate = x.CheckOutDate,
+                             PersonNumber = x.RoomCustomers.Count(),
+                             IsHasForeignPerson = (x.RoomCustomers.Where(t => t.CustomerType == "Nước ngoài").Count() > 0),
+                             RoomPrice = x.Room.RoomType.Price,
+                             ListListServicePayment = x.ServiceUsings.Select(t => new ServiceUsingDTO
+                             {
+                                 RentalContractId = t.RentalContractId,
+                                 ServiceId = t.ServiceId,
+                                 ServiceName = t.Service.ServiceName,
+                                 ServiceType = t.Service.ServiceType,
+                                 UnitPrice = t.Service.ServicePrice,
+                                 Quantity = t.Quantity,
+                             }).ToList(),
+                             ListTroubleByCustomer = x.TroubleByCustomers.Select(t => new TroubleByCustomerDTO {
+                                 RentalContractId = t.RentalContractId,
+                                 TroubleId = t.TroubleId,
+                                 Title = t.Trouble.Title,
+                                 PredictedPrice = t.PredictedPrice,
+                                 Level = t.Trouble.Level,
+                             }).ToList(),
+
+                         }).ToListAsync();
                     
                     foreach (var item in list)
                     {
