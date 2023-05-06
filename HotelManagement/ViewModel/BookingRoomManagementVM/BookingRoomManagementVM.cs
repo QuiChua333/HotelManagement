@@ -217,7 +217,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 currentStaff = AdminVM.AdminVM.CurrentStaff;
                 StaffName = currentStaff.StaffName;
                 StaffId = currentStaff.StaffId;
-
                 IsSucceedSavingCustomer = false;
                 await  LoadReadyRoom();
 
@@ -293,8 +292,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
         }
         public async Task LoadBookingRoom()
         {
-            //BookingRoomList = new ObservableCollection<RentalContractDTO>(await BookingRoomService.Ins.GetBookingList());
-
             BookingRoomList = new ObservableCollection<RentalContractDTO>();
             GetAllBookingRoom = new ObservableCollection<RentalContractDTO>();
             await GetData();
@@ -314,8 +311,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                     StartDate = rentalContractDTO.StartDate,
                     CheckOutDate = rentalContractDTO.CheckOutDate,
                     StartTime = rentalContractDTO.StartTime,
-                    RoomNumber = rentalContractDTO.RoomNumber,
-                    PriceRental = rentalContractDTO.PriceRental,
                 };
                 BookingRoomList.Add(newRT);
             }
@@ -336,8 +331,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                         StartDate = rentalContractDTO.StartDate,
                         CheckOutDate = rentalContractDTO.CheckOutDate,
                         StartTime = rentalContractDTO.StartTime,
-                        RoomNumber = rentalContractDTO.RoomNumber,
-                        PriceRental = rentalContractDTO.PriceRental,
                     };
 
                     BookingRoomList.Add(newRT);
@@ -357,8 +350,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                             StartDate = rentalContractDTO.StartDate,
                             CheckOutDate = rentalContractDTO.CheckOutDate,
                             StartTime = rentalContractDTO.StartTime,
-                            RoomNumber = rentalContractDTO.RoomNumber,
-                            PriceRental = rentalContractDTO.PriceRental,
                         };
                         BookingRoomList.Add(newRT);
                     }
@@ -379,8 +370,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                             StartDate = rentalContractDTO.StartDate,
                             CheckOutDate = rentalContractDTO.CheckOutDate,
                             StartTime = rentalContractDTO.StartTime,
-                            RoomNumber = rentalContractDTO.RoomNumber,
-                            PriceRental = rentalContractDTO.PriceRental,
                         };
                         BookingRoomList.Add(newRT);
                     }

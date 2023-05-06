@@ -7,16 +7,15 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        Title="DetailRent" Height="700" Width="1000"
+        Title="DetailRent" Height="500" Width="1000"
         x:Name="DetailRentalContral"
         DataContext="{StaticResource BookingRoomManagementVM}">
     
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="14*"/>
+            <RowDefinition Height="24*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="65*"/>
+            <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -59,8 +58,8 @@
             <Border CornerRadius="4" Background="#009099"/>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="20 20 20 0">
-            <Border Background="#F2DBA0" BorderBrush="Transparent" BorderThickness="0.5" CornerRadius="10 10 0 0">
+        <Grid Grid.Row="2" Margin="20">
+            <Border Background="#F2DBA0" BorderBrush="Transparent" BorderThickness="0.5" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="49.5*"/>
@@ -70,6 +69,8 @@
 
                     <Grid Grid.Column="0" Margin="20 0 20 0">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -90,7 +91,7 @@
                                      Padding="0 0 10 0" 
                                      VerticalContentAlignment="Center" 
                                      HorizontalContentAlignment="Left"
-                                     Text="{Binding CustomerName}"/>
+                                     Text="{Binding SelectedItem.CustomerName}"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" 
@@ -99,7 +100,25 @@
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
                             <TextBlock Text="Ngày bắt đầu: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBlock Text="{Binding StartDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                            <TextBlock Text="{Binding SelectedItem.StartDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0">
+                            <TextBlock Text="Ngày kết thúc: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
+                            <TextBlock Text="{Binding SelectedItem.CheckOutDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="3" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0">
+                            <TextBlock Text="Số ngày thuê: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
+                            <TextBlock Text="0" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
                         </StackPanel>
                     </Grid>
 
@@ -107,6 +126,8 @@
 
                     <Grid Grid.Column="2" Margin="20 0 20 0">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -127,24 +148,43 @@
                                      Padding="0 0 10 0" 
                                      VerticalContentAlignment="Center" 
                                      HorizontalContentAlignment="Left"
-                                     Text="{Binding StaffName}"/>
+                                     Text="{Binding SelectedItem.StaffName}"/>
                         </StackPanel>
-
+                        
                         <StackPanel Orientation="Horizontal" 
                                     Grid.Row="1" 
                                     HorizontalAlignment="Left" 
                                     VerticalAlignment="Center"
                                     Margin="10 0 0 0">
-                            <TextBlock Text="Ngày kết thúc: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
-                            <TextBlock Text="{Binding CheckoutDate, StringFormat= dd/MM/yy}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                            <TextBlock Text="Số phòng: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
+                            <TextBlock Text="{Binding SelectedRoom.RoomNumber}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
                         </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0">
+                            <TextBlock Text="Số người ở: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
+                            <TextBlock Text="{Binding PersonNumber.Tag}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="3" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center"
+                                    Margin="10 0 0 0">
+                            <TextBlock Text="Giá thuê: " FontWeight="Bold" FontSize="24" Foreground="Black"/>
+                            <TextBlock Text="{Binding SelectedRoom.RoomPriceStr}" FontWeight="Bold" FontSize="24" Foreground="Black" Margin="20 0 0 0" Width="140"/>
+                        </StackPanel>
+
                     </Grid>
 
                 </Grid>
             </Border>
         </Grid>
 
-        <Grid Grid.Row="3" Margin="20 10 20 20">
+        <!--<Grid Grid.Row="3" Margin="20 10 20 20">
             <Border  CornerRadius="5" 
                      Background="White">
                 <materialDesign:Card UniformCornerRadius="5">
@@ -219,6 +259,6 @@
                     </ScrollViewer>
                 </materialDesign:Card>
             </Border>
-        </Grid>
+        </Grid>-->
     </Grid>
 </Window>

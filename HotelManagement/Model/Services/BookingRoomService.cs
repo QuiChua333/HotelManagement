@@ -51,8 +51,6 @@ namespace HotelManagement.Model.Services
                             StartDate = r.StartDate,
                             CheckOutDate = r.CheckOutDate,
                             StartTime = r.StartTime,
-                            RoomNumber = room.RoomNumber.ToString(),
-                            PriceRental = rt.Price.ToString() + "đ",
                             Validated = r.Validated,
                         }
                     ).ToListAsync();
