@@ -7,6 +7,8 @@ using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment;
+using HotelManagement.ViewModel.AdminVM;
+using HotelManagement.ViewModel.StaffVM;
 using IronXL.Formatting;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -222,7 +224,9 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         {
             Color color = new Color();
             FormatStringDate();
-            CurrentStaff = StaffVM.CurrentStaff;
+            if (StaffVM.CurrentStaff!=null) CurrentStaff = StaffVM.CurrentStaff;
+            if (AdminVM.AdminVM.CurrentStaff != null) CurrentStaff = AdminVM.AdminVM.CurrentStaff;
+          
 
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {

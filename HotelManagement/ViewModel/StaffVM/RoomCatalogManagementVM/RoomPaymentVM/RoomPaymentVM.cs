@@ -165,12 +165,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             BillDTO roomBillDTO = new BillDTO
             {
                 RentalContractId = BillPayment.RentalContractId,
-                //StaffId = CurrentStaff.StaffId,
+                StaffId = CurrentStaff.StaffId,
                 NumberOfRentalDays = BillPayment.DayNumber,
                 ServicePrice = BillPayment.ServicePriceTemp,
                 TroublePrice = BillPayment.TroublePriceTemp,
                 TotalPrice = BillPayment.TotalPriceTemp,
-                CreateDate = DateTime.Today,
+                CreateDate = DateTime.Now,
             };
             (bool isSucceed, string message) = await BillService.Ins.SaveBill(roomBillDTO);
             if (isSucceed)

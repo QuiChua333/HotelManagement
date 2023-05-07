@@ -364,6 +364,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                     StartDate = rentalContractDTO.StartDate,
                     CheckOutDate = rentalContractDTO.CheckOutDate,
                     StartTime = rentalContractDTO.StartTime,
+                    Validated = rentalContractDTO.Validated,
                 };
                 BookingRoomList.Add(newRT);
             }
