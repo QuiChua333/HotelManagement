@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:HotelManagement" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              StartupUri="View/Login/LoginWindow.xaml">
 
-    
     <Application.Resources>
 
         <ResourceDictionary>

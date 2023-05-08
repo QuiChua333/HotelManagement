@@ -235,6 +235,7 @@
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Services\BillService.cs" />
+    <Compile Include="Model\Services\OverviewStatisticService.cs" />
     <Compile Include="Model\Services\RoomCustomerService.cs" />
     <Compile Include="Model\Services\BookingRoomService.cs" />
     <Compile Include="Model\Services\RoomService.cs" />
@@ -258,10 +259,11 @@
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\StaffManagementVM\StaffManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\Income.cs" />
+    <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\IndexConverter.cs" />
     <Compile Include="ViewModel\AdminVM\StatisticalManagementVM\StatisticalManagementVM.cs" />
     <Compile Include="ViewModel\BookingRoomManagementVM\BookingVM.cs" />
     <Compile Include="ViewModel\HelpScreenVM\HelpScreenVM.cs" />
-    <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\RentalContractDTO.cs" />
     <Compile Include="DTOs\RoomCustomerDTO.cs" />
     <Compile Include="DTOs\RoomSettingDTO.cs" />
@@ -347,6 +349,9 @@
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomInfoVM\RoomInfoVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomOrderVM\RoomOrderVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomPaymentVM\RoomPaymentVM.cs" />
+    <Compile Include="View\Admin\StatisticalManagement\RoomTypeAndService.xaml.cs">
+      <DependentUpon>RoomTypeAndService.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BookingRoomManagement\Booking.xaml.cs">
       <DependentUpon>Booking.xaml</DependentUpon>
     </Compile>
@@ -510,9 +515,6 @@
     <Compile Include="View\Admin\StatisticalManagement\IncomeStatiscalManagement.xaml.cs">
       <DependentUpon>IncomeStatiscalManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Admin\StatisticalManagement\RankingStatistical.xaml.cs">
-      <DependentUpon>RankingStatistical.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Admin\StatisticalManagement\StatisticalManagementPage.xaml.cs">
       <DependentUpon>StatisticalManagementPage.xaml</DependentUpon>
     </Compile>
@@ -665,6 +667,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ServiceManagement\OtherServices\OtherServicesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StatisticalManagement\RoomTypeAndService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -886,10 +892,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\StatisticalManagement\IncomeStatiscalManagement.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Admin\StatisticalManagement\RankingStatistical.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

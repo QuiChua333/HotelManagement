@@ -5,9 +5,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HotelManagement.View.Admin.StatisticalManagement"
       mc:Ignorable="d" 
+      x:Name="mainPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       Title="IncomeStatiscalManagement">
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="mainPage"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1"
+                                     Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -23,22 +39,36 @@
                         BorderThickness="0.5" 
                         Width="200" Height="36" 
                         Margin="30 0 0 0">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" x:Name="_period">
                         <Image Source="{StaticResource iconFilter}" 
                                Height="24" 
                                Width="30" 
                                Margin="10 0 0 0"/>
                         <ComboBox Width="150" Height="36"
-                                Padding="10 5"
-                                BorderBrush="#606060"
-                                BorderThickness="0"
-                                Foreground="Black"
-                                SelectedIndex="0"
-                                Margin="10 0 0 0"
-                                FontSize="16"
-                                HorizontalContentAlignment="Center">
-                            <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
+                                  SelectedItem="{Binding SelectedIncomePeriod}"
+                                  Padding="10 5"
+                                  BorderBrush="#606060"
+                                  BorderThickness="0"
+                                  Foreground="Black"
+                                  SelectedIndex="0"
+                                  Margin="10 0 0 0"
+                                  FontSize="16"
+                                  HorizontalContentAlignment="Center"
+                                  x:Name="periodbox"
+                                  SelectionChanged="periodbox_SelectionChanged"
+                                  Loaded="periodbox_Loaded">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </StackPanel>
                 </Border>
@@ -51,22 +81,32 @@
                         Width="200" Height="36" 
                         CornerRadius="2"
                         Margin="84 0 0 0">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" x:Name="_time">
                         <Image Source="{StaticResource iconFilter}" 
                                Height="24" 
                                Width="30" 
                                Margin="10 0 0 0"/>
                         <ComboBox Width="150" Height="36"
-                                Padding="10 5"
-                                BorderBrush="#606060"
-                                BorderThickness="0"
-                                Foreground="Black"
-                                SelectedIndex="0"
-                                Margin="10 0 0 0"
-                                FontSize="16"
-                                HorizontalContentAlignment="Center">
-                            <ComboBoxItem  Content="Tháng 1" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Tháng 2" FontSize="16" Foreground="Black"/>
+                                  SelectedItem="{Binding SelectedIncomeTime,Mode=OneWayToSource}"
+                                  Padding="10 5"
+                                  BorderBrush="#606060"
+                                  BorderThickness="0"
+                                  Foreground="Black"
+                                  SelectedIndex="0"
+                                  Margin="10 0 0 0"
+                                  FontSize="16"
+                                  HorizontalContentAlignment="Center"
+                                  x:Name="Timebox">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
+                                                       CommandParameter="{Binding ElementName=Timebox}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
+                                                       CommandParameter="{Binding ElementName=Timebox}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </ComboBox>
                     </StackPanel>
                 </Border>
@@ -107,7 +147,8 @@
                                            FontWeight="Bold"
                                            Foreground="Black"
                                            FontSize="16" />
-                                    <TextBox Text="Tăng"
+                                    <TextBox Text="{Binding ReveRate}"
+                                             TextChanged="TextBox_TextChanged"
                                              BorderThickness="0"
                                              IsHitTestVisible="False"
                                              FontStyle="Italic"
@@ -123,15 +164,15 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <Label Content="Thuê" 
+                                    <Label Content="Thuê"
                                            FontSize="16" 
                                            Foreground="Gray" 
                                            FontWeight="Bold"/>
-                                    <Label Content="46.00 %"
+                                    <Label Content="{Binding RentalPc}"
                                            FontWeight="Bold" 
                                            FontSize="16"
-                                           Foreground="Black"/> 
-                                    <Label Content="10 000 000 đ" FontSize="12"/>
+                                           Foreground="Black"/>
+                                    <Label Content="{Binding RentalReve}" FontSize="12"/>
                                 </StackPanel>
                                 
                                 <StackPanel Grid.Column="1" HorizontalAlignment="Center">
@@ -139,11 +180,11 @@
                                            FontSize="16" 
                                            Foreground="Gray" 
                                            FontWeight="Bold"/>
-                                    <Label Content="50.02 %"
+                                    <Label Content="{Binding ServicePc}"
                                            FontWeight="Bold" 
                                            FontSize="16"
                                            Foreground="Black"/>
-                                    <Label Content="10 000 000 đ" FontSize="12"/>
+                                    <Label Content="{Binding ServiceReve}" FontSize="12"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -164,7 +205,7 @@
                                            FontWeight="Bold"
                                            Foreground="Black"
                                            FontSize="16" />
-                                    <TextBox Text="Giảm"
+                                    <TextBox Text="{Binding ExpeRate}"
                                              BorderThickness="0"
                                              IsHitTestVisible="False"
                                              FontStyle="Italic"
@@ -184,11 +225,11 @@
                                            FontSize="16" 
                                            Foreground="Gray" 
                                            FontWeight="Bold"/>
-                                    <Label Content="46.00 %"
+                                    <Label Content="{Binding ServiceExPc}"
                                            FontWeight="Bold" 
                                            FontSize="16"
                                            Foreground="Black"/>
-                                    <Label Content="10 000 000 đ" FontSize="12"/>
+                                    <Label Content="{Binding ServiceExpe}" FontSize="12"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" HorizontalAlignment="Center">
@@ -196,11 +237,11 @@
                                            FontSize="16" 
                                            Foreground="Gray" 
                                            FontWeight="Bold"/>
-                                    <Label Content="50.02 %"
+                                    <Label Content="{Binding RepairPc}"
                                            FontWeight="Bold" 
                                            FontSize="16"
                                            Foreground="Black"/>
-                                    <Label Content="10 000 000 đ" FontSize="12"/>
+                                    <Label Content="{Binding RepairExpe}" FontSize="12"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -241,7 +282,7 @@
                                         <ProgressBar BorderBrush="Transparent"
                                                      Height="15"
                                                      x:Name="pb1"
-                                                     Value="70"> 
+                                                     Value="{Binding TotalInPc}"> 
                                             <ProgressBar.Style>
                                                 <Style TargetType="{x:Type ProgressBar}">
                                                     <Setter Property="Template">
@@ -292,7 +333,7 @@
                                                      BorderBrush="Transparent"
                                                      Height="14"
                                                      x:Name="pb2"
-                                                     Value="100"> 
+                                                     Value="{Binding TotalOutPc}"> 
                                             <ProgressBar.Style>
                                                 <Style TargetType="{x:Type ProgressBar}">
                                                     <Setter Property="Template">
@@ -336,11 +377,11 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Margin="20 0 30 0">
-                                <TextBlock Text="10 000 000 đ"
+                                <TextBlock Text="{Binding TotalIn}"
                                             Margin="20 24 20 0"
                                             FontWeight="Bold"
-                                            Foreground="Black"/> 
-                                <TextBlock Text="15 000 000 đ"
+                                            Foreground="Black"/>
+                                <TextBlock Text="{Binding TotalOut}"
                                            Margin="20 42 20 0"
                                            FontWeight="Bold"
                                            Foreground="Black"/>
@@ -367,7 +408,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="15" 
+                            <TextBlock Text="{Binding TotalBill}" 
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />
@@ -379,7 +420,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="Theo tháng" 
+                            <TextBlock Text="{Binding Path=Text,ElementName=periodbox}" 
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />
@@ -391,7 +432,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="Tháng 12" 
+                            <TextBlock Text="{Binding Path=Text,ElementName=Timebox}"
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />
@@ -402,7 +443,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="5 000 000 đ" 
+                            <TextBlock Text="{Binding TrueIncome}" 
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />
@@ -421,7 +462,7 @@
                                         Margin="20"> 
                         <lvc:CartesianChart.AxisX>
                             <lvc:AxesCollection>
-                                <lvc:Axis MinValue="1" MaxValue="12">
+                                <lvc:Axis MinValue="1" MaxValue="{Binding LabelMaxValue}">
                                     <lvc:Axis.Separator>
                                         <lvc:Separator Step="1" />
                                     </lvc:Axis.Separator>

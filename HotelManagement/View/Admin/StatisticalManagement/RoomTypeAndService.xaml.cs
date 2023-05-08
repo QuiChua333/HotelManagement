@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace HotelManagement.View.Admin.StatisticalManagement
 {
     /// <summary>
-    /// Interaction logic for RankingStatistical.xaml
+    /// Interaction logic for RoomTypeAndService.xaml
     /// </summary>
-    public partial class RankingStatistical : Page
+    public partial class RoomTypeAndService : Page
     {
-        public RankingStatistical()
+        public RoomTypeAndService()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<Page x:Class="HotelManagement.View.Admin.StatisticalManagement.RankingStatistical"
+﻿<Page x:Class="HotelManagement.View.Admin.StatisticalManagement.RoomTypeAndService"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,8 +7,9 @@
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      Title="RankingStatistical">
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+      Title="RoomTypeAndService"
+      DataContext="{StaticResource StatisticalManagementVM}">
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -31,12 +32,12 @@
                             BorderThickness="0.5" 
                             CornerRadius="2"
                             Width="200" Height="36" 
-                            Margin="30 0 0 0"> 
+                            Margin="20 0 0 0">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{StaticResource iconFilter}" 
                                    Height="24" 
                                    Width="30" 
-                                   Margin="10 0 0 0"/> 
+                                   Margin="10 0 0 0"/>
                             <ComboBox Width="150" Height="36"
                                       Padding="10 5"
                                       BorderBrush="#606060"
@@ -45,26 +46,30 @@
                                       SelectedIndex="0"
                                       Margin="10 0 0 0"
                                       FontSize="16"
-                                      HorizontalContentAlignment="Center"> 
-                                <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
+                                      SelectedItem="{Binding SelectedRankingPeriod}"
+                                      x:Name="periodbox1"
+                                      HorizontalContentAlignment="Center">
                                 <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
+                                <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
                             </ComboBox>
                         </StackPanel>
                     </Border>
                 </Grid>
 
-                <Grid Margin="124 0 0 0">
+                <Grid Margin="20 0 0 0">
                     <Border Background="White" 
                             BorderBrush="#606060" 
                             BorderThickness="0.5" 
                             CornerRadius="2"
                             Width="200" Height="36">
-                        <StackPanel Orientation="Horizontal"> 
+                        <StackPanel Orientation="Horizontal">
                             <Image Source="{StaticResource iconFilter}" 
                                    Height="24" 
                                    Width="30" 
-                                   Margin="10 0 0 0"/> 
+                                   Margin="10 0 0 0"/>
                             <ComboBox Width="150" Height="36"
+                                      x:Name="Time1"
+                                      SelectedItem="{Binding SelectedRankingTime,Mode=OneWayToSource}"
                                       Padding="10 5"
                                       BorderBrush="#606060"
                                       BorderThickness="0"
@@ -72,90 +77,48 @@
                                       SelectedIndex="0"
                                       Margin="10 0 0 0"
                                       FontSize="16"
-                                      HorizontalContentAlignment="Center"> 
-                                <ComboBoxItem  Content="Tháng 1" FontSize="16" Foreground="Black"/>
-                                <ComboBoxItem  Content="Tháng 2" FontSize="16" Foreground="Black"/>
+                                      HorizontalContentAlignment="Center">
+                                
                             </ComboBox>
                         </StackPanel>
                     </Border>
                 </Grid>
             </StackPanel>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <materialDesign:Card Margin="30 0 10 10"
-                                     UniformCornerRadius="4"
-                                     Grid.Column="0"> 
-                    <Grid>
-                        <lvc:PieChart LegendLocation="Bottom"
-                                      InnerRadius="70"
-                                      Background="Transparent"
-                                      Series="{Binding CustomerExpe}" 
-                                      Width="240" Height="200"/> 
-                        <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
-                                     Value="0"
-                                     IsIndeterminate="True"
-                                     Width="125"
-                                     Height="125"
-                                     Margin="0,0,0,20"
-                                     Foreground="#FF455345" />
-                        <Grid Margin="60,60,60,78" Background="Transparent">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            
-                            <Label Grid.Row="1" 
-                                   Content="Châu Dương Nhuận Phan"
-                                   FontSize="10"
-                                   FontWeight="Bold"
-                                   HorizontalContentAlignment="Center" 
-                                   VerticalContentAlignment="Center" /> 
-                            <Label Grid.Row="2"
-                                   Content="99 000 000 đ"
-                                   VerticalContentAlignment="Center"
-                                   HorizontalContentAlignment="Center"
-                                   FontSize="10" /> 
-                            <Label Grid.Row="0"
-                                   Content="Hạng nhất"
-                                   FontWeight="Bold"
-                                   HorizontalContentAlignment="Center"
-                                   VerticalContentAlignment="Center"
-                                   FontSize="10" /> 
-
-                        </Grid>
-                    </Grid>
-                </materialDesign:Card>
-
-                <materialDesign:Card Margin="10 0 10 10"
-                                     UniformCornerRadius="4"
-                                     Grid.Column="1"> 
-                    <Grid>
-                        <lvc:PieChart LegendLocation="Bottom"
-                                      InnerRadius="10"
-                                      Background="Transparent"
-                                      Series="{Binding NewCusPie}" 
-                                      Width="240" Height="184"/> 
-                    </Grid>
-                </materialDesign:Card>
-
-            </Grid>
+            <materialDesign:Card Margin="20 0 20 10"
+                                 UniformCornerRadius="4"
+                                 Grid.Row="1">
+                <Grid>
+                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                 Value="0"
+                                 IsIndeterminate="True"
+                                 Width="80"
+                                 Height="80"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,68,0"
+                                 Foreground="#FF455345" />
+                    <lvc:PieChart LegendLocation="Right"
+                                    InnerRadius="50"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Margin="100 0 100 0"
+                                    Series="{Binding StaffContributePie}" 
+                                    Height="180"/>
+                </Grid>
+            </materialDesign:Card>
 
             <Grid Grid.Row="2">
-                <Label Content="Top 5 Khách Hàng Sử Dụng Dịch Vụ Nhiều Nhất"
+                <Label Content="Thống kê doanh thu của các loại phòng"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
                        Foreground="Black"
-                       FontSize="18"/> 
+                       FontSize="18"/>
             </Grid>
 
-            <materialDesign:Card Margin="30 10 10 20" 
+            <materialDesign:Card Margin="20 10 20 20" 
                                  Grid.Row="3"
                                  UniformCornerRadius="4">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
@@ -164,51 +127,45 @@
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 Foreground="Black"
                                 FontSize="14"
-                                ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=5}">
+                              d:ItemsSource="{d:SampleData ItemCount=3}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Height" Value="40"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
 
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-                                <GridViewColumn Width="60" Header="STT">
+                                <GridViewColumn Width="100" Header="STT">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="1" 
                                                        Width="30"
                                                        FontSize="15" 
-                                                       HorizontalAlignment="Left"
-                                                       TextAlignment="Center"/> 
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="180" Header="Tên khách hàng">
+                                <GridViewColumn Width="240" Header="Tên loại phòng">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="Nguyễn Văn Huỳnh Lâm" 
+                                            <TextBlock Text="Phòng thương gia"
                                                         Width="160"
                                                         FontSize="14" 
-                                                        HorizontalAlignment="Left"
                                                         TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="140" Header="Số điện thoại">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="0379361210" 
-                                                        Width="120"
-                                                        FontSize="14" 
-                                                        HorizontalAlignment="Left"
-                                                        TextAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                
 
-                                <GridViewColumn Width="160" Header="Chi tiêu">
+                                <GridViewColumn Width="200" Header="Doanh số">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="15 000 000 đ" 
+                                            <TextBlock Text="1 000 000 đ"
                                                         Width="140"
                                                         FontSize="14" 
                                                         HorizontalAlignment="Left"
@@ -238,7 +195,7 @@
                             BorderThickness="0.5" 
                             CornerRadius="2"
                             Width="200" Height="36" 
-                            Margin="10 0 0 0">
+                            Margin="20 0 0 0">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{StaticResource iconFilter}" 
                                    Height="24" 
@@ -249,18 +206,21 @@
                                       BorderBrush="#606060"
                                       BorderThickness="0"
                                       Foreground="Black"
-                                      SelectedIndex="0"
                                       Margin="10 0 0 0"
                                       FontSize="16"
-                                      HorizontalContentAlignment="Center">
-                                <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
+                                      HorizontalContentAlignment="Center"
+                                      SelectedItem="{Binding SelectedRankingPeriod2}"
+                                      x:Name="periodbox2"
+                                      SelectedIndex="0"
+                                      >
                                 <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
+                                <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
                             </ComboBox>
                         </StackPanel>
                     </Border>
                 </Grid>
 
-                <Grid Margin="144 0 0 0">
+                <Grid Margin="20 0 0 0">
                     <Border Background="White" 
                             BorderBrush="#606060" 
                             BorderThickness="0.5" 
@@ -272,6 +232,7 @@
                                    Width="30" 
                                    Margin="10 0 0 0"/>
                             <ComboBox Width="150" Height="36"
+                                      SelectedItem="{Binding SelectedRankingTime2,Mode=OneWayToSource}"
                                       Padding="10 5"
                                       BorderBrush="#606060"
                                       BorderThickness="0"
@@ -279,72 +240,41 @@
                                       SelectedIndex="0"
                                       Margin="10 0 0 0"
                                       FontSize="16"
-                                      HorizontalContentAlignment="Center">
-                                <ComboBoxItem  Content="Tháng 1" FontSize="16" Foreground="Black"/>
-                                <ComboBoxItem  Content="Tháng 2" FontSize="16" Foreground="Black"/>
+                                      HorizontalContentAlignment="Center"
+                                      x:Name="Time2" >
                             </ComboBox>
                         </StackPanel>
                     </Border>
                 </Grid>
             </StackPanel>
 
-            <materialDesign:Card Margin="10 0 10 10"
+            <materialDesign:Card Margin="20 0 20 10"
                                  UniformCornerRadius="4"
                                  Grid.Row="1">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*" />
-                        <ColumnDefinition Width="60*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0">
-                        <Image Source="{StaticResource Image_Start}" Width="200" Height="190"/>
-
-                        <Grid Margin="44 65 44 65" Background="Transparent">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="1" 
-                                   Content="Châu Dương Nhuận Phan"
-                                   FontSize="10"
-                                   FontWeight="Bold"
-                                   HorizontalContentAlignment="Center" 
-                                   VerticalContentAlignment="Center" />
-                            <Label Grid.Row="2"
-                                   Content="99 000 000 đ"
-                                   VerticalContentAlignment="Center"
-                                   HorizontalContentAlignment="Center"
-                                   FontSize="10" />
-                            <Label Grid.Row="0"
-                                   Content="Hạng nhất"
-                                   FontWeight="Bold"
-                                   HorizontalContentAlignment="Center"
-                                   VerticalContentAlignment="Center"
-                                   FontSize="10" />
-
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <lvc:PieChart LegendLocation="Right"
-                                    InnerRadius="10"
+                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                 Value="0"
+                                 IsIndeterminate="True"
+                                 Width="80" 
+                                 Height="80" 
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Margin="0,0,68,0"
+                                 Foreground="#FF455345" />
+                    <lvc:PieChart LegendLocation="Right"
+                                    InnerRadius="50"
                                     Background="Transparent"
-                                    Margin="10,0,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Margin="100 0 100 0"
                                     Series="{Binding StaffContributePie}" 
-                                    Height="200"/> 
-                    </Grid>
-
-
-
+                                    Height="180"/>
                 </Grid>
-
             </materialDesign:Card>
-           
+
 
             <Grid Grid.Row="2">
-                <Label Content="Top 5 Nhân Viên Có Doanh Thu Nhất"
+                <Label Content="Thống kê doanh thu của các loại dịch vụ"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
@@ -352,7 +282,7 @@
                        FontSize="18"/>
             </Grid>
 
-            <materialDesign:Card Margin="20 10 10 20" 
+            <materialDesign:Card Margin="20 10 20 20" 
                                  Grid.Row="3"
                                  UniformCornerRadius="4">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
@@ -361,51 +291,45 @@
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 Foreground="Black"
                                 FontSize="14"
-                                ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=5}">
+                              d:ItemsSource="{d:SampleData ItemCount=3}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Height" Value="40"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
 
                             <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
 
-                                <GridViewColumn Width="60" Header="STT">
+                                <GridViewColumn Width="100" Header="STT">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="1" 
                                                        Width="30"
                                                        FontSize="15" 
-                                                       HorizontalAlignment="Left"
                                                        TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="180" Header="Tên nhân viên">
+                                <GridViewColumn Width="240" Header="Tên dịch vụ">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="Nguyễn Văn Huỳnh Lâm" 
+                                            <TextBlock Text="Phòng thương gia"
                                                         Width="160"
                                                         FontSize="14" 
-                                                        HorizontalAlignment="Left"
                                                         TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="140" Header="Mã nhân viên">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="NV001" 
-                                                        Width="120"
-                                                        FontSize="14" 
-                                                        HorizontalAlignment="Left"
-                                                        TextAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
 
-                                <GridViewColumn Width="160" Header="Doanh thu">
+
+                                <GridViewColumn Width="200" Header="Doanh số">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="15 000 000 đ" 
+                                            <TextBlock Text="1 000 000 đ"
                                                         Width="140"
                                                         FontSize="14" 
                                                         HorizontalAlignment="Left"

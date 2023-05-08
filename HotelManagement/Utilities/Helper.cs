@@ -87,6 +87,10 @@ namespace HotelManagement.Utilities
             }
 
         }
+        public static string ConvertDoubleToPercentageStr(double value)
+        {
+            return Math.Round(value, 2, MidpointRounding.AwayFromZero).ToString("P", CultureInfo.InvariantCulture);
+        }
     }
     
 }

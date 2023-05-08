@@ -42,7 +42,8 @@ namespace HotelManagement.Model.Services
                                         Gender=s.Gender,
                                         CustomerAddress=s.CustomerAddress,
                                         CustomerType=s.CustomerType,
-                                        IsDeleted= (bool)s.IsDeleted                                       
+                                        IsDeleted= (bool)s.IsDeleted,
+
                                   }).ToList();
                 }
             }
