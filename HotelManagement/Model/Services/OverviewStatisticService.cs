@@ -1,4 +1,5 @@
-﻿using HotelManagement.Utilities;
+﻿using HotelManagement.DTOs;
+using HotelManagement.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -161,7 +162,7 @@ namespace HotelManagement.Model.Services
                          new
                          {
                              Month = gr.Key,
-                             Outcome = (gr.Sum(t => (double)t.Price)) - Double.Parse(MonthRepairCostByCustomer.Where(x => x.Month == gr.Key).Select(x => x.Outcome).ToString())
+                             Outcome = (gr.Sum(t => (double)t.Price)) - MonthRepairCostByCustomer.Where(x => x.Month == gr.Key).Select(x => x.Outcome),
                          }).ToListAsync();
 
                     
@@ -387,6 +388,112 @@ namespace HotelManagement.Model.Services
 
                     return (DailyExpense, ServiceExpenseTotal, RepairCostTotal, ExpenseRateStr);
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<List<RoomTypeDTO>> GetListRoomTypeRevenue(string period, string value)
+        {
+            try
+            {
+
+                using (var context = new HotelManagementEntities())
+                {
+                    
+                    if (period == "Theo năm") 
+                    {
+                        int year = int.Parse(value);
+                        var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == year).ToListAsync();
+                        var list2 = list1.GroupBy(b => b.RentalContract.Room.RoomType.RoomTypeName)
+                            .Select(gr => new RoomTypeDTO
+                            {
+                                RoomTypeName = gr.First().RentalContract.Room.RoomType.RoomTypeName,
+                                Revenue = (double)gr.Sum(x=> x.TotalPrice - x.ServicePrice - x.TroublePrice)
+                            }).ToList();
+                        return list2;
+                    }
+                    else
+                    {
+                        int month = int.Parse(value);
+                        var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year && x.CreateDate.Value.Month == month).ToListAsync();
+                        var list2 = list1.GroupBy(b => b.RentalContract.Room.RoomType.RoomTypeName)
+                            .Select(gr => new RoomTypeDTO
+                            {
+                                RoomTypeName = gr.First().RentalContract.Room.RoomType.RoomTypeName,
+                                Revenue = (double)gr.Sum(x => x.TotalPrice - x.ServicePrice - x.TroublePrice)
+                            }).ToList();
+                        for (int i = 0; i < list2.Count; i++)
+                        {
+                            list2[i].STT = i + 1;
+                        }
+                        return list2;
+                    }
+                       
+                }
+                
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<List<ServiceTypeDTO>> GetListServiceTypeRevenue(string period, string value)
+        {
+            try
+            {
+
+                using (var context = new HotelManagementEntities())
+                {
+
+                    if (period == "Theo năm")
+                    {
+                        int year = int.Parse(value);
+                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year).Select(x => x.RentalContractId).ToListAsync();
+
+                        var list1 = await context.ServiceUsings.Where(x=> listRentalContract.Contains(x.RentalContractId)).ToListAsync();
+                        var list2 = list1.GroupBy(b => b.Service.ServiceType)
+                            .Select(gr => new ServiceTypeDTO
+                            { 
+
+
+                                ServiceType = gr.First().Service.ServiceType,
+                                Revenue = (double)gr.Sum(x=> x.Quantity * x.UnitPrice)
+                              
+
+                            }).ToList();
+                        for (int i = 0; i< list2.Count; i++)
+                        {
+                            list2[i].STT = i + 1;
+                        }
+                        return list2;
+                    }
+                    else
+                    {
+                        int month = int.Parse(value);
+                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year && x.CreateDate.Value.Year == month).Select(x => x.RentalContractId).ToListAsync();
+
+                        var list1 = await context.ServiceUsings.Where(x => listRentalContract.Contains(x.RentalContractId)).ToListAsync();
+                        var list2 = list1.GroupBy(b => b.Service.ServiceType)
+                            .Select(gr => new ServiceTypeDTO
+                            {
+
+
+                                ServiceType = gr.First().Service.ServiceType,
+                                Revenue = (double)gr.Sum(x => x.Quantity * x.UnitPrice)
+                                
+
+                            }).ToList();
+                        for (int i = 0; i < list2.Count; i++)
+                        {
+                            list2[i].STT = i + 1;
+                        }
+                        return list2;
+                    }
+
+                }
+
             }
             catch (Exception e)
             {

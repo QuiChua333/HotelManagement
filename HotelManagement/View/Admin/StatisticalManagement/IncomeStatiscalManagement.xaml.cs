@@ -129,7 +129,7 @@ namespace HotelManagement.View.Admin.StatisticalManagement
                     tb.Foreground = new SolidColorBrush(Colors.Green);
             }
         }
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
 

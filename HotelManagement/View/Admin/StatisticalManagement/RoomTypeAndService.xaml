@@ -5,11 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HotelManagement.View.Admin.StatisticalManagement"
       mc:Ignorable="d" 
+      x:Name="mainPage"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
       Title="RoomTypeAndService"
       DataContext="{StaticResource StatisticalManagementVM}">
+
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="mainPage"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0"
+                                     To="1"
+                                     Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -46,9 +62,21 @@
                                       SelectedIndex="0"
                                       Margin="10 0 0 0"
                                       FontSize="16"
-                                      SelectedItem="{Binding SelectedRankingPeriod}"
+                                      SelectedItem="{Binding SelectedPeriod}"
                                       x:Name="periodbox1"
+                                      SelectionChanged="periodbox1_SelectionChanged"
+                                      Loaded="periodbox1_Loaded"
                                       HorizontalContentAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding ChangeRoomTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox1}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangeRoomTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox1}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
                                 <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
                             </ComboBox>
@@ -69,7 +97,7 @@
                                    Margin="10 0 0 0"/>
                             <ComboBox Width="150" Height="36"
                                       x:Name="Time1"
-                                      SelectedItem="{Binding SelectedRankingTime,Mode=OneWayToSource}"
+                                      SelectedItem="{Binding SelectedTime,Mode=OneWayToSource}"
                                       Padding="10 5"
                                       BorderBrush="#606060"
                                       BorderThickness="0"
@@ -78,7 +106,16 @@
                                       Margin="10 0 0 0"
                                       FontSize="16"
                                       HorizontalContentAlignment="Center">
-                                
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding ChangeRoomTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=Time1}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangeRoomTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=Time1}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                         </StackPanel>
                     </Border>
@@ -127,6 +164,7 @@
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 Foreground="Black"
                                 FontSize="14"
+                              ItemsSource="{Binding ListRoomTypeRevenue}"
                               d:ItemsSource="{d:SampleData ItemCount=3}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -141,7 +179,7 @@
                                 <GridViewColumn Width="100" Header="STT">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="1" 
+                                            <TextBlock Text="{Binding STT}" 
                                                        Width="30"
                                                        FontSize="15" 
                                                        TextAlignment="Center"/>
@@ -152,7 +190,7 @@
                                 <GridViewColumn Width="240" Header="Tên loại phòng">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="Phòng thương gia"
+                                            <TextBlock Text="{Binding RoomTypeName}"
                                                         Width="160"
                                                         FontSize="14" 
                                                         TextAlignment="Center"/>
@@ -165,7 +203,7 @@
                                 <GridViewColumn Width="200" Header="Doanh số">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="1 000 000 đ"
+                                            <TextBlock Text="{Binding Revenue}"
                                                         Width="140"
                                                         FontSize="14" 
                                                         HorizontalAlignment="Left"
@@ -209,10 +247,22 @@
                                       Margin="10 0 0 0"
                                       FontSize="16"
                                       HorizontalContentAlignment="Center"
-                                      SelectedItem="{Binding SelectedRankingPeriod2}"
+                                      SelectedItem="{Binding SelectedPeriod2}"
                                       x:Name="periodbox2"
                                       SelectedIndex="0"
+                                      SelectionChanged="periodbox2_SelectionChanged"
+                                      Loaded="periodbox2_Loaded"
                                       >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding ChangeServiceTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox2}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangeServiceTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=periodbox2}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
                                 <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
                             </ComboBox>
@@ -232,7 +282,7 @@
                                    Width="30" 
                                    Margin="10 0 0 0"/>
                             <ComboBox Width="150" Height="36"
-                                      SelectedItem="{Binding SelectedRankingTime2,Mode=OneWayToSource}"
+                                      SelectedItem="{Binding SelectedTime2,Mode=OneWayToSource}"
                                       Padding="10 5"
                                       BorderBrush="#606060"
                                       BorderThickness="0"
@@ -242,6 +292,16 @@
                                       FontSize="16"
                                       HorizontalContentAlignment="Center"
                                       x:Name="Time2" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding ChangeServiceTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=Time2}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ChangeServiceTypeRevenueCM}"
+                                                       CommandParameter="{Binding ElementName=Time2}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                         </StackPanel>
                     </Border>
@@ -291,6 +351,7 @@
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 Foreground="Black"
                                 FontSize="14"
+                              ItemsSource="{Binding ListServiceTypeRevenue}"
                               d:ItemsSource="{d:SampleData ItemCount=3}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
@@ -305,7 +366,7 @@
                                 <GridViewColumn Width="100" Header="STT">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="1" 
+                                            <TextBlock Text="{Binding STT}" 
                                                        Width="30"
                                                        FontSize="15" 
                                                        TextAlignment="Center"/>
@@ -316,7 +377,7 @@
                                 <GridViewColumn Width="240" Header="Tên dịch vụ">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="Phòng thương gia"
+                                            <TextBlock Text="{Binding ServiceType}"
                                                         Width="160"
                                                         FontSize="14" 
                                                         TextAlignment="Center"/>
@@ -329,7 +390,7 @@
                                 <GridViewColumn Width="200" Header="Doanh số">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="1 000 000 đ"
+                                            <TextBlock Text="{Binding Revenue}"
                                                         Width="140"
                                                         FontSize="14" 
                                                         HorizontalAlignment="Left"

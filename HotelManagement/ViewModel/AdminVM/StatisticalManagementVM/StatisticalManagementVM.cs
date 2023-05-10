@@ -30,7 +30,8 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
 
         public ICommand LoadRoomTypeAndServiceStatiscalCM { get; set; }
         
-
+        public ICommand ChangeRoomTypeRevenueCM { get; set; }
+        public ICommand ChangeServiceTypeRevenueCM { get; set; }
         public StatisticalManagementVM() 
         {
 
@@ -64,7 +65,15 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 await ChangeIncomePeriod();
                 IsLoading = false;
             });
-            
+            ChangeRoomTypeRevenueCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await ChangeRoomTypeRevenue();
+            });
+            ChangeServiceTypeRevenueCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                await ChangeServiceTypeRevenue();
+            });
+
         }
         public void ChangeView(Card p)
         {
