@@ -116,11 +116,11 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             set { repairExpe = value; OnPropertyChanged(); }
         }
 
-        private string furrnitureExpe;
-        public string FurrnitureExpe
+        private string furnitureExpe;
+        public string FurnitureExpe
         {
-            get { return furrnitureExpe; }
-            set { furrnitureExpe = value; OnPropertyChanged(); }
+            get { return furnitureExpe; }
+            set { furnitureExpe = value; OnPropertyChanged(); }
         }
 
         private string rentalPc;
@@ -224,14 +224,14 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 ServiceReve = Helper.FormatVNMoney(Servicereve);
                 ServiceExpe = Helper.FormatVNMoney(ServiceExpense);
                 RepairExpe = Helper.FormatVNMoney(RepairCost);
-                ReveRate = YearRevenueRateStr;
+                FurnitureExpe = Helper.FormatVNMoney(FurnitureExpense);
                 ExpeRate = YearExpenseRateStr;
 
                 monthlyRevenue.Insert(0, 0);
                 monthlyExpense.Insert(0, 0);
 
                 CalculateTrueIncome(monthlyRevenue, monthlyExpense);
-                Calculate_RevExpPercentage(Rentalreve, Servicereve, ServiceExpense, RepairCost);
+                Calculate_RevExpPercentage(Rentalreve, Servicereve, ServiceExpense, RepairCost, FurnitureExpense);
 
                 for (int i = 1; i <= 12; i++)
                 {
@@ -328,10 +328,10 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             }
 
         }
-        public void Calculate_RevExpPercentage(double a1, double a2, double a3, double a4)
+        public void Calculate_RevExpPercentage(double a1, double a2, double a3, double a4, double a5)
         {
             Calculate_RevPercentage(a1, a2);
-            Calculate_ExpPercentage(a3, a4);
+            Calculate_ExpPercentage(a3, a4,a5);
         }
         public void Calculate_RevPercentage(double a1, double a2)
         {
@@ -361,32 +361,18 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             RentalPc = Math.Round(a1 / (a1 + a2) * 100, 2).ToString() + "%";
             ServicePc = Math.Round(a2 / (a1 + a2) * 100, 2).ToString() + "%";
         }
-        public void Calculate_ExpPercentage(double a3, double a4)
+        public void Calculate_ExpPercentage(double a3, double a4, double a5)
         {
-            if (a3 == 0)
+            if (a3 == 0 && a4 == 0 && a5 == 0)
             {
-                if (a4 == 0)
-                    ServiceExPc = RepairPc = "0%";
-                else
-                {
-                    ServiceExPc = "0%";
-                    RepairPc = "100%";
-                }
+                ServiceExPc = RepairPc = FurniturePc = "0%";
                 return;
             }
-            if (a4 == 0)
-            {
-                if (a3 == 0)
-                    ServiceExPc = RepairPc = "0%";
-                else
-                {
-                    ServiceExPc = "100%";
-                    RepairPc = "0%";
-                }
-                return;
-            }
-            ServiceExPc = Math.Round(a3 / (a3 + a4) * 100, 2).ToString() + "%";
-            RepairPc = Math.Round(a4 / (a3 + a4) * 100, 2).ToString() + "%";
+            
+            ServiceExPc = Math.Round(a3 / (a3 + a4 + a5) * 100, 2).ToString() + "%";
+            RepairPc = Math.Round(a4 / (a3 + a4 + a5) * 100, 2).ToString() + "%";
+            FurniturePc = Math.Round(a5 / (a3 + a4 + a5) * 100, 2).ToString() + "%";
+            
         }
         public async Task LoadIncomeByMonth()
         {
@@ -408,12 +394,13 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 if (SelectedIncomeTime == "December") SelectedIncomeTime = "Tháng 12";
 
                 TotalBill = await OverviewStatisticService.Ins.GetBillQuantity(2021, int.Parse(SelectedIncomeTime.Remove(0, 6)));
-                (List<double> dailyRevenue, double MonthProductReve, double MonthTicketReve, string MonthRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
-                (List<double> dailyExpense, double MonthProductExpense, double MonthRepairCost, string MonthExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
-                RentalReve = Helper.FormatVNMoney(MonthTicketReve);
-                ServiceReve = Helper.FormatVNMoney(MonthProductReve);
-                ServiceExpe = Helper.FormatVNMoney(MonthProductExpense);
+                (List<double> dailyRevenue, double MonthServiceReve, double MonthRentalReve, string MonthRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
+                (List<double> dailyExpense, double MonthServiceExpense, double MonthRepairCost, double FurnitureExpense, string MonthExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
+                RentalReve = Helper.FormatVNMoney(MonthRentalReve);
+                ServiceReve = Helper.FormatVNMoney(MonthServiceReve);
+                ServiceExpe = Helper.FormatVNMoney(MonthServiceExpense);
                 RepairExpe = Helper.FormatVNMoney(MonthRepairCost);
+                FurnitureExpe = Helper.FormatVNMoney(FurnitureExpense);
                 ReveRate = MonthRateStr;
                 ExpeRate = MonthExpenseRateStr;
 
@@ -421,7 +408,7 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 dailyExpense.Insert(0, 0);
 
                 CalculateTrueIncome(dailyRevenue, dailyExpense);
-                Calculate_RevExpPercentage(MonthTicketReve, MonthProductReve, MonthProductExpense, MonthRepairCost);
+                Calculate_RevExpPercentage(MonthRentalReve, MonthServiceReve, MonthServiceExpense, MonthRepairCost, FurnitureExpense);
 
                 for (int i = 1; i <= dailyRevenue.Count - 1; i++)
                 {

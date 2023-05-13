@@ -65,12 +65,14 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
 
         public async Task ChangeRoomTypeRevenue()
         {
-            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(SelectedPeriod.Content.ToString(), SelectedTime, RoomTypeRevenuePieChart);
+            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(SelectedPeriod.Content.ToString(), SelectedTime);
+            RoomTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataRoomTypePieChart(SelectedPeriod.Content.ToString(), SelectedTime);
         }
         
             public async Task ChangeServiceTypeRevenue()
         {
             ListServiceTypeRevenue = await OverviewStatisticService.Ins.GetListServiceTypeRevenue(SelectedPeriod2.Content.ToString(), SelectedTime2);
+            ServiceTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataServiceTypePieChart(SelectedPeriod.Content.ToString(), SelectedTime);
         }
     }
 }
