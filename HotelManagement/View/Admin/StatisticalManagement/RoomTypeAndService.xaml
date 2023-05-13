@@ -141,7 +141,7 @@
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Margin="100 0 100 0"
-                                    Series="{Binding StaffContributePie}" 
+                                    Series="{Binding RoomTypeRevenuePieChart}" 
                                     Height="180"/>
                 </Grid>
             </materialDesign:Card>
@@ -327,7 +327,7 @@
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Margin="100 0 100 0"
-                                    Series="{Binding StaffContributePie}" 
+                                    Series="{Binding ServiceTypeRevenuePieChart}" 
                                     Height="180"/>
                 </Grid>
             </materialDesign:Card>

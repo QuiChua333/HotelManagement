@@ -116,6 +116,13 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             set { repairExpe = value; OnPropertyChanged(); }
         }
 
+        private string furrnitureExpe;
+        public string FurrnitureExpe
+        {
+            get { return furrnitureExpe; }
+            set { furrnitureExpe = value; OnPropertyChanged(); }
+        }
+
         private string rentalPc;
         public string RentalPc
         {
@@ -128,6 +135,13 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
         {
             get { return servicePc; }
             set { servicePc = value; OnPropertyChanged(); }
+        }
+
+        private string furniturePc;
+        public string FurniturePc
+        {
+            get { return furniturePc; }
+            set { furniturePc = value; OnPropertyChanged(); }
         }
 
         private string serviceExPc;
@@ -202,8 +216,8 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             {
 
                 TotalBill = await Task.Run(() => OverviewStatisticService.Ins.GetBillQuantity(int.Parse(SelectedIncomeTime)));
-                (List<double> monthlyRevenue, double Servicereve, double Rentalreve, string YearRevenueRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByYear(int.Parse(SelectedIncomeTime)));
-                (List<double> monthlyExpense, double ServiceExpense, double RepairCost, string YearExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByYear(int.Parse(SelectedIncomeTime)));
+                (List<double> monthlyRevenue, double Servicereve,double Rentalreve, string YearRevenueRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByYear(int.Parse(SelectedIncomeTime)));
+                (List<double> monthlyExpense, double ServiceExpense, double RepairCost, double FurnitureExpense,string YearExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByYear(int.Parse(SelectedIncomeTime)));
 
 
                 RentalReve = Helper.FormatVNMoney(Rentalreve);

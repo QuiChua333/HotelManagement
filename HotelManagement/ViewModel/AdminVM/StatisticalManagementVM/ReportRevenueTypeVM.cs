@@ -1,5 +1,6 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +48,24 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             get { return _ListServiceTypeRevenue; }
             set { _ListServiceTypeRevenue = value; OnPropertyChanged(); }
         }
+
+        private SeriesCollection _RoomTypeRevenuePieChart;
+        public SeriesCollection RoomTypeRevenuePieChart
+        {
+            get { return _RoomTypeRevenuePieChart; }
+            set { _RoomTypeRevenuePieChart = value; OnPropertyChanged(); }
+        }
+
+        private SeriesCollection _ServiceTypeRevenuePieChart;
+        public SeriesCollection ServiceTypeRevenuePieChart
+        {
+            get { return _ServiceTypeRevenuePieChart; }
+            set { _ServiceTypeRevenuePieChart = value; OnPropertyChanged(); }
+        }
+
         public async Task ChangeRoomTypeRevenue()
         {
-            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(SelectedPeriod.Content.ToString(), SelectedTime);
+            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(SelectedPeriod.Content.ToString(), SelectedTime, RoomTypeRevenuePieChart);
         }
         
             public async Task ChangeServiceTypeRevenue()
