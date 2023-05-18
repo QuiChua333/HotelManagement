@@ -38,14 +38,14 @@
                         CornerRadius="2"
                         BorderBrush="#606060" 
                         BorderThickness="0.5" 
-                        Width="200" Height="36" 
+                        Width="180" Height="36" 
                         Margin="30 0 0 0">
                     <StackPanel Orientation="Horizontal" x:Name="_period">
                         <Image Source="{StaticResource iconFilter}" 
                                Height="24" 
                                Width="30" 
                                Margin="10 0 0 0"/>
-                        <ComboBox Width="150" Height="36"
+                        <ComboBox Width="130" Height="36"
                                   SelectedItem="{Binding SelectedIncomePeriod}"
                                   Padding="10 5"
                                   BorderBrush="#606060"
@@ -152,7 +152,8 @@
                                          BorderThickness="0"
                                          IsHitTestVisible="False"
                                          FontStyle="Italic"
-                                         FontSize="16"/>
+                                         VerticalAlignment="Bottom"
+                                         FontSize="14"/>
                             </StackPanel>
 
                             <Grid Grid.Row="1">
@@ -211,7 +212,8 @@
                                              BorderThickness="0"
                                              IsHitTestVisible="False"
                                              FontStyle="Italic"
-                                             FontSize="16"/>
+                                            VerticalAlignment="Bottom"
+                                         FontSize="14"/>
                             </StackPanel>
 
                             <Grid Grid.Row="1">
