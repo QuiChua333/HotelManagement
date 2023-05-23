@@ -39,12 +39,18 @@ namespace HotelManagement.DTOs
         public string ServiceType { get; set; }
         public double ServicePrice { get; set; }
         public byte[] ServiceAvatarData { get; set; }
-        public int Quantity { get; set; }
+
+        private int quantity;
+        public int Quantity
+        {
+            get { return quantity; }
+            set { SetField(ref quantity, value, "Quantity"); }
+        }
         private float importPrice;
         public float ImportPrice
         {
             get { return importPrice; }
-            set { SetField(ref importPrice, value, "ImportQuantity"); }
+            set { SetField(ref importPrice, value, "ImportPrice"); }
         }
 
         private int importQuantity;

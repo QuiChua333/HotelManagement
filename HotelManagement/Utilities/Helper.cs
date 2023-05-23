@@ -30,7 +30,16 @@ namespace HotelManagement.Utilities
                 return "0 ₫";
             }
             return String.Format(CultureInfo.InvariantCulture,
-                                "{0:#,#} ₫", money);
+                                "{0:#,#} đ", money);
+        }
+        public static string FormatVNMoney2(double money)
+        {
+            if (money == 0)
+            {
+                return "0 VNĐ";
+            }
+            return String.Format(CultureInfo.InvariantCulture,
+                                "{0:#,#} VNĐ", money);
         }
         public static BitmapImage LoadBitmapImage(byte[] imageData)
         {
@@ -77,6 +86,10 @@ namespace HotelManagement.Utilities
                 return value[0] != '-' && value != "0";
             }
 
+        }
+        public static string ConvertDoubleToPercentageStr(double value)
+        {
+            return Math.Round(value, 2, MidpointRounding.AwayFromZero).ToString("P", CultureInfo.InvariantCulture);
         }
     }
     

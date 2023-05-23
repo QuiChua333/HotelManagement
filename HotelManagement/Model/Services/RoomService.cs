@@ -268,7 +268,8 @@ namespace HotelManagement.Model.Services
 
 
                     list1 = await context.RentalContracts.ToListAsync();
-                    var roomListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
+                    var roomListId = list1.Where(x => x.CheckOutDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay 
+                    && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
                     t = "";
                     for (int i = 0; i < roomListId.Count; i++)
                     {
@@ -288,7 +289,7 @@ namespace HotelManagement.Model.Services
                    
 
                     list1 = await context.RentalContracts.ToListAsync();
-                    roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false).Select(x => x.RoomId).ToList();
+                    roomListId = list1.Where(x => x.CheckOutDate + x.StartTime > DateTime.Today + DateTime.Now.TimeOfDay && x.StartDate + x.StartTime <= DateTime.Today + DateTime.Now.TimeOfDay && roomRentingList.Contains(x.RoomId) == false && x.Validated == true).Select(x => x.RoomId).ToList();
                     t = "";
                     for (int i = 0; i < roomListId.Count; i++)
                     {
@@ -411,6 +412,7 @@ namespace HotelManagement.Model.Services
                             item.CheckOutDate = null;
                             item.CustomerId = null;
                             item.CustomerName = null;
+                            item.RentalContractId= null;
                         }
                     }
                     return roomList2;

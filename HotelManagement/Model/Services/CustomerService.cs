@@ -42,7 +42,8 @@ namespace HotelManagement.Model.Services
                                         Gender=s.Gender,
                                         CustomerAddress=s.CustomerAddress,
                                         CustomerType=s.CustomerType,
-                                        IsDeleted= (bool)s.IsDeleted                                       
+                                        IsDeleted= (bool)s.IsDeleted,
+
                                   }).ToList();
                 }
             }
@@ -88,6 +89,33 @@ namespace HotelManagement.Model.Services
                 return (false, "Lỗi hệ thống", null);
             }
             return (true, "Thêm khách hàng mới thành công", newCus);
+        }
+        public async Task<CustomerDTO> GetCustomerByCCCD(string cccd)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var cus = await context.Customers.FirstOrDefaultAsync(x=> x.CCCD== cccd);
+                    return new CustomerDTO
+                    {
+                        CustomerId = cus.CustomerId,
+                        CustomerName = cus.CustomerName,
+                        PhoneNumber = cus.PhoneNumber,
+                        Email = cus.Email,
+                        CCCD = cus.CCCD,
+                        DateOfBirth = (DateTime)cus.DateOfBirth,
+                        Gender = cus.Gender,
+                        CustomerAddress = cus.CustomerAddress,
+                        CustomerType = cus.CustomerType,
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
         public async Task<(bool , string)> UpdateCustomerInfo(CustomerDTO customer)
         {

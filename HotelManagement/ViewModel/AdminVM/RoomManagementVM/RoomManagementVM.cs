@@ -225,8 +225,8 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
                     RoomList.Add(r);
                     break;
                 case Operation.UPDATE:
-                    var movieFound = RoomList.FirstOrDefault(x => x.RoomId == r.RoomId);
-                    RoomList[RoomList.IndexOf(movieFound)] = r;
+                    var roomFound = RoomList.FirstOrDefault(x => x.RoomId == r.RoomId);
+                    RoomList[RoomList.IndexOf(roomFound)] = r;
                     break;
                 case Operation.DELETE:
                     for (int i = 0; i < RoomList.Count; i++)
