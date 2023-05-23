@@ -65,7 +65,7 @@ namespace HotelManagement.Model.Services
         {
             try
             {
-                using(HotelManagementEntities db = new HotelManagementEntities())
+                using (HotelManagementEntities db = new HotelManagementEntities())
                 {
                     Service service = await db.Services.FirstOrDefaultAsync(item => item.ServiceId == productSelected.ServiceId);
 
@@ -80,13 +80,13 @@ namespace HotelManagement.Model.Services
                     await db.SaveChangesAsync();
 
                     return (true, "Cập nhật sản phẩm thành công");
-                }    
+                }
             }
-            catch(EntityException ex)
+            catch (EntityException ex)
             {
                 return (false, "Mất kết nối cơ sở dữ liệu");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return (false, "Lỗi hệ thống");
             }
@@ -102,7 +102,7 @@ namespace HotelManagement.Model.Services
 
                     if (service != null)
                         return (false, "Đã có sản phẩm trong cơ sở dữ liệu");
-    
+
                     int ID = db.Services.ToList().Count();
                     string mainID;
                     if (ID == 0)
@@ -111,7 +111,7 @@ namespace HotelManagement.Model.Services
                     {
                         ID = int.Parse(db.Services.ToList().Max(item => item.ServiceId));
                         mainID = getID(++ID);
-                    }    
+                    }
 
                     Service newService = new Service
                     {
@@ -280,6 +280,77 @@ namespace HotelManagement.Model.Services
                 throw ex;
             }
         }
-        
+        public async Task<List<ImportProductDTO>> GetListImportService()
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    List<ImportProductDTO> ImportService = await (
+                                                            from g in db.GoodsReceipts
+                                                            join s in db.Services
+                                                            on g.ServiceId equals s.ServiceId into gs
+                                                            from s in gs.DefaultIfEmpty()
+                                                            join st in db.Staffs 
+                                                            on g.StaffId equals st.StaffId into gst
+                                                            from st in gst.DefaultIfEmpty()
+                                                            orderby g.CreateAt descending
+                                                            select new ImportProductDTO
+                                                            {
+                                                                ImportId = g.GoodsReceiptId,
+                                                                ProductName = s.ServiceName,
+                                                                ProductImportQuantity = (int)g.Quantity,
+                                                                ProductImportPrice = (float)g.ImportPrice,
+                                                                StaffName=st.StaffName,
+                                                                CreatedDate= (DateTime)g.CreateAt,
+                                                                typeimport=0
+                                                                
+                                                            }
+                                                            ).ToListAsync();
+                    return ImportService;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<List<ImportProductDTO>> GetListImportService(int month)
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    List<ImportProductDTO> ImportService = await (
+                                                            from g in db.GoodsReceipts
+                                                            join s in db.Services
+                                                            on g.ServiceId equals s.ServiceId into gs
+                                                            from s in gs.DefaultIfEmpty()
+                                                            join st in db.Staffs
+                                                            on g.StaffId equals st.StaffId into gst
+                                                            from st in gst.DefaultIfEmpty()
+                                                            where ((DateTime)g.CreateAt).Year == DateTime.Today.Year && ((DateTime)g.CreateAt).Month == month
+                                                            orderby g.CreateAt descending
+                                                            select new ImportProductDTO
+                                                            {
+                                                                ImportId = g.GoodsReceiptId,
+                                                                ProductName = s.ServiceName,
+                                                                ProductImportQuantity = (int)g.Quantity,
+                                                                ProductImportPrice = (float)g.ImportPrice,
+                                                                StaffName = st.StaffName,
+                                                                CreatedDate = (DateTime)g.CreateAt,
+                                                                typeimport = 0
+                                                            }
+                                                            ).ToListAsync();
+                    return ImportService;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
     }
 }

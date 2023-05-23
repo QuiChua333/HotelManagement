@@ -8,7 +8,9 @@
       Title="ExportManagementPage"
       xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-      xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      ShowsNavigationUI="False"
+      DataContext="{StaticResource HistoryManagementVM}">
 
     <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin=" 0 10 0 0" >
         <Grid.RowDefinitions>
@@ -56,7 +58,7 @@
                                   FontFamily="{DynamicResource MaterialDesignFont}"
                                   HorizontalContentAlignment="Left">
                         <ComboBoxItem  Content="Mã đơn" Tag="Mã đơn" FontSize="14" />
-                        <ComboBoxItem  Content="Tên sản phẩm" Tag="Tên sản phẩm" FontSize="14"/>
+                        <ComboBoxItem  Content="Tên khách hàng" Tag="Tên khách hàng" FontSize="14"/>
                         <ComboBoxItem  Content="Tên nhân viên" Tag="Tên nhân viên" FontSize="14" />
                     </ComboBox>
                 </Border>
@@ -143,7 +145,7 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
                 </Border.Effect>
-                <Button Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
+                <Button Command="{Binding ExportFileCM}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                     <Grid>
                         <materialDesign:PackIcon Kind="FileExportOutline" Height="20" Width="20" Margin="0 0 20 0" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" />
                         <TextBlock Text="Xuất file Excel" Width="100"  Foreground="White" FontSize="15" FontWeight="Regular" Margin="27 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Right" />
@@ -163,7 +165,7 @@
             </Border.Effect>
             <materialDesign:Card UniformCornerRadius="5" >
                 <ScrollViewer VerticalScrollBarVisibility="Auto"  >
-                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding CustomerList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding BillExportList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                         <ListView.ItemContainerStyle>
                             <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
                         </ListView.ItemContainerStyle>
@@ -178,7 +180,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding CustomerCode}"
+                                            <TextBlock Text="{Binding BillId}"
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
@@ -193,7 +195,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding CustomerName}"                                                           
+                                            <TextBlock Text="{Binding CusName}"                                                           
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
@@ -208,7 +210,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding PhoneNumber}" 
+                                            <TextBlock Text="{Binding PhoneNum}" 
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
@@ -223,7 +225,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Email}"                                                            
+                                            <TextBlock Text="{Binding Price}"                                                            
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
@@ -238,7 +240,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding FirstDate, StringFormat=dd/MM/yyyy}" 
+                                            <TextBlock Text="{Binding StaffName}" 
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>
@@ -253,7 +255,7 @@
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding ExpenseStr}" 
+                                            <TextBlock Text="{Binding CreatedDate, StringFormat=dd/MM/yyyy}" 
                                                            FontSize="14" 
                                                            FontFamily="{StaticResource MaterialDesignFont}"/>
                                         </DataTemplate>

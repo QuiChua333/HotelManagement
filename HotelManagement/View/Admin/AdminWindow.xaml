@@ -7,8 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:components="clr-namespace:HotelManagement.Components"
         mc:Ignorable="d"
-              xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
-
+        xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
         Title="AdminWindow" Height="760" Width="1232"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -16,8 +15,7 @@
         AllowsTransparency="True"
         Name="AdminWD"
         Background="Transparent"
-        DataContext="{StaticResource AdminVM}"
->
+        DataContext="{StaticResource AdminVM}">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
             <BeginStoryboard>
