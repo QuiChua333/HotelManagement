@@ -11,12 +11,14 @@
           </Key>
           <Property Name="BillId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="RentalContractId" Type="varchar" MaxLength="10" />
+          <Property Name="StaffId" Type="varchar" MaxLength="10" />
           <Property Name="NumberOfRentalDays" Type="int" />
           <Property Name="ServicePrice" Type="float" />
           <Property Name="TroublePrice" Type="float" />
           <Property Name="TotalPrice" Type="float" />
           <Property Name="DiscountPrice" Type="float" />
           <Property Name="Price" Type="float" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -215,6 +217,18 @@
             </Principal>
             <Dependent Role="Bill">
               <PropertyRef Name="RentalContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="StaffId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,6 +483,10 @@
             <End Role="RentalContract" EntitySet="RentalContract" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
           <AssociationSet Name="FK_FurnitureReceiptId_Furniture" Association="Self.FK_FurnitureReceiptId_Furniture">
             <End Role="Furniture" EntitySet="Furniture" />
             <End Role="FurnitureReceipt" EntitySet="FurnitureReceipt" />
@@ -557,13 +575,16 @@
           </Key>
           <Property Name="BillId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RentalContractId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StaffId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NumberOfRentalDays" Type="Int32" />
           <Property Name="ServicePrice" Type="Double" />
           <Property Name="TroublePrice" Type="Double" />
           <Property Name="TotalPrice" Type="Double" />
           <Property Name="DiscountPrice" Type="Double" />
           <Property Name="Price" Type="Double" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RentalContract" Relationship="Self.FK_Bill_RentalContract" FromRole="Bill" ToRole="RentalContract" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Bill_Staff" FromRole="Bill" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -757,6 +778,7 @@
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="dateOfStart" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Staff" FromRole="Staff" ToRole="Bill" />
           <NavigationProperty Name="FurnitureReceipts" Relationship="Self.FK_FurnitureReceiptId_Staff" FromRole="Staff" ToRole="FurnitureReceipt" />
           <NavigationProperty Name="GoodsReceipts" Relationship="Self.FK_GoodsReceipt_Staff" FromRole="Staff" ToRole="GoodsReceipt" />
           <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="Staff" ToRole="RentalContract" />
@@ -801,6 +823,18 @@
             </Principal>
             <Dependent Role="Bill">
               <PropertyRef Name="RentalContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="StaffId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1055,6 +1089,10 @@
             <End Role="RentalContract" EntitySet="RentalContracts" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
           <AssociationSet Name="FK_RentalContractDetail_Customer" Association="Self.FK_RentalContractDetail_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="RentalContract" EntitySet="RentalContracts" />
@@ -1143,12 +1181,14 @@
               <MappingFragment StoreEntitySet="Bill">
                 <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="RentalContractId" ColumnName="RentalContractId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
                 <ScalarProperty Name="NumberOfRentalDays" ColumnName="NumberOfRentalDays" />
                 <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
                 <ScalarProperty Name="TroublePrice" ColumnName="TroublePrice" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -39,7 +39,7 @@
 
     <Border CornerRadius="15" Background="#F5F5F5" BorderBrush="Gray" BorderThickness="0.3" Height="650" Width="1000">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            <DropShadowEffect BlurRadius="5" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
@@ -242,7 +242,7 @@
                                                                              Margin="0,0,0,3"/>
                                                     <Label 
                                                           Margin="5,0,0,0"
-                                                           Content="Số người:"
+                                                           Content="Số người ở :"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -250,8 +250,8 @@
                                                     </Label>
                                                     <Label 
                                                           Margin="2,0,0,0"
-                                                           x:Name="lbPersonNumber"
-                                                      
+                                                         
+                                                           Content="{Binding ListCustomer.Count}"
                                                            FontSize="16"
                                                            Foreground="#000000"
                                                            FontFamily="{DynamicResource MaterialDesignFont}"
@@ -670,7 +670,7 @@
                         Margin="20,0,0,0"
                         Width="120" 
                         x:Name="btnAddService"
-                         
+                         Command="{Binding LoadRoomOrderProductsCM}"
                        >
                 </Button>
                 <StackPanel Orientation="Horizontal"

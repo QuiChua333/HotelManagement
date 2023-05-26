@@ -20,13 +20,12 @@
             <i:InvokeCommandAction Command="{Binding FirstLoadCM}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="9*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="36*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="54*"/>
             <RowDefinition Height="36*"/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
@@ -72,16 +71,71 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="25*"/>
-            </Grid.RowDefinitions>
 
-            
+            <Grid Height="50" VerticalAlignment="Top" Margin="0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28*"/>
+                    <ColumnDefinition Width="44*"/>
+                    <ColumnDefinition Width="28*"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0">
+                <Label Grid.Column="0" 
+                       Content="CMND / CCCD:" 
+                       FontWeight="Bold" 
+                       Foreground="#000000" 
+                       FontSize="14"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+
+                <TextBox Grid.Column="1" 
+                             Padding="10 0 10 0" 
+                             HorizontalAlignment="Center" 
+                             HorizontalContentAlignment="Left" 
+                             VerticalAlignment="Top" 
+                             VerticalContentAlignment="Center" 
+                             FontSize="16" 
+                             MaxLength="12"
+                             AcceptsReturn="True"
+                             PreviewTextInput="TextBox_PreviewTextInput" 
+                             Text="{Binding CCCD}"
+                             Foreground="#686868" 
+                             Height="30" Width="240" 
+                             materialDesign:HintAssist.Hint="Nhập CMND / CCCD (12 số)" 
+                             BorderThickness="0.5" 
+                             BorderBrush="#545454"/>
+
+                <Button Grid.Column="2" 
+                        Content="Kiểm tra" 
+                        Background="#009099" 
+                        Width="100" Height="32" 
+                        Foreground="White" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Command="{Binding CheckCCCDCM}"
+                        CommandParameter="{Binding ElementName=BookingRoom}"/>
+
+            </Grid>
+
+
+            <!--chưa tồn tại-->
+            <Grid Height="34" VerticalAlignment="Top" Margin="0 50 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" 
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           FontWeight="Bold"
+                           Foreground="Red"
+                           Visibility="Hidden"
+                           x:Name="notifyNotExist"
+                           Text="Khách hàng mới chưa đăng ký. Vui lòng đăng ký!"/>
+            </Grid>
+
+            <Grid Height="80" VerticalAlignment="Top" Margin="0 80 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -89,8 +143,8 @@
 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="35*"/>
+                        <RowDefinition Height="65*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -118,47 +172,8 @@
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" 
-                           Content="CMND / CCCD:" 
-                           FontWeight="Bold" 
-                           Foreground="#000000" 
-                           FontSize="14" Margin="30 0 0 0" 
-                           VerticalAlignment="Top"/>
-
-                    <TextBox Grid.Row="1" 
-                             Padding="10 0 10 0" 
-                             HorizontalAlignment="Left" 
-                             HorizontalContentAlignment="Left" 
-                             VerticalAlignment="Top" 
-                             VerticalContentAlignment="Center" 
-                             FontSize="16" 
-                             MaxLength="12"
-                             AcceptsReturn="True"
-                             PreviewTextInput="TextBox_PreviewTextInput" 
-                             Text="{Binding CCCD}"
-                             Foreground="#686868" 
-                             Margin="30 0 0 0" 
-                             Height="30" Width="240" 
-                             materialDesign:HintAssist.Hint="Nhập CMND / CCCD (12 số)" 
-                             BorderThickness="0.5" 
-                             BorderBrush="#545454"/>
-                </Grid>
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="35*"/>
+                        <RowDefinition Height="65*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -177,7 +192,7 @@
                              VerticalContentAlignment="Center" 
                              FontSize="16" 
                              MaxLength="10"
-                             PreviewTextInput="TextBox_PreviewTextInput"
+                             PreviewTextInput="TextBox_PreviewTextInput" 
                              Foreground="#686868" 
                              Margin="28 0 0 0" 
                              Height="30" Width="240" 
@@ -186,10 +201,18 @@
                              BorderBrush="#545454"/>
                 </Grid>
 
-                <Grid Grid.Column="1">
+            </Grid>
+
+            <Grid Height="60" VerticalAlignment="Top" Margin="0 140 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -214,47 +237,11 @@
                              BorderThickness="0.5" 
                              BorderBrush="#545454"/>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" 
-                           Content="Ngày sinh: " 
-                           FontWeight="Bold" 
-                           Foreground="#000000" 
-                           FontSize="14" 
-                           Margin="30 0 0 0" 
-                           VerticalAlignment="Top"/>
-
-                    <Border Grid.Row="1" 
-                            Height="30" Width="240" 
-                            BorderThickness="0.5" 
-                            BorderBrush="#545454" 
-                            CornerRadius="0">
-                        <DatePicker Padding="10 0 20 0" 
-                                    HorizontalAlignment="Left" 
-                                    VerticalContentAlignment="Center" 
-                                    FontSize="16" 
-                                    Foreground="#686868" 
-                                    Height="30" Width="240" 
-                                    SelectedDate="{Binding DayOfBirth}"
-                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy"/>
-                    </Border>
-                </Grid>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -280,8 +267,10 @@
                              BorderThickness="0.5" 
                              BorderBrush="#545454"/>
                 </Grid>
+
             </Grid>
-            <Grid Grid.Row="3">
+
+            <Grid Height="60" VerticalAlignment="Top" Margin="0 200 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -289,8 +278,40 @@
 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" 
+                           Content="Ngày sinh: " 
+                           FontWeight="Bold" 
+                           Foreground="#000000" 
+                           FontSize="14" 
+                           Margin="30 0 0 0" 
+                           VerticalAlignment="Top"/>
+
+                    <Border Grid.Row="1" 
+                            Height="30" Width="240" 
+                            BorderThickness="0.5" 
+                            BorderBrush="#545454" 
+                            CornerRadius="0">
+                        <DatePicker Padding="10 0 20 0" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalContentAlignment="Center" 
+                                    FontSize="16" 
+                                    Foreground="#686868" 
+                                    Height="30" Width="240" 
+                                    SelectedDate="{Binding DayOfBirth}"
+                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy">
+
+                        </DatePicker>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -310,59 +331,20 @@
                                   BorderBrush="#606060"
                                   BorderThickness="0.5"
                                   Foreground="#686868"
-                                  SelectedIndex="0"
                                   FontSize="16"
+                                  x:Name="cbbGender"
+                                  materialDesign:HintAssist.Hint="Chọn giới tính"
                                   SelectedItem="{Binding Gender}"
-                                  HorizontalContentAlignment="Center">
+                                  HorizontalContentAlignment="Left">
                             <ComboBoxItem  Content="Nam" FontSize="16" Foreground="Black"/>
                             <ComboBoxItem  Content="Nữ" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </Border>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" 
-                           Content="Loại khách hàng:" 
-                           FontWeight="Bold" 
-                           Foreground="#000000" 
-                           FontSize="14" 
-                           Margin="30 0 0 0" 
-                           VerticalAlignment="Top"/>
-                    <Border Grid.Row="1" 
-                            Background="White" 
-                            Width="240" Height="30" 
-                            BorderBrush="#606060"
-                            BorderThickness="0.5">
-                        <ComboBox Width="240" Height="30"
-                                  Padding="10 2"
-                                  BorderBrush="#606060"
-                                  BorderThickness="0.5"
-                                  Foreground="#686868"
-                                  SelectedIndex="0"
-                                  FontSize="16"
-                                  SelectedItem="{Binding CustomerType}"
-                                  HorizontalContentAlignment="Center">
-                            <ComboBoxItem  Content="Khách nước ngoài" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Khách nội địa" FontSize="16" Foreground="Black"/>
-                        </ComboBox>
-                    </Border>
-                </Grid>
-
             </Grid>
-        </Grid>
 
-        <Grid Grid.Row="3">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
+            <Grid Height="60" VerticalAlignment="Top" Margin="0 260 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -370,8 +352,8 @@
 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -396,15 +378,20 @@
                                     SelectedDate="{Binding StartDate}"
                                     Foreground="#686868" 
                                     Height="30" Width="240" 
-                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy"/>
+                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
                     </Border>
-
                 </Grid>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -429,12 +416,19 @@
                                     SelectedDate="{Binding CheckoutDate}"
                                     Foreground="#686868" 
                                     Height="30" Width="240" 
-                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy"/>
+                                    materialDesign:HintAssist.Hint="Chọn dd/mm/yy">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
                     </Border>
                 </Grid>
+
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Height="60" VerticalAlignment="Top" Margin="0 320 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -442,8 +436,8 @@
 
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
@@ -468,19 +462,24 @@
                                                    SelectedTime="{Binding StartTime}"
                                                    Foreground="#686868" 
                                                    Height="30" Width="240" 
-                                                   materialDesign:HintAssist.Hint="Chọn giờ check-in"/> 
+                                                   materialDesign:HintAssist.Hint="Chọn giờ check-in">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedTimeChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedTimeChangedCM}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </materialDesign:TimePicker>
                     </Border>
-
                 </Grid>
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="56*"/>
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" 
-                           Content="Số người:" 
+                           Content="Loại khách hàng:" 
                            FontWeight="Bold" 
                            Foreground="#000000" 
                            FontSize="14" 
@@ -496,21 +495,21 @@
                                   BorderBrush="#606060"
                                   BorderThickness="0.5"
                                   Foreground="#686868"
-                                  SelectedIndex="0"
-                                  SelectedItem="{Binding PersonNumber}"
+                                  materialDesign:HintAssist.Hint="Chọn loại khách hàng"
                                   FontSize="16"
-                                  HorizontalContentAlignment="Center">
-                            <ComboBoxItem Content="1" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Content="2" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem Content="3" FontSize="16" Foreground="Black"/>
+                                  x:Name="cbbCusType"
+                                  SelectedItem="{Binding CustomerType}"
+                                  HorizontalContentAlignment="Left">
+                            <ComboBoxItem  Content="Nội địa" FontSize="16" Foreground="Black"/>
+                            <ComboBoxItem  Content="Nước ngoài" FontSize="16" Foreground="Black"/>
                         </ComboBox>
                     </Border>
                 </Grid>
+
             </Grid>
-            <!--Số 1 ở đây-->
         </Grid>
 
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="3" Margin="0 10 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="14*"/>
                 <RowDefinition Height="86*"/>
@@ -542,7 +541,7 @@
                                       Cursor="Hand"
                                       ToolTip="Nháy đúp để xem chi tiết" 
                                       d:ItemsSource="{d:SampleData ItemCount=4}">
-                                
+
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="Height" Value="40" />
@@ -601,7 +600,7 @@
             </Grid>
         </Grid>
 
-        <Button Grid.Row="5" 
+        <Button Grid.Row="4" 
                 Content="Xác nhận" 
                 Background="#009099" 
                 Width="100" Height="32" 

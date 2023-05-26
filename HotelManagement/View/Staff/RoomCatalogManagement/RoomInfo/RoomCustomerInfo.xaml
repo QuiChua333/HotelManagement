@@ -30,7 +30,7 @@
     </Window.Resources>
     <Border CornerRadius="15" Background="#FFFFFF" BorderBrush="Gray" BorderThickness="0.3"  Width="850" VerticalAlignment="Top">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
+            <DropShadowEffect BlurRadius="5" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
         </Border.Effect>
         <Grid>
                 <Grid.RowDefinitions>
@@ -379,12 +379,13 @@
             <Grid Grid.Row="3">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="Kết quả: "
+                              
                                                                 Margin="20,0,0,0"
                                                                Foreground="#000000"
                                                                      FontWeight="Regular"  
                                                        FontSize="14" />
                     <TextBlock Text="{Binding ListCustomer.Count}"
-                                                              
+                                                               x:Name="result"
                                                                Foreground="#000000"
                                                                      FontWeight="Regular"  
                                                        FontSize="14" />

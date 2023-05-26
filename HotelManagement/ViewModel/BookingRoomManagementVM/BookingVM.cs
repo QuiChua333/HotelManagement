@@ -3,7 +3,9 @@ using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
 using HotelManagement.Utils;
+using HotelManagement.View.BookingRoomManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
+using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +22,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
 {
     public partial class BookingRoomManagementVM : BaseVM
     {
+        private bool isExistCustomer = false;
         public (bool isvalid, string error) ValidateBooking()
         {
             if (string.IsNullOrEmpty(CustomerName) ||
@@ -27,13 +30,8 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 string.IsNullOrEmpty(PhoneNumber) ||
                 string.IsNullOrEmpty(Email) ||
                 string.IsNullOrEmpty(Address) ||
-                string.IsNullOrEmpty(DayOfBirth.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(StartDate.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(CheckoutDate.TimeOfDay.ToString()) ||
-                string.IsNullOrEmpty(StartTime.TimeOfDay.ToString()) ||
                 string.IsNullOrEmpty(Gender.Content.ToString()) ||
-                string.IsNullOrEmpty(CustomerType.Content.ToString()) ||
-                string.IsNullOrEmpty(PersonNumber.Content.ToString()))
+                string.IsNullOrEmpty(CustomerType.Content.ToString()))
             {
                 return (false, "Vui lòng nhập đủ thông tin khách hàng!");
             }
@@ -55,7 +53,6 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 if (!isv) return (false, err);
                 if (StartDate >= CheckoutDate) return (false, "Vui lòng kiểm tra lại ngày bắt đầu thuê và ngày trả phòng!");
                 if (SelectedRoom is null) return (false, "Vui lòng chọn phòng để đặt!");
-                // check CMND
                 return (true, null);
             }
         }
@@ -81,10 +78,9 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             {
                 CheckOutDate = CheckoutDate,
                 StartDate = StartDate,
-                StartTime = StartTime.TimeOfDay,
-                //StaffId = StaffId,
+                StartTime = new TimeSpan(0, StartTime.TimeOfDay.Hours, StartTime.TimeOfDay.Minutes, StartTime.TimeOfDay.Seconds, 0),
+                StaffId = StaffId,
                 CustomerId = CustomerId,
-                PersonNumber = int.Parse(PersonNumber.Content.ToString()),
                 RoomId = SelectedRoom.RoomId,
                 Validated = true,
             };
@@ -99,13 +95,12 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 CustomMessageBox.ShowOk(message, "Lỗi", "OK", CustomMessageBoxImage.Error);
             }
         }
-        // oke rồi, giờ hỏi đáp =)) trong cái SaveCustomer có cần CustomerId ko 
         public async Task SaveCustomer()
         {
             CustomerDTO customerDTO = new CustomerDTO
             {
                 CustomerName = CustomerName,
-                PhoneNumber = PhoneNumber, // ko cần, nó ở chỗ này
+                PhoneNumber = PhoneNumber,
                 DateOfBirth = (DateTime)DayOfBirth,
                 Email = Email,
                 CCCD = CCCD,
@@ -118,20 +113,59 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             if (isSucsses)
             {
                 CustomerId = customerId;
-                IsSucceedSavingCustomer = true;
             }
             else
             {
                 CustomMessageBox.ShowOk(message, "Lỗi", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
         }
-
         public async Task LoadReadyRoom()
         {
             ListReadyRoom = new ObservableCollection<RoomDTO>(await BookingRoomService.Ins.GetListReadyRoom(StartDate,StartTime,CheckoutDate));
         }
+        public async Task CheckCCCD(string cccd, Booking b)
+        {
+            
+            foreach(var i in cccd)
+            {
+                if( !"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return; 
+                }
+            }
+            if (cccd.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
+            }
 
-        
+            (bool isExist, CustomerDTO cus) = await BookingRoomService.Ins.CheckCCCD(cccd);
 
+            if (isExist)
+            {
+                CCCD = cus.CCCD;
+                CustomerName = cus.CustomerName;
+                Email = cus.Email;
+                Address = cus.CustomerAddress;
+                DayOfBirth = (DateTime)cus.DateOfBirth;
+                if (cus.CustomerType == "Nội địa")
+                    b.cbbCusType.SelectedIndex = 0;
+                else
+                    b.cbbCusType.SelectedIndex = 1;
+
+                if (cus.Gender == "Nam")
+                    b.cbbGender.SelectedIndex = 0;
+                else
+                    b.cbbGender.SelectedIndex = 1;
+                PhoneNumber = cus.PhoneNumber;
+                isExistCustomer = true;
+            }
+            else
+            {
+                RenewWindowData();
+                b.notifyNotExist.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

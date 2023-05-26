@@ -69,6 +69,22 @@ namespace HotelManagement.View.Staff.RoomCatalogManagement
             }
         }
 
-        
+        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem lbi = sender as ListBoxItem;
+            listRoom1.SelectedItem = lbi.DataContext;
+        }
+
+        private void ListBoxItem2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem lbi = sender as ListBoxItem;
+            listRoom2.SelectedItem = lbi.DataContext;
+        }
+
+        private void ListBoxItem3_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem lbi = sender as ListBoxItem;
+            listRoom3.SelectedItem = lbi.DataContext;
+        }
     }
 }

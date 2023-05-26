@@ -377,15 +377,17 @@
                            Foreground="#EC4242">
                         </Label>
 
-                        <ListBox            
+                        <ListBox           
                                         ItemsSource="{Binding ListRoomType1}"
                                         x:Name="listRoom1"
                                          VerticalAlignment="Center"
                                          HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}" >
+                                         SelectedItem="{Binding SelectedRoom}" >
                             <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}">
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown" />
+                                </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -396,7 +398,7 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid x:Name="grid" Cursor="Hand">
+                                    <Grid x:Name="grid1" Cursor="Hand">
                                         <Grid.Style>
                                             <Style TargetType="{x:Type Grid}">
                                                 <Style.Triggers>
@@ -517,15 +519,16 @@
                                             </Grid>
                                         </Border>
                                         <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
-                                            </i:EventTrigger>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.OpenRoomWindowCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                                                       CommandParameter="{Binding ElementName=grid1}" />
 
                                             </i:EventTrigger>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom1, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid1}" />
+                                            </i:EventTrigger>
+                                           
                                         </i:Interaction.Triggers>                                    
                                     </Grid>
 
@@ -766,9 +769,11 @@
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}">
+                                         SelectedItem="{Binding SelectedRoom}">
                             <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" >
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem2_PreviewMouseLeftButtonDown" />
+                                </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -779,7 +784,7 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid x:Name="grid" Cursor="Hand">
+                                    <Grid x:Name="grid2" Cursor="Hand">
                                         <Grid.Style>
                                             <Style TargetType="{x:Type Grid}">
                                                 <Style.Triggers>
@@ -900,15 +905,16 @@
                                             </Grid>
                                         </Border>
                                         <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom2, Path=DataContext.LoadRoomInfoCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
-                                            </i:EventTrigger>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom2, Path=DataContext.OpenRoomWindowCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                                                       CommandParameter="{Binding ElementName=grid2}" />
 
                                             </i:EventTrigger>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom2, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid2}" />
+                                            </i:EventTrigger>
+                                            
                                         </i:Interaction.Triggers>
                                     </Grid>
 
@@ -1041,9 +1047,11 @@
                                          VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
                                          Margin="20,0,20,0"
-                                         SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}">
+                                         SelectedItem="{Binding SelectedRoom}">
                             <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" />
+                                <Style TargetType="ListBoxItem" BasedOn="{StaticResource myListBoxItems3}" >
+                                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem3_PreviewMouseLeftButtonDown" />
+                                </Style>
                             </ListBox.ItemContainerStyle>
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -1054,7 +1062,7 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid x:Name="grid" Cursor="Hand">
+                                    <Grid x:Name="grid3" Cursor="Hand">
                                         <Grid.Style>
                                             <Style TargetType="{x:Type Grid}">
                                                 <Style.Triggers>
@@ -1175,15 +1183,16 @@
                                             </Grid>
                                         </Border>
                                         <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Loaded">
-                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom3, Path=DataContext.LoadRoomInfoCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
-                                            </i:EventTrigger>
-                                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding ElementName=listRoom3, Path=DataContext.OpenRoomWindowCM}"
-                                                                       CommandParameter="{Binding ElementName=grid}" />
+                                                                       CommandParameter="{Binding ElementName=grid3}" />
 
                                             </i:EventTrigger>
+                                            <i:EventTrigger EventName="Loaded">
+                                                <i:InvokeCommandAction Command="{Binding ElementName=listRoom3, Path=DataContext.LoadRoomInfoCM}"
+                                                                       CommandParameter="{Binding ElementName=grid3}" />
+                                            </i:EventTrigger>
+                                            
                                         </i:Interaction.Triggers>
                                     </Grid>
 

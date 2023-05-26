@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -18,40 +17,65 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 namespace HotelManagement.View.Admin.StatisticalManagement
 {
     /// <summary>
-    /// Interaction logic for IncomeStatiscalManagement.xaml
+    /// Interaction logic for RoomTypeAndService.xaml
     /// </summary>
-    public partial class IncomeStatiscalManagement : Page
+    public partial class RoomTypeAndService : Page
     {
-        public IncomeStatiscalManagement()
+        public RoomTypeAndService()
         {
             InitializeComponent();
-            this.Language = XmlLanguage.GetLanguage("vi-VN");
         }
 
-        private void periodbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void periodbox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBoxItem s = (ComboBoxItem)periodbox.SelectedItem;
+            ComboBoxItem s = (ComboBoxItem)periodbox1.SelectedItem;
             if (s != null)
             {
                 switch (s.Content.ToString())
                 {
                     case "Theo năm":
                         {
-                            GetYearSource(Timebox);
+                            GetYearSource(Time1);
                             return;
                         }
                     case "Theo tháng":
                         {
-                            GetMonthSource(Timebox);
+                            GetMonthSource(Time1);
                             return;
                         }
                 }
             }
         }
-        private void periodbox_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void periodbox1_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            GetYearSource(Timebox);
+            GetYearSource(Time1);
         }
+
+        private void periodbox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem s = (ComboBoxItem)periodbox2.SelectedItem;
+            if (s != null)
+            {
+                switch (s.Content.ToString())
+                {
+                    case "Theo năm":
+                        {
+                            GetYearSource(Time1);
+                            return;
+                        }
+                    case "Theo tháng":
+                        {
+                            GetMonthSource(Time1);
+                            return;
+                        }
+                }
+            }
+        }
+        private void periodbox2_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            GetYearSource(Time2);
+        }
+
         public void GetYearSource(ComboBox cbb)
         {
             if (cbb is null) return;
@@ -111,7 +135,7 @@ namespace HotelManagement.View.Admin.StatisticalManagement
             TextBox tb = sender as TextBox;
 
             if (!string.IsNullOrEmpty(tb.Text))
-            { 
+            {
                 if (tb.Text.StartsWith("-"))
                 {
                     if (tb.Text == "-2")
