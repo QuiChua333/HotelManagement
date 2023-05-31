@@ -335,6 +335,75 @@ namespace HotelManagement.Model.Services
 
             return bitmapImage;
         }
+        public async Task<List<ImportProductDTO>> GetListImportFuniture()
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    List<ImportProductDTO> ImportFuniture = await (
+                                                            from g in db.FurnitureReceipts
+                                                            join s in db.Furnitures
+                                                            on g.FurnitureId equals s.FurnitureId into gs
+                                                            from s in gs.DefaultIfEmpty()
+                                                            join st in db.Staffs
+                                                            on g.StaffId equals st.StaffId into gst
+                                                            from st in gst.DefaultIfEmpty()
+                                                            orderby g.CreateAt descending
+                                                            select new ImportProductDTO
+                                                            {
+                                                                ImportId = g.FurnitureId,
+                                                                ProductName = s.FurnitureName,
+                                                                ProductImportQuantity = (int)g.Quantity,
+                                                                ProductImportPrice = (float)g.ImportPrice,
+                                                                StaffName = st.StaffName,
+                                                                CreatedDate = (DateTime)g.CreateAt,
+                                                                typeimport = 1
+                                                            }
+                                                            ).ToListAsync();
+                    return ImportFuniture;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<List<ImportProductDTO>> GetListImportFuniture(int month)
+        {
+            try
+            {
+                using (HotelManagementEntities db = new HotelManagementEntities())
+                {
+                    List<ImportProductDTO> ImportFuniture = await (
+                                                            from g in db.FurnitureReceipts
+                                                            join s in db.Furnitures
+                                                            on g.FurnitureId equals s.FurnitureId into gs
+                                                            from s in gs.DefaultIfEmpty()
+                                                            join st in db.Staffs
+                                                            on g.StaffId equals st.StaffId into gst
+                                                            from st in gst.DefaultIfEmpty()
+                                                            where ((DateTime)g.CreateAt).Year == DateTime.Today.Year && ((DateTime)g.CreateAt).Month == month
+                                                            orderby g.CreateAt descending
+                                                            select new ImportProductDTO
+                                                            {
+                                                                ImportId = g.FurnitureId,
+                                                                ProductName = s.FurnitureName,
+                                                                ProductImportQuantity = (int)g.Quantity,
+                                                                ProductImportPrice = (float)g.ImportPrice,
+                                                                StaffName = st.StaffName,
+                                                                CreatedDate = (DateTime)g.CreateAt,
+                                                                typeimport = 1
+                                                            }
+                                                            ).ToListAsync();
+                    return ImportFuniture;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }

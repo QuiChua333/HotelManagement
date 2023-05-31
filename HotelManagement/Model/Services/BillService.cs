@@ -159,5 +159,243 @@ namespace HotelManagement.Model.Services
         //        throw ex;
         //    }
         //}
+        public async Task<List<BillDTO>> GetAllBill()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var billList = (from b in context.Bills
+                                    orderby b.CreateDate descending
+                                    select new BillDTO
+                                    {
+                                        BillId = b.BillId,
+                                        RentalContractId=b.RentalContractId,
+                                        StaffId=b.StaffId,
+                                        StaffName=b.Staff.StaffName,
+                                        CustomerAddress=b.RentalContract.Customer.CustomerAddress,
+                                        CustomerId=b.RentalContract.CustomerId,
+                                        CustomerName=b.RentalContract.Customer.CustomerName,
+                                        RoomId=b.RentalContract.RoomId,
+                                        RoomNumber= (int)b.RentalContract.Room.RoomNumber,
+                                        RoomTypeName= b.RentalContract.Room.RoomType.RoomTypeName,
+                                        PersonNumber= (int)b.RentalContract.PersonNumber,
+                                        RoomPrice=b.RentalContract.Room.RoomType.Price,
+                                        IsHasForeignPerson=(b.RentalContract.RoomCustomers.Where(t => t.CustomerType == "Nước ngoài").Count() > 0),
+                                        NumberOfRentalDays=b.NumberOfRentalDays,
+                                        ServicePrice=b.ServicePrice,
+                                        TroublePrice=b.TroublePrice,
+                                        TotalPrice=b.TotalPrice,
+                                        DiscountPrice = b.DiscountPrice,
+                                        Price = b.Price,
+                                        StartDate=b.RentalContract.StartDate,
+                                        CheckOutDate=b.RentalContract.CheckOutDate,
+                                        StartTime=b.RentalContract.StartTime,
+                                        CreateDate=b.CreateDate,
+                                        ListListServicePayment=b.RentalContract.ServiceUsings.Select(t => new ServiceUsingDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            ServiceId = t.ServiceId,
+                                            ServiceName = t.Service.ServiceName,
+                                            ServiceType = t.Service.ServiceType,
+                                            UnitPrice = t.Service.ServicePrice,
+                                            Quantity = t.Quantity,
+                                        }).ToList(),
+                                        ListTroubleByCustomer=b.RentalContract.TroubleByCustomers.Select(t => new TroubleByCustomerDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            TroubleId = t.TroubleId,
+                                            Title = t.Trouble.Title,
+                                            PredictedPrice = t.PredictedPrice,
+                                            Level = t.Trouble.Level,
+                                        }).ToList()
+                                    }).ToListAsync();
+                    return await billList;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        
+        public async Task<List<BillDTO>> GetAllBillByDate(DateTime date)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var billList = (from b in context.Bills
+                                    where DbFunctions.TruncateTime(b.CreateDate) == date.Date
+                                    orderby b.CreateDate descending
+                                    select new BillDTO
+                                    {
+                                        BillId = b.BillId,
+                                        RentalContractId = b.RentalContractId,
+                                        StaffId = b.StaffId,
+                                        StaffName = b.Staff.StaffName,
+                                        CustomerAddress = b.RentalContract.Customer.CustomerAddress,
+                                        CustomerId = b.RentalContract.CustomerId,
+                                        CustomerName = b.RentalContract.Customer.CustomerName,
+                                        RoomId = b.RentalContract.RoomId,
+                                        RoomNumber = (int)b.RentalContract.Room.RoomNumber,
+                                        RoomTypeName = b.RentalContract.Room.RoomType.RoomTypeName,
+                                        PersonNumber = (int)b.RentalContract.PersonNumber,
+                                        RoomPrice = b.RentalContract.Room.RoomType.Price,
+                                        IsHasForeignPerson = (b.RentalContract.RoomCustomers.Where(t => t.CustomerType == "Nước ngoài").Count() > 0),
+                                        NumberOfRentalDays = b.NumberOfRentalDays,
+                                        ServicePrice = b.ServicePrice,
+                                        TroublePrice = b.TroublePrice,
+                                        TotalPrice = b.TotalPrice,
+                                        DiscountPrice = b.DiscountPrice,
+                                        Price = b.Price,
+                                        StartDate = b.RentalContract.StartDate,
+                                        CheckOutDate = b.RentalContract.CheckOutDate,
+                                        StartTime = b.RentalContract.StartTime,
+                                        CreateDate = b.CreateDate,
+                                        ListListServicePayment = b.RentalContract.ServiceUsings.Select(t => new ServiceUsingDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            ServiceId = t.ServiceId,
+                                            ServiceName = t.Service.ServiceName,
+                                            ServiceType = t.Service.ServiceType,
+                                            UnitPrice = t.Service.ServicePrice,
+                                            Quantity = t.Quantity,
+                                        }).ToList(),
+                                        ListTroubleByCustomer = b.RentalContract.TroubleByCustomers.Select(t => new TroubleByCustomerDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            TroubleId = t.TroubleId,
+                                            Title = t.Trouble.Title,
+                                            PredictedPrice = t.PredictedPrice,
+                                            Level = t.Trouble.Level,
+                                        }).ToList()
+                                    }).ToListAsync();
+                    return await billList;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<List<BillDTO>> GetAllBillByMonth(int month)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var billList = (from b in context.Bills
+                                    where ((DateTime)b.CreateDate).Year == DateTime.Now.Year && ((DateTime)b.CreateDate).Month == month
+                                    orderby b.CreateDate descending
+                                    select new BillDTO
+                                    {
+                                        BillId = b.BillId,
+                                        RentalContractId = b.RentalContractId,
+                                        StaffId = b.StaffId,
+                                        StaffName = b.Staff.StaffName,
+                                        CustomerAddress = b.RentalContract.Customer.CustomerAddress,
+                                        CustomerId = b.RentalContract.CustomerId,
+                                        CustomerName = b.RentalContract.Customer.CustomerName,
+                                        RoomId = b.RentalContract.RoomId,
+                                        RoomNumber = (int)b.RentalContract.Room.RoomNumber,
+                                        RoomTypeName = b.RentalContract.Room.RoomType.RoomTypeName,
+                                        PersonNumber = (int)b.RentalContract.PersonNumber,
+                                        RoomPrice = b.RentalContract.Room.RoomType.Price,
+                                        IsHasForeignPerson = (b.RentalContract.RoomCustomers.Where(t => t.CustomerType == "Nước ngoài").Count() > 0),
+                                        NumberOfRentalDays = b.NumberOfRentalDays,
+                                        ServicePrice = b.ServicePrice,
+                                        TroublePrice = b.TroublePrice,
+                                        TotalPrice = b.TotalPrice,
+                                        DiscountPrice = b.DiscountPrice,
+                                        Price = b.Price,
+                                        StartDate = b.RentalContract.StartDate,
+                                        CheckOutDate = b.RentalContract.CheckOutDate,
+                                        StartTime = b.RentalContract.StartTime,
+                                        CreateDate = b.CreateDate,
+                                        ListListServicePayment = b.RentalContract.ServiceUsings.Select(t => new ServiceUsingDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            ServiceId = t.ServiceId,
+                                            ServiceName = t.Service.ServiceName,
+                                            ServiceType = t.Service.ServiceType,
+                                            UnitPrice = t.Service.ServicePrice,
+                                            Quantity = t.Quantity,
+                                        }).ToList(),
+                                        ListTroubleByCustomer = b.RentalContract.TroubleByCustomers.Select(t => new TroubleByCustomerDTO
+                                        {
+                                            RentalContractId = t.RentalContractId,
+                                            TroubleId = t.TroubleId,
+                                            Title = t.Trouble.Title,
+                                            PredictedPrice = t.PredictedPrice,
+                                            Level = t.Trouble.Level,
+                                        }).ToList()
+                                    }).ToListAsync();
+                    return await billList;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task<BillDTO> GetBillDetails(string id)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var b = await context.Bills.FindAsync(id);
+                    
+                    BillDTO billdetail = new BillDTO{
+                        BillId = b.BillId,
+                        RentalContractId = b.RentalContractId,
+                        StaffId = b.StaffId,
+                        StaffName = b.Staff.StaffName,
+                        CustomerAddress = b.RentalContract.Customer.CustomerAddress,
+                        CustomerId = b.RentalContract.CustomerId,
+                        CustomerName = b.RentalContract.Customer.CustomerName,
+                        RoomId = b.RentalContract.RoomId,
+                        RoomNumber = (int)b.RentalContract.Room.RoomNumber,
+                        RoomTypeName = b.RentalContract.Room.RoomType.RoomTypeName,
+                        PersonNumber = (int)b.RentalContract.PersonNumber,
+                        RoomPrice = b.RentalContract.Room.RoomType.Price,
+                        IsHasForeignPerson = (b.RentalContract.RoomCustomers.Where(t => t.CustomerType == "Nước ngoài").Count() > 0),
+                        NumberOfRentalDays = b.NumberOfRentalDays,
+                        ServicePrice = b.ServicePrice,
+                        TroublePrice = b.TroublePrice,
+                        TotalPrice = b.TotalPrice,
+                        DiscountPrice = b.DiscountPrice,
+                        Price = b.Price,
+                        StartDate = b.RentalContract.StartDate,
+                        CheckOutDate = b.RentalContract.CheckOutDate,
+                        StartTime = b.RentalContract.StartTime,
+                        CreateDate = b.CreateDate,
+                        ListListServicePayment = b.RentalContract.ServiceUsings.Select(t => new ServiceUsingDTO
+                        {
+                            RentalContractId = t.RentalContractId,
+                            ServiceId = t.ServiceId,
+                            ServiceName = t.Service.ServiceName,
+                            ServiceType = t.Service.ServiceType,
+                            UnitPrice = t.Service.ServicePrice,
+                            Quantity = t.Quantity,
+                        }).ToList(),
+                        ListTroubleByCustomer = b.RentalContract.TroubleByCustomers.Select(t => new TroubleByCustomerDTO
+                        {
+                            RentalContractId = t.RentalContractId,
+                            TroubleId = t.TroubleId,
+                            Title = t.Trouble.Title,
+                            PredictedPrice = t.PredictedPrice,
+                            Level = t.Trouble.Level,
+                        }).ToList()
+                    };
+                    return  billdetail;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
