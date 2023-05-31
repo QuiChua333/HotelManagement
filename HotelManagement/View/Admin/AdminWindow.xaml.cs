@@ -52,7 +52,5 @@ namespace HotelManagement.View.Admin
             GridNav.BeginAnimation(Border.WidthProperty, animation);
             Tg_Btn.IsChecked = false;
         }
-
-        
     }
 }
