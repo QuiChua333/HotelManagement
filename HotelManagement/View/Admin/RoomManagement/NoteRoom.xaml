@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:HotelManagement.View.Admin.RoomManagement"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Height="460" Width="600"
+        mc:Ignorable="d"
         Title="NoteRoom"
         x:Name="noteRoom"
         WindowStyle="None"

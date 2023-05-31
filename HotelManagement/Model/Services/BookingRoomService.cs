@@ -123,7 +123,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                     var maxId = await context.RentalContracts.MaxAsync(s => s.RentalContractId);
+                    var maxId = await context.RentalContracts.MaxAsync(s => s.RentalContractId);
                     string rentalId = CreateNextRentalContractId(maxId);
                     RentalContract rc = new RentalContract
                     {

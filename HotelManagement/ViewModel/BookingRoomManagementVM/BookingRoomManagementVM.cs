@@ -219,6 +219,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
             ci.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             Thread.CurrentThread.CurrentCulture = ci;
+
             FirstLoadCM = new RelayCommand<Window>((p) => { return true; },async (p) =>
             {
                 StartDate = DateTime.Today;
