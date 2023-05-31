@@ -9,7 +9,7 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
       x:Class="HotelManagement.View.Admin.FurnitureManagement.FurnitureManagementPage"
       mc:Ignorable="d" 
-          x:Name="FurniturePage"
+        x:Name="FurniturePage"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       DataContext="{StaticResource FurnitureManagementVM}"
 >

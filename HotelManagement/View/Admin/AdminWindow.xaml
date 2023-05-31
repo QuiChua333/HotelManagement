@@ -8,6 +8,7 @@
         xmlns:components="clr-namespace:HotelManagement.Components"
         mc:Ignorable="d"
         xmlns:Search="clr-namespace:HotelManagement.Components.Search" 
+
         Title="AdminWindow" Height="760" Width="1232"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -29,6 +30,11 @@
             </BeginStoryboard>
         </EventTrigger>
     </Window.Triggers>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FirstLoadCM}" CommandParameter="{Binding ElementName=Overlay}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="62"/>
@@ -83,12 +89,14 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="50">
                         <Grid VerticalAlignment="Center" Margin="11 0 0 0">
-                            <Border Height="40" Width="40"  CornerRadius="100" Background="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center">
-                                <Ellipse>
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding Staffimgsource}"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                            <Ellipse Name="OverlayIcon" Fill="White" Width="35" Height="35">
+                            </Ellipse>
+                            <TextBlock x:Name="AvatarName" Text="{Binding AvatarName}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource HeavyBlueZodiac}" FontWeight="SemiBold" FontSize="16" Margin="0,-1,0,0" LineHeight="16">
+                            </TextBlock>
+                            <Border Height="40" Width="40"  CornerRadius="100" HorizontalAlignment="Center">
+                                <Border.Background>
+                                    <ImageBrush x:Name="IconAvatar" Stretch="UniformToFill" ImageSource="{Binding AvatarSource, Mode=TwoWay}"/>
+                                </Border.Background>
                             </Border>
                             
                             <Border x:Name="ActiveUserDot" Height="12" Width="12"  CornerRadius="100" Background="LightGreen"
@@ -98,7 +106,7 @@
                         </Grid>
                         
 
-                        <TextBlock Text="Van Phat" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" FontWeight="Light" VerticalAlignment="Center" Margin="15,0,20,0" />
+                        <TextBlock x:Name="FullName" Text="{Binding StaffName}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" FontWeight="Light" VerticalAlignment="Center" Margin="15,0,20,0" />
                         <materialDesign:PackIcon Kind="MenuDown" Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}" Margin="40 18 0 0"></materialDesign:PackIcon>
                     </StackPanel>
 
@@ -108,9 +116,9 @@
                         <StackPanel Height="40">
                             <components:MenuItem  GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center" Command="{Binding StatiscalCommand}"/>
                         </StackPanel>
-                        <StackPanel Height="40" >
+                        <!--<StackPanel Height="40" >
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center" />
-                        </StackPanel>
+                        </StackPanel>-->
 
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
 
@@ -157,6 +165,9 @@
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource settings}" IconWidth="16" Text="Cài đặt" Command="{Binding SettingCommand}" VerticalAlignment="Center"/>
                         </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource LogOutIcon}" IconWidth="16" Text="Đăng xuất" VerticalAlignment="Center" Command="{Binding LogOutCommand}"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <!--Show/Hide Icon-->
@@ -190,6 +201,5 @@
         </Border>
 
         <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" x:Name="MaskOverSideBar" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
-
     </Grid>
 </Window>

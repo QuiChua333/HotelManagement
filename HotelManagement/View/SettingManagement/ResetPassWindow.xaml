@@ -89,7 +89,7 @@
                              FontFamily="{StaticResource MaterialDesignFont}"
                              FontSize="20"
                              Foreground="{StaticResource HeavyBlueZodiac}"
-                             FontWeight="Regular"
+                             FontWeight="Regular" PasswordChanged="ConfirmText_PasswordChanged"
                           
                             ></PasswordBox>
                 </Grid>
