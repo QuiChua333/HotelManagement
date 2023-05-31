@@ -14,6 +14,8 @@ using HotelManagement.View.CustomMessageBoxWindow;
 using HotelManagement.Model.Services;
 using System.Windows.Forms;
 using ComboBox = System.Windows.Controls.ComboBox;
+using System.Windows;
+using HotelManagement.Utilities;
 
 namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
 {
@@ -26,8 +28,8 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             get { return importList; }
             set { importList = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<ExportBillDTO> billExportList;
-        public ObservableCollection<ExportBillDTO> BillExportList
+        private ObservableCollection<BillDTO> billExportList;
+        public ObservableCollection<BillDTO> BillExportList
         {
             get { return billExportList; }
             set { billExportList = value; OnPropertyChanged(); }
@@ -56,18 +58,54 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             get { return _filterImportList; }
             set { _filterImportList = value; OnPropertyChanged(); }
         }
+        private ComboBoxItem _filterExportList;
+        public ComboBoxItem FilterExportList
+        {
+            get { return _filterExportList; }
+            set { _filterExportList = value; OnPropertyChanged(); }
+        }
+        private DateTime _selectedDate;
+        public DateTime SelectedDate
+        {
+            get { return _selectedDate; }
+            set { _selectedDate = value; OnPropertyChanged(); }
+        }
+        private DateTime GetCurrentDate;
+
+        private BillDTO _selectedItem;
+        public BillDTO SelectedItem
+        {
+            get { return _selectedItem; }
+            set { _selectedItem = value; OnPropertyChanged(); }
+        }
+        private BillDTO _billDetail;
+        public BillDTO BillDetail
+        {
+            get { return _billDetail; }
+            set { _billDetail = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<ServiceUsingDTO> _ListServicePayment;
+        public ObservableCollection<ServiceUsingDTO> ListServicePayment
+        {
+            get { return _ListServicePayment; }
+            set { _ListServicePayment = value; OnPropertyChanged(); }
+        }
         public ICommand LoadImportPageCM { get; set; }
         public ICommand LoadExportPageCM { get; set; }
         public ICommand CheckImportItemFilterCM { get; set; }
         public ICommand SelectedImportMonthCM { get; set; }
         public ICommand ExportFileCM { get; set; }
         public ICommand FilterListImportCM { get; set; }
-
+        public ICommand CheckItemFilterCM { get; set; }
+        public ICommand SelectedMonthCM { get; set; }
+        public ICommand SelectedDateExportListCM { get; set; }
+        public ICommand LoadInforBillCM { get; set; }
+        public ICommand FirstLoadRoomBillCM { get; set; }
         public HistoryManagementVM()
         {
-            //GetCurrentDate = DateTime.Today;
-            //SelectedDate = GetCurrentDate;
-            _selectedMonthExportItem = DateTime.Now.Month - 1;
+            GetCurrentDate = DateTime.Today;
+            SelectedDate = GetCurrentDate;
+            SelectedMonthExportItem = DateTime.Now.Month - 1;
             SelectedMonthImportItem = DateTime.Now.Month - 1;
             LoadImportPageCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
@@ -79,7 +117,7 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             LoadExportPageCM = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
                 SelectedView = 1;
-                BillExportList = new ObservableCollection<ExportBillDTO>();
+                BillExportList = new ObservableCollection<BillDTO>();
                 await GetExportListSource("date");
                 ExportManagementPage page = new ExportManagementPage();
                 p.Content = page;
@@ -108,6 +146,10 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             ExportFileCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ExportToFileFunc();
+            });
+            SelectedDateExportListCM = new RelayCommand<DatePicker>(p => true, async p => 
+            {
+                await GetExportListSource("date");
             });
             FilterListImportCM = new RelayCommand<ComboBox>(p => true, async p =>
             {
@@ -169,7 +211,62 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                             return;
                         }
                 }
+            });
+            CheckItemFilterCM = new RelayCommand<System.Windows.Controls.ComboBox>((p) => { return true; }, async (p) =>
+            {
+                switch (FilterExportList.Tag.ToString())
+                {
+                    case "Toàn bộ":
+                        {
+                            await GetExportListSource("");
+                            return;
+                        }
+                    case "Theo ngày":
+                        {
+                            await GetExportListSource("date");
+                            return;
+                        }
+                    case "Theo tháng":
+                        {
+                            await GetExportListSource("month");
+                            return;
+                        }
+                }
+            });
+            SelectedMonthCM = new RelayCommand<System.Windows.Controls.ComboBox>((p) => { return true; }, async (p) =>
+            {
+                await CheckMonthFilter();
+            });
+            LoadInforBillCM = new RelayCommand<object>(p => true,async p => 
+            {
+                if (SelectedItem != null)
+                {
+                    try
+                    {
+                        BillDetail = await Task.Run(() => BillService.Ins.GetBillDetails(SelectedItem.BillId));
+                    }
+                    catch (System.Data.Entity.Core.EntityException e)
+                    {
+                        CustomMessageBox.ShowOk("Mất kết nối cơ sở dữ liệu", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                    }
+                    catch (Exception e)
+                    {
+                       CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                    }
+                    BillDetail b = new BillDetail();
+                    b.ShowDialog();
+                }
 
+            });
+            FirstLoadRoomBillCM = new RelayCommand<Window>(p => true, async p => 
+            {
+                ListServicePayment = new ObservableCollection<ServiceUsingDTO>(BillDetail.ListListServicePayment);
+                ListServicePayment.Insert(0, new ServiceUsingDTO
+                {
+                    ServiceName = BillDetail.RoomName,
+                    UnitPrice = BillDetail.RoomPrice,
+                    Quantity = BillDetail.DayNumber,
+                });         
             });
         }
 
@@ -202,10 +299,76 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             }
         }
 
-        private async Task GetExportListSource(string v = "")
+        private async Task GetExportListSource(string v )
         {
+            BillExportList = new ObservableCollection<BillDTO>();
+            switch (v)
+            {
+                case "date":
+                    {
+                        try
+                        {
+                            BillExportList = new ObservableCollection<BillDTO>(await BillService.Ins.GetAllBillByDate(SelectedDate));
+                            return;
+                        }
+                        catch (System.Data.Entity.Core.EntityException e)
+                        {
+                            CustomMessageBox.ShowOk("Mất kết nối cơ sở dữ liệu", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                            throw;
+                        }
+                        catch (Exception e)
+                        {
+                            CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                            throw;
+                        }
+
+                    }
+                case "":
+                    {
+                        try
+                        {
+                            BillExportList = new ObservableCollection<BillDTO>(await BillService.Ins.GetAllBill());
+                            return;
+                        }
+                        catch (System.Data.Entity.Core.EntityException e)
+                        {
+                            CustomMessageBox.ShowOk("Mất kết nối cơ sở dữ liệu", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                            throw;
+                        }
+                        catch (Exception e)
+                        {
+                            CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                            throw;
+                        }
+
+                    }
+                case "month":
+                    {
+                        await CheckMonthFilter();
+                        return;
+                    }
+            }
+        }
+
+        private async Task CheckMonthFilter()
+        {
+            try
+            {
+                BillExportList = new ObservableCollection<BillDTO>(await BillService.Ins.GetAllBillByMonth(SelectedMonthExportItem + 1));
+            }
+            catch (System.Data.Entity.Core.EntityException e)
+            {
+                CustomMessageBox.ShowOk("Mất kết nối cơ sở dữ liệu", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                throw;
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                throw;
+            }
 
         }
+    
 
         private async Task GetImportListSource(string v = "")
         {
@@ -308,24 +471,27 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
 
 
-                                ws.Cells[1, 1] = "Mã đơn";
-                                ws.Cells[1, 2] = "Ngày xuất";
-                                ws.Cells[1, 3] = "Khách hàng";
-                                ws.Cells[1, 4] = "Số điện thoại";
-                                ws.Cells[1, 5] = "Tổng giá";                                
-                                ws.Cells[1, 6] = "Nhân viên xuất";
-
+                                ws.Cells[1, 1] = "Mã hóa đơn";
+                                ws.Cells[1, 2] = "Khách hàng";
+                                ws.Cells[1, 3] = "Địa chỉ";
+                                ws.Cells[1, 4] = "Tổng tiền";
+                                ws.Cells[1, 5] = "Phí dịch vụ";                                
+                                ws.Cells[1, 6] = "Phí sự cố";
+                                ws.Cells[1, 7] = "Nhân viên xuất";
+                                ws.Cells[1, 8] = "Ngày xuất";
                                 int i2 = 2;
                                 foreach (var item in BillExportList)
                                 {
 
                                     ws.Cells[i2, 1] = item.BillId;
-                                    ws.Cells[i2, 2] = item.CreatedDate;
-                                    ws.Cells[i2, 3] = item.CusName;
-                                    ws.Cells[i2, 4] = "'" + item.PhoneNum;
-                                    ws.Cells[i2, 5] = item.Price;
-                                    ws.Cells[i2, 6] = item.StaffName;
-                                    
+                                    ws.Cells[i2, 2] = item.CustomerName;
+                                    ws.Cells[i2, 3] = item.CustomerAddress;
+                                    ws.Cells[i2, 4] = item.TotalPriceTempStr;
+                                    ws.Cells[i2, 5] = item.ServicePriceTempStr;
+                                    ws.Cells[i2, 6] = item.TroublePriceTempStr;
+                                    ws.Cells[i2, 7] = item.StaffName;
+                                    ws.Cells[i2, 8] = item.CreateDate;
+
 
                                     i2++;
                                 }
