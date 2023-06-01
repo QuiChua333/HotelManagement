@@ -20,21 +20,21 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 
         public void LoadEditRoom(EditRoom w1)
         {
-            RoomId = SelectedItem.RoomId;
-            RoomNumber = (int)SelectedItem.RoomNumber;
-            RoomNote = SelectedItem.Note;
-            RoomStatus = SelectedItem.RoomStatus;
-            if (SelectedItem.RoomTypeId == "LP001")
+            RoomId = SelectedRoomItem.RoomId;
+            RoomNumber = (int)SelectedRoomItem.RoomNumber;
+            RoomNote = SelectedRoomItem.Note;
+            RoomStatus = SelectedRoomItem.RoomStatus;
+            if (SelectedRoomItem.RoomTypeId == "LP001")
             {
                 w1.loaiphong.SelectedIndex = 0;
             }
-            else if (SelectedItem.RoomTypeId == "LP002")
+            else if (SelectedRoomItem.RoomTypeId == "LP002")
             {
                 w1.loaiphong.SelectedIndex = 1;
             }
             else w1.loaiphong.SelectedIndex = 2;
 
-            w1.tinhtrangphong.Text = SelectedItem.RoomCleaningStatus;
+            w1.tinhtrangphong.Text = SelectedRoomItem.RoomCleaningStatus;
         }
         
         public async Task UpdateRoomFunc(System.Windows.Window p)
@@ -59,7 +59,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 
                 if (successUpdateRoom)
                 {
-                    isSaving = false;
+                    isSavingRoom = false;
                     CustomMessageBox.ShowOk(messageFromUpdateRoom, "Thông báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     LoadRoomListView(Operation.UPDATE, room);
                     p.Close();

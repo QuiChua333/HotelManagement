@@ -110,7 +110,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
             LoadEditRoomTypeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 EditRoom w1 = new EditRoom();
-                LoadEditRoomType(w1);
+                LoadEditRoomType();
                 w1.ShowDialog();
             });
             LoadNoteRoomTypeCM = new RelayCommand<object>((p) => { return true; }, (p) =>

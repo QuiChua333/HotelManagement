@@ -1,14 +1,14 @@
-﻿<Window x:Class="HotelManagement.View.Admin.RoomManagement.NoteRoom"
+﻿<Window x:Class="HotelManagement.View.Admin.RoomManagement.NoteRoomType"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.RoomManagement"
+        mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Height="460" Width="600"
-        mc:Ignorable="d"
-        Title="NoteRoom"
-        x:Name="noteRoom"
+        Title="NoteRoomType"
+        x:Name="noteRoomType"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource RoomManagementVM}">
@@ -31,8 +31,8 @@
             <Label Grid.Column="1" 
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center" 
-                   Margin="80 0 0 0" 
-                   Content="GHI CHÚ PHÒNG" 
+                   Margin="60 0 0 0" 
+                   Content="GHI CHÚ LOẠI PHÒNG" 
                    FontSize="24" 
                    Foreground="#009099" 
                    FontWeight="Bold"/>
@@ -46,8 +46,8 @@
                     VerticalContentAlignment="Center" 
                     BorderThickness="0" 
                     Background="Transparent"
-                    Command="{Binding CloseRoomCM}"
-                    CommandParameter="{Binding ElementName=noteRoom}">
+                    Command="{Binding CloseRoomTypeCM}"
+                    CommandParameter="{Binding ElementName=noteRoomType}">
                 <Image Source="{StaticResource Button_X}" 
                        VerticalAlignment="Center" 
                        HorizontalAlignment="Center"  
@@ -66,11 +66,11 @@
                 HorizontalAlignment="Center"  
                 Width="540" 
                 Margin="20"
-                TextWrapping="Wrap"
                 Focusable="False"
-                Text="{Binding RoomNote, Mode=TwoWay}"
+                TextWrapping="Wrap"
+                Text="{Binding RoomTypeNote, Mode=TwoWay}"
                 materialDesign:HintAssist.Hint="Nhập ghi chú ..." 
                 BorderThickness="0.5" 
-                BorderBrush="#545454"/>
+                BorderBrush="#545454"/> 
     </Grid>
 </Window>

@@ -139,14 +139,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     {
                         wd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
                     }
-                    if (BillPayment.PersonNumber < 3)
-                    {
-                        wd.ptKhachThu3.Visibility= System.Windows.Visibility.Collapsed;
-                    }
-                    if (BillPayment.IsHasForeignPerson == false)
-                    {
-                        wd.ptNuocNgoai.Visibility= System.Windows.Visibility.Collapsed;
-                    }
+                  
                     TotalMoneyPayment = 0;
                     wd.ShowDialog();
                 }

@@ -121,20 +121,20 @@
                         </StackPanel>-->
 
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>
-
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Danh mục phòng" VerticalAlignment="Center"
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý thuê phòng" VerticalAlignment="Center" Command="{Binding BookingRoomCommand}"/>
+                        </StackPanel>
+                        <StackPanel Height="40">
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Quản lý sử dụng phòng" VerticalAlignment="Center"
                                                   Command="{Binding RoomCatalogCommand}"/>
                         </StackPanel>
-                        <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource booking}" IconWidth="16" Text="Quản lý đặt phòng" VerticalAlignment="Center" Command="{Binding BookingRoomCommand}"/>
-                        </StackPanel>
+                        
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource billing}" IconWidth="16" Text="Quản lý phòng" VerticalAlignment="Center" Command="{Binding RoomCommand}"/>
                         </StackPanel>
-                        <StackPanel Height="40">
+                        <!--<StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource products}" IconWidth="16" Text="Quản lý loại phòng" VerticalAlignment="Center" Command="{Binding RoomTypeCommand}"/>
-                        </StackPanel>
+                        </StackPanel>-->
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource staff}" IconWidth="16" Text="Quản lý nhân viên" VerticalAlignment="Center" Command="{Binding StaffCommand}"/>
                         </StackPanel>
@@ -142,19 +142,20 @@
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource customer}" IconWidth="16" Text="Quản lý khách hàng" VerticalAlignment="Center" Command="{Binding CustomerCommand}"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource food}" Command="{Binding ServiceCommand}" IconWidth="16" Text="Quản lý dịch vụ" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource food}" Command="{Binding ServiceCommand}" IconWidth="16" Text="Sản phẩm/dịch vụ" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý tiện nghi" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Command="{Binding RoomFurnitureCommand}" Text="Tiện nghi trong phòng" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource furniture}" IconWidth="16" Command="{Binding RoomFurnitureCommand}" Text="Quản lý nội thất" VerticalAlignment="Center"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý kho tiện nghi" VerticalAlignment="Center"/>
                         </StackPanel>
+                     
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center" Command="{Binding TroubleCommand}"/>
                         </StackPanel>
                         <StackPanel Height="40">
-                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource history}" IconWidth="16" Text="Lịch sử" VerticalAlignment="Center" Command="{Binding HistoryCommand}"/>
+                            <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource history}" IconWidth="16" Text="Thu chi" VerticalAlignment="Center" Command="{Binding HistoryCommand}"/>
                         </StackPanel>
 
                         <Border Height="0.2" Background="{DynamicResource PrimaryTextColor}" Margin="10 5"/>

@@ -1,12 +1,12 @@
-﻿using HotelManagement.View.HelpScreen;
-using MaterialDesignThemes.Wpf;
+﻿using HotelManagement.View.Admin;
+using HotelManagement.View.HelpScreen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace HotelManagement.ViewModel.HelpScreenVM
@@ -27,8 +27,8 @@ namespace HotelManagement.ViewModel.HelpScreenVM
             {
                 string myUri = !uri.ToString().Contains("https://") && !uri.ToString().Contains("http://") ? "http://" + uri.ToString() : uri.ToString();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(myUri));
-                HelpScreen h = new HelpScreen();
-                h.ShowsNavigationUI = true;
+                AdminWindow tk = System.Windows.Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
+                tk.Content.Content = new HelpScreen();
             });
             Load_PrivacyPolicy = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

@@ -110,7 +110,7 @@ namespace HotelManagement.DTOs
         {
             get
             {
-                return ServicePriceTemp + TroublePriceTemp + DayNumber *(double) RoomPrice + PhuThuKhachThu3Money + PhuThuKhachNuocNgoaiMoney;
+                return ServicePriceTemp + TroublePriceTemp + DayNumber * (double)RoomPrice;
             }
         }
         public string TotalPriceTempStr
@@ -121,37 +121,6 @@ namespace HotelManagement.DTOs
             }
 
         }
-        public double PhuThuKhachThu3Money
-        {
-            get
-            {
-                if (PersonNumber < 3) return 0;
-                return ((double)(0.25 *RoomPrice * DayNumber));
-            }
-        }
-        public string PhuThuKhachThu3MoneyStr
-        {
-            get
-            {
-                return Helper.FormatVNMoney(PhuThuKhachThu3Money);
-            }
-
-        }
-        public double PhuThuKhachNuocNgoaiMoney
-        {
-            get
-            {
-                if (IsHasForeignPerson == false) return 0;
-                return ((double)(1.5 * RoomPrice * DayNumber));
-            }
-        }
-        public string PhuThuKhachNuocNgoaiMoneyStr
-        {
-            get
-            {
-                return Helper.FormatVNMoney(PhuThuKhachNuocNgoaiMoney);
-            }
-
-        }
+       
     }
 }
