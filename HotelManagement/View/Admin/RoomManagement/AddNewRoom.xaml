@@ -40,7 +40,7 @@
                     VerticalContentAlignment="Center" 
                     BorderThickness="0" 
                     Background="Transparent"
-                    Command="{Binding CloseCM}"
+                    Command="{Binding CloseRoomCM}"
                     CommandParameter="{Binding ElementName=addroomwindow}">
                 <Image Source="{StaticResource Button_X}" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="26" Width="30" />
             </Button>

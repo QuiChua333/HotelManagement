@@ -820,14 +820,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                     {
                         rbWd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
                     }
-                    if (BillPayment.PersonNumber < 3)
-                    {
-                        rbWd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                    if (BillPayment.IsHasForeignPerson == false)
-                    {
-                        rbWd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
-                    }
+                   
                     TotalMoneyPayment = 0;
                     p.Close();
                     rbWd.ShowDialog();
@@ -861,14 +854,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 {
                     wd.wrapperTrouble.Visibility = System.Windows.Visibility.Collapsed;
                 }
-                if (BillPayment.PersonNumber < 3)
-                {
-                    wd.ptKhachThu3.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                if (BillPayment.IsHasForeignPerson == false)
-                {
-                    wd.ptNuocNgoai.Visibility = System.Windows.Visibility.Collapsed;
-                }
+              
                 TotalMoneyPayment = 0;
                 wd.ShowDialog();
             });

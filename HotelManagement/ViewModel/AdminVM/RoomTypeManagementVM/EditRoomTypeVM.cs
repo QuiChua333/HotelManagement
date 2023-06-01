@@ -19,7 +19,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
     {
         public ICommand LoadEditRoomTypeCM { get; set; }
 
-        public void LoadEditRoomType(EditRoom w1)
+        public void LoadEditRoomType()
         {
             RoomTypeID = SelectedItem.RoomTypeId;
             RoomTypeName = SelectedItem.RoomTypeName;
@@ -44,7 +44,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomTypeManagementVM
                 if (successUpdateRoomType)
                 {
                     isSaving = false;
-                    CustomMessageBox.ShowOk(messageFromUpdateRoomType,"Thông báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+                    CustomMessageBox.ShowOk(messageFromUpdateRoomType, "Thông báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     LoadRoomTypeListView(Operation.UPDATE, roomType);
                     p.Close();
                 }

@@ -40,7 +40,7 @@
                     Height="50" Width="50" 
                     HorizontalContentAlignment="Center" 
                     VerticalContentAlignment="Center"
-                    Command="{Binding CloseCM}"
+                    Command="{Binding CloseRoomCM}"
                     CommandParameter="{Binding ElementName=editRoomWindow}">
                 <Image Source="{StaticResource Button_X}" VerticalAlignment="Center" HorizontalAlignment="Center"  Height="26" Width="30" />
             </Button>

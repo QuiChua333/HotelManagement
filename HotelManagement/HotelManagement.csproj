@@ -330,8 +330,20 @@
     <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureManagementPage.xaml.cs">
       <DependentUpon>RoomFurnitureManagementPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Admin\RoomManagement\EditRoomType.xaml.cs">
+      <DependentUpon>EditRoomType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\RoomManagement\NoteRoom.xaml.cs">
       <DependentUpon>NoteRoom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\NoteRoomType.xaml.cs">
+      <DependentUpon>NoteRoomType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\RoomManagement.xaml.cs">
+      <DependentUpon>RoomManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomManagement\RoomTypeManagementPage.xaml.cs">
+      <DependentUpon>RoomTypeManagementPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\RoomTypeManagement\NoteRoomType.xaml.cs">
       <DependentUpon>NoteRoomType.xaml</DependentUpon>
@@ -651,9 +663,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Admin\RoomManagement\EditRoomType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Admin\RoomManagement\NoteRoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\NoteRoomType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\RoomManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomManagement\RoomTypeManagementPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Admin\RoomTypeManagement\NoteRoomType.xaml">
       <SubType>Designer</SubType>

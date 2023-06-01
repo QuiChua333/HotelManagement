@@ -38,7 +38,7 @@
         <BookingRoomView:BookingRoomManagementPage></BookingRoomView:BookingRoomManagementPage>
     </DataTemplate>
     <DataTemplate DataType="{x:Type RoomVM:RoomManagementVM}">
-        <RoomView:RoomManagementPage></RoomView:RoomManagementPage>
+        <RoomView:RoomManagement></RoomView:RoomManagement>
     </DataTemplate>
     <DataTemplate DataType="{x:Type RoomTypeVM:RoomTypeManagementVM}">
         <RoomTypeView:RoomTypeManagementPage></RoomTypeView:RoomTypeManagementPage>

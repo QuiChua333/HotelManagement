@@ -211,7 +211,7 @@
                            FontSize="14"
                                         
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="01/04/2023"
+                                        <TextBlock Text="{Binding CreateDateStr}"
                                 Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -249,7 +249,7 @@
                            FontSize="14"
                                        
                            FontFamily="{DynamicResource MaterialDesignFont}"></Label>
-                                        <TextBlock Text="Sài Gòn Hotel"
+                                        <TextBlock Text="{Binding BillPayment.PersonNumber}"
                                Margin="7,0,0,0"
                                FontFamily="{DynamicResource MaterialDesignFont}"
                                VerticalAlignment="Center"
@@ -501,45 +501,7 @@
 
                             </StackPanel>
                         </Border>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
-                                Margin="0,25,0,0"
-                                    x:Name="ptKhachThu3">
-                            <Label Content="Phụ thu khách thứ 3:"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontFamily="{DynamicResource MaterialDesignFont}"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#000000"/>
-                            <Label Content="{Binding BillPayment.PhuThuKhachThu3MoneyStr}"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontFamily="{DynamicResource MaterialDesignFont}"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#000000"/>
-
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
-                                Margin="0,5,0,-14"
-                                    x:Name="ptNuocNgoai">
-                            <Label Content="Phụ thu khách nước ngoài:"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontFamily="{DynamicResource MaterialDesignFont}"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#000000"/>
-                            <Label Content="{Binding BillPayment.PhuThuKhachNuocNgoaiMoneyStr}"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontFamily="{DynamicResource MaterialDesignFont}"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#000000"/>
-
-                        </StackPanel>
-                        
+                      
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  
                                 Margin="0,25,0,-14">
                             <Label Content="Tổng tiền:"

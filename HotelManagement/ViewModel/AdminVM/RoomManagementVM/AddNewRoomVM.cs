@@ -33,7 +33,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
 
                 if (successAddRoom)
                 {
-                    isSaving = false;
+                    isSavingRoom = false;
                     CustomMessageBox.ShowOk(messageFromAddRoom, "Thông báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     ReloadListView();
                     p.Close();
