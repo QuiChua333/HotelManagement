@@ -188,6 +188,7 @@
     <Compile Include="Model\Services\SettingService.cs" />
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureDeleteVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
@@ -251,6 +252,9 @@
     </Compile>
     <Compile Include="View\Admin\HistoryManagement\BillDetail.xaml.cs">
       <DependentUpon>BillDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureDeleteWindow.xaml.cs">
+      <DependentUpon>RoomFurnitureDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureImportWindow.xaml.cs">
       <DependentUpon>RoomFurnitureImportWindow.xaml</DependentUpon>
@@ -579,6 +583,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\HistoryManagement\BillDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomFurnitureManagement\RoomFurnitureDeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

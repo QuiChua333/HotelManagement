@@ -2,6 +2,7 @@
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
 using HotelManagement.View.CustomMessageBoxWindow;
+using Microsoft.Office.Interop.Excel;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             get { return furnitureCache; }
             set { furnitureCache = value; OnPropertyChanged(); }
         }
-
-
-
         public ICommand FirstLoadInfoWindowCM { get; set; }
         public ICommand OpenImportFurnitureRoomCM { get; set; }
         public ICommand ChooseItemToListNeedDelete { get; set; }
@@ -46,6 +44,8 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
         public ICommand ChooseAllFurnitureToDeleteCM { get; set; }
         public ICommand DeleteListFurnitureCM { get; set; }
         public ICommand CloseDeleteControlCM { get; set; }
+        public ICommand SelectionFilterInfoChangeCM { get; set; }
+    
 
         public async Task LoadFurniture()
         {
@@ -54,6 +54,9 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             if (isSuccess)
             {
                 FurnituresRoomCache.ListFurnitureRoom = new ObservableCollection<FurnitureDTO>(listFurnituresRoomReturn);
+                AllFurniture = new ObservableCollection<FurnitureDTO>(listFurnituresRoomReturn);
+                FurnitureList = new ObservableCollection<FurnitureDTO>(AllFurniture);
+                CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(listFurnituresRoomReturn));
                 FurnituresRoomCache.SetQuantityAndStringTypeFurniture();
             }
             else
@@ -61,7 +64,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
         }
-        public async Task DeleteListFurniture()
+        public async Task DeleteListFurniture(Window p )
         {
             if (ListFurnitureNeedDelete.Count() == 0)
                 return;
@@ -88,6 +91,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                     FurnituresRoomCache.DeleteListFurniture(ListFurnitureNeedDelete);
                     FurnituresRoomCache.SetQuantityAndStringTypeFurniture();
                     ListFurnitureNeedDelete.Clear();
+                    p.Close();
                 }
                 else
                 {

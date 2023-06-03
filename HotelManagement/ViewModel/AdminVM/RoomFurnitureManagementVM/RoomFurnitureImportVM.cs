@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
@@ -96,15 +97,17 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 furnitureInOrder.IncreaseImport(1);
         }
 
-        public async Task ImportListFurnitureToRoom()
+        public async Task ImportListFurnitureToRoom(Window p)
         {
             (bool isSuccess, string messageReturn, List<FurnitureDTO> listFurniture) = await Task.Run(() => FurnituresRoomService.Ins.ImportListFurnitureToRoom(OrderFurnitureList, FurnituresRoomCache));
 
             if (isSuccess)
             {
                 CustomMessageBox.ShowOk(messageReturn, "Thành công", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
-                LoadListViewFurnitureInRoom(listFurniture);
-                furnituresRoomCache.SetQuantityAndStringTypeFurniture();
+                //LoadListViewFurnitureInRoom(listFurniture);
+                OrderFurnitureList.Clear();
+                p.Close();
+                //furnituresRoomCache.SetQuantityAndStringTypeFurniture();
             }
             else
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
