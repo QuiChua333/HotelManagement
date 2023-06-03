@@ -69,6 +69,12 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _SelectedRoomBill; }
             set { _SelectedRoomBill = value; OnPropertyChanged(); }
         }
+        private string _StaffName;
+        public string StaffName
+        {
+            get { return _StaffName; }
+            set { _StaffName = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<TroubleByCustomerDTO> _ListTroubleByCustomer;
         public ObservableCollection<TroubleByCustomerDTO> ListTroubleByCustomer

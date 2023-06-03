@@ -255,6 +255,11 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         }
         public async Task AddOrderProduct(Window p)
         {
+            if (OrderList.Count == 0)
+            {
+                CustomMessageBox.ShowOk("Vui lòng chọn sản phẩm!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                return;
+            }
             (bool isSucceed, string message) = await ServiceUsingHelper.Ins.SaveUsingProduct(OrderList, SelectedRoom);
             if (isSucceed)
             {

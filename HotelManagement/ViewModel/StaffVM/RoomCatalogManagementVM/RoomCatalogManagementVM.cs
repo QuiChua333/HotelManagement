@@ -226,7 +226,7 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             FormatStringDate();
             if (StaffVM.CurrentStaff!=null) CurrentStaff = StaffVM.CurrentStaff;
             if (AdminVM.AdminVM.CurrentStaff != null) CurrentStaff = AdminVM.AdminVM.CurrentStaff;
-          
+            StaffName = CurrentStaff.StaffName;
 
             FirstLoadCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
             {

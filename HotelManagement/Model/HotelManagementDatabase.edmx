@@ -11,12 +11,14 @@
           </Key>
           <Property Name="BillId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="RentalContractId" Type="varchar" MaxLength="10" />
+          <Property Name="StaffId" Type="varchar" MaxLength="10" />
           <Property Name="NumberOfRentalDays" Type="int" />
           <Property Name="ServicePrice" Type="float" />
           <Property Name="TroublePrice" Type="float" />
           <Property Name="TotalPrice" Type="float" />
           <Property Name="DiscountPrice" Type="float" />
           <Property Name="Price" Type="float" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -180,6 +182,16 @@
           <Property Name="dateOfStart" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Trouble">
           <Key>
             <PropertyRef Name="TroubleId" />
@@ -215,6 +227,18 @@
             </Principal>
             <Dependent Role="Bill">
               <PropertyRef Name="RentalContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="StaffId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -463,10 +487,15 @@
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceUsing" EntityType="Self.ServiceUsing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trouble" EntityType="Self.Trouble" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TroubleByCustomer" EntityType="Self.TroubleByCustomer" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Bill_RentalContract" Association="Self.FK_Bill_RentalContract">
             <End Role="RentalContract" EntitySet="RentalContract" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staff" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
           <AssociationSet Name="FK_FurnitureReceiptId_Furniture" Association="Self.FK_FurnitureReceiptId_Furniture">
@@ -557,13 +586,16 @@
           </Key>
           <Property Name="BillId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RentalContractId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StaffId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NumberOfRentalDays" Type="Int32" />
           <Property Name="ServicePrice" Type="Double" />
           <Property Name="TroublePrice" Type="Double" />
           <Property Name="TotalPrice" Type="Double" />
           <Property Name="DiscountPrice" Type="Double" />
           <Property Name="Price" Type="Double" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RentalContract" Relationship="Self.FK_Bill_RentalContract" FromRole="Bill" ToRole="RentalContract" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Bill_Staff" FromRole="Bill" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -757,10 +789,21 @@
           <Property Name="Avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="dateOfStart" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Staff" FromRole="Staff" ToRole="Bill" />
           <NavigationProperty Name="FurnitureReceipts" Relationship="Self.FK_FurnitureReceiptId_Staff" FromRole="Staff" ToRole="FurnitureReceipt" />
           <NavigationProperty Name="GoodsReceipts" Relationship="Self.FK_GoodsReceipt_Staff" FromRole="Staff" ToRole="GoodsReceipt" />
           <NavigationProperty Name="RentalContracts" Relationship="Self.FK_RentalContractDetail_Staff" FromRole="Staff" ToRole="RentalContract" />
           <NavigationProperty Name="Troubles" Relationship="Self.FK_Trouble_Staff" FromRole="Staff" ToRole="Trouble" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Trouble">
           <Key>
@@ -801,6 +844,18 @@
             </Principal>
             <Dependent Role="Bill">
               <PropertyRef Name="RentalContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffId" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="StaffId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1032,7 +1087,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HotelManagementEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HotelManagementEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bills" EntityType="Self.Bill" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Furnitures" EntityType="Self.Furniture" />
@@ -1049,10 +1104,15 @@
           <EntitySet Name="Services" EntityType="Self.Service" />
           <EntitySet Name="ServiceUsings" EntityType="Self.ServiceUsing" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Troubles" EntityType="Self.Trouble" />
           <EntitySet Name="TroubleByCustomers" EntityType="Self.TroubleByCustomer" />
           <AssociationSet Name="FK_Bill_RentalContract" Association="Self.FK_Bill_RentalContract">
             <End Role="RentalContract" EntitySet="RentalContracts" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Staff" Association="Self.FK_Bill_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalContractDetail_Customer" Association="Self.FK_RentalContractDetail_Customer">
@@ -1137,18 +1197,20 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HotelManagementModelStoreContainer" CdmEntityContainer="HotelManagementEntities1">
+        <EntityContainerMapping StorageEntityContainer="HotelManagementModelStoreContainer" CdmEntityContainer="HotelManagementEntities">
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="HotelManagementModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
                 <ScalarProperty Name="BillId" ColumnName="BillId" />
                 <ScalarProperty Name="RentalContractId" ColumnName="RentalContractId" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
                 <ScalarProperty Name="NumberOfRentalDays" ColumnName="NumberOfRentalDays" />
                 <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
                 <ScalarProperty Name="TroublePrice" ColumnName="TroublePrice" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1326,6 +1388,17 @@
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="dateOfStart" ColumnName="dateOfStart" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HotelManagementModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
