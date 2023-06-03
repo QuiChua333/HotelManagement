@@ -29,20 +29,6 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
             InitializeComponent();
         }
 
-        private void Grid_MouseMove(object sender, MouseEventArgs e)
-        {
-            Grid grid = sender as Grid;
-            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
-            mask.Opacity = 0.1;
-        }
-
-        private void Grid_MouseLeave(object sender, MouseEventArgs e)
-        {
-            Grid grid = sender as Grid;
-            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
-            mask.Opacity = 0;
-        }
-
         private void SearchBox_SearchTextChange(object sender, EventArgs e)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewFurnitureRoom.ItemsSource);
@@ -62,6 +48,25 @@ namespace HotelManagement.View.Admin.RoomFurnitureManagement
                        || ((item as FurnituresRoomDTO).RoomType.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
                        || ((item as FurnituresRoomDTO).RoomStatus.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
                        || ((item as FurnituresRoomDTO).CustomerName.IndexOf(SearchBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        private void AvatarMask_MouseMove(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
+            mask.Opacity = 0.25;
+            StackPanel st = (StackPanel)grid.FindName("ChooseType");
+            st.Visibility = Visibility.Visible;
+        }
+
+        private void AvatarMask_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            Rectangle mask = (Rectangle)grid.FindName("MaskOver");
+            mask.Opacity = 0;
+            StackPanel st = (StackPanel)grid.FindName("ChooseType");
+            st.Visibility = Visibility.Collapsed;
+
         }
     }
 }

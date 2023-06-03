@@ -162,7 +162,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="263" Height="161" Cursor="Hand" MouseMove="Grid_MouseMove" MouseLeave="Grid_MouseLeave">
+                            <Grid Width="263" Height="161" Cursor="Hand">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurnitureRoom, Path=DataContext.OpenFurnituresInRoomWindow}"/>
@@ -278,8 +278,81 @@
                                         </Grid>
                                     </Border>
                                 </Grid>
-                                
-                                <Rectangle Name="MaskOver" Grid.RowSpan="2" Fill="Black" Opacity="0" RadiusX="10" RadiusY="10"/>
+                                <Grid x:Name="AvatarMask" MouseLeave="AvatarMask_MouseLeave" MouseMove="AvatarMask_MouseMove">
+                                    <Rectangle Name="MaskOver" Grid.RowSpan="2" Fill="Black" Opacity="0" RadiusX="10" RadiusY="10"/>
+                                    <StackPanel x:Name="ChooseType" Visibility="Collapsed" Margin="0 0 0 5" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <Button Name="InfoButton" Cursor="Hand" Margin="0 0 20 0" Width="100" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#EC4242">
+                                            <Button.Style>
+                                                <Style TargetType="{x:Type Button}">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Opacity" Value="0.8"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseCaptured" Value="True">
+                                                            <Setter Property="Opacity" Value="0.5"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <i:InvokeCommandAction Command="{Binding ElementName=ListViewFurnitureRoom, Path=DataContext.OpenDeleteFurnitureInRoomCM}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <TextBlock Text="Xóa tiện nghi" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
+                                        </Button>
+                                        <Grid>
+                                            <Button Name="ImportButton" Cursor="Hand" Width="100" Height="36" materialDesign:ButtonAssist.CornerRadius="5" Background="#50A5E5">
+                                                <Button.Style>
+                                                    <Style TargetType="{x:Type Button}">
+                                                        <Setter Property="Background" Value="Transparent"/>
+                                                        <Setter Property="Width" Value="32"/>
+                                                        <Setter Property="Height" Value="32"/>
+                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Opacity" Value="0.8"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseCaptured" Value="True">
+                                                                <Setter Property="Opacity" Value="0.5"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+
+                                                </Button.Style>
+                                                <Button.InputBindings>
+                                                    <MouseBinding Command="{Binding ElementName=ListViewFurnitureRoom, Path=DataContext.OpenImportFurnitureRoomCM}"
+                                                                                            MouseAction="LeftClick" />
+                                                </Button.InputBindings>
+                                                <TextBlock Text="Nhập tiện nghi" Foreground="White" FontSize="15" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular"></TextBlock>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                               
+
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

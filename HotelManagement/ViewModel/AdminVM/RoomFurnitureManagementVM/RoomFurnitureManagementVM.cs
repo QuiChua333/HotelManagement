@@ -78,6 +78,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
         public ICommand DecreaseQuantityOrderItem { get; set; }
         public ICommand DeleteItemInBillStackCM { get; set; }
         public ICommand DeleteItemInRoomFurnitureInfoCM { get; set; }
+        public ICommand OpenDeleteFurnitureInRoomCM { get; set; }
 
         public RoomFurnitureManagementVM()
         {
@@ -144,11 +145,30 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 IsLoading = false;
             });
 
+            OpenDeleteFurnitureInRoomCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedFurnituresRoom == null)
+                    return;
+
+                FurnituresRoomCache = new FurnituresRoomDTO(SelectedFurnituresRoom);
+
+                IsLoading = true;
+
+                RoomFurnitureDeleteWindow roomFurnitureInfoWD = new RoomFurnitureDeleteWindow();
+
+                tk.MaskOverSideBar.Visibility = Visibility.Visible;
+
+                roomFurnitureInfoWD.ShowDialog();
+
+                IsLoading = false;
+            });
+
             FirstLoadInfoWindowCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 if (FurnituresRoomCache == null)
                     return;
                 ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>();
+
                 IsLoading = true;
 
                 await LoadFurniture();
@@ -164,8 +184,19 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
             });
 
+            CloseFurnitureRoomDeleteCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                FurnituresRoomCache = null;
+                p.Close();
+                tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+            });
+
             OpenImportFurnitureRoomCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
+                if (SelectedFurnituresRoom == null)
+                    return;
+
+                FurnituresRoomCache = new FurnituresRoomDTO(SelectedFurnituresRoom);
 
                 IsLoading = true;
 
@@ -241,7 +272,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             {
                 IsLoading = true;
 
-                await ImportListFurnitureToRoom();
+                await ImportListFurnitureToRoom(p);
 
                 IsLoading = false;
             });
@@ -303,17 +334,27 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>(FurnituresRoomCache.ListFurnitureRoom);
             });
 
-            DeleteListFurnitureCM = new RelayCommand<object>((p) => { return true; },async (p) =>
+            DeleteListFurnitureCM = new RelayCommand<Window>((p) => { return true; },async (p) =>
             {
                 IsLoading = true;
 
-                await DeleteListFurniture();
+                await DeleteListFurniture(p);
 
                 IsLoading = false;
             });
             CloseDeleteControlCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 ListFurnitureNeedDelete.Clear();
+            });
+            SelectionFilterInfoChangeCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItemFilter != null)
+                {
+                    if (SelectedItemFilter == "Tất cả")
+                        FurnituresRoomCache.ListFurnitureRoom = new ObservableCollection<FurnitureDTO>(AllFurniture);
+                    else
+                        FurnituresRoomCache.ListFurnitureRoom = new ObservableCollection<FurnitureDTO>(FurnitureService.Ins.GetAllFurnitureByType(SelectedItemFilter, AllFurniture));
+                }
             });
         }
     }

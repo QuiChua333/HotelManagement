@@ -256,6 +256,7 @@
     </Compile>
     <Compile Include="ViewModel\AdminVM\CustomerManagementVM\CustomerManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\HistoryManagementVM\HistoryManagementVM.cs" />
+    <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureDeleteVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomFurnitureManagementVM\RoomFurnitureManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomManagementVM\RoomManagementVM.cs" />
     <Compile Include="ViewModel\AdminVM\RoomTypeManagementVM\RoomTypeManagementVM.cs" />
@@ -317,6 +318,9 @@
     <Compile Include="ViewModel\StaffVM\TroubleReportVM\TroubleReportVM.cs" />
     <Compile Include="View\Admin\FurnitureManagement\ImportListWD.xaml.cs">
       <DependentUpon>ImportListWD.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureDeleteWindow.xaml.cs">
+      <DependentUpon>RoomFurnitureDeleteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Admin\RoomFurnitureManagement\RoomFurnitureImportWindow.xaml.cs">
       <DependentUpon>RoomFurnitureImportWindow.xaml</DependentUpon>
@@ -629,6 +633,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\FurnitureManagement\ImportListWD.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\RoomFurnitureManagement\RoomFurnitureDeleteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
