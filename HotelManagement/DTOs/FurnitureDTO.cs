@@ -191,7 +191,7 @@ namespace HotelManagement.DTOs
                 return true;
             if (string.IsNullOrWhiteSpace(FurnitureType))
                 return true;
-            if (FurnitureAvatarData.Length == 0)
+            if (FurnitureAvatarData == null ||FurnitureAvatarData.Length == 0)
                 return true;
             return false;   
         }

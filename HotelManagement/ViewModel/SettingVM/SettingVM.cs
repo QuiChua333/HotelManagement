@@ -365,6 +365,11 @@ namespace HotelManagement.ViewModel.SettingVM
             });
             ConfirmCurrentPassCM = new RelayCommand<PasswordBox>((p) => { return true; }, (p) =>
             {
+                if (string.IsNullOrEmpty(p.Password))
+                {
+                    CustomMessageBox.ShowOk("Mật khẩu trống, xin vui lòng nhập mật khẩu!","Thông báo", "Xác nhận", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                    return;
+                }
                 if (p.Password == currentStaff.Password)
                 {
                     IsToResetPage = true;

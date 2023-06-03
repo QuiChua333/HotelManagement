@@ -227,7 +227,8 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                 StartTime = DateTime.Now;
                 DayOfBirth = DateTime.Now;
                 SelectedRoom = null;
-                currentStaff = AdminVM.AdminVM.CurrentStaff;
+                if (AdminVM.AdminVM.CurrentStaff!=null) currentStaff = AdminVM.AdminVM.CurrentStaff;
+                if (StaffVM.StaffVM.CurrentStaff != null) currentStaff = StaffVM.StaffVM.CurrentStaff;
                 StaffName = currentStaff.StaffName;
                 StaffId = currentStaff.StaffId;
                 await  LoadReadyRoom();
