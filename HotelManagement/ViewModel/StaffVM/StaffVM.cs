@@ -1,14 +1,22 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.DTOs;
+using HotelManagement.View.Admin;
+using HotelManagement.View.CustomMessageBoxWindow;
+using HotelManagement.View.Login;
+using HotelManagement.View.Staff;
 using HotelManagement.ViewModel.AdminVM.FurnitureManagementVM;
 using HotelManagement.ViewModel.AdminVM.ServiceManagementVM;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace HotelManagement.ViewModel.StaffVM
 {
@@ -22,11 +30,25 @@ namespace HotelManagement.ViewModel.StaffVM
             get { return _staffname; }
             set { _staffname = value; OnPropertyChanged(); }
         }
-        private ImageSource _staffimgsource;
-        public ImageSource Staffimgsource
+        public string _avatarName { get; set; }
+        public string AvatarName
         {
-            get { return _staffimgsource; }
-            set { _staffimgsource = value; OnPropertyChanged(); }
+            get { return _avatarName; }
+            set { _avatarName = value; OnPropertyChanged(); }
+        }
+
+        private ImageSource _imageSource { get; set; }
+        public ImageSource AvatarSource
+        {
+            get { return _imageSource; }
+            set { _imageSource = value; OnPropertyChanged(); }
+        }
+
+        private string _StaffId;
+        public string StaffId
+        {
+            get { return _StaffId; }
+            set { _StaffId = value; OnPropertyChanged(); }
         }
         private object _currentView;
         public object CurrentView
@@ -38,11 +60,15 @@ namespace HotelManagement.ViewModel.StaffVM
         private void BookingRoom(object obj) => CurrentView = new BookingRoomManagementVM.BookingRoomManagementVM();
         private void RoomCatalog(object obj) => CurrentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
         private void TroubleRp(object obj) => CurrentView = new TroubleReportVM.TroubleReportVM();
+        private void Setting(object obj) => CurrentView = new SettingVM.SettingVM();
+        
         public ICommand BookingRoomCommand { get; set; }
         public ICommand FirstLoadCM { get; set; }
         public ICommand RoomCatalogCommand { get; set; }
         public ICommand TroubleRpCommand { get; set; }
         public ICommand HelpScreenCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
+        public ICommand LogOutCommand { get; set; }
 
         public StaffVM()
         {
@@ -51,6 +77,49 @@ namespace HotelManagement.ViewModel.StaffVM
             TroubleRpCommand = new RelayCommand(TroubleRp);
             BookingRoomCommand = new RelayCommand(BookingRoom);
             HelpScreenCommand = new RelayCommand(HelpScreen);
+            SettingCommand = new RelayCommand(Setting);
+
+            FirstLoadCM = new RelayCommand<Rectangle>((p) => { return true; }, (p) =>
+            {
+                StaffName = CurrentStaff.StaffName;
+                SetAvatarName(StaffName);
+                StaffId = CurrentStaff.StaffId;
+                if (CurrentStaff.Avatar != null)
+                    AvatarSource = LoadAvatarImage(CurrentStaff.Avatar);
+                else
+                    AvatarSource = null;
+                p.Fill = (SolidColorBrush)new BrushConverter().ConvertFrom(Properties.Settings.Default.MainAppColor);
+            });
+            LogOutCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                if (CustomMessageBox.ShowOkCancel("Bạn thật sự muốn đăng xuất không?", "Cảnh báo", "Đăng xuất", "Không", CustomMessageBoxImage.Warning) == CustomMessageBoxResult.OK)
+                {
+                    LoginWindow loginwd = new LoginWindow();
+                    StaffWindow st = Application.Current.Windows.OfType<StaffWindow>().FirstOrDefault();
+                    st.Close();
+                    loginwd.Show();
+                }
+            });
+        }
+        public void SetAvatarName(string staffName)
+        {
+            string[] trimNames = staffName.Split(' ');
+            AvatarName = trimNames[trimNames.Length - 1][0].ToString() + trimNames[0][0].ToString();
+        }
+        public BitmapImage LoadAvatarImage(byte[] data)
+        {
+            MemoryStream strm = new MemoryStream();
+            strm.Write(data, 0, data.Length);
+            strm.Position = 0;
+            System.Drawing.Image img = System.Drawing.Image.FromStream(strm);
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            ms.Seek(0, SeekOrigin.Begin);
+            bi.StreamSource = ms;
+            bi.EndInit();
+            return bi;
         }
     }
 }

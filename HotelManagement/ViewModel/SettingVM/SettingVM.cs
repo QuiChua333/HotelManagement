@@ -25,6 +25,7 @@ using HotelManagement.Model.Services;
 using HotelManagement.Utils;
 using HotelManagement.Model;
 using HotelManagement.View;
+using HotelManagement.View.Staff;
 
 namespace HotelManagement.ViewModel.SettingVM
 {
@@ -156,17 +157,27 @@ namespace HotelManagement.ViewModel.SettingVM
         public ICommand CloseResetPassCM { get; set; }
         public ICommand ChooseLanguageCM { get; set; }
         public ICommand ConfirmNewPassCM { get; set; }
-
+        AdminWindow tk;
+        StaffWindow st;
         public SettingVM()
         {
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                currentStaff = AdminVM.AdminVM.CurrentStaff;
+                if (AdminVM.AdminVM.CurrentStaff != null)
+                {
+                    currentStaff = AdminVM.AdminVM.CurrentStaff;
+                    tk = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
+                }    
+                else
+                {
+                    currentStaff = StaffVM.StaffVM.CurrentStaff;
+                    st = Application.Current.Windows.OfType<StaffWindow>().FirstOrDefault();
+                }
                 StaffName = currentStaff.StaffName;
                 StaffEmail = currentStaff.Email;
                 Position = currentStaff.Position;
-                if (reg.GetValue("CinemaManagementApp") == null)
+                if (reg.GetValue("HotelManagementApp") == null)
                     IsCheckedAutoStart = false;
                 else
                     IsCheckedAutoStart = true;
@@ -204,7 +215,17 @@ namespace HotelManagement.ViewModel.SettingVM
                         return;
                     }
                     currentStaff.StaffName = StaffName;
-                    AdminWindow tk = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
+                    SetAvatarName(StaffName);
+                    if (AdminVM.AdminVM.CurrentStaff != null)
+                    {
+                        tk.FullName.Text = StaffName;
+                        tk.AvatarName.Text = AvatarName;
+                    }
+                    else
+                    {
+                        st.FullName.Text = StaffName;
+                        st.AvatarName.Text = AvatarName;
+                    }
                     CustomMessageBox.ShowOkCancel(messageReturn, IsEnglish ? "Success" : "Thành công", "OK", IsEnglish ? "Cancel" : "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     p.Kind = MaterialDesignThemes.Wpf.PackIconKind.Pencil;
                     IsEdit = false;
@@ -212,6 +233,11 @@ namespace HotelManagement.ViewModel.SettingVM
             });
             EditEmailCM = new RelayCommand<MaterialDesignThemes.Wpf.PackIcon>((p) => { return true; }, async (p) =>
             {
+                if (string.IsNullOrEmpty(StaffEmail))
+                {
+                    CustomMessageBox.ShowOk(IsEnglish ? "Do not leave the blank name!" : "Không được để mail trống!", IsEnglish ? "Warning" : "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                    return;
+                }
                 if (IsEditEmail == false)
                 {
                     p.Kind = MaterialDesignThemes.Wpf.PackIconKind.ContentSaveEdit;
@@ -229,10 +255,12 @@ namespace HotelManagement.ViewModel.SettingVM
                     {
                         Random randomNumber = new Random();
                         randomCode = randomNumber.Next(111111, 999999);
-                        SendMailToStaff(StaffEmail, randomCode);
+                        await SendMailToStaff(StaffEmail, randomCode);
 
                         confirmWD = new ConfirmWindow();
                         confirmWD.ShowDialog();
+                        p.Kind = MaterialDesignThemes.Wpf.PackIconKind.Pencil;
+                        IsEditEmail = false;
                     }
 
                 }
@@ -253,12 +281,10 @@ namespace HotelManagement.ViewModel.SettingVM
                         return;
                     }
                     currentStaff.Email = StaffEmail;
-                    AdminWindow tk = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
                     CustomMessageBox.ShowOkCancel(messageReturn, IsEnglish ? "Success" : "Thành công", "OK", IsEnglish ? "Cancel" : "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     IconEditEmail = PackIconKind.Pencil;
                     confirmWD.Close();
                     IsEditEmail = false;
-
                 }
                 else
                     Error = IsEnglish ? "This code is invalid!" : "Mã code vừa nhập chưa chính xác!";
@@ -272,7 +298,6 @@ namespace HotelManagement.ViewModel.SettingVM
                 {
                     filePath = openfile.FileName;
                     LoadImage();
-                    AdminWindow tk = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
 
                     using (var context = new HotelManagementEntities())
                     {
@@ -285,6 +310,14 @@ namespace HotelManagement.ViewModel.SettingVM
                         fs.Read(photo_aray, 0, photo_aray.Length);
                         updateStaff.Avatar = photo_aray;
                         currentStaff.Avatar = photo_aray;
+                        if (AdminVM.AdminVM.CurrentStaff != null)
+                        {
+                            tk.IconAvatar.ImageSource = LoadAvatarImage(photo_aray);
+                        }
+                        else
+                        {
+                            st.IconAvatar.ImageSource = LoadAvatarImage(photo_aray);
+                        }
                         context.SaveChanges();
                         CustomMessageBox.ShowOk(IsEnglish ? "Update successful" : "Cập nhật thành công", IsEnglish ? "Notice" : "Thông báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
                     }
@@ -325,9 +358,9 @@ namespace HotelManagement.ViewModel.SettingVM
             AutoStartAppCM = new RelayCommand<ToggleButton>((p) => { return true; }, (p) =>
             {
                 if (p.IsChecked == true)
-                    reg.SetValue("CinemaManagementApp", System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    reg.SetValue("HotelManagementApp", System.Reflection.Assembly.GetExecutingAssembly().Location);
                 else
-                    reg.DeleteValue("CinemaManagementApp");
+                    reg.DeleteValue("HotelManagementApp");
             });
             RemindLoginAppCM = new RelayCommand<ToggleButton>((p) => { return true; }, (p) =>
             {
@@ -356,9 +389,15 @@ namespace HotelManagement.ViewModel.SettingVM
             });
             ChooseColorCM = new RelayCommand<Rectangle>((p) => { return true; }, (p) =>
             {
-                AdminWindow tk = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
                 ColorPicked = p.Fill;
-                tk.Overlay.Fill = p.Fill;
+                if (AdminVM.AdminVM.CurrentStaff != null)
+                {
+                    tk.Overlay.Fill = p.Fill;
+                }
+                else
+                {
+                    st.Overlay.Fill = p.Fill;
+                }
                 SolidColorBrush solidColorBrush = (SolidColorBrush)ColorPicked;
                 Properties.Settings.Default.MainAppColor = solidColorBrush.Color.ToString();
                 Properties.Settings.Default.Save();
@@ -399,7 +438,7 @@ namespace HotelManagement.ViewModel.SettingVM
             string[] trimNames = staffName.Split(' ');
             AvatarName = trimNames[trimNames.Length - 1][0].ToString() + trimNames[0][0].ToString();
         }
-        public void SendMailToStaff(string staffEmail, int randomCode)
+        public async Task SendMailToStaff(string staffEmail, int randomCode)
         {
             try
             {
@@ -429,7 +468,7 @@ namespace HotelManagement.ViewModel.SettingVM
                 SmtpServer.UseDefaultCredentials = false;
                 SmtpServer.Credentials = new NetworkCredential(APP_EMAIL, APP_PASSWORD);
                 SmtpServer.EnableSsl = true;
-                SmtpServer.Send(mail);
+                await SmtpServer.SendMailAsync(mail);
             }
             catch (Exception ex)
             {

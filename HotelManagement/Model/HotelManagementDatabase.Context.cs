@@ -13,10 +13,10 @@ namespace HotelManagement.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HotelManagementEntities : DbContext
+    public partial class HotelManagementEntities1 : DbContext
     {
-        public HotelManagementEntities()
-            : base("name=HotelManagementEntities")
+        public HotelManagementEntities1()
+            : base("name=HotelManagementEntities1")
         {
         }
     
