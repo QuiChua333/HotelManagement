@@ -46,7 +46,7 @@
                                  FontSize="18"
                                  FontWeight="Bold"
                                  IsChecked="True"
-                                 Content="Tổng thu chi"
+                                 Content="Thống kê"
                                  Margin="20,10,0,0"
                                  Command="{Binding LoadAllStatisticalCM}"
                                  CommandParameter="{Binding ElementName=card1}"/>
@@ -58,7 +58,7 @@
                                  FontSize="18"
                                  FontWeight="Bold"
                                  IsChecked ="False"
-                                 Content="Báo cáo doanh thu"
+                                 Content="Xu hướng"
                                  Margin="20,10,0,0"
                                  Command="{Binding LoadRoomTypeAndServiceStatiscalCM}"
                                  CommandParameter="{Binding ElementName=card1}"/>

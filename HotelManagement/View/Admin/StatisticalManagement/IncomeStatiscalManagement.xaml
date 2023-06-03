@@ -9,6 +9,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
       Title="IncomeStatiscalManagement"
       DataContext="{StaticResource StatisticalManagementVM}">
 
@@ -33,85 +34,122 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Grid>
-                <Border Background="White"
-                        CornerRadius="2"
-                        BorderBrush="#606060" 
-                        BorderThickness="0.5" 
-                        Width="180" Height="36" 
-                        Margin="30 0 0 0">
-                    <StackPanel Orientation="Horizontal" x:Name="_period">
-                        <Image Source="{StaticResource iconFilter}" 
-                               Height="24" 
-                               Width="30" 
-                               Margin="10 0 0 0"/>
-                        <ComboBox Width="130" Height="36"
-                                  SelectedItem="{Binding SelectedIncomePeriod}"
-                                  Padding="10 5"
-                                  BorderBrush="#606060"
-                                  BorderThickness="0"
-                                  Foreground="Black"
-                                  SelectedIndex="0"
-                                  Margin="10 0 0 0"
-                                  FontSize="16"
-                                  HorizontalContentAlignment="Center"
-                                  x:Name="periodbox"
-                                  SelectionChanged="periodbox_SelectionChanged"
-                                  Loaded="periodbox_Loaded">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Loaded">
-                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
-                                                       CommandParameter="{Binding ElementName=periodbox}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
-                                                       CommandParameter="{Binding ElementName=periodbox}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <ComboBoxItem  Content="Theo năm" FontSize="16" Foreground="Black"/>
-                            <ComboBoxItem  Content="Theo tháng" FontSize="16" Foreground="Black"/>
-                        </ComboBox>
-                    </StackPanel>
-                </Border>
-            </Grid>
+   
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20 0 0 0">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Chọn năm:"
+                       FontSize="16"
+                       Foreground="#888"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                               Margin="10,0,0,0">
 
-            <Grid>
-                <Border Background="White" 
-                        BorderBrush="#606060" 
-                        BorderThickness="0.5" 
-                        Width="200" Height="36" 
-                        CornerRadius="2"
-                        Margin="14 0 0 0">
-                    <StackPanel Orientation="Horizontal" x:Name="_time">
-                        <Image Source="{StaticResource iconFilter}" 
-                               Height="24" 
-                               Width="30" 
-                               Margin="10 0 0 0"/>
-                        <ComboBox Width="150" Height="36"
-                                  SelectedItem="{Binding SelectedIncomeTime,Mode=OneWayToSource}"
-                                  Padding="10 5"
-                                  BorderBrush="#606060"
-                                  BorderThickness="0"
-                                  Foreground="Black"
-                                  SelectedIndex="0"
-                                  Margin="10 0 0 0"
-                                  FontSize="16"
-                                  HorizontalContentAlignment="Center"
-                                  x:Name="Timebox">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Loaded">
-                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
-                                                       CommandParameter="{Binding ElementName=Timebox}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding ChangeIncomePeriodCM}"
-                                                       CommandParameter="{Binding ElementName=Timebox}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                    </StackPanel>
-                </Border>
-            </Grid>
+                    </Label>
+                    <Border Background="White" 
+                            BorderBrush="#606060" 
+                            BorderThickness="0.5" 
+                            CornerRadius="2"
+                            Width="155" Height="30" 
+                            HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource iconFilter}" 
+                                   Height="20" 
+                                   Width="28" 
+                                   Margin="10 0 0 0"/>
+                            <ScrollViewer  MaxHeight="160" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False" >
+                                <ScrollViewer.Resources>
+                                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
+                                </ScrollViewer.Resources>
+                                <ComboBox Width="105" Height="30"
+                                      Padding="10 5"
+                                      BorderBrush="#606060"
+                                      BorderThickness="0"
+                                      VerticalContentAlignment="Center"
+                                      FontWeight="Medium" 
+                                      Foreground="{StaticResource Gray1}" 
+                                      SelectedIndex="0"
+                                      ItemsSource="{Binding ListFilterYear}"
+                                      Margin="10 0 0 0"
+                                      FontSize="14"
+                                      SelectedItem="{Binding SelectedYear}"
+                                      x:Name="cbbYear"
+                                      HorizontalContentAlignment="Center">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Loaded">
+                                            <i:InvokeCommandAction Command="{Binding ChangeTimeCM}"
+                                                       CommandParameter="{Binding ElementName=mainPage}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangeTimeCM}"
+                                                       CommandParameter="{Binding ElementName=mainPage}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                            </ScrollViewer>
+
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0 0 0 0">
+                    <Label Content="Chọn tháng:"
+                       FontSize="16"
+                       Foreground="#888"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center"
+                           Margin="50,0,0,0">
+                    </Label>
+                    <Border Background="White" 
+                            BorderBrush="#606060" 
+                            BorderThickness="0.5" 
+                            CornerRadius="2"
+                            Width="160" Height="30" 
+                            HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Margin="50,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource iconFilter}" 
+                                   Height="20" 
+                                   Width="28" 
+                                   Margin="10 0 0 0"/>
+                            <ScrollViewer  MaxHeight="160" HorizontalScrollBarVisibility="Hidden" CanContentScroll="False" >
+                                <ScrollViewer.Resources>
+                                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
+                                </ScrollViewer.Resources>
+                                <ComboBox Width="110" Height="30"
+                                      Padding="10 5"
+                                      BorderBrush="#606060"
+                                      BorderThickness="0"
+                                      FontWeight="Medium"
+                                      VerticalContentAlignment="Center"
+                                      Foreground="{StaticResource Gray1}" 
+                                      SelectedIndex="0"
+                                      ItemsSource="{Binding ListFilterMonth}"
+                                      Margin="10 0 0 0"
+                                      FontSize="14"
+                                      SelectedItem="{Binding SelectedMonth}"
+                                      x:Name="cbbMonth"
+                                      HorizontalContentAlignment="Center">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Loaded">
+                                            <i:InvokeCommandAction Command="{Binding ChangeTimeCM}"
+                                                       CommandParameter="{Binding ElementName=mainPage}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChangeTimeCM}"
+                                                       CommandParameter="{Binding ElementName=mainPage}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+
+                                </ComboBox>
+                            </ScrollViewer>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -148,8 +186,8 @@
                                         Margin="10 0 0 0"
                                         FontSize="16" />
                                 <TextBox Text="{Binding ReveRate}"
-                                         TextChanged="TextBox_TextChanged"
                                          BorderThickness="0"
+                                         x:Name="tbReveRate"
                                          IsHitTestVisible="False"
                                          FontStyle="Italic"
                                          VerticalAlignment="Bottom"
@@ -208,10 +246,11 @@
                                        Foreground="Black"
                                        FontSize="16" />
                                 <TextBox Text="{Binding ExpeRate}"
-                                             TextChanged="TextBox_TextChanged1"
+                                
                                              BorderThickness="0"
                                              IsHitTestVisible="False"
-                                             FontStyle="Italic"
+                                         x:Name="tbExpeRate"    
+                                         FontStyle="Italic"
                                             VerticalAlignment="Bottom"
                                          FontSize="14"/>
                             </StackPanel>

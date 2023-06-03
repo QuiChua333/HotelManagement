@@ -37,12 +37,12 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             set { _SelectedIncomeTime = value; OnPropertyChanged(); }
         }
 
-        private int selectedYear;
-        public int SelectedYear
-        {
-            get { return selectedYear; }
-            set { selectedYear = value; }
-        }
+        //private int selectedYear;
+        //public int SelectedYear
+        //{
+        //    get { return selectedYear; }
+        //    set { selectedYear = value; }
+        //}
 
 
         private string _TrueIncome;
@@ -179,96 +179,31 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             get { return _LabelMaxValue; }
             set { _LabelMaxValue = value; OnPropertyChanged(); }
         }
-
-        public async Task ChangeIncomePeriod()
+        private List<string> _ListFilterYear;
+        public List<string> ListFilterYear
         {
-            if (SelectedIncomePeriod != null)
-            {
-                switch (SelectedIncomePeriod.Content.ToString())
-                {
-                    case "Theo năm":
-                        {
-                            if (SelectedIncomeTime != null)
-                            {
-                                if (SelectedIncomeTime.Length == 4)
-                                    SelectedYear = int.Parse(SelectedIncomeTime);
-                                await LoadIncomeByYear();
-                            }
-                            return;
-                        }
-                    case "Theo tháng":
-                        {
-                            if (SelectedIncomeTime != null)
-                            {
-                                await LoadIncomeByMonth();
-                            }
-                            return;
-                        }
-                }
-            }
+            get { return _ListFilterYear; }
+            set { _ListFilterYear = value; OnPropertyChanged(); }
         }
-
-        public async Task LoadIncomeByYear()
+        private string _SelectedYear;
+        public string SelectedYear
         {
-            if (SelectedIncomeTime.Length != 4) return;
-            LabelMaxValue = 12;
-            try
-            {
-
-                TotalBill = await Task.Run(() => OverviewStatisticService.Ins.GetBillQuantity(int.Parse(SelectedIncomeTime)));
-                (List<double> monthlyRevenue, double Servicereve,double Rentalreve, string YearRevenueRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByYear(int.Parse(SelectedIncomeTime)));
-                (List<double> monthlyExpense, double ServiceExpense, double RepairCost, double FurnitureExpense,string YearExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByYear(int.Parse(SelectedIncomeTime)));
-
-
-                RentalReve = Helper.FormatVNMoney(Rentalreve);
-                ServiceReve = Helper.FormatVNMoney(Servicereve);
-                ServiceExpe = Helper.FormatVNMoney(ServiceExpense);
-                RepairExpe = Helper.FormatVNMoney(RepairCost);
-                FurnitureExpe = Helper.FormatVNMoney(FurnitureExpense);
-                ExpeRate = YearExpenseRateStr;
-
-                monthlyRevenue.Insert(0, 0);
-                monthlyExpense.Insert(0, 0);
-
-                CalculateTrueIncome(monthlyRevenue, monthlyExpense);
-                Calculate_RevExpPercentage(Rentalreve, Servicereve, ServiceExpense, RepairCost, FurnitureExpense);
-
-                for (int i = 1; i <= 12; i++)
-                {
-                    monthlyRevenue[i] /= 1000000;
-                    monthlyExpense[i] /= 1000000;
-                }
-
-
-                InComeData = new SeriesCollection
-            {
-            new LineSeries
-            {
-                Title = "Thu",
-                Values = new ChartValues<double>(monthlyRevenue),
-                Fill = Brushes.Transparent
-            },
-            new LineSeries
-            {
-                Title = "Chi",
-                Values = new ChartValues<double>(monthlyExpense),
-                Fill = Brushes.Transparent
-            }
-            };
-            }
-            catch (System.Data.Entity.Core.EntityException e)
-            {
-                Console.WriteLine(e);
-                CustomMessageBox.ShowOk("Mất kết nối cơ sở dữ liệu", "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
-                throw;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
-                throw;
-            }
+            get { return _SelectedYear; }
+            set { _SelectedYear = value; OnPropertyChanged(); }
         }
+        private List<string> _ListFilterMonth;
+        public List<string> ListFilterMonth
+        {
+            get { return _ListFilterMonth; }
+            set { _ListFilterMonth = value; OnPropertyChanged(); }
+        }
+        private string _SelectedMonth;
+        public string SelectedMonth
+        {
+            get { return _SelectedMonth; }
+            set { _SelectedMonth = value; OnPropertyChanged(); }
+        }
+       
 
         public void CalculateTrueIncome(List<double> l1, List<double> l2)
         {
@@ -376,26 +311,16 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
         }
         public async Task LoadIncomeByMonth()
         {
-            if (SelectedIncomeTime.Length == 4) return;
-            LabelMaxValue = 30;
+     
             try
             {
-                if (SelectedIncomeTime == "January") SelectedIncomeTime = "Tháng 1";
-                if (SelectedIncomeTime == "February") SelectedIncomeTime = "Tháng 2";
-                if (SelectedIncomeTime == "March") SelectedIncomeTime = "Tháng 3";
-                if (SelectedIncomeTime == "April") SelectedIncomeTime = "Tháng 4";
-                if (SelectedIncomeTime == "May") SelectedIncomeTime = "Tháng 5";
-                if (SelectedIncomeTime == "June") SelectedIncomeTime = "Tháng 6";
-                if (SelectedIncomeTime == "July") SelectedIncomeTime = "Tháng 7";
-                if (SelectedIncomeTime == "August") SelectedIncomeTime = "Tháng 8";
-                if (SelectedIncomeTime == "September") SelectedIncomeTime = "Tháng 9";
-                if (SelectedIncomeTime == "October") SelectedIncomeTime = "Tháng 10";
-                if (SelectedIncomeTime == "November") SelectedIncomeTime = "Tháng 11";
-                if (SelectedIncomeTime == "December") SelectedIncomeTime = "Tháng 12";
 
-                TotalBill = await OverviewStatisticService.Ins.GetBillQuantity(2021, int.Parse(SelectedIncomeTime.Remove(0, 6)));
-                (List<double> dailyRevenue, double MonthServiceReve, double MonthRentalReve, string MonthRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
-                (List<double> dailyExpense, double MonthServiceExpense, double MonthRepairCost, double FurnitureExpense, string MonthExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByMonth(SelectedYear, int.Parse(SelectedIncomeTime.Remove(0, 6))));
+                int year = int.Parse(SelectedYear.Substring(4));
+                int month = int.Parse(SelectedMonth.Substring(6));
+                LabelMaxValue = DayOfMonth(year,month);
+                TotalBill = await OverviewStatisticService.Ins.GetBillQuantity(year, month);
+                (List<double> dailyRevenue, double MonthServiceReve, double MonthRentalReve, string MonthRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetRevenueByMonth(year, month));
+                (List<double> dailyExpense, double MonthServiceExpense, double MonthRepairCost, double FurnitureExpense, string MonthExpenseRateStr) = await Task.Run(() => OverviewStatisticService.Ins.GetExpenseByMonth(year,month));
                 RentalReve = Helper.FormatVNMoney(MonthRentalReve);
                 ServiceReve = Helper.FormatVNMoney(MonthServiceReve);
                 ServiceExpe = Helper.FormatVNMoney(MonthServiceExpense);
@@ -441,6 +366,27 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             {
                 Console.WriteLine(e);
                 CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+            }
+        }
+
+        private int DayOfMonth(int year, int month)
+        {
+            switch (month)
+            {
+                case 1: case 3: case 5: case 7 : case 8: case 10: case 12:
+                    {
+                        return 31;
+                    }
+                case 2:
+                    {
+                        int plus = 0;
+                        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) plus = 1;
+                        return 28 + plus;
+                    }
+                default:
+                    {
+                        return 30;
+                    }
             }
         }
     }

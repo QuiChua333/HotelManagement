@@ -29,20 +29,16 @@ namespace HotelManagement.Model.Services
             private set => _ins = value;
         }
 
-        public async Task<int> GetBillQuantity(int year, int month = 0)
+        public async Task<int> GetBillQuantity(int year, int month)
         {
             try
             {
                 using (var context = new HotelManagementEntities())
                 {
-                    if (month == 0)
-                    {
-                        return await context.Bills.Where(b => b.CreateDate.Value.Year == year).CountAsync();
-                    }
-                    else
-                    {
+                    
+                    
                         return await context.Bills.Where(b => b.CreateDate.Value.Year == year && b.CreateDate.Value.Month == month).CountAsync();
-                    }
+                    
                 }
             }
             catch (Exception e)
@@ -83,6 +79,7 @@ namespace HotelManagement.Model.Services
                     if (lastRevenueTotal == 0)
                     {
                         RevenueRateStr = "-2";
+                        if (ServiceRevenue + RentalRevenue == 0) RevenueRateStr = "-3";
                     }
                     else
                     {
@@ -208,7 +205,9 @@ namespace HotelManagement.Model.Services
                     if (lastExpenseTotal == 0)
                     {
                         ExpenseRateStr = "-2";
+                        if (ServiceExpenseTotal + RepairCostTotal + FurnitureExpenseTotal == 0) ExpenseRateStr = "-3";
                     }
+
                     else
                     {
                         ExpenseRateStr = Helper.ConvertDoubleToPercentageStr(((double)(ServiceExpenseTotal + RepairCostTotal + FurnitureExpenseTotal / lastExpenseTotal) - 1));
@@ -410,6 +409,7 @@ namespace HotelManagement.Model.Services
                     if (lastRevenueTotal == 0)
                     {
                         RevenueRateStr = "-2";
+                        if (ServiceRevenue + RentalRevenue == 0) RevenueRateStr = "-3";
                     }
                     else
                     {
@@ -516,6 +516,7 @@ namespace HotelManagement.Model.Services
                     if (lastProductExpenseTotal == 0)
                     {
                         ExpenseRateStr = "-2";
+                        if (ServiceExpenseTotal + RepairCostTotal + FurnitureExpenseTotal == 0) ExpenseRateStr = "-3";
                     }
                     else
                     {
@@ -530,36 +531,14 @@ namespace HotelManagement.Model.Services
                 throw e;
             }
         }
-        public async Task<List<RoomTypeDTO>> GetListRoomTypeRevenue(string period, string value)
+        public async Task<List<RoomTypeDTO>> GetListRoomTypeRevenue(int year, int month)
         {
             try
             {
 
                 using (var context = new HotelManagementEntities())
                 {
-                    
-                    if (period == "Theo năm") 
-                    {
-                        int year = int.Parse(value);
-                        var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == year).ToListAsync();
-                        var list2 = list1.GroupBy(b => b.RentalContract.Room.RoomType.RoomTypeName)
-                            .Select(gr => new RoomTypeDTO
-                            {
-                                RoomTypeName = gr.First().RentalContract.Room.RoomType.RoomTypeName,
-                                Revenue = (double)gr.Sum(x=> x.TotalPrice - x.ServicePrice - x.TroublePrice)
-                            }).ToList();
-                     
-                        for (int i = 0; i < list2.Count; i++)
-                        {
-                            list2[i].STT = i + 1;
-                        }
-
-                        return list2;
-                    }
-                    else
-                    {
-                        int month = int.Parse(value);
-                        var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year && x.CreateDate.Value.Month == month).ToListAsync();
+                        var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).ToListAsync();
                         var list2 = list1.GroupBy(b => b.RentalContract.Room.RoomType.RoomTypeName)
                             .Select(gr => new RoomTypeDTO
                             {
@@ -571,7 +550,7 @@ namespace HotelManagement.Model.Services
                             list2[i].STT = i + 1;
                         }
                         return list2;
-                    }
+                    
                        
                 }
                 
@@ -581,7 +560,7 @@ namespace HotelManagement.Model.Services
                 throw e;
             }
         }
-        public async Task<List<ServiceTypeDTO>> GetListServiceTypeRevenue(string period, string value)
+        public async Task<List<ServiceTypeDTO>> GetListServiceTypeRevenue(int year, int month)
         {
             try
             {
@@ -589,32 +568,7 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
 
-                    if (period == "Theo năm")
-                    {
-                        int year = int.Parse(value);
-                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year).Select(x => x.RentalContractId).ToListAsync();
-
-                        var list1 = await context.ServiceUsings.Where(x=> listRentalContract.Contains(x.RentalContractId)).ToListAsync();
-                        var list2 = list1.GroupBy(b => b.Service.ServiceType)
-                            .Select(gr => new ServiceTypeDTO
-                            { 
-
-
-                                ServiceType = gr.First().Service.ServiceType,
-                                Revenue = (double)gr.Sum(x=> x.Quantity * x.UnitPrice)
-                              
-
-                            }).ToList();
-                        for (int i = 0; i< list2.Count; i++)
-                        {
-                            list2[i].STT = i + 1;
-                        }
-                        return list2;
-                    }
-                    else
-                    {
-                        int month = int.Parse(value);
-                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year && x.CreateDate.Value.Year == month).Select(x => x.RentalContractId).ToListAsync();
+                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Year == month).Select(x => x.RentalContractId).ToListAsync();
 
                         var list1 = await context.ServiceUsings.Where(x => listRentalContract.Contains(x.RentalContractId)).ToListAsync();
                         var list2 = list1.GroupBy(b => b.Service.ServiceType)
@@ -632,7 +586,7 @@ namespace HotelManagement.Model.Services
                             list2[i].STT = i + 1;
                         }
                         return list2;
-                    }
+                    
 
                 }
 
@@ -642,7 +596,7 @@ namespace HotelManagement.Model.Services
                 throw e;
             }
         }
-        public async Task<SeriesCollection> GetDataRoomTypePieChart(string period, string value)
+        public async Task<SeriesCollection> GetDataRoomTypePieChart(int year, int month)
         {
             try
             {
@@ -650,7 +604,7 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
 
-                    var listRoomType = await GetListRoomTypeRevenue(period,value);
+                    var listRoomType = await GetListRoomTypeRevenue(year, month);
                     SeriesCollection listRoomChart = new SeriesCollection();
                     foreach (var item in listRoomType)
                     {
@@ -670,7 +624,7 @@ namespace HotelManagement.Model.Services
                 throw e;
             }
         }
-        public async Task<SeriesCollection> GetDataServiceTypePieChart(string period, string value)
+        public async Task<SeriesCollection> GetDataServiceTypePieChart(int year, int month)
         {
             try
             {
@@ -678,7 +632,7 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
 
-                    var listServiceType = await GetListServiceTypeRevenue(period, value);
+                    var listServiceType = await GetListServiceTypeRevenue(year, month);
                     SeriesCollection listRoomChart = new SeriesCollection();
                     foreach (var item in listServiceType)
                     {
@@ -698,6 +652,33 @@ namespace HotelManagement.Model.Services
                 throw e;
             }
         }
-        
+        public List<string> GetListFilterYear()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    var listYear = context.Bills.Select(x => x.CreateDate.Value.Year).ToList();
+                    if (listYear == null) listYear = new List<int>();
+                    if (!listYear.Contains(DateTime.Now.Year))
+                    {
+                        listYear.Add(DateTime.Now.Year);
+                    }
+                    var listYearStr = listYear.Select(x => "Năm " + x.ToString()).ToList();
+                    listYearStr.Reverse();
+                    List<string> years = new List<string>();
+                    foreach (var year in listYearStr)
+                    {
+                        if (!years.Contains(year)) years.Add(year);
+                    }
+                    return years;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

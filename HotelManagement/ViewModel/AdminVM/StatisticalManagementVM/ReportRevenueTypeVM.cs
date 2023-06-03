@@ -18,29 +18,53 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             get { return _ListRoomTypeRevenue; }
             set { _ListRoomTypeRevenue = value; OnPropertyChanged(); }
         }
-        private ComboBoxItem _SelectedPeriod;
-        public ComboBoxItem SelectedPeriod
+        private List<string> _ListFilterYear2;
+        public List<string> ListFilterYear2
         {
-            get { return _SelectedPeriod; }
-            set { _SelectedPeriod = value; OnPropertyChanged(); }
+            get { return _ListFilterYear2; }
+            set { _ListFilterYear2 = value; OnPropertyChanged(); }
         }
-        private string _SelectedTime;
-        public string SelectedTime
+        private string _SelectedYear2;
+        public string SelectedYear2
         {
-            get { return _SelectedTime; }
-            set { _SelectedTime = value; OnPropertyChanged(); }
+            get { return _SelectedYear2; }
+            set { _SelectedYear2 = value; OnPropertyChanged(); }
         }
-        private ComboBoxItem _SelectedPeriod2;
-        public ComboBoxItem SelectedPeriod2
+        private List<string> _ListFilterMonth2;
+        public List<string> ListFilterMonth2
         {
-            get { return _SelectedPeriod2; }
-            set { _SelectedPeriod2 = value; OnPropertyChanged(); }
+            get { return _ListFilterMonth2; }
+            set { _ListFilterMonth2 = value; OnPropertyChanged(); }
         }
-        private string _SelectedTime2;
-        public string SelectedTime2
+        private string _SelectedMonth2;
+        public string SelectedMonth2
         {
-            get { return _SelectedTime2; }
-            set { _SelectedTime2 = value; OnPropertyChanged(); }
+            get { return _SelectedMonth2; }
+            set { _SelectedMonth2 = value; OnPropertyChanged(); }
+        }
+        private List<string> _ListFilterYear3;
+        public List<string> ListFilterYear3
+        {
+            get { return _ListFilterYear3; }
+            set { _ListFilterYear3 = value; OnPropertyChanged(); }
+        }
+        private string _SelectedYear3;
+        public string SelectedYear3
+        {
+            get { return _SelectedYear3; }
+            set { _SelectedYear3 = value; OnPropertyChanged(); }
+        }
+        private List<string> _ListFilterMonth3;
+        public List<string> ListFilterMonth3
+        {
+            get { return _ListFilterMonth3; }
+            set { _ListFilterMonth3 = value; OnPropertyChanged(); }
+        }
+        private string _SelectedMonth3;
+        public string SelectedMonth3
+        {
+            get { return _SelectedMonth3; }
+            set { _SelectedMonth3 = value; OnPropertyChanged(); }
         }
         private List<ServiceTypeDTO> _ListServiceTypeRevenue;
         public List<ServiceTypeDTO> ListServiceTypeRevenue
@@ -65,14 +89,18 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
 
         public async Task ChangeRoomTypeRevenue()
         {
-            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(SelectedPeriod.Content.ToString(), SelectedTime);
-            RoomTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataRoomTypePieChart(SelectedPeriod.Content.ToString(), SelectedTime);
+            int year = int.Parse(SelectedYear2.Substring(4));
+            int month = int.Parse(SelectedMonth2.Substring(6));
+            ListRoomTypeRevenue = await OverviewStatisticService.Ins.GetListRoomTypeRevenue(year, month);
+            RoomTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataRoomTypePieChart(year, month);
         }
         
             public async Task ChangeServiceTypeRevenue()
         {
-            ListServiceTypeRevenue = await OverviewStatisticService.Ins.GetListServiceTypeRevenue(SelectedPeriod2.Content.ToString(), SelectedTime2);
-            ServiceTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataServiceTypePieChart(SelectedPeriod.Content.ToString(), SelectedTime);
+            int year = int.Parse(SelectedYear3.Substring(4));
+            int month = int.Parse(SelectedMonth3.Substring(6));
+            ListServiceTypeRevenue = await OverviewStatisticService.Ins.GetListServiceTypeRevenue(year, month);
+            ServiceTypeRevenuePieChart = await OverviewStatisticService.Ins.GetDataServiceTypePieChart(year, month);
         }
     }
 }
