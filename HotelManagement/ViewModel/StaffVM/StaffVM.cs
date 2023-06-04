@@ -50,6 +50,12 @@ namespace HotelManagement.ViewModel.StaffVM
             get { return _StaffId; }
             set { _StaffId = value; OnPropertyChanged(); }
         }
+        private string nameTypeMenuBind;
+        public string NameTypeMenuBind
+        {
+            get { return nameTypeMenuBind; }
+            set { nameTypeMenuBind = value; OnPropertyChanged(); }
+        }
         private object _currentView;
         public object CurrentView
         {
@@ -87,17 +93,39 @@ namespace HotelManagement.ViewModel.StaffVM
 
         public StaffVM()
         {
-            _currentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
             staffVM = this;
-            RoomCatalogCommand = new RelayCommand(RoomCatalog);
-            TroubleRpCommand = new RelayCommand(TroubleRp);
-            BookingRoomCommand = new RelayCommand(BookingRoom);
-            HelpScreenCommand = new RelayCommand(HelpScreen);
-            SettingCommand = new RelayCommand(Setting);
+            StaffWindow tk = Application.Current.Windows.OfType<StaffWindow>().FirstOrDefault();
+            RoomCatalogCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                RoomCatalog(p);
+                NameTypeMenuBind = "QUẢN LÍ SỬ DỤNG PHÒNG";
+            });
+            TroubleRpCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                TroubleRp(p);
+                NameTypeMenuBind = "BÁO CÁO SỰ CỐ";
+            });
+            BookingRoomCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                BookingRoom(p);
+                NameTypeMenuBind = "QUẢN LÍ ĐẶT PHÒNG";
+            });
+            HelpScreenCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                HelpScreen(p);
+                NameTypeMenuBind = "GIÚP ĐỠ";
+            });
+            SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Setting(p);
+                NameTypeMenuBind = "CÀI ĐẶT";
+            });
 
             FirstLoadCM = new RelayCommand<Rectangle>((p) => { return true; }, (p) =>
             {
                 StaffName = CurrentStaff.StaffName;
+                CurrentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
+                NameTypeMenuBind = "QUẢN LÍ SỬ DỤNG PHÒNG";
                 SetAvatarName(StaffName);
                 StaffId = CurrentStaff.StaffId;
                 if (CurrentStaff.Avatar != null)
@@ -113,6 +141,7 @@ namespace HotelManagement.ViewModel.StaffVM
                     LoginWindow loginwd = new LoginWindow();
                     StaffWindow st = Application.Current.Windows.OfType<StaffWindow>().FirstOrDefault();
                     st.Close();
+                    CurrentStaff = null;
                     loginwd.Show();
                 }
             });

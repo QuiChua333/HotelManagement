@@ -16,6 +16,7 @@
         AllowsTransparency="True"
         Name="AdminWD"
         Background="Transparent"
+        MouseDown="AdminWD_MouseDown"
         DataContext="{StaticResource AdminVM}">
     <Window.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
@@ -44,7 +45,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!--Overlay-->
         <Rectangle x:Name="Overlay" Fill="#F7FAFD" Grid.ColumnSpan="2" Grid.RowSpan="2" RadiusX="10" RadiusY="10">
             <Rectangle.Effect>
@@ -59,23 +60,141 @@
 
         <!--Content-->
         <Frame NavigationUIVisibility="Hidden" x:Name="Content" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentView}"></Frame>
-        
+
         <!--TopBar-->
-        <Grid Grid.Column="1" Grid.Row="0">
+        <Grid Name="TopBar"  Grid.Column="1" Grid.Row="0">
             <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
                 <Grid>
-                    <TextBlock Text="Quản lí đặt phòng" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="571*"/>
+                    </Grid.ColumnDefinitions>
                 </Grid>
             </Border>
             <Rectangle Height="0.4" Fill="#444B55" VerticalAlignment="Bottom" Opacity="0.3"></Rectangle>
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Ellipse x:Name="AvatarGreeding" Fill="#FED600" Width="18" Height="18" />
+                        <TextBlock x:Name="Honorifics" Text="Good Morning" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#1D242E"  FontWeight="Medium" FontSize="14" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+
+                    </StackPanel>
+                    <TextBlock Name="DayMonthYear" HorizontalAlignment="Right" Text="14 January 2022" VerticalAlignment="Center" Foreground="#1D242E"  FontWeight="Regular" FontSize="14" Grid.ColumnSpan="2" />
+
+                </StackPanel>
+            </Grid>
+            <TextBlock Name="NameTypeMenu" Text="{Binding NameTypeMenuBind}" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="#009099" FontWeight="Bold" FontSize="24" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+            <Border Name="TopControl" Background="Transparent" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>                
+                </Border.Style>
+                <StackPanel Height="40" Orientation="Horizontal">
+                    <Button Focusable="False" Foreground="Black" Cursor="Hand" Click="Button_Click_1">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Width" Value="24"/>
+                                <Setter Property="Margin" Value="0,4,0,4"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseCaptured" Value="True">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Border Width="24" Height="24" Background="#FF01BB01" CornerRadius="24">
+                            <Image Width="17" Height="17" Source="{StaticResource DockWindowIcon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Button>
+                    <Button Focusable="False" Foreground="Black" Cursor="Hand" Click="Button_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Width" Value="24"/>
+                                <Setter Property="Margin" Value="12,4,12,4"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseCaptured" Value="True">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Border Width="24" Height="24" Background="#FFEBEB00" CornerRadius="24">
+                            <materialDesign:PackIcon Kind="Minimize" Foreground="#FF2E2E2E" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
+                        </Border>
+                    </Button>
+                    <Button Focusable="False" materialDesign:ButtonAssist.CornerRadius="0,10,0,0" Cursor="Hand" Click="Button_Click_2">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Width" Value="24"/>
+                                <Setter Property="Margin" Value="0,4,0,4"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="0,10,0,0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseCaptured" Value="True">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Border Width="24" Height="24" Background="#FFE00000" CornerRadius="24">
+                            <materialDesign:PackIcon Kind="Close" Foreground="#FF2D2D2D" VerticalAlignment="Center" HorizontalAlignment="Center"></materialDesign:PackIcon>
+                        </Border>
+                    </Button>
+                </StackPanel>
+            </Border>
         </Grid>
+       
+
+       
         <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="2" MouseLeftButtonDown="Mask_MouseLeftButtonDown" x:Name="Mask" Fill="Black" Visibility="Collapsed" Opacity="0.3" RadiusX="10" RadiusY="10"/>
         <!--SideBar-->
         <Border 
             Background="{DynamicResource SidebarColor}"
             Name="Sidebar"
             CornerRadius="10 0 0 10" 
-            Height="760"  
+            VerticalAlignment="Stretch"  
             HorizontalAlignment="Left"
             Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Grid Width="62" Name="GridNav">
@@ -101,13 +220,13 @@
                                     <ImageBrush x:Name="IconAvatar" Stretch="UniformToFill" ImageSource="{Binding AvatarSource, Mode=TwoWay}"/>
                                 </Border.Background>
                             </Border>
-                            
+
                             <Border x:Name="ActiveUserDot" Height="12" Width="12"  CornerRadius="100" Background="LightGreen"
                                     BorderBrush="#283342" BorderThickness="1"
                                     VerticalAlignment="Bottom"
                                     HorizontalAlignment="Right"/>
                         </Grid>
-                        
+
 
                         <TextBlock x:Name="FullName" Text="{Binding StaffName}" Foreground="{DynamicResource PrimaryTextColor}" FontSize="16" FontWeight="Light" VerticalAlignment="Center" Margin="15,0,20,0" />
                         <materialDesign:PackIcon Kind="MenuDown" Background="Transparent" Foreground="{DynamicResource PrimaryTextColor}" Margin="40 18 0 0"></materialDesign:PackIcon>
@@ -117,7 +236,7 @@
 
                     <StackPanel Name="MenuItems" PreviewMouseLeftButtonUp="MenuItems_PreviewMouseLeftButtonUp">
                         <StackPanel Height="40">
-                            <components:MenuItem  GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center" Command="{Binding StatiscalCommand}"/>
+                            <components:MenuItem  GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" IsSelected="True" Icon="{DynamicResource overview}" IconWidth="16" Text="Tổng quan" VerticalAlignment="Center" Command="{Binding StatiscalCommand}"/>
                         </StackPanel>
                         <!--<StackPanel Height="40" >
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource review}" IconWidth="16" Text="Đánh giá" VerticalAlignment="Center" />
@@ -131,7 +250,7 @@
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource home}" IconWidth="16" Text="Quản lý sử dụng phòng" VerticalAlignment="Center"
                                                   Command="{Binding RoomCatalogCommand}"/>
                         </StackPanel>
-                        
+
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource billing}" IconWidth="16" Text="Quản lý phòng" VerticalAlignment="Center" Command="{Binding RoomCommand}"/>
                         </StackPanel>
@@ -153,7 +272,7 @@
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource restore}" Command="{Binding FurnitureCommand}" IconWidth="16" Text="Quản lý kho tiện nghi" VerticalAlignment="Center"/>
                         </StackPanel>
-                     
+
                         <StackPanel Height="40">
                             <components:MenuItem GroupName="MenuItem" IndicatorBrush="{DynamicResource PrimaryBlueColor}" Icon="{DynamicResource trouble}" IconWidth="16" Text="Sự cố" VerticalAlignment="Center" Command="{Binding TroubleCommand}"/>
                         </StackPanel>

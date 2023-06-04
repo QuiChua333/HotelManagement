@@ -69,7 +69,7 @@
                 </i:Interaction.Triggers>
             </TextBlock>
             <Border Margin="68 0 0 0" Height="34" Width="100" CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                <Button Command="{Binding LoginCM}" CommandParameter="{Binding ElementName=labelError}" Height="34" BorderBrush="Transparent"  Width="100" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                <Button IsDefault="True" Command="{Binding LoginCM}" CommandParameter="{Binding ElementName=labelError}" Height="34" BorderBrush="Transparent"  Width="100" Background="Transparent" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
                     <TextBlock Text="Đăng nhập" FontSize="14" FontWeight="Medium"   Foreground="{DynamicResource PrimaryTextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Button>
             </Border>

@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp.Processing;
+﻿using HotelManagement.ViewModel.AdminVM;
+using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,6 @@ namespace HotelManagement.View.Login
         {
             InitializeComponent();
         }
-
         private void LoginWd_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

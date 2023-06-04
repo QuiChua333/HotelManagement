@@ -1,5 +1,6 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.DTOs;
+using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.StatisticalManagement;
@@ -38,7 +39,12 @@ namespace HotelManagement.ViewModel.AdminVM
             get { return _avatarName; }
             set { _avatarName = value; OnPropertyChanged(); }
         }
-
+        private string nameTypeMenuBind;
+        public string NameTypeMenuBind
+        {
+            get { return nameTypeMenuBind; }
+            set { nameTypeMenuBind = value; OnPropertyChanged(); }
+        }
         private ImageSource _imageSource { get; set; }
         public ImageSource AvatarSource
         {
@@ -107,25 +113,84 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand LogOutCommand { get; set; }
         public AdminVM()
         {
-            _currentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM();
+            AdminWindow tk =  Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
+
             adminVM = this;
-            FurnitureCommand = new RelayCommand(Furniture);
-            ServiceCommand = new RelayCommand(Service);
-            RoomFurnitureCommand = new RelayCommand(RoomFurniture);
-            SettingCommand = new RelayCommand(Setting);
-            BookingRoomCommand = new RelayCommand(BookingRoom);
-            RoomCommand = new RelayCommand(Room);
-            RoomTypeCommand = new RelayCommand(RoomType);
-            StatiscalCommand=new RelayCommand(Statiscal);
-            HelpScreenCommand = new RelayCommand(HelpScreen);
-            CustomerCommand=new RelayCommand(Customer);
-            StaffCommand=new RelayCommand(Staff);
-            HistoryCommand=new RelayCommand(History);
-            TroubleCommand=new RelayCommand(Trouble);
-            RoomCatalogCommand = new RelayCommand(RoomCatalog);
+            FurnitureCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Furniture(p);
+                NameTypeMenuBind = "QUẢN LÍ TIỆN NGHI";
+            });
+            ServiceCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Service(p);
+                NameTypeMenuBind = "QUẢN LÍ DỊCH VỤ - SẢN PHẨM";
+            });
+            RoomFurnitureCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                RoomFurniture(p);
+                NameTypeMenuBind = "TIỆN NGHI TRONG PHÒNG";
+            });
+            SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Setting(p);
+                NameTypeMenuBind = "CÀI ĐẶT";
+            });
+            BookingRoomCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                BookingRoom(p);
+                NameTypeMenuBind = "QUẢN LÍ ĐẶT PHÒNG";
+            });
+            RoomCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Room(p);
+                NameTypeMenuBind = "QUẢN LÍ PHÒNG";
+            });
+            RoomTypeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                RoomType(p);
+                NameTypeMenuBind = "QUẢN LÍ LOẠI PHÒNG";
+            });
+            StatiscalCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Statiscal(p);
+                NameTypeMenuBind = "TỔNG QUAN";
+            });
+            HelpScreenCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                HelpScreen(p);
+                NameTypeMenuBind = "GIÚP ĐỠ";
+            });
+            CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Customer(p);
+                NameTypeMenuBind = "QUẢN LÍ KHÁCH HÀNG";
+            });
+            StaffCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Staff(p);
+                NameTypeMenuBind = "QUẢN LÍ NHÂN VIÊN";
+            });
+            HistoryCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                History(p);
+                NameTypeMenuBind = "TRA CỨU THU CHI";
+            });
+            TroubleCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Trouble(p);
+                NameTypeMenuBind = "QUẢN LÍ SỰ CỐ";
+            });
+            RoomCatalogCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                RoomCatalog(p);
+                NameTypeMenuBind = "QUẢN LÍ SỬ DỤNG PHÒNG";
+            });
             FirstLoadCM = new RelayCommand<Rectangle>((p) => { return true; }, (p) =>
             {
+                CurrentView = new StatisticalManagementVM.StatisticalManagementVM();
                 StaffName = CurrentStaff.StaffName;
+                NameTypeMenuBind = "TỔNG QUAN";
                 SetAvatarName(StaffName);
                 StaffId = CurrentStaff.StaffId;
                 if (CurrentStaff.Avatar != null)
@@ -141,6 +206,7 @@ namespace HotelManagement.ViewModel.AdminVM
                     LoginWindow loginwd = new LoginWindow();
                     AdminWindow st = Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
                     st.Close();
+                    CurrentStaff = null;
                     loginwd.Show();
                 }
             });
