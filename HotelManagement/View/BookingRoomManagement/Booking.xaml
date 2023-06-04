@@ -539,7 +539,6 @@
                                       ItemsSource="{Binding ListReadyRoom}"
                                       SelectedItem="{Binding SelectedRoom, UpdateSourceTrigger=PropertyChanged}"
                                       Cursor="Hand"
-                                      ToolTip="Nháy đúp để xem chi tiết" 
                                       d:ItemsSource="{d:SampleData ItemCount=4}">
 
                                 <ListView.ItemContainerStyle>

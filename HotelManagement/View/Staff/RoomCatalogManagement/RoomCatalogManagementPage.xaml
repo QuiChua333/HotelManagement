@@ -411,7 +411,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
@@ -423,7 +423,7 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
+                                                        <Border CornerRadius="10,10,0,0"  Width="200" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
@@ -468,7 +468,7 @@
                                                     </Grid>
 
                                                     <Grid Grid.Row="1">
-                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
                                                             <Grid Margin="10,0">
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -797,7 +797,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
@@ -809,7 +809,7 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
+                                                        <Border CornerRadius="10,10,0,0"  Width="200" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
@@ -854,7 +854,7 @@
                                                     </Grid>
 
                                                     <Grid Grid.Row="1">
-                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
                                                             <Grid Margin="10,0">
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -1075,7 +1075,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Border CornerRadius="10" Background="AliceBlue" Width="220" HorizontalAlignment="Left"
+                                        <Border CornerRadius="10" Background="AliceBlue" Width="200" HorizontalAlignment="Left"
                                                >
                                             <Border.Effect>
                                                 <DropShadowEffect BlurRadius="10" Direction="270" Color="Black" ShadowDepth="4" Opacity="0.25"/>
@@ -1087,7 +1087,7 @@
                                                         <RowDefinition Height="25"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0">
-                                                        <Border CornerRadius="10,10,0,0"  Width="220" HorizontalAlignment="Left"  x:Name="border">
+                                                        <Border CornerRadius="10,10,0,0"  Width="200" HorizontalAlignment="Left"  x:Name="border">
                                                             <Grid Margin="10">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="*"/>
@@ -1132,7 +1132,7 @@
                                                     </Grid>
 
                                                     <Grid Grid.Row="1">
-                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="220" HorizontalAlignment="Left">
+                                                        <Border CornerRadius="0,0,10,10" Background="#EBE8E8" Width="200" HorizontalAlignment="Left">
                                                             <Grid Margin="10,0">
                                                                 <Grid HorizontalAlignment="Left">
                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

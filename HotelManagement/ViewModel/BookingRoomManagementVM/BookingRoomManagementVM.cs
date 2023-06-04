@@ -246,6 +246,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             {
                 RenewWindowData();
                 Booking booking = new Booking();
+                CheckoutDate = StartDate.AddDays(1);
                 isExistCustomer = false;
                 booking.ShowDialog();
             });
@@ -259,7 +260,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             });
             SelectedTimeChangedCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                CheckoutDate = StartDate.AddDays(1);
+               
                 await LoadReadyRoom();
             });
             

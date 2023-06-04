@@ -31,7 +31,7 @@ namespace HotelManagement.ViewModel.StaffVM.TroubleReportVM
                     Title = Title,
                     Description = Desription,
                     StartDate = StartDate,
-                    StaffId = "NV001",  
+                    StaffId = currentStaff.StaffId,  
                     Level=Level.Tag.ToString(),
                     Reason=Reason.Tag.ToString(),
                     Avatar=photo_aray

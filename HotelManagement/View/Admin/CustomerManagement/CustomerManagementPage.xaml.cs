@@ -29,17 +29,12 @@ namespace HotelManagement.View.Admin.CustomerManagement
         private bool Filter(object item)
         {
             if (String.IsNullOrEmpty(FilterBox.Text)) return true;
-            switch (cbbFilter.SelectedValue)
-            {
-                case "Mã khách hàng":
-                    return ((item as CustomerDTO).CustomerId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >=0);
-                case "Tên khách hàng":
-                    return ((item as CustomerDTO).CustomerName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                case "Số điện thoại":
-                    return ((item as CustomerDTO).PhoneNumber.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                default:
-                    return ((item as CustomerDTO).CustomerId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
+            
+            return ((item as CustomerDTO).CustomerId.IndexOf(FilterBox.Text.Trim(), StringComparison.OrdinalIgnoreCase) >= 0)
+                || ((item as CustomerDTO).CustomerName.IndexOf(FilterBox.Text.Trim(), StringComparison.OrdinalIgnoreCase) >= 0)
+                || ((item as CustomerDTO).PhoneNumber.IndexOf(FilterBox.Text.Trim(), StringComparison.OrdinalIgnoreCase) >= 0)
+                || ((item as CustomerDTO).CCCD.IndexOf(FilterBox.Text.Trim(), StringComparison.OrdinalIgnoreCase) >= 0);
+            
         }
         private void filterbox_textchange(object sender, EventArgs e)
         {

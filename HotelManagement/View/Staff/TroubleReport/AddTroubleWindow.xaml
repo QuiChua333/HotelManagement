@@ -144,7 +144,22 @@
                 <Grid Grid.Column="1" Visibility="Visible" x:Name="txtboxMPT">
                     <TextBlock Text="Mã số phiếu thuê" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 10" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBox Text="{Binding RentalContractId}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center" BorderThickness="0"/>
+                        <!--<TextBox Text="{Binding RentalContractId}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center" BorderThickness="0"/>-->
+                        <ComboBox Padding="12,7" 
+                                  BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                                  SelectedIndex="0"
+                                  SelectedItem="{Binding RentalContractId,Mode=TwoWay}"
+                                  ItemsSource="{Binding ListRentalContractId}"
+                                  FontWeight="Regular"
+                                  UseLayoutRounding="False"
+                                  FontSize="14" 
+                                  SelectedValuePath="Tag"
+                                  BorderThickness="0" 
+                                  FontFamily="{DynamicResource MaterialDesignFont}"
+                                  HorizontalContentAlignment="Left">
+
+                            
+                        </ComboBox>
                     </Border>
                 </Grid>
             </Grid>

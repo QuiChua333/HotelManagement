@@ -38,7 +38,7 @@
                 </Grid.ColumnDefinitions>
 
                 <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Border Grid.Column="1" Height="38" Width="150" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
+                <Border  Grid.Column="1" Height="38" Width="150" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
                     <ComboBox Padding="12,7" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="2"
                                   FontWeight="Regular"
