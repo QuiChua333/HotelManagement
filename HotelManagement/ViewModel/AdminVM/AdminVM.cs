@@ -107,7 +107,7 @@ namespace HotelManagement.ViewModel.AdminVM
         public ICommand LogOutCommand { get; set; }
         public AdminVM()
         {
-            _currentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM();
+            _currentView = new StatisticalManagementVM.StatisticalManagementVM();
             adminVM = this;
             FurnitureCommand = new RelayCommand(Furniture);
             ServiceCommand = new RelayCommand(Service);

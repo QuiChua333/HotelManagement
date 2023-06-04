@@ -23,6 +23,7 @@ namespace HotelManagement.ViewModel.StaffVM.TroubleReportVM
 {
     public partial class TroubleReportVM : BaseVM
     {
+        private StaffDTO currentStaff;
         private ObservableCollection<TroubleDTO> _troubleList;
         public ObservableCollection<TroubleDTO> TroubleList
         {
@@ -90,6 +91,12 @@ namespace HotelManagement.ViewModel.StaffVM.TroubleReportVM
             get { return _rentalContractId; }
             set { _rentalContractId = value; OnPropertyChanged(); }
         }
+        private List<string> _ListRentalContractId;
+        public List<string> ListRentalContractId
+        {
+            get { return _ListRentalContractId; }
+            set { _ListRentalContractId = value; OnPropertyChanged(); }
+        }
         private ImageSource _imgTrouble;
         public ImageSource ImageTrouble
         {
@@ -114,18 +121,21 @@ namespace HotelManagement.ViewModel.StaffVM.TroubleReportVM
         public ICommand LoadDetailTroubleWindowCM { get; set; }
         public TroubleReportVM()
         {
+            if (AdminVM.AdminVM.CurrentStaff!=null) { currentStaff= AdminVM.AdminVM.CurrentStaff;}
+            if (StaffVM.CurrentStaff != null) { currentStaff = StaffVM.CurrentStaff; }
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 TroubleList = new ObservableCollection<TroubleDTO>(await TroubleService.Ins.GetAllTrouble() );
 
             });
-            OpenReportWindow = new RelayCommand<object>(p => true, p =>
+            OpenReportWindow = new RelayCommand<object>(p => true, async p =>
             {
                 AddTroubleWindow wd = new AddTroubleWindow();
-                //wd.staffname.Text=...
-                StartDate=DateTime.Now;
+                wd.staffname.Text = currentStaff.StaffName;
+                StartDate =DateTime.Now;
                 wd.startdate.Text = StartDate.ToString();
                 wd.status.Text = STATUS.WAITING;
+                ListRentalContractId= new List<string>(await TroubleService.Ins.GetCurrentListRentalContractId());
                 ResetData();
                 wd.ShowDialog();
             });

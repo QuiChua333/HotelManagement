@@ -77,8 +77,8 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <ComboBoxItem  Content="Tất cả" Tag="Tất cả" FontSize="14" />
-                        <ComboBoxItem  Content="Còn trống" Tag="Còn trống" FontSize="14"/>
-                        <ComboBoxItem  Content="Đã thuê" Tag="Đã thuê" FontSize="14" />
+                        <ComboBoxItem  Content="Còn hiệu lực" Tag="Còn hiệu lực" FontSize="14"/>
+                        <ComboBoxItem  Content="Hết hiệu lực" Tag="Hết hiệu lực" FontSize="14" />
                     </ComboBox>
                 </Border>
             </StackPanel>

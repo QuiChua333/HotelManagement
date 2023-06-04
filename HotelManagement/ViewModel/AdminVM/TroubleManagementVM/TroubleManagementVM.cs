@@ -241,7 +241,8 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
                     wd.cbbStatus.Visibility = Visibility.Collapsed;
                     wd.gridbyHotel.Visibility = Visibility.Collapsed;
                     wd.gridByCus.Visibility = Visibility.Visible;
-                    
+                    wd.predictgrid.Visibility = Visibility.Visible;
+                    PredictPrice = (double)(await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).PredictedPrice;
                     wd.MSPgrid.Visibility=System.Windows.Visibility.Visible;
                     wd.rentalcontractid.Text = (await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).RentalContractId;
                 }

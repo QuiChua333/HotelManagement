@@ -1,5 +1,6 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Utilities;
+using HotelManagement.Utils;
 using HotelManagement.ViewModel.StaffVM;
 using Microsoft.Office.Interop.Excel;
 using System;
@@ -262,6 +263,24 @@ namespace HotelManagement.Model.Services
             catch(Exception ex)
             {
                 throw ex;
+            }
+
+        }
+        public async Task<List<string>> GetCurrentListRentalContractId()
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+
+                   var list = await context.RentalContracts.Where(x=> x.Room.RoomStatus == ROOM_STATUS.RENTING).Select(x=> x.RentalContractId).ToListAsync();
+                    return list;
+                }
+            }
+           
+            catch (Exception)
+            {
+                return (null);
             }
 
         }
