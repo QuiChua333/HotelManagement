@@ -152,7 +152,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 if (SelectedProduct == null)
                     return;
                 ServiceCache = new ServiceDTO(SelectedProduct);
-
+                SalePrice = ServiceCache.ServicePrice.ToString();
                 EditProductWindow editProductWindow = new EditProductWindow();
                 tk.MaskOverSideBar.Visibility = Visibility.Visible;
                 editProductWindow.ShowDialog();
@@ -182,6 +182,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 ServiceCache = null;
                 p.Close();
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                SalePrice = null;
             });
 
             DeleteProductCM = new RelayCommand<object>((p) => { return true; },async (p) =>
@@ -226,10 +227,15 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 ServiceCache = null;
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
                 p.Close();
+                SalePrice = null;
             });
 
             OpenImportFoodCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                if (SelectedProduct == null)
+                    return;
+
+                ServiceCache = new ServiceDTO(SelectedProduct);
                 ImportProductWindow importProductWindow = new ImportProductWindow();
                 tk.MaskOverSideBar.Visibility = Visibility.Visible;
                 importProductWindow.ShowDialog();
@@ -247,6 +253,8 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 p.Close();
                 tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
                 ServiceCache = null;
+                ImportPrice = null;
+                ImportQuantity = null;
             });
 
             OpenOtherServiceCM = new RelayCommand<object>((p) => { return true; }, (p) =>

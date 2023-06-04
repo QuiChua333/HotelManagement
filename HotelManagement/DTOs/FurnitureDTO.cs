@@ -94,6 +94,8 @@ namespace HotelManagement.DTOs
             set { SetField(ref deleteInRoomQuantity, value, "DeleteInRoomQuantity"); }
         }
 
+        public string DisplayQuantity { get; set; }
+
         public FurnitureDTO()
         {
             FurnitureName = "";
@@ -190,6 +192,8 @@ namespace HotelManagement.DTOs
             if (string.IsNullOrWhiteSpace(FurnitureName))
                 return true;
             if (string.IsNullOrWhiteSpace(FurnitureType))
+                return true;
+            if (string.IsNullOrWhiteSpace(DisplayQuantity))
                 return true;
             if (FurnitureAvatarData == null ||FurnitureAvatarData.Length == 0)
                 return true;

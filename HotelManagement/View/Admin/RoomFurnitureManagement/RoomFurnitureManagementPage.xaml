@@ -70,11 +70,11 @@
                 <StackPanel Margin="30 0 0 0" Width="205" Height="38" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
                     <Border CornerRadius="10" Width="173" Background="White" BorderBrush="Black" BorderThickness="0.5">
-                        <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Loại phòng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterTypeRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
-                            <ComboBoxItem Content="Tất cả loại phòng" Tag="Tất cả"/>
+                        <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Loại phòng" ItemsSource="{Binding ListRoomType}" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterTypeRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
+                            <!--<ComboBoxItem Content="Tất cả loại phòng" Tag="Tất cả"/>
                             <ComboBoxItem Content="Thường" Tag="Thường"/>
                             <ComboBoxItem Content="VIP" Tag="VIP"/>
-                            <ComboBoxItem Content="Thương gia" Tag="Thương gia"/>
+                            <ComboBoxItem Content="Thương gia" Tag="Thương gia"/>-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding MainPageSelectionFilterChangeCM}" />

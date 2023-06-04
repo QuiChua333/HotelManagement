@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -55,8 +56,14 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             get { return furnituresRoomCache; }
             set { furnituresRoomCache = value; OnPropertyChanged(); }
         }
+        private ObservableCollection<ComboBoxItem> listRoomType { get; set; }
+    public ObservableCollection<ComboBoxItem> ListRoomType
+    {
+        get { return listRoomType; }
+        set { listRoomType = value; OnPropertyChanged(); }
+    }
 
-        private ComboBoxItem selectedFilterTypeRoom { get; set; }
+    private ComboBoxItem selectedFilterTypeRoom { get; set; }
         public ComboBoxItem SelectedFilterTypeRoom
         {
             get { return selectedFilterTypeRoom; }
@@ -79,15 +86,17 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
         public ICommand DeleteItemInBillStackCM { get; set; }
         public ICommand DeleteItemInRoomFurnitureInfoCM { get; set; }
         public ICommand OpenDeleteFurnitureInRoomCM { get; set; }
-
         public RoomFurnitureManagementVM()
         {
             AdminWindow tk = System.Windows.Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
-
+            
             FirstLoadCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                IsLoading = true;
 
+                IsLoading = true;
+                ListRoomType = new ObservableCollection<ComboBoxItem>();
+                List<RoomTypeDTO> roomType = await Task.Run(() => RoomTypeService.Ins.GetAllRoomType());
+                SetRoomTypeToCombobox(roomType);
                 (bool isSuccess, string messageReturn, List<FurnituresRoomDTO> listFurnituresRoomReturn) = await Task.Run(() => FurnituresRoomService.Ins.GetAllFurnituresRoom());
 
                 IsLoading = false;
@@ -357,5 +366,19 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 }
             });
         }
+        public void SetRoomTypeToCombobox(List<RoomTypeDTO> roomType)
+        {
+            ComboBoxItem cbiall = new ComboBoxItem();
+            cbiall.Tag = "Tất cả";
+            cbiall.Content = "Tất cả loại phòng";
+            ListRoomType.Add(cbiall);
+            for (int i = 0; i < roomType.Count(); i++)
+            {
+                ComboBoxItem cbi = new ComboBoxItem();
+                cbi.Tag = cbi.Content = roomType[i].RoomTypeName;
+                ListRoomType.Add(cbi);
+            }
+        }
+
     }
 }

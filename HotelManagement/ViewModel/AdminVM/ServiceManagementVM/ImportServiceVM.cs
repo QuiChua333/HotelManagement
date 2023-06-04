@@ -3,9 +3,11 @@ using HotelManagement.Model;
 using HotelManagement.Model.Services;
 using HotelManagement.Utils;
 using HotelManagement.View.Admin;
+using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +20,12 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
 {
     public partial class ServiceManagementVM
     {
+        public string ImportPrice { get; set; }
+        public string ImportQuantity { get; set; }
         public async Task ImportService(ServiceDTO serviceSelected, Window wd, AdminWindow mainWD)
         {
             try
             {
-                string ImportQuantity = serviceSelected.ImportQuantity.ToString();
-                string ImportPrice = serviceSelected.ImportPrice.ToString();
-
                 if (string.IsNullOrEmpty(ImportQuantity))
                 {
                     CustomMessageBox.ShowOk("Vui lòng nhập số lượng", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
@@ -35,28 +36,27 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                     CustomMessageBox.ShowOk("Vui lòng nhập giá nhập", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                     return;
                 }
-                if (!Number.IsNumeric(ImportQuantity))
+
+                int quantity;
+                double price;
+                bool isIntQuantity = Int32.TryParse(ImportQuantity, out quantity);
+                bool isFloatPrice = double.TryParse(ImportPrice, out price);
+
+                if (!isIntQuantity ||quantity <= 0)
                 {
-                    CustomMessageBox.ShowOk("Vui lòng nhập chữ số cho trường số lượng", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                    CustomMessageBox.ShowOk("Số lượng là một số nguyên dương", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                     return;
                 }
-                if (!Number.IsNumeric(ImportPrice))
+                if (!isFloatPrice || price <= 0)
                 {
-                    CustomMessageBox.ShowOk("Vui lòng nhập chữ số cho trường giá nhập", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
-                    return;
-                }
-                if (!Number.IsPositive(ImportPrice))
-                {
-                    CustomMessageBox.ShowOk("Giá nhập không được âm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
-                    return;
-                }
-                if (!Number.IsPositive(ImportQuantity))
-                {
-                    CustomMessageBox.ShowOk("Số lượng là một số lớn hơn 0", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                    CustomMessageBox.ShowOk("Giá nhập phải là số dương", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                     return;
                 }
 
-                (bool isSuccess, string messageReturn) = await Task.Run(() => ServiceHelper.Ins.ImportService(serviceSelected, serviceSelected.ServicePrice, serviceSelected.ImportQuantity));
+                serviceCache.ImportPrice = serviceSelected.ImportPrice = price;
+                serviceCache.ImportQuantity = serviceSelected.ImportQuantity = quantity;
+                    
+                (bool isSuccess, string messageReturn) = await Task.Run(() => ServiceHelper.Ins.ImportService(serviceSelected, serviceCache.ImportPrice, serviceCache.ImportQuantity));
                 if (isSuccess)
                 {
                     CustomMessageBox.ShowOk(messageReturn, "Thành công", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);

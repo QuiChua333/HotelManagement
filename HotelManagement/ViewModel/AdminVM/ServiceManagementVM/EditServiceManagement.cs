@@ -15,6 +15,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
     public partial class ServiceManagementVM
     {
         public List<string> filterSource { get; set; }
+        public string SalePrice { get; set; }
         public async Task SaveEditProduct(ServiceDTO serviceDTO, Window wd, AdminWindow adWD)
         {
             if(string.IsNullOrEmpty(serviceDTO.ServiceName))
@@ -22,21 +23,26 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 CustomMessageBox.ShowOk("Vui lòng nhập tên sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
+
             if (string.IsNullOrEmpty(serviceDTO.ServiceType))
             {
                 CustomMessageBox.ShowOk("Vui lòng chọn loại sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-            if (!Number.IsNumeric(serviceDTO.ServicePrice.ToString()))
+
+            if (string.IsNullOrEmpty(SalePrice))
             {
-                CustomMessageBox.ShowOk("Vui lòng nhập một số cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                CustomMessageBox.ShowOk("Vui lòng nhập giá bán sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-            if (!Number.IsPositive(serviceDTO.ServicePrice.ToString()))
+            double salePrice;
+            bool isIntSalePrice = double.TryParse(SalePrice, out salePrice);
+            if (!isIntSalePrice || salePrice <= 0)
             {
                 CustomMessageBox.ShowOk("Vui lòng nhập một số dương cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
+            serviceDTO.ServicePrice = salePrice;
             (bool isSucess, string messageReturn) = await Task.Run(() => ServiceHelper.Ins.SaveEditProduct(serviceDTO));
 
             if(isSucess)
@@ -50,7 +56,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
             }
             wd.Close();
             adWD.MaskOverSideBar.Visibility = Visibility.Collapsed;
-
+            SalePrice = null;
         }
         public async Task SaveEditCleanService(ServiceDTO serviceDTO, Window wd)
         {
@@ -85,22 +91,26 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 CustomMessageBox.ShowOk("Vui lòng nhập tên sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
+
             if (string.IsNullOrEmpty(productCache.ServiceType))
             {
                 CustomMessageBox.ShowOk("Vui lòng chọn loại sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-            if (!Number.IsNumeric(productCache.ServicePrice.ToString()))
+
+            if (string.IsNullOrEmpty(SalePrice))
             {
-                CustomMessageBox.ShowOk("Vui lòng nhập một số cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                CustomMessageBox.ShowOk("Vui lòng nhập giá bán sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-            if (!Number.IsPositive(productCache.ServicePrice.ToString()))
+            double salePrice;
+            bool isIntSalePrice = double.TryParse(SalePrice, out salePrice);
+            if (!isIntSalePrice || salePrice <= 0)
             {
                 CustomMessageBox.ShowOk("Vui lòng nhập một số dương cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-
+            productCache.ServicePrice = salePrice;
             (bool isSucess, string messageReturn) = await Task.Run(() => ServiceHelper.Ins.AddProduct(productCache));
 
             if (isSucess)
@@ -115,6 +125,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
             ServiceCache = null;
             wd.Close();
             adWD.MaskOverSideBar.Visibility = Visibility.Collapsed;
+            SalePrice = null;
         }
     }
 }

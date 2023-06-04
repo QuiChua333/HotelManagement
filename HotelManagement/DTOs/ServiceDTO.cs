@@ -46,8 +46,8 @@ namespace HotelManagement.DTOs
             get { return quantity; }
             set { SetField(ref quantity, value, "Quantity"); }
         }
-        private float importPrice;
-        public float ImportPrice
+        private double importPrice;
+        public double ImportPrice
         {
             get { return importPrice; }
             set { SetField(ref importPrice, value, "ImportPrice"); }

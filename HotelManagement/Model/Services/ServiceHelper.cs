@@ -185,15 +185,6 @@ namespace HotelManagement.Model.Services
                     if (service == null)
                         return (false, "Không tìm thấy sản phẩm trong cơ sở dữ liệu");
 
-                    //int ID = db.GoodsReceipts.ToList().Count();
-                    //string mainID;
-                    //if (ID == 0)
-                    //    mainID = "0001";
-                    //else
-                    //{
-                    //    ID = int.Parse(db.GoodsReceipts.ToList().Max(item => item.GoodsReceiptId));
-                    //    mainID = getID(++ID);
-                    //}
                     string maxId = await db.GoodsReceipts.MaxAsync(x => x.GoodsReceiptId);
 
                     GoodsReceipt goodReceipt = new GoodsReceipt

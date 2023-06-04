@@ -176,8 +176,15 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                     {
                         if(CustomMessageBox.ShowOk("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning) == CustomMessageBoxResult.OK)
                             return;
-                    } 
-
+                    }
+                    int displayQuantity;
+                    bool isInt = int.TryParse(furnitureCache.DisplayQuantity, out displayQuantity);
+                    if(!isInt || displayQuantity <= 0)
+                    {
+                        CustomMessageBox.ShowOk("Vui lòng nhập số nguyên dương cho trường số lượng", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                        return;
+                    }
+                    furnitureCache.Quantity = displayQuantity;
                     (bool isSuccess, string messageReturn) = await Task.Run(() => FurnitureService.Ins.SaveEditFurniture(furnitureCache));
                     if(isSuccess)
                     {
@@ -190,6 +197,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                     }
                     p.Close();  
                     tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+                    furnitureCache = null;
                 }
             });
 
