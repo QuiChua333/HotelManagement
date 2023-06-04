@@ -164,6 +164,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             else
             {
                 RenewWindowData();
+                CCCD = cccd;
                 b.notifyNotExist.Visibility = Visibility.Visible;
             }
         }
