@@ -1,4 +1,6 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.ViewModel.AdminVM;
+using HotelManagement.ViewModel.StaffVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -67,8 +69,12 @@ namespace HotelManagement.Model.Services
             {
                 using (HotelManagementEntities db = new HotelManagementEntities())
                 {
-                    Service service = await db.Services.FirstOrDefaultAsync(item => item.ServiceId == productSelected.ServiceId);
 
+                    Service CheckServiceName = await db.Services.FirstOrDefaultAsync(item => item.ServiceName.Equals(productSelected.ServiceName) && item.ServiceId != productSelected.ServiceId);
+                    if (CheckServiceName != null)
+                        return (false, "Đã có sản phẩm trong cơ sở  dữ liệu");
+
+                    Service service = await db.Services.FirstOrDefaultAsync(item => item.ServiceId == productSelected.ServiceId);
                     if (service == null)
                         return (false, "Không tìm thấy sản phẩm trong cơ sở dữ liệu");
 
@@ -186,11 +192,21 @@ namespace HotelManagement.Model.Services
                         return (false, "Không tìm thấy sản phẩm trong cơ sở dữ liệu");
 
                     string maxId = await db.GoodsReceipts.MaxAsync(x => x.GoodsReceiptId);
+                    string id = "";
 
+                    if (AdminVM.CurrentStaff != null)
+                    {
+                        id = AdminVM.CurrentStaff.StaffId;
+                    }
+                    else
+                    {
+                        id = StaffVM.CurrentStaff.StaffId;
+                    }
                     GoodsReceipt goodReceipt = new GoodsReceipt
                     {
                         GoodsReceiptId = CreateGoodReceiptID(maxId),
                         ServiceId = serviceSelected.ServiceId,
+                        StaffId = id,
                         ImportPrice = importPrice,
                         Quantity = importQuantity,
                         CreateAt = DateTime.Now,

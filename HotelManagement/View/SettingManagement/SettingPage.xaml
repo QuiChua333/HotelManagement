@@ -104,7 +104,8 @@
                                 x:Name="_staffName"
                                 Text="{Binding StaffName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 FontSize="18" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" Margin="5,0,0,0"
-                                IsEnabled="{Binding IsEdit, Mode=OneWay}"
+                                IsReadOnly="True"
+                                
                             >
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
@@ -135,6 +136,7 @@
                                     </Style>
                                 </Border.Style>
                                 <materialDesign:PackIcon 
+                                    Visibility="Collapsed"
                                 Kind="Pencil"
                                 Width="22"
                                 Height="22"
@@ -162,7 +164,7 @@
                             Margin="5,0,0,0"
                             MaxWidth="250"
                             Text="{Binding StaffEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            IsEnabled="{Binding IsEditEmail, Mode=OneWay}">
+                            IsReadOnly="True">
                                 <TextBox.Style>
                                     <Style TargetType="TextBox">
                                         <Setter Property="BorderThickness"
@@ -191,6 +193,7 @@
                                     </Style>
                                 </Border.Style>
                                 <materialDesign:PackIcon 
+                                    Visibility="Collapsed"
                                     Kind="{Binding IconEditEmail}"
                                     Width="22"
                                     Height="22"

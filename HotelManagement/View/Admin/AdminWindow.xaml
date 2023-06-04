@@ -63,6 +63,9 @@
         <!--TopBar-->
         <Grid Grid.Column="1" Grid.Row="0">
             <Border Background="#F7FAFD" Opacity="0.5" CornerRadius="0 10 0 0">
+                <Grid>
+                    <TextBlock Text="Quản lí đặt phòng" />
+                </Grid>
             </Border>
             <Rectangle Height="0.4" Fill="#444B55" VerticalAlignment="Bottom" Opacity="0.3"></Rectangle>
         </Grid>

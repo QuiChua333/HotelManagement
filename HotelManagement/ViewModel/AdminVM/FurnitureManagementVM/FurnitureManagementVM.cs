@@ -156,6 +156,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                 if(SelectedFurniture != null)
                 {
                     furnitureCache = new FurnitureDTO(SelectedFurniture);
+                    furnitureCache.DisplayQuantity = furnitureCache.Quantity.ToString();
                     FurnitureEditWindow furnitureEditWD = new FurnitureEditWindow();
                     tk.MaskOverSideBar.Visibility = Visibility.Visible;
                     furnitureEditWD.ShowDialog();
@@ -193,7 +194,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                     }
                     else
                     {
-                        CustomMessageBox.ShowOkCancel(messageReturn, "Lỗi", "Ok", "Hủy", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
+                        CustomMessageBox.ShowOk(messageReturn, "Lỗi", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
                     }
                     p.Close();  
                     tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
@@ -233,6 +234,7 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
             AddFurnitureCM = new RelayCommand<System.Windows.Window>((p) => { return true; }, async (p) => {
                 if (furnitureCache != null)
                 {
+                    furnitureCache.DisplayQuantity = "0";
                     if (furnitureCache.IsEmptyFurniture())
                     {
                         if (CustomMessageBox.ShowOk("Vui lòng nhập đầy đủ thông tin", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning) == CustomMessageBoxResult.OK)
@@ -252,6 +254,8 @@ namespace HotelManagement.ViewModel.AdminVM.FurnitureManagementVM
                     }
                     p.Close();
                     tk.MaskOverSideBar.Visibility = Visibility.Collapsed;
+
+                    furnitureCache.DisplayQuantity = null;
                 }
             });
             CloseAddFurnitureCM = new RelayCommand<Window>((p) => { return true; }, (p) =>

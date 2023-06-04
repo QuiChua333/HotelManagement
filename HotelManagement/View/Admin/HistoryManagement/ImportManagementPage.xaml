@@ -67,14 +67,14 @@
                 <Border Grid.Column="0" Height="38" Width="120" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
                     
                     <ComboBox Padding="12,7" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
-                                  SelectedItem="{Binding SelectedFilterImportItem}"
+                                  SelectedItem="{Binding SelectedFilterImportItem,Mode=TwoWay}"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
                                   FontSize="14" 
                                   SelectedValuePath="Tag"
                                   BorderThickness="0" 
                                   x:Name="cbb" 
-                                  
+                                  SelectedIndex="0"
                                   FontFamily="{DynamicResource MaterialDesignFont}"
                                   HorizontalContentAlignment="Left" 
                                   SelectionChanged="cbb_SelectionChanged" HorizontalAlignment="Left" Width="119">
@@ -136,8 +136,7 @@
         </Grid>
         <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="0" BorderBrush="#1D242E" BorderThickness="0.5">
             <materialDesign:Card UniformCornerRadius="5" >
-                <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding ImportList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                <ListView FontFamily="{StaticResource MaterialDesignFont}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontSize="14" FontWeight="Regular" ItemsSource="{Binding ImportList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -224,7 +223,6 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                </ScrollViewer>
             </materialDesign:Card>
         </Border>
 

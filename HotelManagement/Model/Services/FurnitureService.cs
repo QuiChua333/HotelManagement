@@ -14,6 +14,11 @@ using Microsoft.Win32;
 using System.Runtime.Remoting.Contexts;
 using System.Collections.ObjectModel;
 using System.Windows.Automation.Peers;
+using System.Data;
+using HotelManagement.View.Admin;
+using HotelManagement.View.Staff;
+using HotelManagement.ViewModel.AdminVM;
+using HotelManagement.ViewModel.StaffVM;
 
 namespace HotelManagement.Model.Services
 {
@@ -99,6 +104,10 @@ namespace HotelManagement.Model.Services
             {
                 using (HotelManagementEntities db = new HotelManagementEntities())
                 {
+                    Furniture CheckFurnitureName = await db.Furnitures.FirstOrDefaultAsync(item => item.FurnitureName.Equals(furnitureSelected.FurnitureName) && item.FurnitureId != furnitureSelected.FurnitureID);
+                    if (CheckFurnitureName != null)
+                        return (false, "Đã có tiện nghi trong cơ sở  dữ liệu");
+
                     Furniture furniture = await db.Furnitures.FirstOrDefaultAsync(item => item.FurnitureId == furnitureSelected.FurnitureID);
                     if(furniture == null) 
                     {
@@ -218,10 +227,21 @@ namespace HotelManagement.Model.Services
                         mainID = getID(++ID);
                     }
 
+                    string id = "";
+
+                    if (AdminVM.CurrentStaff != null)
+                    {
+                        id = AdminVM.CurrentStaff.StaffId;
+                    }
+                    else
+                    {
+                        id = StaffVM.CurrentStaff.StaffId;
+                    }
                     FurnitureReceipt furnitureReceipt = new FurnitureReceipt
                     {
                         FurnitureReceiptId = mainID,
                         FurnitureId = furniture.FurnitureId,
+                        StaffId = id,
                         ImportPrice = float.Parse(importPrice),
                         Quantity = int.Parse(importQuantity),
                         CreateAt = DateTime.Now,
@@ -258,7 +278,16 @@ namespace HotelManagement.Model.Services
                     {
                         ID = int.Parse(db.FurnitureReceipts.ToList().Max(item => item.FurnitureReceiptId));
                     }
+                    string id = "";
 
+                    if (AdminVM.CurrentStaff != null)
+                    {
+                        id = AdminVM.CurrentStaff.StaffId;
+                    }
+                    else
+                    {
+                        id = StaffVM.CurrentStaff.StaffId;
+                    }
                     for (int i = 0; i < Length; i++)
                     {
                         FurnitureDTO temp = orderList[i];
@@ -272,6 +301,7 @@ namespace HotelManagement.Model.Services
                         {
                             FurnitureReceiptId = mainID,
                             FurnitureId = furniture.FurnitureId,
+                            StaffId = id,
                             ImportPrice = temp.ImportPrice,
                             Quantity = temp.ImportQuantity,
                             CreateAt = DateTime.Now,

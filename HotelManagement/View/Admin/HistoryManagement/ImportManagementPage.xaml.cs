@@ -37,7 +37,7 @@ namespace HotelManagement.View.Admin.HistoryManagement
                 }
                 if(comboBox.SelectedIndex == 1)
                 {
-                    comboBox.Visibility= Visibility.Visible;
+                    bodermonth.Visibility= Visibility.Visible;
                 }
             }
         }
@@ -45,7 +45,9 @@ namespace HotelManagement.View.Admin.HistoryManagement
         private bool Filter(object item)   //can sua//
         {
             if (String.IsNullOrEmpty(FilterBox.Text)) return true;
-            return ((item as ImportProductDTO).ProductName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            return ((item as ImportProductDTO).ProductName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                || ((item as ImportProductDTO).ImportId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                || ((item as ImportProductDTO).StaffName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
         private void filterbox_textchange(object sender, EventArgs e)
         {
