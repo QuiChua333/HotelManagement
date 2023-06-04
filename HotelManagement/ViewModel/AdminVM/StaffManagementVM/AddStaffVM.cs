@@ -7,6 +7,7 @@ using HotelManagement.DTOs;
 using System.IO;
 using HotelManagement.Model.Services;
 using HotelManagement.Utils;
+using System.Linq;
 
 namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
 {
@@ -25,6 +26,19 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
                         return;
                     }
                 }
+            }
+            foreach (var i in Cccd)
+            {
+                if (!"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                }
+            }
+            if (Cccd.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
             }
             (bool isvalid, string mess) =  IsValidData(Operation.CREATE);
             if (isvalid)

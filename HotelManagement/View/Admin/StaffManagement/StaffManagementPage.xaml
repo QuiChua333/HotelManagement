@@ -62,23 +62,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <Border Grid.Column="1" Height="38" Width="180" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
-                        <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
-                                  SelectedIndex="0"
-                                  FontWeight="Regular"
-                                  UseLayoutRounding="False"
-                                  FontSize="14" 
-                                  SelectedValuePath="Tag"
-                                  BorderThickness="0" 
-                                  x:Name="cbbFilter" 
-                                  FontFamily="{DynamicResource MaterialDesignFont}"
-                                  HorizontalContentAlignment="Left">
-                            <ComboBoxItem  Content="Mã nhân viên" Tag="Mã nhân viên" FontSize="14" />
-                            <ComboBoxItem  Content="Tên nhân viên" Tag="Tên nhân viên" FontSize="14"/>
-                            <ComboBoxItem  Content="Số điện thoại" Tag="Số điện thoại" FontSize="14" />
-                        </ComboBox>
-                    </Border>
+                   
                 </Grid>
             </Grid>
             <Border Height="40" Grid.Column="1" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
