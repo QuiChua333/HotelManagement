@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HotelManagement.Model.Services
 {
@@ -415,7 +416,7 @@ namespace HotelManagement.Model.Services
                     {
                         RevenueRateStr = Helper.ConvertDoubleToPercentageStr((double)((ServiceRevenue + RentalRevenue) / lastRevenueTotal) - 1);
                     }
-
+                    
                     return (DailyReveList, (double)ServiceRevenue, (double)RentalRevenue, RevenueRateStr);
                 }
             }

@@ -33,15 +33,25 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Search:Search 
+              
+                <Border CornerRadius="6" 
+                        BorderBrush="#1D242E" 
+                        Background="Transparent"
+                        BorderThickness="0.5" 
+                        Width="402"  
+                        Margin="30 0 0 0"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" >
+                    <Search:Search 
                         Width="400" Height="38"
                         FontSize="12"
                         IconSize="18"
                         Corner="5"
-                        Margin="30 0 0 0"
+                        IndicatorBrush="{StaticResource White}"
                         SearchTextChange="Search_SearchTextChange"
                         x:Name="SearchBox"
                     />
+                </Border>
                 <Border Height="38" Width="180" 
                         CornerRadius="4"  
                         Background="#fff" 
@@ -49,9 +59,6 @@
                         HorizontalAlignment="Left" 
                         BorderThickness="0.5"
                         Margin="30 0 0 0">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
-                    </Border.Effect>
                     <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                               SelectedIndex="0"
                               FontWeight="Regular"
@@ -80,6 +87,7 @@
                 <Button Background="#009099"
                         Width="200"
                         Height="46"
+                        BorderThickness="0"
                         Command="{Binding LoadBookingCM}">
                     <StackPanel Orientation="Horizontal" 
                                 Width="180" 
@@ -95,6 +103,7 @@
                 <Button Background="#009099"
                         Width="200"
                         Height="46"
+                        BorderThickness="0"
                         Command="{Binding ExportExcelFileCM}">
                     <StackPanel Orientation="Horizontal" 
                                 Width="180" 
@@ -121,8 +130,13 @@
                                   Foreground="Black"
                                   FontSize="14"
                                   ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=20}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Height" Value="40"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
                             <ListView.View>
-
                                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
                                     <GridViewColumn Width="140" Header="Mã phiếu thuê">
                                         <GridViewColumn.CellTemplate>
@@ -206,7 +220,7 @@
                                                             BorderThickness="0.5"
                                                             CornerRadius="5"
                                                             Cursor="Hand"
-                                                            Margin="15 0 0 0"
+                                                            HorizontalAlignment="Right"
                                                             Grid.Column="0">
                                                         <Image Source="{StaticResource iconChiTiet}" 
                                                                Width="22"
@@ -219,7 +233,7 @@
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </Border>
-                                                    
+
                                                     <Border BorderBrush="#D63127"
                                                             Background="#D63127"
                                                             BorderThickness="0.5"
@@ -227,7 +241,7 @@
                                                             Cursor="Hand"
                                                             Width="40"
                                                             Height="36"
-                                                            Margin="0 0 15 0"
+                                                            HorizontalAlignment="Left"
                                                              Grid.Column="2">
                                                         <Image Source="{StaticResource iconXoa}"
                                                                     Width="22"
@@ -240,8 +254,6 @@
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </Border>
-
-                                                    
                                                 </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -256,7 +268,7 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 40 0">
             <Label Content="Kết quả: " FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
-            <Label x:Name="result" Content="3" FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
+            <Label x:Name="result" Content="{Binding BookingRoomList.Count}" FontSize="16" FontWeight="Bold" Foreground="#403F3F"/>
         </StackPanel>
     </Grid>
 </Page>

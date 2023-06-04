@@ -34,37 +34,37 @@
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"/>
-                <ColumnDefinition Width="260"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" CornerRadius="4" BorderBrush="#1D242E" BorderThickness="0.5" Width="350" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                <Border.Effect>
-                    <DropShadowEffect
-                                            BlurRadius="6"
-                                            Color="Black"
-                                            ShadowDepth="4"
-                                            Opacity=".2"
-                                            Direction="270"/>
-                </Border.Effect>
-                <Search:Search x:Name="FilterBox" SearchTextChange="filterbox_textchange" IndicatorBrush="White"  Width="350" Height="38" FontSize="14" IconSize="18" Corner="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </Border>
+            <Grid Grid.Column="0">
+                <Border CornerRadius="6" 
+                        BorderBrush="#1D242E" 
+                        Background="Transparent"
+                        BorderThickness="0.5" 
+                        Width="402"  
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" >
+                    <Search:Search 
+                        Width="400" Height="38"
+                        FontSize="12"
+                        IconSize="18"
+                        Corner="5"
+                        IndicatorBrush="{StaticResource White}"
+                        x:Name="FilterBox" 
+                        SearchTextChange="filterbox_textchange"/>
+                </Border>
+                <Grid Width="243" Margin="280 0 0 0" VerticalAlignment="Top" Height="38">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <Grid Width="243" Grid.Column="1" Margin="16 0 0 0" VerticalAlignment="Top" Height="38">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="26"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <Border Grid.Column="1" Height="38" Width="180" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
-                    </Border.Effect>
-                    <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
+                    <materialDesign:PackIcon Kind="Filter" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Border Grid.Column="1" Height="38" Width="180" CornerRadius="4"  Background="#fff" BorderBrush="#1D242E" HorizontalAlignment="Left" BorderThickness="0.5">
+                        <ComboBox Padding="12,8" BorderBrush="{DynamicResource SecondTextColor}" Foreground="{DynamicResource SecondTextColor}"
                                   SelectedIndex="0"
                                   FontWeight="Regular"
                                   UseLayoutRounding="False"
@@ -74,17 +74,15 @@
                                   x:Name="cbbFilter" 
                                   FontFamily="{DynamicResource MaterialDesignFont}"
                                   HorizontalContentAlignment="Left">
-                        <ComboBoxItem  Content="Mã nhân viên" Tag="Mã nhân viên" FontSize="14" />
-                        <ComboBoxItem  Content="Tên nhân viên" Tag="Tên nhân viên" FontSize="14"/>
-                        <ComboBoxItem  Content="Số điện thoại" Tag="Số điện thoại" FontSize="14" />
-                    </ComboBox>
-                </Border>
+                            <ComboBoxItem  Content="Mã nhân viên" Tag="Mã nhân viên" FontSize="14" />
+                            <ComboBoxItem  Content="Tên nhân viên" Tag="Tên nhân viên" FontSize="14"/>
+                            <ComboBoxItem  Content="Số điện thoại" Tag="Số điện thoại" FontSize="14" />
+                        </ComboBox>
+                    </Border>
+                </Grid>
             </Grid>
-            <Border Height="40" Grid.Column="2" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="6" Color="Black" ShadowDepth="4" Opacity=".2" Direction="270"/>
-                </Border.Effect>
-                <Button Command="{Binding OpenAddStaffCM}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"> 
+            <Border Height="40" Grid.Column="1" CornerRadius="4" Width="180" Background="#009099" BorderBrush="#1D242E" BorderThickness="0.5" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Button Command="{Binding OpenAddStaffCM}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
                     <Grid>
                         <materialDesign:PackIcon Kind="Plus" Height="20" Width="20" Margin="0 0 20 0" HorizontalAlignment="Left" Foreground="White" VerticalAlignment="Center" />
                         <TextBlock Text="Thêm nhân viên" Width="110"  Foreground="White" FontSize="15" FontWeight="Regular" Margin="24 0 0 0"  VerticalAlignment="Center" HorizontalAlignment="Right" />
@@ -93,154 +91,121 @@
             </Border>
         </Grid>
         <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="5" BorderBrush="#1D242E" BorderThickness="0.5">
-            <Border.Effect>
-                <DropShadowEffect
-                                            BlurRadius="6"
-                                            Color="Black"
-                                            ShadowDepth="4"
-                                            Opacity=".2"
-                                            Direction="270"/>
-            </Border.Effect>
             <materialDesign:Card UniformCornerRadius="5" >
-                <ScrollViewer VerticalScrollBarVisibility="Auto"  >
-                    <ListView FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding StaffList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" FontFamily="{StaticResource MaterialDesignFont}" FontSize="14" FontWeight="Regular" ItemsSource="{Binding StaffList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                         <ListView.ItemContainerStyle>
-                            <Style  TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignGridViewItem}"/>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Height" Value="40"/>
+                            </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.View>
-                            <GridView >
-                                <GridViewColumn Width="77">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="ID" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                <GridViewColumn Width="77" Header="ID">
                                     <GridViewColumn.CellTemplate >
                                         <DataTemplate>
                                             <TextBlock Text="{Binding StaffId}"
-                                                           FontSize="14" Margin="16 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn  Width="150">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Tên nhân viên" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0" />
-                                    </GridViewColumn.Header>
+                                <GridViewColumn  Width="170" Header="Tên nhân viên">
+                                    
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding StaffName}"                                                           
-                                                           FontSize="14" Margin="16 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="150">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Số điện thoại"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="150" Header="Số điện thoại">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PhoneNumber}" 
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="150">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Email" 
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="150" Header="Email">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Email}"                                                            
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="125" >
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Ngày sinh"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="125" Header="Ngày sinh">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DateOfBirth, StringFormat=dd/MM/yyyy}" 
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="116">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Giới tính"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="116" Header="Giới tính">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Gender}" 
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="110">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="CCCD"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="110" Header="CCCD">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding CCCD}" 
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="114">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Chức vụ"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="114" Header="Chức vụ">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Position}" 
-                                                           FontSize="14" Margin="18 6 0 0"
-                                                           FontFamily="{StaticResource MaterialDesignFont}"/>
+                                                       Margin="0 6 0 0"
+                                                       FontSize="14" 
+                                                       FontFamily="{StaticResource MaterialDesignFont}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="120">
-                                    <GridViewColumn.Header>
-                                        <TextBlock Text="Sửa/Xóa"
-                                                       FontSize="14" 
-                                                       FontWeight="Medium" 
-                                                       Foreground="#111FA0"/>
-                                    </GridViewColumn.Header>
+                                <GridViewColumn Width="120" Header="Sửa / Xóa">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"
                                                             Orientation="Horizontal" 
-                                                            Margin="18 6 0 0">
+                                                            Margin="0 6 0 0">
                                                 <Border BorderBrush="Black"
                                                             BorderThickness="1"
                                                             CornerRadius="3"

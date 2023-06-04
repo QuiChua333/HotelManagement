@@ -1,5 +1,6 @@
 ﻿using CinemaManagementProject.Utilities;
 using HotelManagement.DTOs;
+using HotelManagement.Model.Services;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.StatisticalManagement;
 using HotelManagement.View.CustomMessageBoxWindow;
@@ -52,11 +53,27 @@ namespace HotelManagement.ViewModel.AdminVM
             set { _StaffId = value; OnPropertyChanged(); }
         }
         private object _currentView;
-        public object CurrentView
+        public object CurrentView 
         {
             get { return _currentView; }
             set { _currentView = value; OnPropertyChanged(); }
         }
+        private static AdminVM _ins;
+        public static AdminVM Ins
+        {
+            get
+            {
+                if (_ins == null)
+                {
+                    _ins = new AdminVM();
+                }
+                return _ins;
+            }
+            private set { _ins = value; }
+        }
+
+        public static AdminVM adminVM;
+   
         public ICommand FirstLoadCM { get; set; }
         private void Furniture(object obj) => CurrentView = new FurnitureManagementVM.FurnitureManagementVM();
         private void Service(object obj) => CurrentView = new ServiceManagementVM.ServiceManagementVM();
@@ -91,7 +108,7 @@ namespace HotelManagement.ViewModel.AdminVM
         public AdminVM()
         {
             _currentView = new RoomFurnitureManagementVM.RoomFurnitureManagementVM();
-
+            adminVM = this;
             FurnitureCommand = new RelayCommand(Furniture);
             ServiceCommand = new RelayCommand(Service);
             RoomFurnitureCommand = new RelayCommand(RoomFurniture);
@@ -127,6 +144,10 @@ namespace HotelManagement.ViewModel.AdminVM
                     loginwd.Show();
                 }
             });
+        }
+        public void setNavigateHelpScreen()
+        {
+            CurrentView = new HelpScreenVM.HelpScreenVM();
         }
         public void SetAvatarName(string staffName)
         {

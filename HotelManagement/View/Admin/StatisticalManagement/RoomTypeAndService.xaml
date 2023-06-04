@@ -43,7 +43,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20 0 0 0">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10 0 0 0">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Chọn năm:"
                        FontSize="16"
@@ -160,7 +160,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <materialDesign:Card Margin="20 0 20 10"
+            <materialDesign:Card Margin="20 10 20 10"
                                  UniformCornerRadius="4"
                                  Grid.Row="1">
                 <Grid>
@@ -265,7 +265,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="20 0 0 0">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10 0 0 0">
                     <StackPanel Orientation="Vertical">
                         <Label Content="Chọn năm:"
                        FontSize="16"
@@ -382,7 +382,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <materialDesign:Card Margin="20 0 20 10"
+            <materialDesign:Card Margin="20 10 20 10"
                                  UniformCornerRadius="4"
                                  Grid.Row="1">
                 <Grid>

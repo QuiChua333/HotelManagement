@@ -21,13 +21,14 @@
             </BeginStoryboard>
         </EventTrigger>
     </Page.Triggers>
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20 -15 20 20">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20 0 20 20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Left" 
+                    VerticalAlignment="Center"
                     Grid.Row="0">
             <RadioButton    Style="{StaticResource MaterialDesignTabRadioButtonBottom}"
                             BorderBrush="#283342"
@@ -41,7 +42,7 @@
                             Cursor="Hand"
                             Command="{Binding LoadImportPageCM}"
                             CommandParameter="{Binding ElementName=MainListViewFrame}"
-                            Margin="20,5,0,0"/>
+                            Margin="0,5,0,0"/>
             <RadioButton    Style="{StaticResource MaterialDesignTabRadioButtonBottom}"
                             BorderBrush="#283342"
                             VerticalAlignment="Top"

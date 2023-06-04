@@ -46,8 +46,7 @@
                                  Height="40"
                                  FontSize="18"
                                  FontWeight="Bold"
-                                 
-                                   IsChecked="True"
+                                 IsChecked="True"
                                  Content="Phòng"
                                  Margin="20,10,0,0"
                                  Command="{Binding LoadRoomCM}"

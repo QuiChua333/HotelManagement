@@ -31,19 +31,29 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Search:Search 
+                <Border CornerRadius="6" 
+                        BorderBrush="#1D242E" 
+                        Background="Transparent"
+                        BorderThickness="0.5" 
+                        Width="402"  
+                        Margin="30 0 0 0"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" >
+                    <Search:Search 
                         Width="400" Height="38"
                         FontSize="12"
                         IconSize="18"
                         Corner="5"
-                        Margin="30 0 0 0"
+                        IndicatorBrush="{StaticResource White}"
                         SearchTextChange="Search_SearchTextChange"
                         x:Name="SearchBox"
                     />
+                </Border>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 30 0">
                 <Button Background="#009099"
                         Width="200"
+                        BorderThickness="0"
                         Command="{Binding LoadAddRoomCM}"
                         Height="46">
                     <StackPanel Orientation="Horizontal" 
@@ -70,11 +80,17 @@
                                   FontFamily="{StaticResource MaterialDesignFont}"
                                   Foreground="Black"
                                   FontSize="14"
-                                  ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=20}"> 
+                                  ToolTip="Nháy đúp để xem chi tiết" d:ItemsSource="{d:SampleData ItemCount=20}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Height" Value="40"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
                             <ListView.View>
                                 
                                 <GridView ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
-                                    <GridViewColumn Width="140" Header="Số phòng">
+                                    <GridViewColumn Width="130" Header="Số phòng">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding RoomNumber}" 
@@ -87,7 +103,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="200" Header="Loại phòng" >
+                                    <GridViewColumn Width="190" Header="Loại phòng" >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding RoomTypeName}" 
@@ -100,7 +116,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="200" Header="Trạng thái" >
+                                    <GridViewColumn Width="190" Header="Trạng thái" >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding RoomStatus}" 
@@ -113,7 +129,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="200" Header="Tình trạng" >
+                                    <GridViewColumn Width="190" Header="Tình trạng" >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding RoomCleaningStatus}" 
@@ -152,14 +168,22 @@
                                     <GridViewColumn Width="170" Header="Sửa / Xóa">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" Margin="28 0 0 0">
+                                                <Grid Width="150">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="6"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+
                                                     <Border BorderBrush="#009099"
                                                             Background="#009099"
+                                                            Width="40"
+                                                            Height="36"
                                                             BorderThickness="0.5"
                                                             CornerRadius="5"
                                                             Cursor="Hand"
-                                                            Height="36"
-                                                            Width="36">
+                                                            HorizontalAlignment="Right"
+                                                            Grid.Column="0">
                                                         <Image Source="{StaticResource iconSua}"
                                                                    Width="20"
                                                                    Height="20" 
@@ -171,14 +195,16 @@
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </Border>
+
                                                     <Border BorderBrush="#D63127"
                                                             Background="#D63127"
                                                             BorderThickness="0.5"
                                                             CornerRadius="5"
                                                             Cursor="Hand"
+                                                            Width="40"
                                                             Height="36"
-                                                            Width="36"
-                                                            Margin="8 0 0 0">
+                                                            HorizontalAlignment="Left"
+                                                             Grid.Column="2">
                                                         <Image Source="{StaticResource iconXoa}"
                                                                 Width="22"
                                                                 Height="22" 
@@ -190,12 +216,10 @@
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </Border>
-                                                </StackPanel>
+                                                </Grid>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-
-                                
 
                                 </GridView>
                             </ListView.View>

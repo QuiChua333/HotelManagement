@@ -56,6 +56,21 @@ namespace HotelManagement.ViewModel.StaffVM
             get { return _currentView; }
             set { _currentView = value; OnPropertyChanged(); }
         }
+        private static StaffVM _ins;
+        public static StaffVM Ins
+        {
+            get
+            {
+                if (_ins == null)
+                {
+                    _ins = new StaffVM();
+                }
+                return _ins;
+            }
+            private set { _ins = value; }
+        }
+
+        public static StaffVM staffVM;
         private void HelpScreen(object obj) => CurrentView = new HelpScreenVM.HelpScreenVM();
         private void BookingRoom(object obj) => CurrentView = new BookingRoomManagementVM.BookingRoomManagementVM();
         private void RoomCatalog(object obj) => CurrentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
@@ -73,6 +88,7 @@ namespace HotelManagement.ViewModel.StaffVM
         public StaffVM()
         {
             _currentView = new RoomCatalogManagementVM.RoomCatalogManagementVM();
+            staffVM = this;
             RoomCatalogCommand = new RelayCommand(RoomCatalog);
             TroubleRpCommand = new RelayCommand(TroubleRp);
             BookingRoomCommand = new RelayCommand(BookingRoom);
@@ -100,6 +116,10 @@ namespace HotelManagement.ViewModel.StaffVM
                     loginwd.Show();
                 }
             });
+        }
+        public void setNavigateHelpScreen()
+        {
+            CurrentView = new HelpScreenVM.HelpScreenVM();
         }
         public void SetAvatarName(string staffName)
         {

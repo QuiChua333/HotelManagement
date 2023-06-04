@@ -1,5 +1,6 @@
 ﻿using HotelManagement.View.Admin;
 using HotelManagement.View.HelpScreen;
+using HotelManagement.ViewModel.AdminVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,14 @@ namespace HotelManagement.ViewModel.HelpScreenVM
             {
                 string myUri = !uri.ToString().Contains("https://") && !uri.ToString().Contains("http://") ? "http://" + uri.ToString() : uri.ToString();
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(myUri));
-                AdminWindow tk = System.Windows.Application.Current.Windows.OfType<AdminWindow>().FirstOrDefault();
-                tk.Content.Content = new HelpScreen();
+                if (AdminVM.AdminVM.CurrentStaff != null)
+                {
+                    AdminVM.AdminVM.adminVM.setNavigateHelpScreen();
+                }
+                else
+                {
+                    StaffVM.StaffVM.staffVM.setNavigateHelpScreen();
+                }
             });
             Load_PrivacyPolicy = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -55,5 +62,8 @@ namespace HotelManagement.ViewModel.HelpScreenVM
                 p.Close();
             });
         }
+
+
+        
     }
 }

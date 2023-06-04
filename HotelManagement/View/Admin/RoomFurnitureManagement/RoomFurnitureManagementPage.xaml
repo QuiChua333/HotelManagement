@@ -51,28 +51,25 @@
         <!--Top control-->
         <Grid Name="TopControl" Grid.Row="0" Margin="35 10 35 10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Search:Search 
-                    x:Name="SearchBox"
-                    Width="350" Height="38"
-                    FontSize="14"
-                    IconSize="18"
-                    Corner="10"
-                    Margin="0 0 38 0"
-                    IndicatorBrush="{StaticResource LightBlue_Search}"
-                    SearchTextChange="SearchBox_SearchTextChange"
-                />
-                <StackPanel Width="205" Height="38" Orientation="Horizontal">
+                <Border CornerRadius="6" 
+                        BorderBrush="#1D242E" 
+                        Background="Transparent"
+                        BorderThickness="0.5" 
+                        Width="352"  
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" >
+                    <Search:Search 
+                        Width="350" Height="38"
+                        FontSize="12"
+                        IconSize="18"
+                        Corner="5"
+                        IndicatorBrush="{StaticResource White}"
+                        x:Name="SearchBox" 
+                        SearchTextChange="SearchBox_SearchTextChange"/>
+                </Border>
+                <StackPanel Margin="30 0 0 0" Width="205" Height="38" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
-                    <Border CornerRadius="10" Width="173" Background="White">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="10"
-                                Color="Black"
-                                ShadowDepth="4"
-                                Opacity=".25"
-                                Direction="270"
-                            />
-                        </Border.Effect>
+                    <Border CornerRadius="10" Width="173" Background="White" BorderBrush="Black" BorderThickness="0.5">
                         <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Loại phòng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterTypeRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
                             <ComboBoxItem Content="Tất cả loại phòng" Tag="Tất cả"/>
                             <ComboBoxItem Content="Thường" Tag="Thường"/>
@@ -90,16 +87,7 @@
                 </StackPanel>
                 <StackPanel Width="205" Height="38" Orientation="Horizontal" Margin="20 0 0 0">
                     <!--<materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>-->
-                    <Border CornerRadius="10" Width="173" Background="White">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="10"
-                                Color="Black"
-                                ShadowDepth="4"
-                                Opacity=".25"
-                                Direction="270"
-                            />
-                        </Border.Effect>
+                    <Border CornerRadius="10" Width="173" Background="White" BorderBrush="Black" BorderThickness="0.5">
                         <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Tình trạng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterStatusRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
                             <ComboBoxItem Content="Tất cả tình trạng" Tag="Tất cả"/>
                             <ComboBoxItem Content="Phòng trống" Tag="Phòng trống"/>

@@ -544,7 +544,7 @@
                             <Button Height="70"
                                     materialDesign:ButtonAssist.CornerRadius="6">
                                 <Button.Content>
-                                    <Hyperlink NavigateUri="https://chat.zalo.me/"
+                                    <Hyperlink NavigateUri="https://www.facebook.com/profile.php?id=100073316952962"
                                                x:Name="Hyperlink_FB_Group1"
                                                Command="{Binding FB_Group_Command}"
                                                CommandParameter="{Binding ElementName=Hyperlink_FB_Group1,Path=NavigateUri}">
