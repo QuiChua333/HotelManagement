@@ -6,6 +6,7 @@ using Window = System.Windows.Window;
 using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.Utils;
+using System.Linq;
 
 namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
 {
@@ -24,6 +25,19 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
                         return;
                     }
                 }
+            }
+            foreach (var i in Cccd)
+            {
+                if (!"0123456789".Contains(i))
+                {
+                    CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                    return;
+                }
+            }
+            if (Cccd.Length != 12)
+            {
+                CustomMessageBox.ShowOk("Sai định dạng CCCD!", "Thông Báo", "OK", CustomMessageBoxImage.Warning);
+                return;
             }
             (bool isvalid, string error) = IsValidData();
             if (isvalid)
