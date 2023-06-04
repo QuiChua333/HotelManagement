@@ -108,7 +108,7 @@ namespace HotelManagement.Model.Services
                 {
                     if (s.Status == STATUS.PREDIT)
                     {
-                        var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
+                        var troublebycus = await context.TroubleByCustomers.FirstOrDefaultAsync(x => x.TroubleId == s.TroubleId);
                         troublebycus.PredictedPrice=preprice;
                         var trouble = await context.Troubles.FindAsync(s.TroubleId);
                         trouble.Status=STATUS.PREDIT;
@@ -231,7 +231,7 @@ namespace HotelManagement.Model.Services
             TroubleByCustomerDTO tb;
             using(var context = new HotelManagementEntities())
             {
-                var trouble = await context.TroubleByCustomers.FindAsync(id);
+                var trouble =  context.TroubleByCustomers.FirstOrDefault(x=> x.TroubleId == id);
                 tb = new TroubleByCustomerDTO
                 {
                     TroubleId=trouble.TroubleId,

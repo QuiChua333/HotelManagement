@@ -249,9 +249,6 @@
     <Compile Include="Model\Staff.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\sysdiagram.cs">
-      <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Trouble.cs">
       <DependentUpon>HotelManagementDatabase.tt</DependentUpon>
     </Compile>
