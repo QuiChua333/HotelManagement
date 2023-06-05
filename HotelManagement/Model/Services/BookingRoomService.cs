@@ -89,7 +89,7 @@ namespace HotelManagement.Model.Services
                     DateTime end = CheckOutDate + StartTime.TimeOfDay;
 
                     var listBusyRoomId = listRentalContract.Where(x =>
-                    (x.CheckOutDate + x.StartTime >= start && x.CheckOutDate + x.StartTime < end && x.Validated == true) ||
+                    (x.CheckOutDate + x.StartTime >= start && x.CheckOutDate + x.StartTime < end && x.Validated==true) ||
                     (x.StartDate + x.StartTime >= start && x.StartDate + x.StartTime < end && x.Validated == true) ||
                     (x.StartDate + x.StartTime <= start && x.CheckOutDate + x.StartTime >= end && x.Validated == true)).Select(x => x.RoomId).ToList();
                     var listReadyRoom = await (

@@ -388,7 +388,8 @@ namespace HotelManagement.Model.Services
                             bool flat = false;
                             foreach (var item2 in item)
                             {
-                                if (item2.StartDate + item2.StartTime <= t && t < item2.CheckOutDate + item2.StartTime)
+                                RentalContract r = await context.RentalContracts.FindAsync(item2.RentalContractId);
+                                if (item2.StartDate + item2.StartTime <= t && t < item2.CheckOutDate + item2.StartTime && r.Validated==true)
                                 {
                                     roomList2.Add(item2);
                                     flat = true;
