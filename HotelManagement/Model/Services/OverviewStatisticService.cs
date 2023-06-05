@@ -536,7 +536,6 @@ namespace HotelManagement.Model.Services
         {
             try
             {
-
                 using (var context = new HotelManagementEntities())
                 {
                         var list1 = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).ToListAsync();
@@ -551,8 +550,6 @@ namespace HotelManagement.Model.Services
                             list2[i].STT = i + 1;
                         }
                         return list2;
-                    
-                       
                 }
                 
             }
@@ -565,32 +562,23 @@ namespace HotelManagement.Model.Services
         {
             try
             {
-
                 using (var context = new HotelManagementEntities())
                 {
-
-                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Year == month).Select(x => x.RentalContractId).ToListAsync();
+                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).Select(x => x.RentalContractId).ToListAsync();
 
                         var list1 = await context.ServiceUsings.Where(x => listRentalContract.Contains(x.RentalContractId)).ToListAsync();
                         var list2 = list1.GroupBy(b => b.Service.ServiceType)
                             .Select(gr => new ServiceTypeDTO
                             {
-
-
                                 ServiceType = gr.First().Service.ServiceType,
                                 Revenue = (double)gr.Sum(x => x.Quantity * x.UnitPrice)
-                                
-
                             }).ToList();
                         for (int i = 0; i < list2.Count; i++)
                         {
                             list2[i].STT = i + 1;
                         }
                         return list2;
-                    
-
                 }
-
             }
             catch (Exception e)
             {
@@ -601,10 +589,8 @@ namespace HotelManagement.Model.Services
         {
             try
             {
-
                 using (var context = new HotelManagementEntities())
                 {
-
                     var listRoomType = await GetListRoomTypeRevenue(year, month);
                     SeriesCollection listRoomChart = new SeriesCollection();
                     foreach (var item in listRoomType)
@@ -618,7 +604,6 @@ namespace HotelManagement.Model.Services
                     }
                     return listRoomChart;
                 }
-
             }
             catch (Exception e)
             {
@@ -629,7 +614,6 @@ namespace HotelManagement.Model.Services
         {
             try
             {
-
                 using (var context = new HotelManagementEntities())
                 {
 
@@ -646,7 +630,6 @@ namespace HotelManagement.Model.Services
                     }
                     return listRoomChart;
                 }
-
             }
             catch (Exception e)
             {

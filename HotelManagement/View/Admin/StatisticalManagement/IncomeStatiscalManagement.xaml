@@ -480,7 +480,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="{Binding Path=Text,ElementName=periodbox}" 
+                            <TextBlock Text="Theo tháng" 
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />
@@ -492,7 +492,7 @@
                                        FontSize="16" 
                                        FontWeight="Bold" 
                                        Width="105" />
-                            <TextBlock Text="{Binding Path=Text,ElementName=Timebox}"
+                            <TextBlock Text="{Binding TimeBox}"
                                        Foreground="Gray"
                                        FontWeight="Bold" 
                                        FontSize="16" />

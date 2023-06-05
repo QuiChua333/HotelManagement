@@ -57,18 +57,10 @@ namespace HotelManagement.View.Admin.HistoryManagement
 
         private bool Filter(object item)   //can sua//
         {
-            if (String.IsNullOrEmpty(FilterBox.Text)) return true;
-            switch (cbbFilter.SelectedValue)
-            {
-                case "Mã đơn":
-                    return ((item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                case "Tên khách hàng":
-                    return ((item as BillDTO).CustomerName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                case "Tên nhân viên":
-                    return ((item as BillDTO).StaffName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-                default:
-                    return ((item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
-            }
+            return ((item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                || (item as BillDTO).CustomerName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                || (item as BillDTO).StaffName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                || (item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
         private void filterbox_textchange(object sender, EventArgs e)
         {

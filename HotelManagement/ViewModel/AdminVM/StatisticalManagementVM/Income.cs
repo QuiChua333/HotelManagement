@@ -43,6 +43,12 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
         //    get { return selectedYear; }
         //    set { selectedYear = value; }
         //}
+        private string _TimeBox;
+        public string TimeBox
+        {
+            get { return _TimeBox; }
+            set { _TimeBox = value; OnPropertyChanged(); }
+        }
 
 
         private string _TrueIncome;

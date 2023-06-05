@@ -10,7 +10,7 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
       Title="RoomTypeAndService"
-       xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       DataContext="{StaticResource StatisticalManagementVM}">
 
     <Page.Triggers>
@@ -171,7 +171,7 @@
                                  Height="80"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
-                                 Margin="0,0,95,2"
+                                 Margin="0,0,132,2"
                                  Foreground="#FF455345" />
                     <lvc:PieChart LegendLocation="Right"
                                     InnerRadius="50"
