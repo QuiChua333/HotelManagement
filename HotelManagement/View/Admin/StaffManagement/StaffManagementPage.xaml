@@ -111,7 +111,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="150" Header="Số điện thoại">
+                                <GridViewColumn Width="130" Header="Số điện thoại">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding PhoneNumber}" 
@@ -123,7 +123,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="150" Header="Email">
+                                <GridViewColumn Width="200" Header="Email">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Email}"                                                            
@@ -135,7 +135,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="125" Header="Ngày sinh">
+                                <GridViewColumn Width="105" Header="Ngày sinh">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DateOfBirth, StringFormat=dd/MM/yyyy}" 
@@ -147,7 +147,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Width="116" Header="Giới tính">
+                                <GridViewColumn Width="106" Header="Giới tính">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Gender}" 
