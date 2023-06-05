@@ -173,6 +173,7 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
         private async Task ChangeViewIncome(IncomeStatiscalManagement p)
         {
             await LoadIncomeByMonth();
+            TimeBox = SelectedMonth.ToString() + " " + SelectedYear.ToString().ToLower();
             ChangeViewTrend(p);
         }
         private void InitCBB()

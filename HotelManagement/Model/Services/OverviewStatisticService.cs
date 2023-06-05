@@ -564,7 +564,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
-                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Year == month).Select(x => x.RentalContractId).ToListAsync();
+                        var listRentalContract = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).Select(x => x.RentalContractId).ToListAsync();
 
                         var list1 = await context.ServiceUsings.Where(x => listRentalContract.Contains(x.RentalContractId)).ToListAsync();
                         var list2 = list1.GroupBy(b => b.Service.ServiceType)
