@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using ComboBox = System.Windows.Controls.ComboBox;
 using System.Windows;
 using HotelManagement.Utilities;
+using HotelManagement.Components.Search;
 
 namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
 {
@@ -143,9 +144,9 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
             {
                 await GetListImportByMonth();
             });
-            ExportFileCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ExportFileCM = new RelayCommand<Search>((p) => { return true; }, (p) =>
             {
-                ExportToFileFunc();
+                ExportToFileFunc(p.Text);
             });
             SelectedDateExportListCM = new RelayCommand<DatePicker>(p => true, async p => 
             {
@@ -410,7 +411,7 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                     }
             }
         }
-        public void ExportToFileFunc()
+        public void ExportToFileFunc(string search)
         {
             switch (SelectedView)
             {
@@ -426,7 +427,6 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                                 Microsoft.Office.Interop.Excel.Workbook wb = app.Workbooks.Add(1);
                                 Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
 
-
                                 ws.Cells[1, 1] = "Mã đơn";
                                 ws.Cells[1, 2] = "Tên đơn";
                                 ws.Cells[1, 3] = "Số lượng";
@@ -435,7 +435,12 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                                 ws.Cells[1, 6] = "Ngày nhập";
 
                                 int i2 = 2;
-                                foreach (var item in ImportList)
+
+                                ObservableCollection<ImportProductDTO> listImportSearch = new ObservableCollection<ImportProductDTO>(ImportList.Where(item => item.ProductName.ToLower().Contains(search.ToLower())
+                                                                                                                                    || item.ImportId.ToLower().Contains(search.ToLower())
+                                                                                                                                    || item.StaffName.ToLower().Contains(search.ToLower())));
+
+                                foreach (var item in listImportSearch)
                                 {
                                     ws.Cells[i2, 1] = item.ImportId;
                                     ws.Cells[i2, 2] = item.ProductName;
@@ -480,7 +485,11 @@ namespace HotelManagement.ViewModel.AdminVM.HistoryManagementVM
                                 ws.Cells[1, 7] = "Nhân viên xuất";
                                 ws.Cells[1, 8] = "Ngày xuất";
                                 int i2 = 2;
-                                foreach (var item in BillExportList)
+
+                                ObservableCollection<BillDTO> listBillSearch = new ObservableCollection<BillDTO>(BillExportList.Where(item => item.BillId.ToLower().Contains(search.ToLower())
+                                                                                                    || item.CustomerName.ToLower().Contains(search.ToLower())
+                                                                                                    || item.StaffName.ToLower().Contains(search.ToLower())));
+                                foreach (var item in listBillSearch)
                                 {
 
                                     ws.Cells[i2, 1] = item.BillId;

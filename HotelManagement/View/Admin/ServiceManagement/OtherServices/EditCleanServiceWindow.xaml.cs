@@ -26,17 +26,21 @@ namespace HotelManagement.View.Admin.ServiceManagement.OtherServices
 
         private void EditCleanServiceWD_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            if(e.LeftButton == MouseButtonState.Pressed)
+            {
+               DragMove();
+            }    
         }
-
         private void PackIcon_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Close();
+            Price.Text = "";
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+            Price.Text = "";
         }
     }
 }

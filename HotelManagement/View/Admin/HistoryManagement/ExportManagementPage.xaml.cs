@@ -59,8 +59,7 @@ namespace HotelManagement.View.Admin.HistoryManagement
         {
             return ((item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
                 || (item as BillDTO).CustomerName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                || (item as BillDTO).StaffName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0
-                || (item as BillDTO).BillId.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+                || (item as BillDTO).StaffName.IndexOf(FilterBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
         }
         private void filterbox_textchange(object sender, EventArgs e)
         {
