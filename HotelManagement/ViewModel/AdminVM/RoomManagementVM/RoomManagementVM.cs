@@ -104,7 +104,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
             }
         }
 
-
         public ICommand LoadRoomTypeCM { get; set; }
         public ICommand LoadRoomCM { get; set; }
         public ICommand FirstLoadRoomCM { get; set; }
@@ -115,7 +114,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomManagementVM
         public ICommand LoadNoteRoomCM { get; set; }
         public ICommand SaveRoomCM { get; set; }
         public ICommand UpdateRoomCM { get; set; }
-
         public ICommand FirstLoadRoomTypeCM { get; set; }
         public ICommand CloseRoomTypeCM { get; set; }
         public ICommand LoadNoteRoomTypeCM { get; set; }

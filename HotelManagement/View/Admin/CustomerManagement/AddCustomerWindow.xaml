@@ -145,8 +145,8 @@
                                   BorderThickness="0" 
                                   FontFamily="{DynamicResource MaterialDesignFont}"
                                   HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="146">
-                            <ComboBoxItem  Content="Trong nước" Tag="Trong nước" FontSize="14" />
-                            <ComboBoxItem  Content="Ngoài nước" Tag="Ngoài nước" FontSize="14"/>
+                            <ComboBoxItem  Content="Nội địa" Tag="Nội địa" FontSize="14" />
+                            <ComboBoxItem  Content="Nước ngoài" Tag="Nước ngoài" FontSize="14"/>
                         </ComboBox>
                     </Border>
                 </Grid>

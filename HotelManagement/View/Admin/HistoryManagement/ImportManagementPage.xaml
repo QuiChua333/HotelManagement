@@ -136,7 +136,7 @@
         </Grid>
         <Border Name="fContainer" Grid.Row="1"  Background="White" CornerRadius="0" BorderBrush="#1D242E" BorderThickness="0.5">
             <materialDesign:Card UniformCornerRadius="5" >
-                <ListView FontFamily="{StaticResource MaterialDesignFont}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontSize="14" FontWeight="Regular" ItemsSource="{Binding ImportList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
+                <ListView FontFamily="{StaticResource MaterialDesignFont}" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" FontSize="14" FontWeight="Regular" ItemsSource="{Binding ImportList}" SelectedItem="{Binding SelectedItem}" x:Name="_ListView">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

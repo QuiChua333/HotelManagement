@@ -75,7 +75,7 @@
 
                         <ListView x:Name="RoomListView"
                                   ItemsSource="{Binding RoomList}"
-                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                  SelectedItem="{Binding SelectedRoomItem, Mode=TwoWay}"
                                   Focusable="True"
                                   FontFamily="{StaticResource MaterialDesignFont}"
                                   Foreground="Black"
