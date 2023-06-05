@@ -99,15 +99,18 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 
         public async Task ImportListFurnitureToRoom(Window p)
         {
+            if(OrderFurnitureList.Count() == 0)
+            {
+                CustomMessageBox.ShowOk("Vui lòng chọn tiện nghi vào danh sách nhập!", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                return;
+            }
             (bool isSuccess, string messageReturn, List<FurnitureDTO> listFurniture) = await Task.Run(() => FurnituresRoomService.Ins.ImportListFurnitureToRoom(OrderFurnitureList, FurnituresRoomCache));
 
             if (isSuccess)
             {
                 CustomMessageBox.ShowOk(messageReturn, "Thành công", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
-                //LoadListViewFurnitureInRoom(listFurniture);
                 OrderFurnitureList.Clear();
                 p.Close();
-                //furnituresRoomCache.SetQuantityAndStringTypeFurniture();
             }
             else
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);

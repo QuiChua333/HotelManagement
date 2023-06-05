@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using HotelManagement.Utils;
 using MaterialDesignThemes.Wpf;
 
 namespace HotelManagement.DTOs
@@ -96,7 +97,7 @@ namespace HotelManagement.DTOs
         public void SetOtherProperty()
         {
             var converter = new BrushConverter();
-            if (RoomStatus == "Đang thuê")
+            if (RoomStatus == ROOM_STATUS.RENTING)
             {
                 IsEmptyRoom = false;
                 BackgroundRoomBrush = (Brush)converter.ConvertFromString("#FED600");

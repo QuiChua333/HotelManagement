@@ -92,10 +92,10 @@
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Grid Cursor="Hand">
-                    <Rectangle Width="173" Height="46" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
+                    <Rectangle Width="155" Height="43" RadiusX="10" RadiusY="10" Fill="{StaticResource AddBtn_Furniture}"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="{StaticResource PlusIcon}" VerticalAlignment="Center" Width="14" Height="14"/>
-                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Dịch vụ khác" FontSize="15" FontWeight="Bold" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
+                        <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Dịch vụ khác" FontSize="15" FontWeight="Medium" FontFamily="{StaticResource MaterialDesignFont}" Foreground="White"/>
                     </StackPanel>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -103,9 +103,9 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Grid>
-                <Rectangle Width="45" Height="46" Fill="Transparent"/>
+                <Rectangle Width="30" Height="46" Fill="Transparent"/>
                 <StackPanel Orientation="Horizontal" Margin="0 -6 0 0">
-                    <Grid 
+                    <!--<Grid 
                         x:Name="AddFoodButton"
                         HorizontalAlignment="Left" 
                         Width="62" 
@@ -150,8 +150,8 @@
                                 Content="Nhập"
                             ></Label>
                         </StackPanel>
-                    </Grid>
-                    <Rectangle Width="10" Fill="Transparent"/>
+                    </Grid>-->
+                    <!--<Rectangle Width="10" Fill="Transparent"/>-->
                     <Grid
                         Name="ImportFoodButton"
                         Width="62"

@@ -93,7 +93,12 @@ namespace HotelManagement.DTOs
             get { return deleteInRoomQuantity; }
             set { SetField(ref deleteInRoomQuantity, value, "DeleteInRoomQuantity"); }
         }
-
+        private bool isSelectedDelete;
+        public bool IsSelectedDelete
+        {
+            get { return isSelectedDelete; }
+            set { SetField(ref isSelectedDelete, value, "IsSelectedDelete"); }
+        }
         public string DisplayQuantity { get; set; }
 
         public FurnitureDTO()

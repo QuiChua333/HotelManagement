@@ -43,6 +43,8 @@ namespace HotelManagement.Model.Services
                         join rentalContract in db.RentalContracts on room.RoomId equals rentalContract.RoomId into rRt
 
                         from renContr in rRt.DefaultIfEmpty()
+
+                        where renContr.CheckOutDate < DateTime.Now
                         
                         select new FurnituresRoomDTO
                         {
@@ -58,7 +60,7 @@ namespace HotelManagement.Model.Services
 
                     furnituresRoomDTOs.ForEach(item => item.SetOtherProperty());
 
-                    return (true, "Thành công" ,furnituresRoomDTOs);
+                    return (true, "Thành công", furnituresRoomDTOs);
                 }
             }
             catch(EntityException e)

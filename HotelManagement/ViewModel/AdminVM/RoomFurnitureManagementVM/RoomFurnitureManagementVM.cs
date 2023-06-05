@@ -1,4 +1,5 @@
-﻿using HotelManagement.DTOs;
+﻿using HotelManagement.Components.Search;
+using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.View.Admin;
 using HotelManagement.View.Admin.RoomFurnitureManagement;
@@ -57,13 +58,13 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             set { furnituresRoomCache = value; OnPropertyChanged(); }
         }
         private ObservableCollection<ComboBoxItem> listRoomType { get; set; }
-    public ObservableCollection<ComboBoxItem> ListRoomType
-    {
-        get { return listRoomType; }
-        set { listRoomType = value; OnPropertyChanged(); }
-    }
+        public ObservableCollection<ComboBoxItem> ListRoomType
+        {
+            get { return listRoomType; }
+            set { listRoomType = value; OnPropertyChanged(); }
+        }
 
-    private ComboBoxItem selectedFilterTypeRoom { get; set; }
+        private ComboBoxItem selectedFilterTypeRoom { get; set; }
         public ComboBoxItem SelectedFilterTypeRoom
         {
             get { return selectedFilterTypeRoom; }
@@ -327,6 +328,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 if (SelectedFurniture == null)
                     return;
                 FurnitureCache = SelectedFurniture;
+                FurnitureCache.IsSelectedDelete = true;
                 ListFurnitureNeedDelete.Add(FurnitureCache);
             });
 
@@ -335,19 +337,38 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 if (SelectedFurniture == null)
                     return;
                 FurnitureCache = SelectedFurniture;
+                FurnitureCache.IsSelectedDelete = false;
                 ListFurnitureNeedDelete.Remove(FurnitureCache);
             });
-
+            bool isChooseAll = false;
             ChooseAllFurnitureToDeleteCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>(FurnituresRoomCache.ListFurnitureRoom);
+                if(isChooseAll)
+                {
+                    ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>(FurnituresRoomCache.ListFurnitureRoom);
+                    foreach (var item in ListFurnitureNeedDelete)
+                        item.IsSelectedDelete = true;
+                    isChooseAll = false;
+                }
+                else
+                {
+                    ListFurnitureNeedDelete.Clear();
+                    foreach (var item in ListFurnitureNeedDelete)
+                        item.IsSelectedDelete = false;
+                    isChooseAll = true ;
+                }
             });
 
             DeleteListFurnitureCM = new RelayCommand<Window>((p) => { return true; },async (p) =>
             {
                 IsLoading = true;
 
-                await DeleteListFurniture(p);
+                Search textSearchFinal = (Search)p.FindName("SearchBox");
+                string text = textSearchFinal.Text;
+
+                FilterListFurnitureInRoomByKey(text);
+
+                await DeleteListFurniture(p, tk);
 
                 IsLoading = false;
             });
@@ -380,5 +401,9 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             }
         }
 
+        public void FilterListFurnitureInRoomByKey(string key)
+        {
+            ListFurnitureNeedDelete = new ObservableCollection<FurnitureDTO>(ListFurnitureNeedDelete.Where(item => item.FurnitureName.ToLower().Contains(key.ToLower())));
+        }
     }
 }

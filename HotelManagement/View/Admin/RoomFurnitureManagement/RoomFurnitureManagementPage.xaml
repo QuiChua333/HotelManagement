@@ -71,10 +71,6 @@
                     <materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>
                     <Border CornerRadius="10" Width="173" Background="White" BorderBrush="Black" BorderThickness="0.5">
                         <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Loại phòng" ItemsSource="{Binding ListRoomType}" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterTypeRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
-                            <!--<ComboBoxItem Content="Tất cả loại phòng" Tag="Tất cả"/>
-                            <ComboBoxItem Content="Thường" Tag="Thường"/>
-                            <ComboBoxItem Content="VIP" Tag="VIP"/>
-                            <ComboBoxItem Content="Thương gia" Tag="Thương gia"/>-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding MainPageSelectionFilterChangeCM}" />
@@ -86,13 +82,12 @@
                     </Border>
                 </StackPanel>
                 <StackPanel Width="205" Height="38" Orientation="Horizontal" Margin="20 0 0 0">
-                    <!--<materialDesign:PackIcon Kind="FilterOutline" VerticalAlignment="Center" Width="20" Height="20" Margin="0 0 12 0"/>-->
                     <Border CornerRadius="10" Width="173" Background="White" BorderBrush="Black" BorderThickness="0.5">
                         <ComboBox Background="Transparent" FontSize="14" materialDesign:HintAssist.Hint="Tình trạng" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" SelectedItem="{Binding SelectedFilterStatusRoom}" BorderBrush="#1D242E" Foreground="#1D242E" Padding="10 11 10 10" Style="{StaticResource MaterialDesignComboBox}" BorderThickness="0" VerticalAlignment="Stretch">
                             <ComboBoxItem Content="Tất cả tình trạng" Tag="Tất cả"/>
                             <ComboBoxItem Content="Phòng trống" Tag="Phòng trống"/>
-                            <ComboBoxItem Content="Đang thuê" Tag="Đang thuê"/>
-                            <ComboBoxItem Content="Đã đặt" Tag="Đã đặt"/>
+                            <ComboBoxItem Content="Đang thuê" Tag="Phòng đang thuê"/>
+                            <ComboBoxItem Content="Đã đặt" Tag="Phòng đã đặt"/>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding MainPageSelectionFilterChangeCM}" />
