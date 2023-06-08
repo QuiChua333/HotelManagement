@@ -4,6 +4,7 @@ using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
 using HotelManagement.Utils;
 using HotelManagement.View.CustomMessageBoxWindow;
+using HotelManagement.View.Staff.RoomCatalogManagement;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomOrder;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomPayment;
@@ -17,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,12 +46,24 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _SelectedTime; }
             set { _SelectedTime = value; OnPropertyChanged(); }
         }
+        private RadioButton _radioButtonRoomTypeAll;
+        public RadioButton radioButtonRoomTypeAll
+        {
+            get { return _radioButtonRoomTypeAll; }
+            set { _radioButtonRoomTypeAll = value; OnPropertyChanged(); }
+        }
 
         private RadioButton _radioButtonRoomType;
         public RadioButton radioButtonRoomType
         {
             get { return _radioButtonRoomType; }
             set { _radioButtonRoomType = value; OnPropertyChanged(); }
+        }
+        private RadioButton _radioButtonRoomStatusAll;
+        public RadioButton radioButtonRoomStatusAll
+        {
+            get { return _radioButtonRoomStatusAll; }
+            set { _radioButtonRoomStatusAll = value; OnPropertyChanged(); }
         }
         private RadioButton _radioButtonRoomStatus;
         public RadioButton radioButtonRoomStatus
@@ -63,6 +77,31 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             get { return _radioButtonRoomCleaningStatus; }
             set { _radioButtonRoomCleaningStatus = value; OnPropertyChanged(); }
         }
+        private RadioButton _radioButtonRoomCleaningStatusAll;
+        public RadioButton radioButtonRoomCleaningStatusAll
+        {
+            get { return _radioButtonRoomCleaningStatusAll; }
+            set { _radioButtonRoomCleaningStatusAll = value; OnPropertyChanged(); }
+        }
+        private StackPanel _SPRoomType;
+        public StackPanel SPRoomType
+        {
+            get { return _SPRoomType; }
+            set { _SPRoomType = value; OnPropertyChanged(); }
+        }
+        private StackPanel _SPRoomStatus;
+        public StackPanel SPRoomStatus
+        {
+            get { return _SPRoomStatus; }
+            set { _SPRoomStatus = value; OnPropertyChanged(); }
+        }
+        private StackPanel _SPRoomCleaningStatus;
+        public StackPanel SPRoomCleaningStatus
+        {
+            get { return _SPRoomCleaningStatus; }
+            set { _SPRoomCleaningStatus = value; OnPropertyChanged(); }
+        }
+
         Page MainPage;
         RoomWindow RoomWindow;
         RoomGroupPayment roomGroupPayment;
@@ -286,10 +325,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             ChangeViewCM = new RelayCommand<RadioButton>((p) => { return true; },   (p) =>
             {
                 if (Refresh == true) return;
-               
-                        if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
-                        else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
-                        else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
+
+                if (p.GroupName.ToString() == "RoomType") radioButtonRoomType = p;
+                else if (p.GroupName.ToString() == "RoomStatus") radioButtonRoomStatus = p;
+                else if (p.GroupName.ToString() == "RoomCleaningStatus") radioButtonRoomCleaningStatus = p;
 
                         if (TimeChange == false)
                         {
@@ -312,198 +351,216 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
 
                 
             });
-            SelectedDateTimeCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
+            SelectedDateTimeCM = new RelayCommand<RoomCatalogManagementPage>((p) => { return true; }, async (p) =>
             {
-
-                if (Refresh == true)
+               
+                try
                 {
-                    return;
-                }
-                TimeChange = true;
-
-                if (SelectedDate.Year == DateTime.Now.Year && SelectedDate.Month == DateTime.Now.Month && SelectedDate.Day == DateTime.Now.Day)
-                {
-                   if (SelectedTime.Hour < DateTime.Now.Hour)
-                   {
-                        CustomMessageBox.ShowOk("Không được chọn thời điểm quá khứ!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
-                        RefreshCM.Execute(p);
-                        return;
-                   }
-                   else if (SelectedTime.Hour == DateTime.Now.Hour)
+                    if (Refresh == true)
                     {
-                        if (SelectedTime.Minute < DateTime.Now.Minute)
+                        return;
+                    }
+                    TimeChange = true;
+
+                    if (SelectedDate.Year == DateTime.Now.Year && SelectedDate.Month == DateTime.Now.Month && SelectedDate.Day == DateTime.Now.Day)
+                    {
+                        if (SelectedTime.Hour < DateTime.Now.Hour)
                         {
                             CustomMessageBox.ShowOk("Không được chọn thời điểm quá khứ!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
                             RefreshCM.Execute(p);
                             return;
                         }
+                        else if (SelectedTime.Hour == DateTime.Now.Hour)
+                        {
+                            if (SelectedTime.Minute < DateTime.Now.Minute)
+                            {
+                                CustomMessageBox.ShowOk("Không được chọn thời điểm quá khứ!", "Thông báo", "Ok", CustomMessageBoxImage.Warning);
+                                RefreshCM.Execute(p);
+                                return;
+                            }
+                        }
                     }
+
+
+                    ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
+
+                    ListRoomType2 = ListRoomType2Mini.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
+
+                    ListRoomType3 = ListRoomType3Mini.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
+
+
+                    radioButtonRoomType = radioButtonRoomTypeAll;
+                    radioButtonRoomStatus = radioButtonRoomStatusAll;
+                    radioButtonRoomCleaningStatus = radioButtonRoomCleaningStatusAll;
+
+                    radioButtonRoomType.IsChecked = true;
+                    radioButtonRoomStatus.IsChecked = true;
+                    radioButtonRoomCleaningStatus.IsChecked = true;
+
+
+
+
+
+
+                    ChangeView();
+
+
+                    List<string> listRentalContractId = (await RentalContractService.Ins.GetAllRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
+
+                    foreach (var item in ListRoomType1)
+                    {
+
+                        if (listRentalContractId.Contains(item.RoomId))
+                        {
+                            if (item.RoomStatus == ROOM_STATUS.READY)
+                            {
+                                if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                            }
+                        }
+                        else
+                        {
+                            item.RoomStatus = ROOM_STATUS.READY;
+                            item.StartDate = null;
+                            item.StartTime = null;
+                            item.CheckOutDate = null;
+                            item.CustomerId = null;
+                            item.CustomerName = null;
+                        }
+
+                    }
+                    foreach (var item in ListRoomType2)
+                    {
+                        if (listRentalContractId.Contains(item.RoomId))
+                        {
+                            if (item.RoomStatus == ROOM_STATUS.READY)
+                            {
+                                if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                            }
+                        }
+                        else
+                        {
+                            item.RoomStatus = ROOM_STATUS.READY;
+                            item.StartDate = null;
+                            item.StartTime = null;
+                            item.CheckOutDate = null;
+                            item.CustomerId = null;
+                            item.CustomerName = null;
+                        }
+
+                    }
+                    foreach (var item in ListRoomType3)
+                    {
+                        if (listRentalContractId.Contains(item.RoomId))
+                        {
+                            if (item.RoomStatus == ROOM_STATUS.READY)
+                            {
+                                if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
+                            }
+                        }
+                        else
+                        {
+                            item.RoomStatus = ROOM_STATUS.READY;
+                            item.StartDate = null;
+                            item.StartTime = null;
+                            item.CheckOutDate = null;
+                            item.CustomerId = null;
+                            item.CustomerName = null;
+                        }
+                    }
+                    ListRoomType1ChangeMini = ListRoomType1.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
+                    ListRoomType2ChangeMini = ListRoomType2.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
+                    ListRoomType3ChangeMini = ListRoomType3.Select(r => new RoomSettingDTO
+                    {
+                        RoomId = r.RoomId,
+                        RoomNumber = r.RoomNumber,
+                        RoomTypeId = r.RoomTypeId,
+                        RoomTypeName = r.RoomTypeName.Trim(),
+                        RoomStatus = r.RoomStatus.Trim(),
+                        CustomerName = r.CustomerName,
+                        RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
+                        StartDate = r.StartDate,
+                        StartTime = r.StartTime,
+                        CheckOutDate = r.CheckOutDate,
+                        Validated = r.Validated,
+                    }).ToList();
                 }
-                
-                
-                ListRoomType1 = ListRoomType1Mini.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName= r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
+                catch {
+                    CustomMessageBox.ShowOk("Vui lòng thao tác lại!", "Thông báo", "Xác nhận", CustomMessageBoxImage.Warning);
+                    return;
+
+                }
+
+
                
-                ListRoomType2 = ListRoomType2Mini.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName = r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
-                
-                ListRoomType3 = ListRoomType3Mini.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName= r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
-               
-                radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
-                radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
-                radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
-                radioButtonRoomType.IsChecked = true;
-                radioButtonRoomStatus.IsChecked = true;
-                radioButtonRoomCleaningStatus.IsChecked = true;
-
-                ChangeView();
-
-
-                List<string> listRentalContractId = (await RentalContractService.Ins.GetAllRentalContracts()).Where(x => x.CheckOutDate + x.StartTime > SelectedDate + SelectedTime.TimeOfDay && x.StartDate + x.StartTime <= SelectedDate  + SelectedTime.TimeOfDay).Select(x => x.RoomId).ToList();
-              
-                foreach (var item in ListRoomType1)
-                {
-                   
-                    if (listRentalContractId.Contains(item.RoomId))
-                    {
-                        if (item.RoomStatus == ROOM_STATUS.READY)
-                        {
-                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
-                        }
-                    }
-                    else
-                    {
-                        item.RoomStatus = ROOM_STATUS.READY;
-                        item.StartDate = null;
-                        item.StartTime = null;
-                        item.CheckOutDate = null;
-                        item.CustomerId = null;
-                        item.CustomerName = null;
-                    }
-
-                }
-                foreach (var item in ListRoomType2)
-                {
-                    if (listRentalContractId.Contains(item.RoomId))
-                    {
-                        if (item.RoomStatus == ROOM_STATUS.READY)
-                        {
-                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
-                        }
-                    }
-                    else
-                    {
-                        item.RoomStatus = ROOM_STATUS.READY;
-                        item.StartDate = null;
-                        item.StartTime = null;
-                        item.CheckOutDate = null;
-                        item.CustomerId = null;
-                        item.CustomerName = null;
-                    }
-
-                }
-                foreach (var item in ListRoomType3)
-                {
-                    if (listRentalContractId.Contains(item.RoomId))
-                    {
-                        if (item.RoomStatus == ROOM_STATUS.READY)
-                        {
-                            if (item.StartDate + item.StartTime <= SelectedDate + SelectedTime.TimeOfDay) item.RoomStatus = ROOM_STATUS.BOOKED;
-                        }
-                    }
-                    else
-                    {
-                        item.RoomStatus = ROOM_STATUS.READY;
-                        item.StartDate = null;
-                        item.StartTime = null;
-                        item.CheckOutDate = null;
-                        item.CustomerId = null;
-                        item.CustomerName = null;
-                    }
-                }
-                ListRoomType1ChangeMini = ListRoomType1.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName= r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
-                ListRoomType2ChangeMini = ListRoomType2.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName= r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
-                ListRoomType3ChangeMini = ListRoomType3.Select(r => new RoomSettingDTO
-                {
-                    RoomId = r.RoomId,
-                    RoomNumber = r.RoomNumber,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomTypeName.Trim(),
-                    RoomStatus = r.RoomStatus.Trim(),
-                    CustomerName= r.CustomerName,
-                    RoomCleaningStatus = r.RoomCleaningStatus.Trim(),
-                    StartDate = r.StartDate,
-                    StartTime = r.StartTime,
-                    CheckOutDate = r.CheckOutDate,
-                    Validated = r.Validated,
-                }).ToList();
 
             });
             
-            RefreshCM = new RelayCommand<Page>((p) => { return true; }, async (p) =>
+            RefreshCM = new RelayCommand<RoomCatalogManagementPage>((p) => { return true; }, async (p) =>
             {
                 Refresh = true;
                 IsViewChange = false;
@@ -513,9 +570,10 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 SelectedDate = DateTime.Today;
                 SelectedTime = DateTime.Now;
                 await GenerateRoom();
-                radioButtonRoomType = (RadioButton)p.FindName("rdbAllRoomType");
-                radioButtonRoomStatus = (RadioButton)p.FindName("rdbAllRoomStatus");
-                radioButtonRoomCleaningStatus = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
+                radioButtonRoomType = radioButtonRoomTypeAll;
+                radioButtonRoomStatus = radioButtonRoomStatusAll;
+                radioButtonRoomCleaningStatus = radioButtonRoomCleaningStatusAll;
+
                 radioButtonRoomType.IsChecked = true;
                 radioButtonRoomStatus.IsChecked = true;
                 radioButtonRoomCleaningStatus.IsChecked = true;
@@ -896,10 +954,13 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
             lbRoomTypeB = (Label)p.FindName("lbRoomTypeB");
             lbRoomTypeC = (Label)p.FindName("lbRoomTypeC");
             MainPage = (Page)p;
+            radioButtonRoomTypeAll = (RadioButton) p.FindName("rdbAllRoomType");
+            radioButtonRoomStatusAll = (RadioButton)p.FindName("rdbAllRoomStatus");
+            radioButtonRoomCleaningStatusAll = (RadioButton)p.FindName("rdbAllRoomCleaningStatus");
             ListBox1 = (ListBox) MainPage.FindName("listRoom1");
             ListBox2 = (ListBox)MainPage.FindName("listRoom2");
             ListBox3 = (ListBox)MainPage.FindName("listRoom3");
-            IsPageLoad= true;
+            IsPageLoad = true;
         }
       
      
@@ -957,7 +1018,8 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
         private void ChangeView()
         {
 
-            (string roomType, string roomStatus, string roomCleaningStatus) =  GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
+
+            (string roomType, string roomStatus, string roomCleaningStatus) = GetContentRadioButton(radioButtonRoomType, radioButtonRoomStatus, radioButtonRoomCleaningStatus);
             lbRoomTypeA.Visibility = lbRoomTypeB.Visibility = lbRoomTypeC.Visibility = Visibility.Visible;
             if (roomType != "All")
             {
@@ -981,21 +1043,21 @@ namespace HotelManagement.ViewModel.StaffVM.RoomCatalogManagementVM
                 ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2.Where(r => r.RoomTypeName == roomType).ToList());
                 ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3.Where(r => r.RoomTypeName == roomType).ToList());
 
-                //if (TimeChange == false)
-                //{
-                //    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                //    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                //    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
-                //}
-                //    else
-                //{
-                //    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                //    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                //    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
-                //}
-                   
-              
-              
+                if (TimeChange == false)
+                {
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3Mini.Where(r => r.RoomTypeName == roomType).ToList());
+                }
+                else
+                {
+                    ListRoomType1 = new List<RoomSettingDTO>(ListRoomType1ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType2 = new List<RoomSettingDTO>(ListRoomType2ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                    ListRoomType3 = new List<RoomSettingDTO>(ListRoomType3ChangeMini.Where(r => r.RoomTypeName == roomType).ToList());
+                }
+
+
+
             }
 
             if (roomStatus != "All")
