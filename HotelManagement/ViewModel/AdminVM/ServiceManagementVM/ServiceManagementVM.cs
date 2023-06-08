@@ -279,6 +279,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                     return;
 
                 ServiceCache = new ServiceDTO(SelectedProduct);
+                SalePriceService = ServiceCache.ServicePrice.ToString();
                 EditCleanServiceWindow editCleanServiceWindow = new EditCleanServiceWindow();
                 editCleanServiceWindow.ShowDialog();
             });

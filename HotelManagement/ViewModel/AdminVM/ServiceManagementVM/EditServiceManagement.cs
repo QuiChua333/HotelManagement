@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using HotelManagement.View.Admin;
 using HotelManagement.Utils;
 using static HotelManagement.Utilities.Helper;
+using IronXL.Formatting;
 
 namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
 {
@@ -16,6 +17,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
     {
         public List<string> filterSource { get; set; }
         public string SalePrice { get; set; }
+        public string SalePriceService { get; set; }
         public async Task SaveEditProduct(ServiceDTO serviceDTO, Window wd, AdminWindow adWD)
         {
             if(string.IsNullOrEmpty(serviceDTO.ServiceName))
@@ -60,16 +62,17 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
         }
         public async Task SaveEditCleanService(ServiceDTO serviceDTO, Window wd)
         {
-            if (!Number.IsNumeric(serviceDTO.ServicePrice.ToString()))
+            double price;
+            bool IsNumber = double.TryParse(SalePriceService, out price);
+
+            if(!IsNumber || price <= 0)
             {
-                CustomMessageBox.ShowOk("Vui lòng nhập một số cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
+                CustomMessageBox.ShowOk("Vui lòng nhập một số dương cho giá dịch vụ", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
                 return;
             }
-            if (!Number.IsPositive(serviceDTO.ServicePrice.ToString()))
-            {
-                CustomMessageBox.ShowOk("Vui lòng nhập một số dương cho giá sản phẩm", "Cảnh báo", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Warning);
-                return;
-            }
+
+            ServiceCache.ServicePrice = serviceDTO.ServicePrice = price;
+
             (bool isSucess, string messageReturn) = await Task.Run(() => ServiceHelper.Ins.SaveEditProduct(serviceDTO));
 
             if (isSucess)
@@ -83,6 +86,7 @@ namespace HotelManagement.ViewModel.AdminVM.ServiceManagementVM
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
             wd.Close();
+            SalePriceService = null;
         }
         public async Task AddProduct(ServiceDTO productCache, Window wd, AdminWindow adWD)
         {

@@ -1,5 +1,7 @@
 ﻿using HotelManagement.DTOs;
+using HotelManagement.Utils;
 using HotelManagement.View.Staff.RoomCatalogManagement.RoomInfo;
+using IronXL.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,25 +42,34 @@ namespace HotelManagement.Model.Services
                     furnituresRoomDTOs = await (
                         from room in db.Rooms
 
-                        join rentalContract in db.RentalContracts on room.RoomId equals rentalContract.RoomId into rRt
-
-                        from renContr in rRt.DefaultIfEmpty()
-                        
                         select new FurnituresRoomDTO
                         {
                             RoomId = room.RoomId,
                             RoomNumber = (int)room.RoomNumber,
-                            CustomerName = renContr.Customer.CustomerName ?? "Phòng trống",
+                            CustomerName = ROOM_STATUS.READY,
                             RoomStatus = room.RoomStatus,
                             Note = room.Note,
                             RoomType = room.RoomType.RoomTypeName ?? string.Empty,
-                            CustomerQuantity = renContr.RoomCustomers.Count(),
+                            CustomerQuantity = 0
                         }
                     ).ToListAsync();
 
-                    furnituresRoomDTOs.ForEach(item => item.SetOtherProperty());
+                    furnituresRoomDTOs.ForEach(item =>
+                    {
+                        if(item.RoomStatus == ROOM_STATUS.RENTING)
+                        {
+                            RentalContract renContract = db.RentalContracts.FirstOrDefault(i => i.RoomId == item.RoomId && i.Validated == true);
+                            if(renContract != null)
+                            {
+                                item.CustomerName = renContract.Customer.CustomerName;
+                                item.CustomerQuantity = renContract.RoomCustomers.Count();
+                            }
+                        }
+                        item.SetOtherProperty();
+                    });
 
-                    return (true, "Thành công" ,furnituresRoomDTOs);
+
+                    return (true, "Thành công", furnituresRoomDTOs);
                 }
             }
             catch(EntityException e)

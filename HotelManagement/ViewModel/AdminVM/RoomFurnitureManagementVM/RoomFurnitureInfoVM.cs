@@ -1,6 +1,7 @@
 ﻿using HotelManagement.DTOs;
 using HotelManagement.Model.Services;
 using HotelManagement.Utilities;
+using HotelManagement.View.Admin;
 using HotelManagement.View.CustomMessageBoxWindow;
 using SixLabors.ImageSharp;
 using System;
@@ -16,7 +17,6 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
 {
     public partial class RoomFurnitureManagementVM
     {
-
         private ObservableCollection<FurnitureDTO> allFurnitureInRoom;
         public ObservableCollection<FurnitureDTO> AllFurnitureInRoom
         {
@@ -37,6 +37,7 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             get { return furnitureCache; }
             set { furnitureCache = value; OnPropertyChanged(); }
         }
+
         public ICommand FirstLoadInfoWindowCM { get; set; }
         public ICommand OpenImportFurnitureRoomCM { get; set; }
         public ICommand ChooseItemToListNeedDelete { get; set; }
@@ -54,6 +55,10 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
             if (isSuccess)
             {
                 FurnituresRoomCache.ListFurnitureRoom = new ObservableCollection<FurnitureDTO>(listFurnituresRoomReturn);
+                foreach(var item in FurnituresRoomCache.ListFurnitureRoom)
+                {
+                    item.IsSelectedDelete = false;
+                }    
                 AllFurniture = new ObservableCollection<FurnitureDTO>(listFurnituresRoomReturn);
                 FurnitureList = new ObservableCollection<FurnitureDTO>(AllFurniture);
                 CurrentListFurnitureType = new ObservableCollection<string>(GetAllCurrentFurnitureType(listFurnituresRoomReturn));
@@ -64,10 +69,13 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                 CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
         }
-        public async Task DeleteListFurniture(Window p )
+        public async Task DeleteListFurniture(Window p, AdminWindow adWD)
         {
             if (ListFurnitureNeedDelete.Count() == 0)
+            {
+                CustomMessageBox.ShowOk("Vui lòng chọn tiện nghi để xóa!", "Cảnh báo", "OK", CustomMessageBoxImage.Warning);
                 return;
+            }    
             foreach(var item in ListFurnitureNeedDelete)
             {
                 if(!item.IsDeleteLessThanInUse())
@@ -91,13 +99,14 @@ namespace HotelManagement.ViewModel.AdminVM.RoomFurnitureManagementVM
                     FurnituresRoomCache.DeleteListFurniture(ListFurnitureNeedDelete);
                     FurnituresRoomCache.SetQuantityAndStringTypeFurniture();
                     ListFurnitureNeedDelete.Clear();
-                    p.Close();
                 }
                 else
                 {
                     CustomMessageBox.ShowOk(messageReturn, "Lỗi", "OK", CustomMessageBoxImage.Error);
                 }
             }
+            p.Close();
+            adWD.MaskOverSideBar.Visibility = Visibility.Collapsed;
         }
 
     }

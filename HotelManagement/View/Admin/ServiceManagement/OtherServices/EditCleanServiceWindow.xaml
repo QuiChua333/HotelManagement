@@ -59,7 +59,7 @@
                                 <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding ServiceCache.ServiceType}" VerticalAlignment="Center" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Giá: " Padding="0 5 0 0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14" Grid.ColumnSpan="2"/>
                                 <StackPanel Grid.Column="1" Grid.Row="2" Margin="0 3 0 0">
-                                <TextBox Text="{Binding ServiceCache.ServicePrice}" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
+                                <TextBox Text="{Binding SalePriceService, Mode=TwoWay}" Name="Price" Padding="0" Foreground="#464444" FontFamily="{StaticResource MaterialDesignFont}" FontWeight="Regular" FontSize="14"/>
                                 </StackPanel>
                             </Grid>
 
