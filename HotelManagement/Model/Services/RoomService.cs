@@ -332,8 +332,7 @@ namespace HotelManagement.Model.Services
                                           join cu in context.Customers
                                           on c.CustomerId equals cu.CustomerId into pi
                                           from cu in pi.DefaultIfEmpty()
-                                          where r.RoomTypeId == RoomTypeId
-
+                                          where r.RoomTypeId == RoomTypeId 
                                           orderby r.RoomId
                                           select new RoomSettingDTO
                                           {
@@ -390,6 +389,12 @@ namespace HotelManagement.Model.Services
                             {
                                 RentalContract r = await context.RentalContracts.FindAsync(item2.RentalContractId);
                                 if (item2.StartDate + item2.StartTime <= t && t < item2.CheckOutDate + item2.StartTime && r.Validated==true)
+                                {
+                                    roomList2.Add(item2);
+                                    flat = true;
+                                    break;
+                                }
+                                else if (r.Validated == true)
                                 {
                                     roomList2.Add(item2);
                                     flat = true;

@@ -115,6 +115,7 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
+
                     var list = await context.RentalContracts.Where(x => x.CustomerId == customerId && x.Room.RoomStatus == ROOM_STATUS.RENTING && x.Validated==true).Select(x => new RentalContractDTO
                     {
                         RentalContractId = x.RentalContractId,
