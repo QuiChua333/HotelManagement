@@ -329,7 +329,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
                     }
                     else
                     {
-                        CustomMessageBox.ShowOk(messageFromDelRentalContract, "Lỗi", "OK", CustomMessageBoxImage.Error);
+                        CustomMessageBox.ShowOk(messageFromDelRentalContract, "Thông báo", "OK", CustomMessageBoxImage.Error);
                     }
                 }
             });

@@ -237,7 +237,7 @@ namespace HotelManagement.Model.Services
             }
             catch (Exception)
             {
-                return (false, "Lỗi hệ thống!");
+                return (false, "Không thể xóa do ràng buộc cơ sở dữ liệu!");
             }
             return (true, "Xóa phiếu thuê phòng thành công");
         }
