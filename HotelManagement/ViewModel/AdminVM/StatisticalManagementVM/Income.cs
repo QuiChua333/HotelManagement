@@ -374,6 +374,52 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", View.CustomMessageBoxWindow.CustomMessageBoxImage.Error);
             }
         }
+        public async Task ExportFile()
+        {
+            using (SaveFileDialog box = new SaveFileDialog() { Filter = "Excel | *.xlsx | Excel 2003 | *.xls", ValidateNames = true })
+            {
+                if (box.ShowDialog() == DialogResult.OK)
+                {
+                    await Task.Run(() =>
+                    {
+                        IsExport = true;
+                        Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+                        app.Visible = false;
+                        Microsoft.Office.Interop.Excel.Workbook wb = app.Workbooks.Add(1);
+                        Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
+                        ws.Name = "Danh sách phát hành";
+                        ws.Cells.Style.Font.Size = 12;
+                        ws.Cells.Style.Font.Name = "Times New Roman";
+
+                        ws.Cells[1, 8] = "Thống kê doanh thu " + SelectedMonth +" " + SelectedYear.ToLower();
+                        ws.Cells[2, 9] = "Tổng thu:\t  " + TotalIn.ToString();
+                        ws.Cells[3, 9] = "Tổng chi:\t  " + TotalOut.ToString();
+                        ws.Cells[4, 9] = "Lợi nhuận:\t  " + TrueIncome;
+                        ws.Cells[5, 9] =  "Số hóa đơn:\t  " + TotalBill.ToString();
+
+                        ws.Cells[8, 8] = "Chi tiết tiền thu: ";
+                        ws.Cells[9, 9] = "Tiền thuê phòng:  " + RentalReve+"\t  chiếm "+ RentalPc;
+                        ws.Cells[10, 9] = "Tiền dịch vụ:  " + ServiceReve + "\t  chiếm " + ServicePc;
+
+                        ws.Cells[12, 8] = "Chi tiết tiền chi: ";
+                        ws.Cells[13, 9] = "Tiền nhập sản phẩm:  " + ServiceExpe + "\t  chiếm " + ServiceExPc;
+                        ws.Cells[14, 9] = "Tiền nhập kho tiện nghi:  " + FurnitureExpe + "\t  chiếm " + FurniturePc;
+                        ws.Cells[15, 9] = "Tiền sửa chữa:  " + RepairExpe + "\t  chiếm " + RepairPc;
+
+                        
+                        ws.SaveAs(box.FileName);
+                        wb.Close();
+                        app.Quit();
+
+
+                    });
+                }
+                else
+                {
+                    IsExport = false;
+                }
+            }
+        }
 
         private int DayOfMonth(int year, int month)
         {

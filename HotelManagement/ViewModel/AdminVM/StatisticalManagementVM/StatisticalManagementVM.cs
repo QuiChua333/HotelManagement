@@ -26,6 +26,12 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             get { return isLoading; }
             set { isLoading = value; OnPropertyChanged(); }
         }
+        private bool isExport;
+        public bool IsExport
+        {
+            get { return isExport; }
+            set { isExport = value; OnPropertyChanged(); }
+        }
         bool isChange = false;
 
         public ICommand LoadViewCM { get; set; }
@@ -38,6 +44,7 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
         public ICommand ChangeRoomTypeRevenueCM { get; set; }
         public ICommand ChangeServiceTypeRevenueCM { get; set; }
         public ICommand ChangeTimeCM { get; set; }
+        public ICommand ExportFileCM { get; set; }
         public StatisticalManagementVM() 
         {
             InitCBB();
@@ -69,18 +76,7 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
                 mainFrame.Content = new RoomTypeAndService();
             });
 
-            //ChangeIncomePeriodCM = new RelayCommand<IncomeStatiscalManagement>((p) => { return true; }, async (p) =>
-            //{
-            //    TextBox tbReveRate = (TextBox)p.FindName("tbReveRate");
-            //    TextBox tbExpeRate = (TextBox)p.FindName("tbExpeRate");
-            //    tbExpeRate.Text = "";
-            //    tbReveRate.Text = "";
-            //    isChange = true;
-            //    IsLoading = true;
-            //    await ChangeIncomePeriod();
-            //    ChangeViewTrend(p);
-            //    IsLoading = false;
-            //});
+           
             ChangeRoomTypeRevenueCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
                 await ChangeRoomTypeRevenue();
@@ -93,6 +89,16 @@ namespace HotelManagement.ViewModel.AdminVM.StatisticalManagementVM
             {
                 isChange = true;
                 await ChangeViewIncome(p);
+            });
+            ExportFileCM = new RelayCommand<IncomeStatiscalManagement>((p) => { return true; }, async (p) =>
+            {
+                IsExport = false;
+                await ExportFile();
+                if (IsExport)
+                {
+                    CustomMessageBox.ShowOk("Xuất file thành công!", "Thông báo", "Ok", View.CustomMessageBoxWindow.CustomMessageBoxImage.Success);
+                    IsExport= false;
+                }
             });
 
         }
