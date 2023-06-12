@@ -179,21 +179,43 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
             });
             OpenEditStaffCM = new RelayCommand<object>(p => true, async p =>
             {
-                EditStaffWindow wd = new EditStaffWindow();
-                ResetData();
-                StaffId = SelectedItem.StaffId;
-                FullName = SelectedItem.StaffName;
-                Phonenumber = SelectedItem.PhoneNumber;
-                Email = SelectedItem.Email;
-                Cccd = SelectedItem.CCCD;
-                Address = SelectedItem.StaffAddress;
-                Username = SelectedItem.Username;
-                wd.Gender.Text = SelectedItem.Gender;
-                wd.Position.Text = SelectedItem.Position;
-                wd.Birthday.Text = SelectedItem.DateOfBirth.ToString();
-                wd.Startdate.Text = SelectedItem.dateOfStart.ToString();
-                ImageSource = Helper.LoadBitmapImage(SelectedItem.Avatar);
-                wd.ShowDialog();
+                if(SelectedItem.StaffId != AdminVM.CurrentStaff.StaffId && SelectedItem.Position == "Quản lý" )
+                {
+                    InfoStaffWindow info = new InfoStaffWindow();
+                    ResetData();
+                    StaffId = SelectedItem.StaffId;
+                    FullName = SelectedItem.StaffName;
+                    Phonenumber = SelectedItem.PhoneNumber;
+                    Email = SelectedItem.Email;
+                    Cccd = SelectedItem.CCCD;
+                    Address = SelectedItem.StaffAddress;
+                    Username = SelectedItem.Username;
+                    info.Gender.Text = SelectedItem.Gender;
+                    info.Position.Text = SelectedItem.Position;
+                    info.Birthday.Text = SelectedItem.DateOfBirth.ToString();
+                    info.Startdate.Text = SelectedItem.dateOfStart.ToString();
+                    ImageSource = Helper.LoadBitmapImage(SelectedItem.Avatar);
+                    info.ShowDialog();
+                }
+                else
+                {
+                    EditStaffWindow wd = new EditStaffWindow();
+                    ResetData();
+                    StaffId = SelectedItem.StaffId;
+                    FullName = SelectedItem.StaffName;
+                    Phonenumber = SelectedItem.PhoneNumber;
+                    Email = SelectedItem.Email;
+                    Cccd = SelectedItem.CCCD;
+                    Address = SelectedItem.StaffAddress;
+                    Username = SelectedItem.Username;
+                    wd.Gender.Text = SelectedItem.Gender;
+                    wd.Position.Text = SelectedItem.Position;
+                    wd.Birthday.Text = SelectedItem.DateOfBirth.ToString();
+                    wd.Startdate.Text = SelectedItem.dateOfStart.ToString();
+                    ImageSource = Helper.LoadBitmapImage(SelectedItem.Avatar);
+                    wd.ShowDialog();
+
+                }
             });
             EditStaffCM = new RelayCommand<Window>(p => { if (IsSaving) return false; return true; }, async p =>
             {

@@ -370,6 +370,9 @@
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomInfoVM\RoomInfoVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomOrderVM\RoomOrderVM.cs" />
     <Compile Include="ViewModel\StaffVM\RoomCatalogManagementVM\RoomPaymentVM\RoomPaymentVM.cs" />
+    <Compile Include="View\Admin\StaffManagement\InfoStaffWindow.xaml.cs">
+      <DependentUpon>InfoStaffWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Admin\StatisticalManagement\RoomTypeAndService.xaml.cs">
       <DependentUpon>RoomTypeAndService.xaml</DependentUpon>
     </Compile>
@@ -712,6 +715,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Admin\ServiceManagement\OtherServices\OtherServicesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Admin\StaffManagement\InfoStaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
