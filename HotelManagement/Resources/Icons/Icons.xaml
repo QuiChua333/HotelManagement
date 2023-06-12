@@ -44,7 +44,5 @@
     <ImageSource x:Key="LogoDarkIcon">./Logo_Dark.png</ImageSource>
     <ImageSource x:Key="DollarIcon">./dollar.png</ImageSource>
     <ImageSource x:Key="DockWindowIcon">./zoomout.png</ImageSource>
-
-
 </ResourceDictionary>
     
