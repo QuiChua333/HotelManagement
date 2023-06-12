@@ -12,6 +12,7 @@
         ResizeMode="NoResize"
         AllowsTransparency="True" 
         BorderBrush="Transparent"
+        DataContext="{StaticResource TroubleManagementVM}"
         Height="710" Width="610">
     <Border Background="White" CornerRadius="5" Height="700" Width="600" BorderBrush="#1D242E" BorderThickness="1">
         <Border.Effect>
@@ -60,7 +61,7 @@
                                         Direction="270"/>
                     </Border.Effect>
                     <Border.Background>
-                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding Image}"/>
+                        <ImageBrush x:Name="troubleAvt" Stretch="Fill" ImageSource="{Binding SelectedItem.ImagesourgeTrouble}"/>
                     </Border.Background>
                 </Border>
                 <Grid Grid.Column="1" Margin="0 20 0 0">
@@ -73,13 +74,13 @@
                     <Grid Grid.Row="0">
                         <TextBlock Text="Nhân viên báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding StaffName}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedItem.StaffName}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1">
                         <TextBlock Text="Ngày báo cáo" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                         <Border Margin="0 0 0 5" Height="30.5" Width="260" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                            <TextBlock Text="{Binding ReportDate,StringFormat=dd/MM/yyyy}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding SelectedItem.StartDate,StringFormat=dd/MM/yyyy}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2">
@@ -90,13 +91,13 @@
                         <Grid Grid.Column="0">
                             <TextBlock Text="Nguyên nhân" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                             <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding SelectedItem.Reason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="1" Name="gridmsp" Visibility="Collapsed">
                             <TextBlock Text="Mã số phiếu" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                             <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="rentalcontractid" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                             </Border>
                         </Grid>
                     </Grid>
@@ -108,13 +109,13 @@
                         <Grid Grid.Column="0">
                             <TextBlock Text="Mức độ" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                             <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding SelectedItem.Level}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                             </Border>
                         </Grid>
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="1" Name="giadudoangrid" Visibility="Collapsed">
                             <TextBlock Text="Giá dự đoán" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                             <Border Margin="0 0 0 5" Height="30.5" Width="120" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                                <TextBlock Text="{Binding TroubleReason}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
+                                <TextBlock  Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" VerticalAlignment="Center"/>
                             </Border>
                         </Grid>
 
@@ -124,13 +125,13 @@
             <Grid Grid.Row="2" Margin="15 10 15 0">
                 <TextBlock Text="Tiêu đề:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 4" Height="30.5" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBlock Text="{Binding TroubleTitle}"  Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SelectedItem.Title}"  Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="3" Margin="15 0 15 0">
                 <TextBlock Text="Mô tả sự cố:" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 <Border Margin="0 0 0 4" Height="60" Width="527" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                    <TextBlock Text="{Binding TroubleDescription}" Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
+                    <TextBlock Text="{Binding SelectedItem.Description}" Margin="5 0 0 0" TextWrapping="Wrap" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                 </Border>
             </Grid>
             <Grid Grid.Row="4" Margin="15 0 15 0 " >
@@ -141,13 +142,13 @@
                 <Grid Grid.Column="0">
                     <TextBlock Text="Tình trạng" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBlock Text="{Binding TroubleStatus}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedItem.Status}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
                     <TextBlock Text="Ngày sửa" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
-                        <TextBlock Text="{Binding RepairDate}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedItem.FixedDate, StringFormat=dd/MM/yyyy}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
 
                     </Border>
                 </Grid>
@@ -160,13 +161,13 @@
                 <Grid Grid.Column="0">
                     <TextBlock Text="Giá sửa chữa" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
-                        <TextBlock Text="{Binding RepairCostStr}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedItem.PriceFixStr}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
                     <TextBlock Text="Ngày kết thúc" FontSize="14" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}" />
                     <Border Margin="0 0 0 8" Height="30.5" Width="200" Background="#F8F9FA" BorderBrush="{DynamicResource SecondTextColor}" BorderThickness="0.5" CornerRadius="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"  >
-                        <TextBlock Text="{Binding FinishDate}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedItem.FinishDate,StringFormat=dd/MM/yyyy}" Margin="5 0 0 0" FontSize="15" FontWeight="Regular" Foreground="{DynamicResource SecondTextColor}"  VerticalAlignment="Center"/>
 
                     </Border>
                 </Grid>

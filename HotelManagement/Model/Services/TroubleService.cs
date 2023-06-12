@@ -43,6 +43,7 @@ namespace HotelManagement.Model.Services
                                        Price = (double)s.Price,
                                        StartDate = s.StartDate,
                                        FixedDate = s.FixedDate,
+                                       StaffName = s.Staff.StaffName,
                                        FinishDate = s.FinishDate,
                                        Status = s.Status,
                                        StaffId=s.StaffId,

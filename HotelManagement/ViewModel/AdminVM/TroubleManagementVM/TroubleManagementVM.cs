@@ -8,6 +8,7 @@ using HotelManagement.View.Staff.TroubleReport;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -357,7 +358,6 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
                     wd.MSPgrid.Visibility=System.Windows.Visibility.Visible;
                     wd.rentalcontractid.Text = (await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).RentalContractId;
                 }
-                wd.staffname.Text = await TroubleService.Ins.GetStaffNameById(SelectedItem.StaffId);
                  wd.cbbStatus.Text = SelectedItem.Status;
                 
                 wd.ShowDialog();
@@ -372,13 +372,12 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
                     wd.rentalcontractid.Text = (await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).RentalContractId;
                     PredictPrice = (double)(await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).PredictedPrice;
                 }
-                wd.staffname.Text = await TroubleService.Ins.GetStaffNameById(SelectedItem.StaffId);
 
                 wd.ShowDialog();
             }
             else if(SelectedItem.Status == STATUS.DONE)
             {
-                ViewInfomationWindow wd = new ViewInfomationWindow();
+                TroubleInformationWindow wd = new TroubleInformationWindow();
                 if (SelectedItem.Reason == REASON.BYCUSTOMER)
                 {
                     wd.giadudoangrid.Visibility = System.Windows.Visibility.Visible;
@@ -386,7 +385,7 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
                     wd.rentalcontractid.Text = (await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).RentalContractId;
                     PredictPrice = (double)(await TroubleService.Ins.GetTroubleByCus(SelectedItem.TroubleId)).PredictedPrice;
                 }
-                wd.staffname.Text = await TroubleService.Ins.GetStaffNameById(SelectedItem.StaffId);
+         
 
                 wd.ShowDialog();
             }

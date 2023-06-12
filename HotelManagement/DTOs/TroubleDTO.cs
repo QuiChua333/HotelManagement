@@ -25,6 +25,7 @@ namespace HotelManagement.DTOs
         public Nullable<System.DateTime> FinishDate { get; set; }
         public string Status { get; set; }
         public string StaffId { get; set; }
+        public string StaffName { get; set; }
         public string Level { get; set; }
         public ImageSource ImagesourgeTrouble 
         { 
