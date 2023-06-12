@@ -54,6 +54,7 @@ namespace HotelManagement.Model.Services
             {
                 throw ex;
             }
+            Troublelist.Reverse();
             return Troublelist;
         }
         public async Task<(bool, string, TroubleDTO)> AddTrouble(TroubleDTO s, string id  )
@@ -273,7 +274,7 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
 
-                   var list = await context.RentalContracts.Where(x=> x.Room.RoomStatus == ROOM_STATUS.RENTING).Select(x=> x.RentalContractId).ToListAsync();
+                   var list = await context.RentalContracts.Where(x=> x.Room.RoomStatus == ROOM_STATUS.RENTING && x.Validated==true).Select(x=> x.RentalContractId).ToListAsync();
                     return list;
                 }
             }

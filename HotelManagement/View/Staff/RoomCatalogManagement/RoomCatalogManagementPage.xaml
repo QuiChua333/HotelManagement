@@ -52,7 +52,7 @@
                            FontWeight="Bold"
                            Foreground="#EC4242">
                         </Label>
-                        <StackPanel Margin="20,40,0,0">
+                        <StackPanel Margin="20,40,0,0" x:Name="SPRoomType">
                             <RadioButton GroupName="RoomType" Background="#EC4242"
                                         x:Name="rdbRoomTypeA"
                                          Tag="RoomTypeA"
@@ -115,7 +115,7 @@
                            FontWeight="Bold"
                            Foreground="#EC4242">
                         </Label>
-                        <StackPanel Margin="20,40,0,0">
+                        <StackPanel Margin="20,40,0,0" x:Name="SPRoomStatus">
                             <RadioButton GroupName="RoomStatus" Background="#EC4242"
                                           x:Name="rdbRoomStatusReady"
                                          Tag="RoomStatusReady"
@@ -181,7 +181,7 @@
                            FontWeight="Bold"
                            Foreground="#EC4242">
                         </Label>
-                        <StackPanel Margin="20,40,0,0">
+                        <StackPanel Margin="20,40,0,0" x:Name="SPRoomCleaningStatus">
                             <RadioButton GroupName="RoomCleaningStatus" Background="#EC4242"
                                           x:Name="rdbRoomCleaningStatusCleaned"
                                          Tag="RoomCleaningStatusCleaned"
@@ -354,7 +354,7 @@
                                                  Height="35"
                                                  Foreground="#5AC872"/>
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding RefreshCM}"
                                                            CommandParameter="{Binding ElementName=mainPage}" />
                             </i:EventTrigger>
