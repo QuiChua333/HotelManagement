@@ -149,9 +149,9 @@ namespace HotelManagement.ViewModel.AdminVM.CustomerManagementVM
                     {
                         LoadCustomerList(Operation.DELETE);
                         Reload();
-                        CustomMessageBox.ShowOk("Xóa thành công!", "Thông báo", "OK", CustomMessageBoxImage.Success);
+                        CustomMessageBox.ShowOk(mess, "Thông báo", "OK", CustomMessageBoxImage.Success);
                     }
-                    else CustomMessageBox.ShowOk("Lỗi hệ thống", "Lỗi", "OK", CustomMessageBoxImage.Error);
+                    else CustomMessageBox.ShowOk(mess, "Lỗi", "OK", CustomMessageBoxImage.Error);
                 }
             });
         }
