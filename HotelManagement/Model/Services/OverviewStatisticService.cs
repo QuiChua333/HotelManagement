@@ -108,7 +108,7 @@ namespace HotelManagement.Model.Services
                     double ServiceRevenue = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).SumAsync(x => x.ServicePrice) ?? 0;
                     double TroublePrice = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).SumAsync(x => x.TroublePrice) ?? 0;
                     double TotalPrice = await context.Bills.Where(x => x.CreateDate.Value.Year == year && x.CreateDate.Value.Month == month).SumAsync(x => x.TotalPrice) ?? 0;
-                    double RentalRevenue = TotalPrice - TroublePrice - ServiceRevenue;
+                    double RentalRevenue = TotalPrice - ServiceRevenue;
                     return (ServiceRevenue, RentalRevenue);
                 }
                 else
@@ -154,21 +154,7 @@ namespace HotelManagement.Model.Services
                              Month = gr.Key,
                              Outcome = gr.Sum(b => (double?)b.ImportPrice * b.Quantity) ?? 0
                          }).ToListAsync();
-                    var MonthRepairCostByCustomer = await context.TroubleByCustomers
-                         .Where(t => t.Trouble.FinishDate != null && t.Trouble.FinishDate.Value.Year == year)
-                         .GroupBy(t => t.Trouble.FinishDate.Value.Month)
-                         .Select(gr =>
-                         new
-                         {
-                             Month = gr.Key,
-                             Outcome = gr.Sum(t => t.PredictedPrice) ?? 0
-                         }).ToListAsync();
-                    double[] MonthRepairCostByCustomerEx = new double[13];
-                    for (int i = 0; i < 13; i++) MonthRepairCostByCustomerEx[i] = 0;
-                    foreach (var item in MonthRepairCostByCustomer)
-                    {
-                        MonthRepairCostByCustomerEx[item.Month] = item.Outcome;
-                    }
+                   
                     var MonthlyRepairCost = await context.Troubles
                          .Where(t => t.FinishDate != null && t.FinishDate.Value.Year == year)
                          .GroupBy(t => t.FinishDate.Value.Month)
@@ -190,7 +176,7 @@ namespace HotelManagement.Model.Services
 
                     foreach (var ex in MonthlyRepairCost)
                     {
-                        MonthlyExpense[ex.Month - 1] += (double)ex.Outcome - MonthRepairCostByCustomerEx[ex.Month];
+                        MonthlyExpense[ex.Month - 1] += (double)ex.Outcome;
                         RepairCostTotal += (double?)ex.Outcome ??  0 ;
                     }
                     foreach (var ex in MonthlyFurnitureExpense)
@@ -265,20 +251,7 @@ namespace HotelManagement.Model.Services
                     }
 
 
-                    var LastYearRepairCostByCustomer = await context.TroubleByCustomers
-                             .Where(tr => tr.Trouble.FinishDate != null && tr.Trouble.FinishDate.Value.Year == year).ToListAsync();
-                    double lastYearRepairCostByCustomer = 0;
-                    foreach (var item in LastYearRepairCostByCustomer)
-                    {
-                        if (item != null)
-                        {
-                            if (item.PredictedPrice!=null)
-                            {
-                                lastYearRepairCostByCustomer += (double)item.PredictedPrice;
-                            }
-                        }
-
-                    }
+                   
                     var LastYearFurinitureExpenses = await context.FurnitureReceipts
                         .Where(fn => fn.CreateAt != null && fn.CreateAt.Value.Year == year).ToListAsync();
                     double lastYearFurinitureExpenses = 0;
@@ -294,7 +267,7 @@ namespace HotelManagement.Model.Services
 
                     }
 
-                    return (lastYearServiceExpense + lastYearRepairCost - lastYearRepairCostByCustomer + lastYearFurinitureExpenses);
+                    return (lastYearServiceExpense + lastYearRepairCost  + lastYearFurinitureExpenses);
                 }
                 else
                 {
@@ -332,20 +305,7 @@ namespace HotelManagement.Model.Services
                     }
 
 
-                    var LastMonthRepairCostByCustomer = await context.TroubleByCustomers
-                             .Where(tr => tr.Trouble.FinishDate != null && tr.Trouble.FinishDate.Value.Year == year && tr.Trouble.FinishDate.Value.Month == month).ToListAsync();
-                    double lastMonthRepairCostByCustomer = 0;
-                    foreach (var item in LastMonthRepairCostByCustomer)
-                    {
-                        if (item != null)
-                        {
-                            if (item.PredictedPrice != null)
-                            {
-                                lastMonthRepairCostByCustomer += (double)item.PredictedPrice;
-                            }
-                        }
-
-                    }
+                  
 
                     var LastMonthFurinitureExpenses = await context.FurnitureReceipts
                        .Where(fn => fn.CreateAt != null && fn.CreateAt.Value.Year == year && fn.CreateAt.Value.Month == month).ToListAsync();
@@ -361,7 +321,7 @@ namespace HotelManagement.Model.Services
                         }
 
                     }
-                    return (lastMonthServiceExpense + lastMonthRepairCost - lastMonthRepairCostByCustomer + lastMonthFurinitureExpenses);
+                    return (lastMonthServiceExpense + lastMonthRepairCost  + lastMonthFurinitureExpenses);
                 }
             }
             catch (Exception e)
@@ -452,21 +412,7 @@ namespace HotelManagement.Model.Services
                     //Repair Cost
 
 
-                    var MonthRepairCostByCustomer = await context.TroubleByCustomers
-                         .Where(t => t.Trouble.FinishDate != null && t.Trouble.FinishDate.Value.Year == year && t.Trouble.FinishDate.Value.Month == month)
-                         .GroupBy(t => t.Trouble.FinishDate.Value.Day)
-                         .Select(gr =>
-                         new
-                         {
-                             Day = gr.Key,
-                             Outcome = gr.Sum(t => t.PredictedPrice) ?? 0
-                         }).ToListAsync();
-                    double[] MonthRepairCostByCustomerEx = new double[32];
-                    for (int i = 0; i < 32; i++) MonthRepairCostByCustomerEx[i] = 0;
-                    foreach (var item in MonthRepairCostByCustomer)
-                    {
-                        MonthRepairCostByCustomerEx[item.Day] = item.Outcome;
-                    }
+                
                     var MonthlyRepairCost = await context.Troubles
                          .Where(t => t.FinishDate != null && t.FinishDate.Value.Year == year && t.FinishDate.Value.Month == month)
                          .GroupBy(t => t.FinishDate.Value.Day)
@@ -496,9 +442,10 @@ namespace HotelManagement.Model.Services
 
                     foreach (var ex in MonthlyRepairCost)
                     {
-                        DailyExpense[ex.Day - 1] += (double)ex.Outcome - MonthRepairCostByCustomerEx[ex.Day];
+                        DailyExpense[ex.Day - 1] += (double)ex.Outcome;
                         RepairCostTotal += (double?)ex.Outcome ?? 0;
                     }
+                    
                     foreach (var ex in MonthlyFurnitureExpense)
                     {
                         DailyExpense[ex.Day - 1] += (double?)ex.Outcome ?? 0;
