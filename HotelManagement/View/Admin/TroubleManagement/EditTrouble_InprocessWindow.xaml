@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HotelManagement.View.Admin.TroubleManagement"
         mc:Ignorable="d"
+         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Title="EditTrouble_InprocessWindow"  
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -159,6 +160,14 @@
                                   HorizontalContentAlignment="Left">
                             <ComboBoxItem  Content="Đã giải quyết" Tag="Đã giải quyết" FontSize="14"/>
                             <ComboBoxItem  Content="Đã hủy" Tag="Đã hủy" FontSize="14"/>
+
+                            <i:Interaction.Triggers>
+
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ChangeView3CM}"
+                                                       CommandParameter="{Binding ElementName=SuaSCInprocess}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </ComboBox>
                     </Border>
                 </Grid>

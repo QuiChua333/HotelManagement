@@ -231,26 +231,6 @@ namespace HotelManagement.Model.Services
                         return (false, "Phiếu thuê phòng này không tồn tại!");
                     }
 
-                    List<ServiceUsing> serviceUsing = await context.ServiceUsings.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
-
-                    if(serviceUsing != null)
-                        context.ServiceUsings.RemoveRange(serviceUsing);
-
-                    List<Bill> bill = await context.Bills.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
-
-                    if (bill != null)
-                        context.Bills.RemoveRange(bill);
-
-                    List<TroubleByCustomer> troubleByCus = await context.TroubleByCustomers.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
-
-                    if (troubleByCus != null)
-                        context.TroubleByCustomers.RemoveRange(troubleByCus);
-
-                    List<RoomCustomer> roomCus = await context.RoomCustomers.Where(s => s.RentalContractId == rental.RentalContractId).ToListAsync();
-
-                    if (roomCus != null)
-                        context.RoomCustomers.RemoveRange(roomCus);
-
                     context.RentalContracts.Remove(rental);
                     await context.SaveChangesAsync();
                 }

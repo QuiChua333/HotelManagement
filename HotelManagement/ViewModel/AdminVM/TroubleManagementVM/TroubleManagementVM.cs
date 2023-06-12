@@ -87,6 +87,9 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
         public ICommand FilterListTroubleCM { get; set; }
         public ICommand OpenSolveTroubleWindowCM { get; set; }
         public ICommand UpdateTroubleCM { get; set; }
+        public ICommand ChangeViewCM { get; set; }
+        public ICommand ChangeView1CM { get; set; }
+        public ICommand ChangeView3CM { get; set; }
         public TroubleManagementVM()
         {
             FirstLoadCM = new RelayCommand<System.Windows.Controls.Page>((p) => { return true; }, async (p) =>
@@ -121,8 +124,115 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
                 await UpdateTrouble(p);
                 IsSaving = false;
             });
+            ChangeViewCM = new RelayCommand<EditTroubleWindow>((p) => { return true; }, async (p) =>
+            {
+                Grid fixdate = (Grid)p.fixdate; 
+                Grid finishdate = (Grid)p.finishdate;
+                Grid fixprice = (Grid)p.fixprice;
+                if (p.cbbStatusByCustomer.SelectedIndex == 0)
+                {
+                    fixdate.Visibility = Visibility.Visible;
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                }
+                if (p.cbbStatusByCustomer.SelectedIndex == 1)
+                {
+                    finishdate.Visibility = Visibility.Visible;
+                    fixprice.Visibility = Visibility.Visible;
+
+                    if (SelectedItem.FixedDate == null)
+                    {
+                        fixdate.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        fixdate.Visibility = Visibility.Visible;
+                        fixdate.IsEnabled = false;
+                    }
+                }
+                if (p.cbbStatusByCustomer.SelectedIndex == 2)
+                {
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                    fixdate.Visibility = Visibility.Collapsed;
+                    
+
+                }
+            });
+            ChangeView1CM = new RelayCommand<EditTroubleWindow>((p) => { return true; }, async (p) =>
+            {
+                Grid fixdate = (Grid)p.fixdate;
+                Grid finishdate = (Grid)p.finishdate;
+                Grid fixprice = (Grid)p.fixprice;
+                Grid predictgrid = (Grid)p.predictgrid;
+
+                if (p.cbbStatusByCustomer.SelectedIndex == 0)
+                {
+                    predictgrid.Visibility = Visibility.Visible;
+                    fixdate.Visibility = Visibility.Collapsed;
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                }
+                if (p.cbbStatusByCustomer.SelectedIndex == 1)
+                {
+                    predictgrid.Visibility = Visibility.Visible;
+                    fixdate.Visibility = Visibility.Visible;
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                }
+                if (p.cbbStatusByCustomer.SelectedIndex == 2)
+                {
+                    predictgrid.Visibility = Visibility.Collapsed;
+
+                    finishdate.Visibility = Visibility.Visible;
+                    fixprice.Visibility = Visibility.Visible;
+                    if (SelectedItem.FixedDate == null)
+                    {
+                        fixdate.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        fixdate.Visibility = Visibility.Visible;
+                        fixdate.IsEnabled = false;
+                    }
+                }
+                if (p.cbbStatusByCustomer.SelectedIndex == 3)
+                {
+                    predictgrid.Visibility = Visibility.Collapsed;
+                    fixdate.Visibility = Visibility.Collapsed;
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                }
+            });
+            ChangeView3CM = new RelayCommand<EditTrouble_InprocessWindow>((p) => { return true; }, async (p) =>
+            {
+                Grid gridfixdate = (Grid)p.gridfixdate;
+                Grid finishdate = (Grid)p.finishdate;
+                Grid fixprice = (Grid)p.fixprice;
+                if (p.cbbStatus.SelectedIndex == 0)
+                {
+                    finishdate.Visibility = Visibility.Visible;
+                    fixprice.Visibility = Visibility.Visible;
+                    if (SelectedItem.FixedDate == null)
+                    {
+                        gridfixdate.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        gridfixdate.Visibility = Visibility.Visible;
+                        gridfixdate.IsEnabled = false;
+                    }
+                }
+                if (p.cbbStatus.SelectedIndex == 1)
+                {
+                    gridfixdate.Visibility = Visibility.Collapsed;
+                    finishdate.Visibility = Visibility.Collapsed;
+                    fixprice.Visibility = Visibility.Collapsed;
+                }
+            });
 
         }
+
         public async Task UpdateTrouble(Window p)
         {
             if (Status.Tag.ToString() == STATUS.PREDIT)
@@ -147,7 +257,7 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
             }
            else if (Status.Tag.ToString() == STATUS.IN_PROGRESS)
             {
-                if (SelectedItem.StartDate > FixedDate)
+                if (SelectedItem.StartDate.Value.Date > FixedDate)
                 {
                     CustomMessageBox.ShowOk("Ngày không hợp lệ, vui lòng chọn lại!", "Lỗi", "OK", CustomMessageBoxImage.Error);
                     
@@ -174,7 +284,7 @@ namespace HotelManagement.ViewModel.AdminVM.TroubleManagementVM
             }
            else if (Status.Tag.ToString() == STATUS.DONE)
             {
-                if (SelectedItem.StartDate > FixedDate && FixedDate>FinishDate)
+                if (SelectedItem.StartDate.Value.Date > FixedDate || FixedDate>FinishDate)
                 {
                     CustomMessageBox.ShowOk("Ngày không hợp lệ, vui lòng chọn lại!", "Lỗi", "OK", CustomMessageBoxImage.Error);
 

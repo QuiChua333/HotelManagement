@@ -288,7 +288,7 @@ namespace HotelManagement.ViewModel.BookingRoomManagementVM
             LoadDeleteRentalContractRoomCM = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
 
-                string message = "Bạn có chắc muốn xoá phiếu thuê này không? Dữ liệu không thể phục hồi sau khi xoá!";
+                string message = "Bạn có chắc muốn xoá phiếu thuê này không?";
                 CustomMessageBoxResult kq = CustomMessageBox.ShowOkCancel(message, "Cảnh báo", "Xác nhận", "Hủy", CustomMessageBoxImage.Warning);
 
                 if (kq == CustomMessageBoxResult.OK)

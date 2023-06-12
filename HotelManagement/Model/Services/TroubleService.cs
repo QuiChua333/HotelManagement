@@ -122,7 +122,7 @@ namespace HotelManagement.Model.Services
                         trouble.FixedDate = s.FixedDate;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FirstOrDefaultAsync(x => x.TroubleId == s.TroubleId);
                             troublebycus.PredictedPrice = preprice;
                         }
                     }
@@ -135,7 +135,7 @@ namespace HotelManagement.Model.Services
                         trouble.Price = s.Price;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FirstOrDefaultAsync(x => x.TroubleId == s.TroubleId);
                             troublebycus.PredictedPrice = s.Price;
                         }
                         
@@ -146,7 +146,7 @@ namespace HotelManagement.Model.Services
                         trouble.Status = STATUS.CANCLE;
                         if (trouble.Reason == REASON.BYCUSTOMER)
                         {
-                            var troublebycus = await context.TroubleByCustomers.FindAsync(s.TroubleId);
+                            var troublebycus = await context.TroubleByCustomers.FirstOrDefaultAsync(x => x.TroubleId == s.TroubleId);
                             troublebycus.PredictedPrice = 0;
                         }
                     }

@@ -65,63 +65,9 @@ namespace HotelManagement.View.Admin.TroubleManagement
                 tb.Text = "0";
         }
 
-        private void cbbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
-            ComboBox cbb = sender as ComboBox;
-            if (cbb.SelectedIndex == 0)
-            {
-                fixdate.Visibility = Visibility.Visible;
-                finishdate.Visibility = Visibility.Collapsed;
-                fixprice.Visibility = Visibility.Collapsed;
-            }
-            if (cbb.SelectedIndex == 1)
-            {
-                fixdate.Visibility = Visibility.Visible;
-                finishdate.Visibility = Visibility.Visible;
-                fixprice.Visibility = Visibility.Visible;
-            }
-            if (cbb.SelectedIndex == 2)
-            {
-                fixdate.Visibility = Visibility.Collapsed;
-                finishdate.Visibility = Visibility.Collapsed;
-                fixprice.Visibility = Visibility.Collapsed;
-            }
-            
-        }
+        
 
-        private void cbbStatus1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox cbb = sender as ComboBox;
-            if(cbb.SelectedIndex == 0)
-            {
-                predictgrid.Visibility = Visibility.Visible;
-                fixdate.Visibility = Visibility.Collapsed;
-                finishdate.Visibility = Visibility.Collapsed;
-                fixprice.Visibility = Visibility.Collapsed;
-            }
-            if (cbb.SelectedIndex == 1)
-            {
-                predictgrid.Visibility = Visibility.Visible;
-                fixdate.Visibility = Visibility.Visible;
-                finishdate.Visibility = Visibility.Collapsed;
-                fixprice.Visibility = Visibility.Collapsed;
-            }
-            if (cbb.SelectedIndex == 2)
-            {
-                predictgrid.Visibility = Visibility.Collapsed;
-                fixdate.Visibility = Visibility.Visible;
-                finishdate.Visibility = Visibility.Visible;
-                fixprice.Visibility = Visibility.Visible;
-            }
-            if (cbb.SelectedIndex == 3)
-            {
-                predictgrid.Visibility = Visibility.Collapsed;
-                fixdate.Visibility = Visibility.Collapsed;
-                finishdate.Visibility = Visibility.Collapsed;
-                fixprice.Visibility = Visibility.Collapsed;
-            }
-        }
+     
 
         private void TextBox_PreviewTextInput_1(object sender, TextCompositionEventArgs e)
         {
