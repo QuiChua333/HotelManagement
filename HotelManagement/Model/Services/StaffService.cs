@@ -188,7 +188,7 @@ namespace HotelManagement.Model.Services
                         return (false, "Nhân viên không tồn tại");
 
                     }
-                    selectedStaff.IsDeleted = true;
+                    context.Staffs.Remove(selectedStaff);
 
                     await context.SaveChangesAsync();
                 }

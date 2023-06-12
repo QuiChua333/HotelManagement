@@ -169,7 +169,8 @@ namespace HotelManagement.Model.Services
                         return (false, "Khách hàng không tồn tại" );
 
                     }
-                    selectedCus.IsDeleted = true;
+
+                    context.Customers.Remove(selectedCus);
 
                     await context.SaveChangesAsync();
                 }
