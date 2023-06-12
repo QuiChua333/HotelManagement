@@ -146,6 +146,34 @@ namespace HotelManagement.Model.Services
             }
             return (true, "Cập nhật thông tin thành công");
         }
+        public bool CheckStaff(string id)
+        {
+            try
+            {
+                using (var context = new HotelManagementEntities())
+                {
+                    Bill bill = context.Bills.FirstOrDefault(item => item.StaffId == id);
+                    if(bill != null)
+                    {
+                        return false;
+                    }
+                    RentalContract rent = context.RentalContracts.FirstOrDefault(item => item.StaffId == id);
+                    if (rent != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (System.Data.Entity.Core.EntityException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
         public async Task<(bool, string)> DeleteStaff(string id)
         {
             try
@@ -160,7 +188,7 @@ namespace HotelManagement.Model.Services
                         return (false, "Nhân viên không tồn tại");
 
                     }
-                    selectedStaff.IsDeleted = true;
+                    context.Staffs.Remove(selectedStaff);
 
                     await context.SaveChangesAsync();
                 }
@@ -205,7 +233,7 @@ namespace HotelManagement.Model.Services
                 using (var context = new HotelManagementEntities())
                 {
                     var staff = await (from s in context.Staffs
-                                       where (username == s.Username || username == s.Email) && password == s.Password
+                                       where (username == s.Username || username == s.Email) && password == s.Password && s.IsDeleted == false
                                        select new StaffDTO
                                        {
                                            StaffId=s.StaffId,

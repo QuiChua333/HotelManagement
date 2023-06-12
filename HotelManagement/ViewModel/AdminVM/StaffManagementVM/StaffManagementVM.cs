@@ -212,6 +212,21 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
             DeleteStaffCM = new RelayCommand<Window>(p => true, async p =>
             {
                 var kq = CustomMessageBox.ShowOkCancel("Bạn có chắc muốn xoá nhân viên này không?", "Cảnh báo", "OK", "Cancel", CustomMessageBoxImage.Warning);
+                if(AdminVM.CurrentStaff.StaffId == SelectedItem.StaffId)
+                {
+                    CustomMessageBox.ShowOkCancel("Bạn không thể tự xóa chính mình!", "Cảnh báo", "OK", "Cancel", CustomMessageBoxImage.Warning);
+                    return;
+                }
+                if (SelectedItem.Position == "Quản lý")
+                {
+                    CustomMessageBox.ShowOkCancel("Bạn không thể xóa quản lý khác!", "Cảnh báo", "OK", "Cancel", CustomMessageBoxImage.Warning);
+                    return;
+                }
+                if (!CheckStaff(SelectedItem.StaffId))
+                {
+                    return;
+                };
+                
                 if (kq == CustomMessageBoxResult.OK)
                 {
                     (bool issucced, string mess) = await StaffService.Ins.DeleteStaff(SelectedItem.StaffId);
@@ -231,7 +246,18 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
                 IsSaving = false;
             });
         }
+        private bool CheckStaff(string staffID)
+        {
+            bool issucced = StaffService.Ins.CheckStaff(SelectedItem.StaffId);
 
+            if (issucced)
+                return true;
+            else
+            {
+                CustomMessageBox.ShowOk("Không xóa được nhân viên do ràng buộc dữ liệu trên hệ thống!", "Cảnh báo", "OK", CustomMessageBoxImage.Warning);
+                return false;
+            }    
+        }
         private void LoadImage()
         {
             BitmapImage _image = new BitmapImage();

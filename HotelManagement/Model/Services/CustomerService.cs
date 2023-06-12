@@ -154,6 +154,13 @@ namespace HotelManagement.Model.Services
             {
                 using (var context = new HotelManagementEntities())
                 {
+                    RentalContract rent = await context.RentalContracts.FirstOrDefaultAsync(item => item.CustomerId == id);
+
+                    if(rent != null)
+                    {
+                        return (false, "Không thể xóa khách hàng do ràng buộc dữ liệu!");
+                    }    
+
                     Customer selectedCus = await ( from s in context.Customers
                                                    where s.CustomerId==id && s.IsDeleted==false
                                                    select s).FirstOrDefaultAsync();
@@ -162,7 +169,8 @@ namespace HotelManagement.Model.Services
                         return (false, "Khách hàng không tồn tại" );
 
                     }
-                    selectedCus.IsDeleted = true;
+
+                    context.Customers.Remove(selectedCus);
 
                     await context.SaveChangesAsync();
                 }
