@@ -43,6 +43,11 @@ namespace HotelManagement.ViewModel.AdminVM.StaffManagementVM
             (bool isvalid, string mess) =  IsValidData(Operation.CREATE);
             if (isvalid)
             {
+                if (filepath== null)
+                {
+                    CustomMessageBox.ShowOk("Vui lòng chọn hình ảnh","Thông báo","Xác nhận",CustomMessageBoxImage.Warning);
+                    return;
+                }
                 FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
                 byte[] photo_aray = new byte[fs.Length];
                 fs.Read(photo_aray, 0, photo_aray.Length);
